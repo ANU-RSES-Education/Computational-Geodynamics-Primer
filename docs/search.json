@@ -1,110 +1,566 @@
 [
   {
-    "objectID": "getting-started.html",
-    "href": "getting-started.html",
-    "title": "Getting Started",
+    "objectID": "customization.html",
+    "href": "customization.html",
+    "title": "Customization",
     "section": "",
-    "text": "Before you begin, make sure you have:\n\nA GitHub account\nGit installed on your computer\nPixi package manager (recommended) or Python 3.10+",
+    "text": "Replace the default ANU logos with your institution’s branding:\n# WebBook/_quarto.yml\nnavbar:\n  logo: assets/your-logo.jpg\n\nsidebar:\n  logo: assets/your-sidebar-image.jpg\nPlace your logo files in WebBook/assets/.\n\n\n\nEdit the color scheme to match your institution:\nformat:\n  live-html:\n    linkcolor: \"#YOUR_COLOR\"\n\nnavbar:\n  foreground: \"#YOUR_COLOR\"\nFor more extensive customization, edit WebBook/assets/theme.scss:\n/*-- scss:defaults --*/\n$primary: #C58812;  // Your primary color\n$secondary: #333333;  // Your secondary color\n\n/*-- scss:rules --*/\n.navbar {\n  border-bottom: 3px solid $primary;\n}\n\n\n\nChange fonts in _quarto.yml:\nformat:\n  live-html:\n    mainfont: \"Your Font Name\"\n    fontsize: 1.0em\n    linestretch: 1.5\nPopular web-safe fonts: - Georgia, Garamond (serif) - Helvetica, Arial (sans-serif) - “Courier New”, Monaco (monospace)\nOr use Google Fonts - just include the name and Quarto will load it.",
     "crumbs": [
       "Home",
-      "Introduction",
-      "Getting Started"
+      "Configuration & Customization",
+      "Customization"
     ]
   },
   {
-    "objectID": "getting-started.html#prerequisites",
-    "href": "getting-started.html#prerequisites",
-    "title": "Getting Started",
+    "objectID": "customization.html#branding-and-styling",
+    "href": "customization.html#branding-and-styling",
+    "title": "Customization",
     "section": "",
-    "text": "Before you begin, make sure you have:\n\nA GitHub account\nGit installed on your computer\nPixi package manager (recommended) or Python 3.10+",
+    "text": "Replace the default ANU logos with your institution’s branding:\n# WebBook/_quarto.yml\nnavbar:\n  logo: assets/your-logo.jpg\n\nsidebar:\n  logo: assets/your-sidebar-image.jpg\nPlace your logo files in WebBook/assets/.\n\n\n\nEdit the color scheme to match your institution:\nformat:\n  live-html:\n    linkcolor: \"#YOUR_COLOR\"\n\nnavbar:\n  foreground: \"#YOUR_COLOR\"\nFor more extensive customization, edit WebBook/assets/theme.scss:\n/*-- scss:defaults --*/\n$primary: #C58812;  // Your primary color\n$secondary: #333333;  // Your secondary color\n\n/*-- scss:rules --*/\n.navbar {\n  border-bottom: 3px solid $primary;\n}\n\n\n\nChange fonts in _quarto.yml:\nformat:\n  live-html:\n    mainfont: \"Your Font Name\"\n    fontsize: 1.0em\n    linestretch: 1.5\nPopular web-safe fonts: - Georgia, Garamond (serif) - Helvetica, Arial (sans-serif) - “Courier New”, Monaco (monospace)\nOr use Google Fonts - just include the name and Quarto will load it.",
     "crumbs": [
       "Home",
-      "Introduction",
-      "Getting Started"
+      "Configuration & Customization",
+      "Customization"
     ]
   },
   {
-    "objectID": "getting-started.html#creating-your-course-repository",
-    "href": "getting-started.html#creating-your-course-repository",
-    "title": "Getting Started",
-    "section": "Creating Your Course Repository",
-    "text": "Creating Your Course Repository\n\nStep 1: Use This Template\n\nGo to the EMSC-QuartoBook-Course repository\nClick the green “Use this template” button\nChoose “Create a new repository”\nFill in your repository details:\n\nOwner: Your GitHub username or organization\nRepository name: e.g., EMSC-4033-2025\nDescription: Brief course description\nPublic/Private: Choose based on your needs\n\nClick “Create repository”\n\n\n\n\n\n\n\nNote\n\n\n\nWhen you create a repository from a template, you get a fresh repository with no connection to the original. This is intentional - your course content is independent.\n\n\n\n\nStep 2: Clone Your Repository\ngit clone https://github.com/YOUR-USERNAME/YOUR-COURSE-NAME.git\ncd YOUR-COURSE-NAME\n\n\nStep 3: Set Up Your Environment\n\nUsing Pixi (Recommended)\nPixi manages all dependencies automatically:\n# Install dependencies\npixi install\n\n# Activate the environment\npixi shell\n\n\nUsing Python/pip\nIf you prefer not to use Pixi:\n# Create virtual environment\npython -m venv venv\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\n\n# Install Quarto separately from https://quarto.org/docs/get-started/\n\n# Install Python dependencies\npip install jupyterlite jupyterlite-pyodide-kernel ipython ipykernel",
+    "objectID": "customization.html#content-structure",
+    "href": "customization.html#content-structure",
+    "title": "Customization",
+    "section": "Content Structure",
+    "text": "Content Structure\n\nCustom Chapter Organization\nCreate a logical structure for your course:\nchapters:\n  - part: \"**Week 1: Foundations**\"\n    chapters:\n      - Week1/lecture.qmd\n      - Week1/lab.qmd\n      - Week1/exercises.qmd\n\n  - part: \"**Week 2: Applications**\"\n    chapters:\n      - Week2/lecture.qmd\n      - Week2/lab.qmd\n\n  - part: \"**Assessments**\"\n    chapters:\n      - Assessments/assignment1.qmd\n      - Assessments/assignment2.qmd\n\n\nIncluding Notebooks\nAdd Jupyter notebooks to your book:\nchapters:\n  - Notebooks/analysis.ipynb\n  - Notebooks/visualization.ipynb\nNotebooks are rendered automatically by Quarto.",
     "crumbs": [
       "Home",
-      "Introduction",
-      "Getting Started"
+      "Configuration & Customization",
+      "Customization"
     ]
   },
   {
-    "objectID": "getting-started.html#first-build",
-    "href": "getting-started.html#first-build",
-    "title": "Getting Started",
-    "section": "First Build",
-    "text": "First Build\nTest that everything works:\n# Using pixi\npixi run quarto render WebBook\n\n# Or directly if quarto is in your PATH\nquarto render WebBook\nIf successful, you’ll see output in _build/book/.",
+    "objectID": "customization.html#interactive-features",
+    "href": "customization.html#interactive-features",
+    "title": "Customization",
+    "section": "Interactive Features",
+    "text": "Interactive Features\n\nPyodide (Live Python)\nEnable live Python code execution in your pages:\n\nUncomment the pyodide filter in _quarto.yml:\n\nformat:\n  live-html:\n    filters:\n      - pyodide\n\nUse executable code blocks:\n\n```{pyodide-python}\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 2*np.pi, 100)\ny = np.sin(x)\nplt.plot(x, y)\nplt.show()\n```\n\n\nCustom JavaScript\nAdd interactive elements with custom JavaScript:\nCreate WebBook/assets/custom.js:\n// Your custom JavaScript\ndocument.addEventListener('DOMContentLoaded', function() {\n  console.log('Custom JS loaded');\n});\nInclude in _quarto.yml:\nformat:\n  live-html:\n    include-in-header:\n      - text: |\n          &lt;script src=\"assets/custom.js\"&gt;&lt;/script&gt;",
     "crumbs": [
       "Home",
-      "Introduction",
-      "Getting Started"
+      "Configuration & Customization",
+      "Customization"
     ]
   },
   {
-    "objectID": "getting-started.html#customizing-your-course",
-    "href": "getting-started.html#customizing-your-course",
-    "title": "Getting Started",
-    "section": "Customizing Your Course",
-    "text": "Customizing Your Course\n\nUpdate Course Information\nEdit WebBook/_quarto.yml:\nbook:\n  title: \"Your Course Title\"  # Change this\n  author:\n    - \"Your Name\"              # Change this\n  date: \"2025\"                 # Update year\n\n\nRepository Links\nUpdate the GitHub repository links in WebBook/_quarto.yml:\nother-links:\n  - text: Github Repository\n    icon: github\n    href: https://github.com/YOUR-USERNAME/YOUR-COURSE-NAME",
+    "objectID": "customization.html#slides-customization",
+    "href": "customization.html#slides-customization",
+    "title": "Customization",
+    "section": "Slides Customization",
+    "text": "Slides Customization\n\nCustom Slide Theme\nEdit WebSlides/_quarto.yml:\nformat:\n  revealjs:\n    theme: [default, custom-theme.scss]\n    slide-number: true\n    logo: images/logo.png\n    footer: \"Your Course | Session\"\nCreate WebSlides/custom-theme.scss:\n.reveal {\n  font-family: \"Your Font\";\n}\n\n.reveal h1 {\n  color: #YOUR_COLOR;\n}\n\n\nSlide Templates\nCreate reusable slide layouts in WebSlides/templates/.",
     "crumbs": [
       "Home",
-      "Introduction",
-      "Getting Started"
+      "Configuration & Customization",
+      "Customization"
     ]
   },
   {
-    "objectID": "getting-started.html#keeping-your-course-updated",
-    "href": "getting-started.html#keeping-your-course-updated",
-    "title": "Getting Started",
-    "section": "Keeping Your Course Updated",
-    "text": "Keeping Your Course Updated\nThe template includes an interactive update script that checks for: - Extension updates - Python package updates - JupyterLite rebuild needs - Template improvements\n./update-template.sh\nSee Template Doctor for details.",
+    "objectID": "customization.html#github-pages-customization",
+    "href": "customization.html#github-pages-customization",
+    "title": "Customization",
+    "section": "GitHub Pages Customization",
+    "text": "GitHub Pages Customization\n\nCustom Domain\nTo use a custom domain (e.g., course.your.edu):\n\nAdd WebBook/CNAME file:\n\ncourse.your.edu\n\nConfigure DNS:\n\nAdd CNAME record pointing to username.github.io\n\nEnable custom domain in Settings &gt; Pages\n\n\n\nrobots.txt and SEO\nControl search engine indexing:\nCreate WebBook/robots.txt:\nUser-agent: *\nAllow: /\n\nSitemap: https://your-site.github.io/sitemap.xml\nAdd SEO metadata in _quarto.yml:\nwebsite:\n  description: \"Your course description\"\n  open-graph: true\n  twitter-card: true",
     "crumbs": [
       "Home",
-      "Introduction",
-      "Getting Started"
+      "Configuration & Customization",
+      "Customization"
     ]
   },
   {
-    "objectID": "getting-started.html#next-steps",
-    "href": "getting-started.html#next-steps",
-    "title": "Getting Started",
-    "section": "Next Steps",
-    "text": "Next Steps\n\nConfigure your course - Detailed configuration options\nCustomize the appearance - Themes, colors, and styling\nSet up automatic deployment - GitHub Pages configuration",
+    "objectID": "customization.html#advanced-customizations",
+    "href": "customization.html#advanced-customizations",
+    "title": "Customization",
+    "section": "Advanced Customizations",
+    "text": "Advanced Customizations\n\nCustom Quarto Extensions\nInstall Quarto extensions for additional features:\n# In WebBook directory\ncd WebBook\nquarto add extension-name\nPopular extensions: - quarto-ext/fontawesome - Font Awesome icons - shafayetShafee/reveal-header - Custom slide headers\n\n\nConditional Content\nShow different content based on output format:\n::: {.content-visible when-format=\"html\"}\nThis only appears in HTML\n:::\n\n::: {.content-visible when-format=\"pdf\"}\nThis only appears in PDF\n:::\n\n\nCustom Callouts\nCreate custom callout styles:\n// In assets/theme.scss\ndiv.callout-your-style {\n  border-left-color: #YOUR_COLOR;\n}\nUse in content:\n::: {.callout-your-style}\nYour custom callout\n:::",
     "crumbs": [
       "Home",
-      "Introduction",
-      "Getting Started"
+      "Configuration & Customization",
+      "Customization"
     ]
   },
   {
-    "objectID": "getting-started.html#testing-locally",
-    "href": "getting-started.html#testing-locally",
-    "title": "Getting Started",
-    "section": "Testing Locally",
-    "text": "Testing Locally\nBefore pushing changes, test locally:\n# Render the book\npixi run quarto render WebBook\n\n# Preview in browser\npixi run quarto preview WebBook\nThe preview server will open your course in a web browser with live reload.",
+    "objectID": "template-sync.html",
+    "href": "template-sync.html",
+    "title": "Template Synchronization",
+    "section": "",
+    "text": "The template includes an automated synchronization system that allows your course repository to receive updates from the template. This ensures you can benefit from bug fixes, new features, and improvements without manually merging changes.",
     "crumbs": [
       "Home",
-      "Introduction",
-      "Getting Started"
+      "Maintenance",
+      "Template Synchronization"
     ]
   },
   {
-    "objectID": "getting-started.html#deploying-to-github-pages",
-    "href": "getting-started.html#deploying-to-github-pages",
-    "title": "Getting Started",
-    "section": "Deploying to GitHub Pages",
-    "text": "Deploying to GitHub Pages\nOnce you push to the main branch, GitHub Actions will automatically:\n\nBuild your course book\nBuild your slides\nBuild JupyterLite\nDeploy everything to GitHub Pages\n\nYour course will be available at:\nhttps://YOUR-USERNAME.github.io/YOUR-COURSE-NAME/\n\n\n\n\n\n\nTip\n\n\n\nYou may need to enable GitHub Pages in your repository settings: - Go to Settings &gt; Pages - Set Source to “GitHub Actions”",
+    "objectID": "template-sync.html#overview",
+    "href": "template-sync.html#overview",
+    "title": "Template Synchronization",
+    "section": "",
+    "text": "The template includes an automated synchronization system that allows your course repository to receive updates from the template. This ensures you can benefit from bug fixes, new features, and improvements without manually merging changes.",
     "crumbs": [
       "Home",
-      "Introduction",
-      "Getting Started"
+      "Maintenance",
+      "Template Synchronization"
+    ]
+  },
+  {
+    "objectID": "template-sync.html#how-it-works",
+    "href": "template-sync.html#how-it-works",
+    "title": "Template Synchronization",
+    "section": "How It Works",
+    "text": "How It Works\n\nAutomatic Sync Process\n\nMonthly Check: On the 1st of each month, GitHub Actions runs in your course repository\nComparison: The action compares your repo with the template repository\nPull Request: If changes are found, a PR is automatically created\nReview: You review the changes and decide whether to merge\nMerge: Accept the changes that make sense for your course\n\n\n\nThe Sync Workflow\nThe synchronization is configured in .github/workflows/template-sync.yml:\nname: Check for updates to template\n\non:\n  schedule:\n    - cron: \"0 0 1 * *\"  # Monthly on the 1st\n  workflow_dispatch:      # Manual trigger\n\njobs:\n  repo-sync:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: write\n      pull-requests: write\n    steps:\n      - name: Checkout\n        uses: actions/checkout@v4\n\n      - name: actions-template-sync\n        uses: AndreasAugustin/actions-template-sync@v2\n        with:\n          source_repo_path: ANU-RSES-Education/EMSC-QuartoBook-Course",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Template Synchronization"
+    ]
+  },
+  {
+    "objectID": "template-sync.html#manual-synchronization",
+    "href": "template-sync.html#manual-synchronization",
+    "title": "Template Synchronization",
+    "section": "Manual Synchronization",
+    "text": "Manual Synchronization\nYou can manually trigger a sync check:\n\nGo to your repository on GitHub\nClick Actions tab\nSelect “Check for updates to template” workflow\nClick “Run workflow” button",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Template Synchronization"
+    ]
+  },
+  {
+    "objectID": "template-sync.html#what-gets-synced",
+    "href": "template-sync.html#what-gets-synced",
+    "title": "Template Synchronization",
+    "section": "What Gets Synced",
+    "text": "What Gets Synced\nThe sync will attempt to update:\n\n✅ Build scripts (build.sh)\n✅ GitHub Actions workflows (.github/workflows/)\n✅ Pixi configuration (pixi.toml)\n✅ Template utilities and helpers\n⚠️ Configuration templates (_quarto.yml structure) - Handle with care\n❌ Your course content (WebBook chapters, slides)\n❌ Your customizations (when in different files)\n\n\n\n\n\n\n\nWarningSpecial Consideration: _quarto.yml\n\n\n\nThe _quarto.yml file is heavily modified in course repositories (it contains all your content structure). Template sync may suggest changes to this file, but these should be carefully reviewed before accepting.\nRecommended approach: - Review infrastructure changes (format settings, new features) - Keep your content structure (chapters, parts) - Merge selectively, don’t blindly accept",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Template Synchronization"
+    ]
+  },
+  {
+    "objectID": "template-sync.html#sync-configuration",
+    "href": "template-sync.html#sync-configuration",
+    "title": "Template Synchronization",
+    "section": "Sync Configuration",
+    "text": "Sync Configuration\nYou can configure which files to ignore in the sync process. Edit .github/workflows/template-sync.yml:\n- name: actions-template-sync\n  uses: AndreasAugustin/actions-template-sync@v2\n  with:\n    source_repo_path: ANU-RSES-Education/EMSC-QuartoBook-Course\n    ignored_files: |\n      WebBook/_quarto.yml\n      WebSlides/_quarto.yml\n      WebBook/Module*/**\nThis prevents the sync from touching your content-heavy configuration files.",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Template Synchronization"
+    ]
+  },
+  {
+    "objectID": "template-sync.html#handling-conflicts",
+    "href": "template-sync.html#handling-conflicts",
+    "title": "Template Synchronization",
+    "section": "Handling Conflicts",
+    "text": "Handling Conflicts\nWhen a sync PR is created, you may see conflicts if you’ve customized the same files.\n\nStrategy for Common Conflicts\nWebBook/_quarto.yml - Template changes: Infrastructure improvements (new features, bug fixes) - Your changes: Content structure, course title, author - Resolution: Carefully merge both - keep your content, accept infrastructure improvements\npixi.toml - Template changes: Version bumps, new common dependencies - Your changes: Course-specific packages - Resolution: Merge dependency lists\n.github/workflows/publish.yml - Template changes: Build optimizations, new deployment features - Your changes: Usually none (unless you’ve customized deployment) - Resolution: Usually safe to accept template changes\n\n\nConflict Resolution Process\n\nReview the PR: Read the description of what changed\nCheck the diff: Look at specific changes file by file\nTest locally (optional):\n# Fetch the sync PR branch\ngit fetch origin template-sync-&lt;date&gt;\ngit checkout template-sync-&lt;date&gt;\n\n# Build and test\npixi run quarto render WebBook\nResolve conflicts: Either through GitHub UI or locally\nMerge when ready: Only after you’re satisfied with the changes",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Template Synchronization"
+    ]
+  },
+  {
+    "objectID": "template-sync.html#customization-strategy",
+    "href": "template-sync.html#customization-strategy",
+    "title": "Template Synchronization",
+    "section": "Customization Strategy",
+    "text": "Customization Strategy\nTo minimize conflicts, follow these practices:\n\nSeparate Your Customizations\n✅ Good: Course-specific content in separate files\nWebBook/\n  Module1/\n    lecture1.qmd      # Your content\n  Module2/\n    lecture2.qmd      # Your content\n❌ Avoid: Heavily modifying template infrastructure files unless necessary\n\n\nUse Comments to Mark Changes\nIn files you must modify, mark your changes:\n# CUSTOM: Added for EMSC-3022 specific requirements\ncustom-setting: value\n# END CUSTOM\nThis makes it easier to preserve your changes during merges.",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Template Synchronization"
+    ]
+  },
+  {
+    "objectID": "template-sync.html#opting-out",
+    "href": "template-sync.html#opting-out",
+    "title": "Template Synchronization",
+    "section": "Opting Out",
+    "text": "Opting Out\nIf you don’t want automatic sync:\n\nDelete .github/workflows/template-sync.yml\nYou can still manually pull updates when desired\n\n\n\n\n\n\n\nTip\n\n\n\nEven if you opt out of automatic sync, keeping the file with the schedule commented out lets you manually trigger updates when needed.",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Template Synchronization"
+    ]
+  },
+  {
+    "objectID": "template-sync.html#sync-labels",
+    "href": "template-sync.html#sync-labels",
+    "title": "Template Synchronization",
+    "section": "Sync Labels",
+    "text": "Sync Labels\nPull requests from the sync action are labeled with: - template_sync - Identifies automated sync PRs\nYou can configure additional labels in the workflow:\npr_labels: template_sync,dependencies,infrastructure",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Template Synchronization"
+    ]
+  },
+  {
+    "objectID": "template-sync.html#troubleshooting",
+    "href": "template-sync.html#troubleshooting",
+    "title": "Template Synchronization",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\nSync PR has too many changes\nThis usually happens after a long time between syncs. Review carefully and consider: - Accepting in smaller chunks - Cherry-picking specific commits - Asking for help in the template repository issues\nSync fails with permissions error\nEnsure GitHub Actions has permissions: 1. Settings &gt; Actions &gt; General 2. Workflow permissions: “Read and write permissions” 3. “Allow GitHub Actions to create and approve pull requests” ✅\nWant to sync specific files only\nThe action uses patterns. You can configure exclusions (advanced):\npr_branch_name_prefix: template_sync_\nignored_files: \"WebBook/Module*/**,custom/**\"",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Template Synchronization"
+    ]
+  },
+  {
+    "objectID": "webbook.html",
+    "href": "webbook.html",
+    "title": "WebBook - Course Notes",
+    "section": "",
+    "text": "The WebBook is the main component of your course - a searchable, interactive online textbook built with Quarto.",
+    "crumbs": [
+      "Home",
+      "Features",
+      "WebBook - Course Notes"
+    ]
+  },
+  {
+    "objectID": "webbook.html#structure",
+    "href": "webbook.html#structure",
+    "title": "WebBook - Course Notes",
+    "section": "Structure",
+    "text": "Structure\nWebBook/\n├── _quarto.yml          # Configuration\n├── index.qmd            # Home page\n├── assets/              # Images, CSS, JS\n├── Module1/             # Your content\n│   ├── lecture1.qmd\n│   └── exercises.qmd\n└── Notebooks/           # Jupyter notebooks\n    └── analysis.ipynb",
+    "crumbs": [
+      "Home",
+      "Features",
+      "WebBook - Course Notes"
+    ]
+  },
+  {
+    "objectID": "webbook.html#writing-content",
+    "href": "webbook.html#writing-content",
+    "title": "WebBook - Course Notes",
+    "section": "Writing Content",
+    "text": "Writing Content\n\nQuarto Markdown (.qmd)\nBasic syntax:\n---\ntitle: \"Lecture Title\"\n---\n\n## Introduction\n\nRegular markdown text with **bold** and *italic*.\n\n### Code Examples\n\n```{python}\nimport numpy as np\nx = np.array([1, 2, 3])\nprint(x.mean())\n```\n\n### Math\n\nInline math: $E = mc^2$\n\nDisplay math:\n$$\n\\frac{\\partial u}{\\partial t} = \\nabla^2 u\n$$\n\n\nLive Interactive Code\nWith pyodide filter enabled:\n```{pyodide-python}\n# This runs in the browser!\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nx = np.linspace(0, 10, 100)\nplt.plot(x, np.sin(x))\nplt.show()\n```",
+    "crumbs": [
+      "Home",
+      "Features",
+      "WebBook - Course Notes"
+    ]
+  },
+  {
+    "objectID": "webbook.html#features",
+    "href": "webbook.html#features",
+    "title": "WebBook - Course Notes",
+    "section": "Features",
+    "text": "Features\n\nNavigation\n\nBreadcrumbs: Show current location\nSearch: Full-text search\nTable of Contents: Auto-generated from headers\n\n\n\nCross-References\nReference sections, figures, and equations:\nSee @sec-introduction for details.\n\n![Caption](image.png){#fig-diagram}\n\nAs shown in @fig-diagram...\n\n\nCallouts\n::: {.callout-note}\nThis is important information\n:::\n\n::: {.callout-warning}\nBe careful here!\n:::\n\n::: {.callout-tip}\nPro tip: ...\n:::\n\n\nTabsets\n::: {.panel-tabset}\n\n## Tab 1\nContent for tab 1\n\n## Tab 2\nContent for tab 2\n\n:::",
+    "crumbs": [
+      "Home",
+      "Features",
+      "WebBook - Course Notes"
+    ]
+  },
+  {
+    "objectID": "webbook.html#building",
+    "href": "webbook.html#building",
+    "title": "WebBook - Course Notes",
+    "section": "Building",
+    "text": "Building\n# Render entire book\npixi run quarto render WebBook\n\n# Preview with live reload\npixi run quarto preview WebBook\n\n# Render single page\npixi run quarto render WebBook/Module1/lecture1.qmd\nOutput goes to _build/book/.",
+    "crumbs": [
+      "Home",
+      "Features",
+      "WebBook - Course Notes"
+    ]
+  },
+  {
+    "objectID": "configuration.html",
+    "href": "configuration.html",
+    "title": "Configuration",
+    "section": "",
+    "text": "The main configuration file is WebBook/_quarto.yml. This controls all aspects of your course book.\n\n\nbook:\n  title: \"Your Course Title\"\n  author:\n    - \"Primary Author\"\n    - \"Secondary Author\"  # Optional\n  date: \"2025\"\n  bread-crumbs: True  # Navigation breadcrumbs\n\n\n\nThe template uses the live-html format which supports interactive Python code:\nformat:\n  live-html:\n    theme: [united, \"assets/theme.scss\"]\n    mainfont: \"Jost\"\n    fontsize: 0.9em\n    linestretch: 1.7\n    linkcolor: \"#C58812\"  # ANU honey color\nYou can customize:\n\ntheme: Choose from Quarto’s built-in themes (united, cosmo, flatly, etc.)\nmainfont: Any Google Font or web-safe font\nfontsize: Adjust base font size\nlinkcolor: Use your institution’s colors\n\n\n\n\nnavbar:\n  search: true\n  logo: assets/ANU-logo.jpg  # Replace with your logo\n  background: \"white\"\n  foreground: \"#C58812\"\n\nsidebar:\n  logo: assets/AuWorldEQ.jpg  # Optional sidebar logo\n  background: \"white\"\n\n\n\nStructure your content in the chapters section:\nchapters:\n  - part: \"**Module 1: Introduction**\"\n    chapters:\n      - Module1/lecture1.qmd\n      - Module1/lecture2.qmd\n\n  - part: \"**Module 2: Advanced Topics**\"\n    chapters:\n      - Module2/lecture1.qmd\n      - Module2/exercises.qmd\n\n\n\nSpecify Python packages available in the browser:\npyodide:\n  packages:\n    - micropip\n    - numpy\n    - matplotlib\n    - pandas\n    - xarray\n    - netcdf4\n\n\n\n\n\n\nWarning\n\n\n\nNot all Python packages are available in Pyodide. Check the Pyodide package list.\n\n\n\n\n\nBy default, code execution is disabled:\nexecute:\n  enabled: false\nThis means code in your .qmd files won’t run during build. For interactive code, use the pyodide filter or JupyterLite.\nTo enable execution during build:\nexecute:\n  enabled: true\n  freeze: auto  # Cache results",
+    "crumbs": [
+      "Home",
+      "Configuration & Customization",
+      "Configuration"
+    ]
+  },
+  {
+    "objectID": "configuration.html#quarto-configuration",
+    "href": "configuration.html#quarto-configuration",
+    "title": "Configuration",
+    "section": "",
+    "text": "The main configuration file is WebBook/_quarto.yml. This controls all aspects of your course book.\n\n\nbook:\n  title: \"Your Course Title\"\n  author:\n    - \"Primary Author\"\n    - \"Secondary Author\"  # Optional\n  date: \"2025\"\n  bread-crumbs: True  # Navigation breadcrumbs\n\n\n\nThe template uses the live-html format which supports interactive Python code:\nformat:\n  live-html:\n    theme: [united, \"assets/theme.scss\"]\n    mainfont: \"Jost\"\n    fontsize: 0.9em\n    linestretch: 1.7\n    linkcolor: \"#C58812\"  # ANU honey color\nYou can customize:\n\ntheme: Choose from Quarto’s built-in themes (united, cosmo, flatly, etc.)\nmainfont: Any Google Font or web-safe font\nfontsize: Adjust base font size\nlinkcolor: Use your institution’s colors\n\n\n\n\nnavbar:\n  search: true\n  logo: assets/ANU-logo.jpg  # Replace with your logo\n  background: \"white\"\n  foreground: \"#C58812\"\n\nsidebar:\n  logo: assets/AuWorldEQ.jpg  # Optional sidebar logo\n  background: \"white\"\n\n\n\nStructure your content in the chapters section:\nchapters:\n  - part: \"**Module 1: Introduction**\"\n    chapters:\n      - Module1/lecture1.qmd\n      - Module1/lecture2.qmd\n\n  - part: \"**Module 2: Advanced Topics**\"\n    chapters:\n      - Module2/lecture1.qmd\n      - Module2/exercises.qmd\n\n\n\nSpecify Python packages available in the browser:\npyodide:\n  packages:\n    - micropip\n    - numpy\n    - matplotlib\n    - pandas\n    - xarray\n    - netcdf4\n\n\n\n\n\n\nWarning\n\n\n\nNot all Python packages are available in Pyodide. Check the Pyodide package list.\n\n\n\n\n\nBy default, code execution is disabled:\nexecute:\n  enabled: false\nThis means code in your .qmd files won’t run during build. For interactive code, use the pyodide filter or JupyterLite.\nTo enable execution during build:\nexecute:\n  enabled: true\n  freeze: auto  # Cache results",
+    "crumbs": [
+      "Home",
+      "Configuration & Customization",
+      "Configuration"
+    ]
+  },
+  {
+    "objectID": "configuration.html#slides-configuration",
+    "href": "configuration.html#slides-configuration",
+    "title": "Configuration",
+    "section": "Slides Configuration",
+    "text": "Slides Configuration\nConfigure your slides in WebSlides/_quarto.yml:\nformat:\n  revealjs:\n    theme: [default, custom.scss]\n    logo: images/logo.png\n    footer: \"Course Name | 2025\"",
+    "crumbs": [
+      "Home",
+      "Configuration & Customization",
+      "Configuration"
+    ]
+  },
+  {
+    "objectID": "configuration.html#pixi-environment",
+    "href": "configuration.html#pixi-environment",
+    "title": "Configuration",
+    "section": "Pixi Environment",
+    "text": "Pixi Environment\nEdit pixi.toml to add dependencies:\n[dependencies]\nquarto = \"&gt;=1.6.42,&lt;2\"\njupyterlite = \"&gt;=0.5.1,&lt;0.6\"\nmatplotlib = \"&gt;=3.8.0,&lt;4\"  # Add your packages\nnumpy = \"&gt;=1.26.0,&lt;2\"\nAfter modifying:\npixi install",
+    "crumbs": [
+      "Home",
+      "Configuration & Customization",
+      "Configuration"
+    ]
+  },
+  {
+    "objectID": "configuration.html#jupyterlite-configuration",
+    "href": "configuration.html#jupyterlite-configuration",
+    "title": "Configuration",
+    "section": "JupyterLite Configuration",
+    "text": "JupyterLite Configuration\nConfigure JupyterLite in jupyterlite/jupyter-lite.config.json:\n{\n  \"jupyter-config-data\": {\n    \"appName\": \"Your Course Name - JupyterLite\"\n  }\n}\nAdd content to jupyterlite/content/ to make notebooks available.",
+    "crumbs": [
+      "Home",
+      "Configuration & Customization",
+      "Configuration"
+    ]
+  },
+  {
+    "objectID": "jupyterlite.html",
+    "href": "jupyterlite.html",
+    "title": "JupyterLite",
+    "section": "",
+    "text": "JupyterLite provides a full Jupyter environment running entirely in the browser - no server required!",
+    "crumbs": [
+      "Home",
+      "Features",
+      "JupyterLite"
+    ]
+  },
+  {
+    "objectID": "jupyterlite.html#what-is-jupyterlite",
+    "href": "jupyterlite.html#what-is-jupyterlite",
+    "title": "JupyterLite",
+    "section": "What is JupyterLite?",
+    "text": "What is JupyterLite?\nA WebAssembly-powered Jupyter running in your browser: - Full Python environment - Jupyter notebook and lab interface - File system in browser storage - No installation needed",
+    "crumbs": [
+      "Home",
+      "Features",
+      "JupyterLite"
+    ]
+  },
+  {
+    "objectID": "jupyterlite.html#structure",
+    "href": "jupyterlite.html#structure",
+    "title": "JupyterLite",
+    "section": "Structure",
+    "text": "Structure\njupyterlite/\n├── content/         # Notebooks to include\n├── requirements.txt # Python packages\n└── jupyter-lite.config.json",
+    "crumbs": [
+      "Home",
+      "Features",
+      "JupyterLite"
+    ]
+  },
+  {
+    "objectID": "jupyterlite.html#adding-notebooks",
+    "href": "jupyterlite.html#adding-notebooks",
+    "title": "JupyterLite",
+    "section": "Adding Notebooks",
+    "text": "Adding Notebooks\nPlace .ipynb files in jupyterlite/content/:\ncp MyNotebook.ipynb jupyterlite/content/\nThey’ll be available in the JupyterLite file browser.",
+    "crumbs": [
+      "Home",
+      "Features",
+      "JupyterLite"
+    ]
+  },
+  {
+    "objectID": "jupyterlite.html#python-packages",
+    "href": "jupyterlite.html#python-packages",
+    "title": "JupyterLite",
+    "section": "Python Packages",
+    "text": "Python Packages\nEdit jupyterlite/requirements.txt:\nnumpy\nmatplotlib\npandas\nRebuild after changes:\ncd jupyterlite\njupyter lite build --contents content --output-dir dist",
+    "crumbs": [
+      "Home",
+      "Features",
+      "JupyterLite"
+    ]
+  },
+  {
+    "objectID": "jupyterlite.html#accessing",
+    "href": "jupyterlite.html#accessing",
+    "title": "JupyterLite",
+    "section": "Accessing",
+    "text": "Accessing\nAfter deployment, JupyterLite is available at:\nhttps://your-site.github.io/your-repo/jupyterlite/",
+    "crumbs": [
+      "Home",
+      "Features",
+      "JupyterLite"
+    ]
+  },
+  {
+    "objectID": "jupyterlite.html#limitations",
+    "href": "jupyterlite.html#limitations",
+    "title": "JupyterLite",
+    "section": "Limitations",
+    "text": "Limitations\nJupyterLite runs entirely in the browser, which brings some constraints:\n\nNetwork and Data\n\nLimited HTTP access: CORS restrictions apply\nNo direct downloads: Can’t fetch arbitrary data from the internet\nFile size limits: ~100MB practical limit\nWorkaround: Pre-load data files, or use Binder for data-intensive work\n\n\n\nPackage Availability\n\nOnly packages available in Pyodide\nCheck Pyodide packages\n\n\n\nStorage and Persistence\n\nFiles stored in browser only\nCleared if browser cache is cleared\nNo sharing between users\nDownload important results\n\n\n\nPerformance\n\nSlower than server-based Jupyter\nLimited memory\nBetter for learning than production",
+    "crumbs": [
+      "Home",
+      "Features",
+      "JupyterLite"
+    ]
+  },
+  {
+    "objectID": "jupyterlite.html#when-to-use-binder-instead",
+    "href": "jupyterlite.html#when-to-use-binder-instead",
+    "title": "JupyterLite",
+    "section": "When to Use Binder Instead",
+    "text": "When to Use Binder Instead\nJupyterLite is excellent for teaching and simple examples, but for complex research work, consider Binder:\n\nLarge datasets from the internet\nComplex package requirements\nNetwork-intensive operations\nCollaborative work\nProduction analysis ```",
+    "crumbs": [
+      "Home",
+      "Features",
+      "JupyterLite"
+    ]
+  },
+  {
+    "objectID": "binder.html",
+    "href": "binder.html",
+    "title": "Binder Integration",
+    "section": "",
+    "text": "While Pyodide and JupyterLite are excellent for simple interactive code examples, they have limitations when it comes to:\n\nComplex network requests and API calls\nLarge data downloads\nPackages not available in Pyodide\nComputationally intensive operations\nFile system operations\n\nFor these use cases, Binder provides a full-featured computing environment running on cloud servers.",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
+    ]
+  },
+  {
+    "objectID": "binder.html#overview",
+    "href": "binder.html#overview",
+    "title": "Binder Integration",
+    "section": "",
+    "text": "While Pyodide and JupyterLite are excellent for simple interactive code examples, they have limitations when it comes to:\n\nComplex network requests and API calls\nLarge data downloads\nPackages not available in Pyodide\nComputationally intensive operations\nFile system operations\n\nFor these use cases, Binder provides a full-featured computing environment running on cloud servers.",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
+    ]
+  },
+  {
+    "objectID": "binder.html#what-is-binder",
+    "href": "binder.html#what-is-binder",
+    "title": "Binder Integration",
+    "section": "What is Binder?",
+    "text": "What is Binder?\nBinder creates a live, executable environment from a GitHub repository. When students click a Binder link, they get:\n\nFull Jupyter Lab environment\nComplete Python package ecosystem\nNetwork access for data downloads\nPersistent sessions (while active)\nReal file system\nMore computational resources",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
+    ]
+  },
+  {
+    "objectID": "binder.html#basic-binder-setup",
+    "href": "binder.html#basic-binder-setup",
+    "title": "Binder Integration",
+    "section": "Basic Binder Setup",
+    "text": "Basic Binder Setup\n\n1. Configure Your Repository\nBinder reads configuration from your repository root. Create an environment.yml file:\nname: emsc-course\nchannels:\n  - conda-forge\ndependencies:\n  - python=3.11\n  - jupyter\n  - numpy\n  - matplotlib\n  - pandas\n  - xarray\n  - netcdf4\n  - pip\n  - pip:\n    - some-pip-only-package\n    # Add any pip-only packages here\nThis approach uses conda for most packages (faster, better dependency resolution) and pip only for packages not available in conda-forge.\n\n\n2. Add a Binder Badge\nAdd to your README.md:\n[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ANU-RSES-Education/YOUR-REPO/HEAD)\nReplace YOUR-REPO with your repository name.\n\n\n3. Link from Your Course\nIn your Quarto book, add a link to Binder:\n# In WebBook/_quarto.yml\nformat:\n  live-html:\n    code-links:\n      - text: Open in Binder\n        icon: rocket-takeoff\n        href: https://mybinder.org/v2/gh/ANU-RSES-Education/YOUR-REPO/HEAD",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
+    ]
+  },
+  {
+    "objectID": "binder.html#paired-repository-strategy-recommended-for-rses",
+    "href": "binder.html#paired-repository-strategy-recommended-for-rses",
+    "title": "Binder Integration",
+    "section": "Paired Repository Strategy (Recommended for RSES)",
+    "text": "Paired Repository Strategy (Recommended for RSES)\nFor complex courses, we recommend a paired repository approach:\n\nThe Strategy\n\nMain Course Repository (e.g., EMSC-4033)\n\nContains course book, slides, and content\nBuilt website deployed to GitHub Pages\nLightweight for fast builds\n\nBinder Companion Repository (e.g., EMSC-4033-Binder)\n\nDedicated to Binder environment\nSyncs notebooks and data from main repository\nContains all heavy dependencies\nOptimized for interactive computing\n\n\n\n\nBenefits\n\nFaster main repo builds - No heavy Binder dependencies\nFlexible environment - Can install anything needed\nBetter caching - Binder builds are cached separately\nCleaner separation - Content vs. compute environment\n\n\n\nSetting Up a Paired Repository\n\nStep 1: Create Binder Repository\nCreate a new repository: YOUR-COURSE-NAME-Binder\n\n\nStep 2: Configure to Pull From Main Repo\nCreate .binder/postBuild script:\n#!/bin/bash\n\n# Clone the main course repository\ngit clone https://github.com/ANU-RSES-Education/YOUR-COURSE-NAME.git course-content\n\n# Copy notebooks to working directory\ncp -r course-content/WebBook/Notebooks/* notebooks/\n\n# Copy any data files\nif [ -d \"course-content/WebBook/Data\" ]; then\n    cp -r course-content/WebBook/Data ./\nfi\n\necho \"Course content loaded successfully\"\nMake it executable:\nchmod +x .binder/postBuild\n\n\nStep 3: Create environment.yml\nname: emsc-binder\nchannels:\n  - conda-forge\ndependencies:\n  - python=3.11\n  - jupyter\n  - jupyterlab&gt;=4.0\n  - numpy\n  - matplotlib\n  - pandas\n  - cartopy\n  - xarray\n  - netcdf4\n  - requests\n  - beautifulsoup4\n  # Add any packages you need\n\n\nStep 4: Add start.sh (optional)\nCreate a startup script that opens a specific notebook:\n#!/bin/bash\nexec jupyter lab notebooks/Welcome.ipynb\n\n\nStep 5: Link from Main Repository\nIn your main course’s _quarto.yml:\ncode-links:\n  - text: Open in Binder\n    icon: rocket-takeoff\n    href: https://mybinder.org/v2/gh/ANU-RSES-Education/YOUR-COURSE-NAME-Binder/HEAD",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
+    ]
+  },
+  {
+    "objectID": "binder.html#automation-considerations",
+    "href": "binder.html#automation-considerations",
+    "title": "Binder Integration",
+    "section": "Automation Considerations",
+    "text": "Automation Considerations\n\n\n\n\n\n\nNoteFuture Development\n\n\n\nAutomating the Binder repository sync is on our roadmap. Potential approaches:\n\nGitHub Actions - Trigger on main repo push to update Binder repo\nGit Submodules - Link main repo as submodule\nDynamic fetching - postBuild always pulls latest from main\n\nThis requires careful design to avoid circular dependencies and ensure reliable builds.",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
+    ]
+  },
+  {
+    "objectID": "binder.html#when-to-use-what",
+    "href": "binder.html#when-to-use-what",
+    "title": "Binder Integration",
+    "section": "When to Use What",
+    "text": "When to Use What\n\n\n\n\n\n\n\n\nFeature\nPyodide/JupyterLite\nBinder\n\n\n\n\nSetup\nNone required\nClick link, wait ~30s\n\n\nSpeed\nInstant\nInitial build delay\n\n\nPackages\nLimited to Pyodide\nFull Python ecosystem\n\n\nData\nSmall (&lt;10MB)\nLarge datasets OK\n\n\nNetwork\nLimited/proxied\nFull access\n\n\nPersistence\nBrowser only\nSession (few hours)\n\n\nBest for\nSimple examples, teaching basics\nComplex analysis, real research",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
+    ]
+  },
+  {
+    "objectID": "binder.html#best-practices",
+    "href": "binder.html#best-practices",
+    "title": "Binder Integration",
+    "section": "Best Practices",
+    "text": "Best Practices\n\nFor Simple Interactive Examples\n\nUse Pyodide in course pages\nGreat for teaching syntax and concepts\nStudents can experiment immediately\n\n\n\nFor Real Data Analysis\n\nProvide Binder link\nInclude clear instructions\nPre-load data in Binder environment\nGive realistic expectations (build time)\n\n\n\nHybrid Approach\n\nStart with Pyodide for basics\nProgress to Binder for applied work\nShow same concepts in both environments",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
+    ]
+  },
+  {
+    "objectID": "binder.html#example-workflow",
+    "href": "binder.html#example-workflow",
+    "title": "Binder Integration",
+    "section": "Example Workflow",
+    "text": "Example Workflow\n\nWeek 1-3: Basic Python with Pyodide\n\nVariables, loops, functions\nSimple plotting\nNo setup required\n\nWeek 4-6: Introduce Binder\n\n“For the next exercise, click the Binder link”\nWork with real datasets\nMore complex libraries\n\nProjects: Full Binder environment\n\nStudents’ own data analysis\nComplete research workflow",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
+    ]
+  },
+  {
+    "objectID": "binder.html#troubleshooting-binder",
+    "href": "binder.html#troubleshooting-binder",
+    "title": "Binder Integration",
+    "section": "Troubleshooting Binder",
+    "text": "Troubleshooting Binder\n\nBuild Fails\n\nCheck environment.yml syntax\nEnsure all packages are available in conda-forge\nReview Binder build logs\n\n\n\nSlow to Start\n\nBinder caches builds - first time is slow\nSubsequent launches are faster\nConsider using repo2docker locally for testing\n\n\n\nSession Died\n\nSessions timeout after ~10 minutes of inactivity\nWarn students to save work frequently\nProvide download instructions for results",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
+    ]
+  },
+  {
+    "objectID": "binder.html#additional-resources",
+    "href": "binder.html#additional-resources",
+    "title": "Binder Integration",
+    "section": "Additional Resources",
+    "text": "Additional Resources\n\nBinder Documentation\nExample Binder Repositories\nrepo2docker - Build Binder images locally",
+    "crumbs": [
+      "Home",
+      "Features",
+      "Binder Integration"
     ]
   },
   {
@@ -336,87 +792,183 @@
     ]
   },
   {
-    "objectID": "customization.html",
-    "href": "customization.html",
-    "title": "Customization",
+    "objectID": "pixi-environment.html",
+    "href": "pixi-environment.html",
+    "title": "Pixi Environment Management",
     "section": "",
-    "text": "Replace the default ANU logos with your institution’s branding:\n# WebBook/_quarto.yml\nnavbar:\n  logo: assets/your-logo.jpg\n\nsidebar:\n  logo: assets/your-sidebar-image.jpg\nPlace your logo files in WebBook/assets/.\n\n\n\nEdit the color scheme to match your institution:\nformat:\n  live-html:\n    linkcolor: \"#YOUR_COLOR\"\n\nnavbar:\n  foreground: \"#YOUR_COLOR\"\nFor more extensive customization, edit WebBook/assets/theme.scss:\n/*-- scss:defaults --*/\n$primary: #C58812;  // Your primary color\n$secondary: #333333;  // Your secondary color\n\n/*-- scss:rules --*/\n.navbar {\n  border-bottom: 3px solid $primary;\n}\n\n\n\nChange fonts in _quarto.yml:\nformat:\n  live-html:\n    mainfont: \"Your Font Name\"\n    fontsize: 1.0em\n    linestretch: 1.5\nPopular web-safe fonts: - Georgia, Garamond (serif) - Helvetica, Arial (sans-serif) - “Courier New”, Monaco (monospace)\nOr use Google Fonts - just include the name and Quarto will load it.",
+    "text": "Pixi is a fast, cross-platform package manager that manages both Python and system-level dependencies. It’s similar to conda but faster and more reproducible.",
     "crumbs": [
       "Home",
       "Configuration & Customization",
-      "Customization"
+      "Pixi Environment Management"
     ]
   },
   {
-    "objectID": "customization.html#branding-and-styling",
-    "href": "customization.html#branding-and-styling",
-    "title": "Customization",
+    "objectID": "pixi-environment.html#what-is-pixi",
+    "href": "pixi-environment.html#what-is-pixi",
+    "title": "Pixi Environment Management",
     "section": "",
-    "text": "Replace the default ANU logos with your institution’s branding:\n# WebBook/_quarto.yml\nnavbar:\n  logo: assets/your-logo.jpg\n\nsidebar:\n  logo: assets/your-sidebar-image.jpg\nPlace your logo files in WebBook/assets/.\n\n\n\nEdit the color scheme to match your institution:\nformat:\n  live-html:\n    linkcolor: \"#YOUR_COLOR\"\n\nnavbar:\n  foreground: \"#YOUR_COLOR\"\nFor more extensive customization, edit WebBook/assets/theme.scss:\n/*-- scss:defaults --*/\n$primary: #C58812;  // Your primary color\n$secondary: #333333;  // Your secondary color\n\n/*-- scss:rules --*/\n.navbar {\n  border-bottom: 3px solid $primary;\n}\n\n\n\nChange fonts in _quarto.yml:\nformat:\n  live-html:\n    mainfont: \"Your Font Name\"\n    fontsize: 1.0em\n    linestretch: 1.5\nPopular web-safe fonts: - Georgia, Garamond (serif) - Helvetica, Arial (sans-serif) - “Courier New”, Monaco (monospace)\nOr use Google Fonts - just include the name and Quarto will load it.",
+    "text": "Pixi is a fast, cross-platform package manager that manages both Python and system-level dependencies. It’s similar to conda but faster and more reproducible.",
     "crumbs": [
       "Home",
       "Configuration & Customization",
-      "Customization"
+      "Pixi Environment Management"
     ]
   },
   {
-    "objectID": "customization.html#content-structure",
-    "href": "customization.html#content-structure",
-    "title": "Customization",
-    "section": "Content Structure",
-    "text": "Content Structure\n\nCustom Chapter Organization\nCreate a logical structure for your course:\nchapters:\n  - part: \"**Week 1: Foundations**\"\n    chapters:\n      - Week1/lecture.qmd\n      - Week1/lab.qmd\n      - Week1/exercises.qmd\n\n  - part: \"**Week 2: Applications**\"\n    chapters:\n      - Week2/lecture.qmd\n      - Week2/lab.qmd\n\n  - part: \"**Assessments**\"\n    chapters:\n      - Assessments/assignment1.qmd\n      - Assessments/assignment2.qmd\n\n\nIncluding Notebooks\nAdd Jupyter notebooks to your book:\nchapters:\n  - Notebooks/analysis.ipynb\n  - Notebooks/visualization.ipynb\nNotebooks are rendered automatically by Quarto.",
+    "objectID": "pixi-environment.html#installing-pixi",
+    "href": "pixi-environment.html#installing-pixi",
+    "title": "Pixi Environment Management",
+    "section": "Installing Pixi",
+    "text": "Installing Pixi\n\nmacOS and Linux\nUsing the install script:\ncurl -fsSL https://pixi.sh/install.sh | bash\nOr using Homebrew (macOS):\nbrew install pixi\n\n\nWindows\nUsing PowerShell:\niwr -useb https://pixi.sh/install.ps1 | iex\nOr using winget:\nwinget install prefix-dev.pixi\n\n\nVerify Installation\nAfter installation, restart your terminal and verify:\npixi --version\nYou should see the pixi version number.",
     "crumbs": [
       "Home",
       "Configuration & Customization",
-      "Customization"
+      "Pixi Environment Management"
     ]
   },
   {
-    "objectID": "customization.html#interactive-features",
-    "href": "customization.html#interactive-features",
-    "title": "Customization",
-    "section": "Interactive Features",
-    "text": "Interactive Features\n\nPyodide (Live Python)\nEnable live Python code execution in your pages:\n\nUncomment the pyodide filter in _quarto.yml:\n\nformat:\n  live-html:\n    filters:\n      - pyodide\n\nUse executable code blocks:\n\n```{pyodide-python}\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 2*np.pi, 100)\ny = np.sin(x)\nplt.plot(x, y)\nplt.show()\n```\n\n\nCustom JavaScript\nAdd interactive elements with custom JavaScript:\nCreate WebBook/assets/custom.js:\n// Your custom JavaScript\ndocument.addEventListener('DOMContentLoaded', function() {\n  console.log('Custom JS loaded');\n});\nInclude in _quarto.yml:\nformat:\n  live-html:\n    include-in-header:\n      - text: |\n          &lt;script src=\"assets/custom.js\"&gt;&lt;/script&gt;",
+    "objectID": "pixi-environment.html#why-pixi",
+    "href": "pixi-environment.html#why-pixi",
+    "title": "Pixi Environment Management",
+    "section": "Why Pixi?",
+    "text": "Why Pixi?\n\nFast: Much faster than conda\nReproducible: Lock files ensure everyone has identical environments\nCross-platform: Works on macOS, Linux, and Windows\nMultiple languages: Handles Python, R, Julia, and system tools\nTask runner: Built-in task management",
     "crumbs": [
       "Home",
       "Configuration & Customization",
-      "Customization"
+      "Pixi Environment Management"
     ]
   },
   {
-    "objectID": "customization.html#slides-customization",
-    "href": "customization.html#slides-customization",
-    "title": "Customization",
-    "section": "Slides Customization",
-    "text": "Slides Customization\n\nCustom Slide Theme\nEdit WebSlides/_quarto.yml:\nformat:\n  revealjs:\n    theme: [default, custom-theme.scss]\n    slide-number: true\n    logo: images/logo.png\n    footer: \"Your Course | Session\"\nCreate WebSlides/custom-theme.scss:\n.reveal {\n  font-family: \"Your Font\";\n}\n\n.reveal h1 {\n  color: #YOUR_COLOR;\n}\n\n\nSlide Templates\nCreate reusable slide layouts in WebSlides/templates/.",
+    "objectID": "pixi-environment.html#basic-usage",
+    "href": "pixi-environment.html#basic-usage",
+    "title": "Pixi Environment Management",
+    "section": "Basic Usage",
+    "text": "Basic Usage\n\nInstall Dependencies\npixi install\nThis reads pixi.toml and creates a locked environment in .pixi/envs/default/.\n\n\nRun Commands\n# Run in pixi environment\npixi run quarto render WebBook\n\n# Or activate shell\npixi shell\nquarto render WebBook\nexit\n\n\nAdd Packages\npixi add package-name\nOr edit pixi.toml directly:\n[dependencies]\nmatplotlib = \"&gt;=3.8.0,&lt;4\"\nThen run pixi install to update.",
     "crumbs": [
       "Home",
       "Configuration & Customization",
-      "Customization"
+      "Pixi Environment Management"
     ]
   },
   {
-    "objectID": "customization.html#github-pages-customization",
-    "href": "customization.html#github-pages-customization",
-    "title": "Customization",
-    "section": "GitHub Pages Customization",
-    "text": "GitHub Pages Customization\n\nCustom Domain\nTo use a custom domain (e.g., course.your.edu):\n\nAdd WebBook/CNAME file:\n\ncourse.your.edu\n\nConfigure DNS:\n\nAdd CNAME record pointing to username.github.io\n\nEnable custom domain in Settings &gt; Pages\n\n\n\nrobots.txt and SEO\nControl search engine indexing:\nCreate WebBook/robots.txt:\nUser-agent: *\nAllow: /\n\nSitemap: https://your-site.github.io/sitemap.xml\nAdd SEO metadata in _quarto.yml:\nwebsite:\n  description: \"Your course description\"\n  open-graph: true\n  twitter-card: true",
+    "objectID": "pixi-environment.html#configuration",
+    "href": "pixi-environment.html#configuration",
+    "title": "Pixi Environment Management",
+    "section": "Configuration",
+    "text": "Configuration\nThe pixi.toml file defines your environment:\n[workspace]\nname = \"your-course-name\"\nchannels = [\"conda-forge\"]\nplatforms = [\"osx-arm64\", \"osx-64\", \"linux-64\", \"win-64\"]\n\n[dependencies]\nquarto = \"&gt;=1.6.42,&lt;2\"\npython = \"&gt;=3.10,&lt;3.13\"\njupyterlite = \"&gt;=0.5.1,&lt;0.6\"\n\nVersion Constraints\n\n\"&gt;=1.0,&lt;2\" - Any 1.x version\n\"~=1.2.3\" - Compatible with 1.2.3\n\"*\" - Any version (not recommended)",
     "crumbs": [
       "Home",
       "Configuration & Customization",
-      "Customization"
+      "Pixi Environment Management"
     ]
   },
   {
-    "objectID": "customization.html#advanced-customizations",
-    "href": "customization.html#advanced-customizations",
-    "title": "Customization",
-    "section": "Advanced Customizations",
-    "text": "Advanced Customizations\n\nCustom Quarto Extensions\nInstall Quarto extensions for additional features:\n# In WebBook directory\ncd WebBook\nquarto add extension-name\nPopular extensions: - quarto-ext/fontawesome - Font Awesome icons - shafayetShafee/reveal-header - Custom slide headers\n\n\nConditional Content\nShow different content based on output format:\n::: {.content-visible when-format=\"html\"}\nThis only appears in HTML\n:::\n\n::: {.content-visible when-format=\"pdf\"}\nThis only appears in PDF\n:::\n\n\nCustom Callouts\nCreate custom callout styles:\n// In assets/theme.scss\ndiv.callout-your-style {\n  border-left-color: #YOUR_COLOR;\n}\nUse in content:\n::: {.callout-your-style}\nYour custom callout\n:::",
+    "objectID": "pixi-environment.html#common-tasks",
+    "href": "pixi-environment.html#common-tasks",
+    "title": "Pixi Environment Management",
+    "section": "Common Tasks",
+    "text": "Common Tasks\n\nUpdate All Packages\npixi update\n\n\nList Installed Packages\npixi list\n\n\nClean Environment\nrm -rf .pixi\npixi install",
     "crumbs": [
       "Home",
       "Configuration & Customization",
-      "Customization"
+      "Pixi Environment Management"
+    ]
+  },
+  {
+    "objectID": "pixi-environment.html#comparison-with-other-tools",
+    "href": "pixi-environment.html#comparison-with-other-tools",
+    "title": "Pixi Environment Management",
+    "section": "Comparison with Other Tools",
+    "text": "Comparison with Other Tools\n\n\n\nFeature\nPixi\nConda\nPip + venv\n\n\n\n\nSpeed\n⚡⚡⚡\n⚡\n⚡⚡\n\n\nReproducibility\n✅\n✅\n⚠️\n\n\nSystem packages\n✅\n✅\n❌\n\n\nLock files\n✅\n✅\n⚠️\n\n\nCross-platform\n✅\n✅\n✅",
+    "crumbs": [
+      "Home",
+      "Configuration & Customization",
+      "Pixi Environment Management"
+    ]
+  },
+  {
+    "objectID": "pixi-environment.html#using-pip-instead",
+    "href": "pixi-environment.html#using-pip-instead",
+    "title": "Pixi Environment Management",
+    "section": "Using pip Instead",
+    "text": "Using pip Instead\nIf you prefer pip, install Quarto separately and use:\npython -m venv venv\nsource venv/bin/activate\npip install -r requirements.txt\nCreate requirements.txt:\njupyterlite&gt;=0.5.1\njupyterlite-pyodide-kernel&gt;=0.5.2\nipython&gt;=9.4.0\nipykernel&gt;=6.30.1",
+    "crumbs": [
+      "Home",
+      "Configuration & Customization",
+      "Pixi Environment Management"
+    ]
+  },
+  {
+    "objectID": "troubleshooting.html",
+    "href": "troubleshooting.html",
+    "title": "Troubleshooting",
+    "section": "",
+    "text": "Problem: Missing Python dependencies\nSolution:\n# Update pixi environment\npixi install\n\n# Or if using pip\npip install pyyaml\n\n\n\nProblem: Jupyter kernel not found or misconfigured\nSolution:\n# Ensure ipykernel is installed\npixi install\n\n# Check kernel is available\npixi run jupyter kernelspec list\n\n\n\n\n\n\nProblem: GitHub Actions doesn’t have write permissions\nSolution: 1. Go to Settings &gt; Actions &gt; General 2. Under “Workflow permissions”, select “Read and write permissions” 3. Check “Allow GitHub Actions to create and approve pull requests”\n\n\n\nProblem: GitHub Pages not configured correctly\nSolution: 1. Settings &gt; Pages 2. Source: “GitHub Actions” (not “Deploy from branch”) 3. Wait a few minutes after first push\n\n\n\n\n\n\nProblem: Port already in use\nSolution:\n# Use different port\npixi run quarto preview WebBook --port 4000\n\n\n\nProblem: Browser cache or frozen execution results\nSolution:\n# Clear quarto cache\nrm -rf WebBook/.quarto\n\n# Hard refresh browser (Cmd+Shift+R or Ctrl+Shift+R)\n\n\n\n\n\n\nProblem: You’ve modified the same files as template updates\nSolution:\n# Checkout the PR branch locally\ngit fetch origin template-sync-YYYY-MM-DD\ngit checkout template-sync-YYYY-MM-DD\n\n# Merge main into it\ngit merge main\n\n# Resolve conflicts, then push\ngit push origin template-sync-YYYY-MM-DD\n\n\n\nProblem: Long time between syncs, or extensive template modifications\nSolution: - Review changes carefully section by section - Consider cherry-picking specific improvements - May need to manually merge some changes",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Troubleshooting"
+    ]
+  },
+  {
+    "objectID": "troubleshooting.html#common-issues",
+    "href": "troubleshooting.html#common-issues",
+    "title": "Troubleshooting",
+    "section": "",
+    "text": "Problem: Missing Python dependencies\nSolution:\n# Update pixi environment\npixi install\n\n# Or if using pip\npip install pyyaml\n\n\n\nProblem: Jupyter kernel not found or misconfigured\nSolution:\n# Ensure ipykernel is installed\npixi install\n\n# Check kernel is available\npixi run jupyter kernelspec list\n\n\n\n\n\n\nProblem: GitHub Actions doesn’t have write permissions\nSolution: 1. Go to Settings &gt; Actions &gt; General 2. Under “Workflow permissions”, select “Read and write permissions” 3. Check “Allow GitHub Actions to create and approve pull requests”\n\n\n\nProblem: GitHub Pages not configured correctly\nSolution: 1. Settings &gt; Pages 2. Source: “GitHub Actions” (not “Deploy from branch”) 3. Wait a few minutes after first push\n\n\n\n\n\n\nProblem: Port already in use\nSolution:\n# Use different port\npixi run quarto preview WebBook --port 4000\n\n\n\nProblem: Browser cache or frozen execution results\nSolution:\n# Clear quarto cache\nrm -rf WebBook/.quarto\n\n# Hard refresh browser (Cmd+Shift+R or Ctrl+Shift+R)\n\n\n\n\n\n\nProblem: You’ve modified the same files as template updates\nSolution:\n# Checkout the PR branch locally\ngit fetch origin template-sync-YYYY-MM-DD\ngit checkout template-sync-YYYY-MM-DD\n\n# Merge main into it\ngit merge main\n\n# Resolve conflicts, then push\ngit push origin template-sync-YYYY-MM-DD\n\n\n\nProblem: Long time between syncs, or extensive template modifications\nSolution: - Review changes carefully section by section - Consider cherry-picking specific improvements - May need to manually merge some changes",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Troubleshooting"
+    ]
+  },
+  {
+    "objectID": "troubleshooting.html#jupyterlite-issues",
+    "href": "troubleshooting.html#jupyterlite-issues",
+    "title": "Troubleshooting",
+    "section": "JupyterLite Issues",
+    "text": "JupyterLite Issues\n\nNotebooks not loading\nProblem: JupyterLite build failed or content not copied\nSolution:\n# Check jupyterlite directory exists\nls jupyterlite/content\n\n# Rebuild manually\ncd jupyterlite\njupyter lite build --contents content --output-dir dist\n\n\nPython packages not available\nProblem: Package not included in Pyodide or requirements\nSolution:\n\nCheck if package exists in Pyodide packages\nAdd to jupyterlite/requirements.txt\nRebuild JupyterLite",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Troubleshooting"
+    ]
+  },
+  {
+    "objectID": "troubleshooting.html#pixi-environment-issues",
+    "href": "troubleshooting.html#pixi-environment-issues",
+    "title": "Troubleshooting",
+    "section": "Pixi Environment Issues",
+    "text": "Pixi Environment Issues\n\nLock file out of sync\nProblem: pixi.lock doesn’t match pixi.toml\nSolution:\n# Update lock file\npixi install\n\n# Or clean and reinstall\nrm -rf .pixi\npixi install\n\n\nPlatform-specific issues\nProblem: Different OS or architecture\nSolution: Edit pixi.toml to include your platform:\nplatforms = [\"osx-arm64\", \"osx-64\", \"linux-64\", \"win-64\"]",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Troubleshooting"
+    ]
+  },
+  {
+    "objectID": "troubleshooting.html#getting-help",
+    "href": "troubleshooting.html#getting-help",
+    "title": "Troubleshooting",
+    "section": "Getting Help",
+    "text": "Getting Help\nIf you’re still stuck:\n\nCheck the documentation: Review relevant docs pages\nSearch existing issues: GitHub Issues\nAsk for help: Open a new issue with:\n\nWhat you’re trying to do\nWhat error you’re getting\nYour environment (OS, Quarto version)\nSteps to reproduce",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Troubleshooting"
+    ]
+  },
+  {
+    "objectID": "troubleshooting.html#useful-commands",
+    "href": "troubleshooting.html#useful-commands",
+    "title": "Troubleshooting",
+    "section": "Useful Commands",
+    "text": "Useful Commands\n\nDiagnostic Information\n# Check Quarto version\nquarto check\n\n# Check pixi environment\npixi info\n\n# List installed packages\npixi list\n\n# Check git status\ngit status\ngit log --oneline -5\n\n\nClean Build\nSometimes a clean rebuild solves issues:\n# Remove all build artifacts\nrm -rf _build\nrm -rf WebBook/.quarto\nrm -rf WebSlides/.quarto\n\n# Rebuild\npixi run quarto render WebBook\npixi run quarto render WebSlides\n\n\nReset to Template State\nIf you want to start fresh (⚠️ destroys local changes):\n# Save your content first!\ncp -r WebBook/YourContent ~/backup/\n\n# Reset to template\ngit fetch origin\ngit reset --hard origin/main\n\n# Restore your content\ncp -r ~/backup/YourContent WebBook/",
+    "crumbs": [
+      "Home",
+      "Maintenance",
+      "Troubleshooting"
     ]
   },
   {
@@ -528,198 +1080,6 @@
     ]
   },
   {
-    "objectID": "binder.html",
-    "href": "binder.html",
-    "title": "Binder Integration",
-    "section": "",
-    "text": "While Pyodide and JupyterLite are excellent for simple interactive code examples, they have limitations when it comes to:\n\nComplex network requests and API calls\nLarge data downloads\nPackages not available in Pyodide\nComputationally intensive operations\nFile system operations\n\nFor these use cases, Binder provides a full-featured computing environment running on cloud servers.",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "binder.html#overview",
-    "href": "binder.html#overview",
-    "title": "Binder Integration",
-    "section": "",
-    "text": "While Pyodide and JupyterLite are excellent for simple interactive code examples, they have limitations when it comes to:\n\nComplex network requests and API calls\nLarge data downloads\nPackages not available in Pyodide\nComputationally intensive operations\nFile system operations\n\nFor these use cases, Binder provides a full-featured computing environment running on cloud servers.",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "binder.html#what-is-binder",
-    "href": "binder.html#what-is-binder",
-    "title": "Binder Integration",
-    "section": "What is Binder?",
-    "text": "What is Binder?\nBinder creates a live, executable environment from a GitHub repository. When students click a Binder link, they get:\n\nFull Jupyter Lab environment\nComplete Python package ecosystem\nNetwork access for data downloads\nPersistent sessions (while active)\nReal file system\nMore computational resources",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "binder.html#basic-binder-setup",
-    "href": "binder.html#basic-binder-setup",
-    "title": "Binder Integration",
-    "section": "Basic Binder Setup",
-    "text": "Basic Binder Setup\n\n1. Configure Your Repository\nBinder reads configuration from your repository root. Create an environment.yml file:\nname: emsc-course\nchannels:\n  - conda-forge\ndependencies:\n  - python=3.11\n  - jupyter\n  - numpy\n  - matplotlib\n  - pandas\n  - xarray\n  - netcdf4\n  - pip\n  - pip:\n    - some-pip-only-package\n    # Add any pip-only packages here\nThis approach uses conda for most packages (faster, better dependency resolution) and pip only for packages not available in conda-forge.\n\n\n2. Add a Binder Badge\nAdd to your README.md:\n[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ANU-RSES-Education/YOUR-REPO/HEAD)\nReplace YOUR-REPO with your repository name.\n\n\n3. Link from Your Course\nIn your Quarto book, add a link to Binder:\n# In WebBook/_quarto.yml\nformat:\n  live-html:\n    code-links:\n      - text: Open in Binder\n        icon: rocket-takeoff\n        href: https://mybinder.org/v2/gh/ANU-RSES-Education/YOUR-REPO/HEAD",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "binder.html#paired-repository-strategy-recommended-for-rses",
-    "href": "binder.html#paired-repository-strategy-recommended-for-rses",
-    "title": "Binder Integration",
-    "section": "Paired Repository Strategy (Recommended for RSES)",
-    "text": "Paired Repository Strategy (Recommended for RSES)\nFor complex courses, we recommend a paired repository approach:\n\nThe Strategy\n\nMain Course Repository (e.g., EMSC-4033)\n\nContains course book, slides, and content\nBuilt website deployed to GitHub Pages\nLightweight for fast builds\n\nBinder Companion Repository (e.g., EMSC-4033-Binder)\n\nDedicated to Binder environment\nSyncs notebooks and data from main repository\nContains all heavy dependencies\nOptimized for interactive computing\n\n\n\n\nBenefits\n\nFaster main repo builds - No heavy Binder dependencies\nFlexible environment - Can install anything needed\nBetter caching - Binder builds are cached separately\nCleaner separation - Content vs. compute environment\n\n\n\nSetting Up a Paired Repository\n\nStep 1: Create Binder Repository\nCreate a new repository: YOUR-COURSE-NAME-Binder\n\n\nStep 2: Configure to Pull From Main Repo\nCreate .binder/postBuild script:\n#!/bin/bash\n\n# Clone the main course repository\ngit clone https://github.com/ANU-RSES-Education/YOUR-COURSE-NAME.git course-content\n\n# Copy notebooks to working directory\ncp -r course-content/WebBook/Notebooks/* notebooks/\n\n# Copy any data files\nif [ -d \"course-content/WebBook/Data\" ]; then\n    cp -r course-content/WebBook/Data ./\nfi\n\necho \"Course content loaded successfully\"\nMake it executable:\nchmod +x .binder/postBuild\n\n\nStep 3: Create environment.yml\nname: emsc-binder\nchannels:\n  - conda-forge\ndependencies:\n  - python=3.11\n  - jupyter\n  - jupyterlab&gt;=4.0\n  - numpy\n  - matplotlib\n  - pandas\n  - cartopy\n  - xarray\n  - netcdf4\n  - requests\n  - beautifulsoup4\n  # Add any packages you need\n\n\nStep 4: Add start.sh (optional)\nCreate a startup script that opens a specific notebook:\n#!/bin/bash\nexec jupyter lab notebooks/Welcome.ipynb\n\n\nStep 5: Link from Main Repository\nIn your main course’s _quarto.yml:\ncode-links:\n  - text: Open in Binder\n    icon: rocket-takeoff\n    href: https://mybinder.org/v2/gh/ANU-RSES-Education/YOUR-COURSE-NAME-Binder/HEAD",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "binder.html#automation-considerations",
-    "href": "binder.html#automation-considerations",
-    "title": "Binder Integration",
-    "section": "Automation Considerations",
-    "text": "Automation Considerations\n\n\n\n\n\n\nNoteFuture Development\n\n\n\nAutomating the Binder repository sync is on our roadmap. Potential approaches:\n\nGitHub Actions - Trigger on main repo push to update Binder repo\nGit Submodules - Link main repo as submodule\nDynamic fetching - postBuild always pulls latest from main\n\nThis requires careful design to avoid circular dependencies and ensure reliable builds.",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "binder.html#when-to-use-what",
-    "href": "binder.html#when-to-use-what",
-    "title": "Binder Integration",
-    "section": "When to Use What",
-    "text": "When to Use What\n\n\n\n\n\n\n\n\nFeature\nPyodide/JupyterLite\nBinder\n\n\n\n\nSetup\nNone required\nClick link, wait ~30s\n\n\nSpeed\nInstant\nInitial build delay\n\n\nPackages\nLimited to Pyodide\nFull Python ecosystem\n\n\nData\nSmall (&lt;10MB)\nLarge datasets OK\n\n\nNetwork\nLimited/proxied\nFull access\n\n\nPersistence\nBrowser only\nSession (few hours)\n\n\nBest for\nSimple examples, teaching basics\nComplex analysis, real research",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "binder.html#best-practices",
-    "href": "binder.html#best-practices",
-    "title": "Binder Integration",
-    "section": "Best Practices",
-    "text": "Best Practices\n\nFor Simple Interactive Examples\n\nUse Pyodide in course pages\nGreat for teaching syntax and concepts\nStudents can experiment immediately\n\n\n\nFor Real Data Analysis\n\nProvide Binder link\nInclude clear instructions\nPre-load data in Binder environment\nGive realistic expectations (build time)\n\n\n\nHybrid Approach\n\nStart with Pyodide for basics\nProgress to Binder for applied work\nShow same concepts in both environments",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "binder.html#example-workflow",
-    "href": "binder.html#example-workflow",
-    "title": "Binder Integration",
-    "section": "Example Workflow",
-    "text": "Example Workflow\n\nWeek 1-3: Basic Python with Pyodide\n\nVariables, loops, functions\nSimple plotting\nNo setup required\n\nWeek 4-6: Introduce Binder\n\n“For the next exercise, click the Binder link”\nWork with real datasets\nMore complex libraries\n\nProjects: Full Binder environment\n\nStudents’ own data analysis\nComplete research workflow",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "binder.html#troubleshooting-binder",
-    "href": "binder.html#troubleshooting-binder",
-    "title": "Binder Integration",
-    "section": "Troubleshooting Binder",
-    "text": "Troubleshooting Binder\n\nBuild Fails\n\nCheck environment.yml syntax\nEnsure all packages are available in conda-forge\nReview Binder build logs\n\n\n\nSlow to Start\n\nBinder caches builds - first time is slow\nSubsequent launches are faster\nConsider using repo2docker locally for testing\n\n\n\nSession Died\n\nSessions timeout after ~10 minutes of inactivity\nWarn students to save work frequently\nProvide download instructions for results",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "binder.html#additional-resources",
-    "href": "binder.html#additional-resources",
-    "title": "Binder Integration",
-    "section": "Additional Resources",
-    "text": "Additional Resources\n\nBinder Documentation\nExample Binder Repositories\nrepo2docker - Build Binder images locally",
-    "crumbs": [
-      "Home",
-      "Features",
-      "Binder Integration"
-    ]
-  },
-  {
-    "objectID": "webbook.html",
-    "href": "webbook.html",
-    "title": "WebBook - Course Notes",
-    "section": "",
-    "text": "The WebBook is the main component of your course - a searchable, interactive online textbook built with Quarto.",
-    "crumbs": [
-      "Home",
-      "Features",
-      "WebBook - Course Notes"
-    ]
-  },
-  {
-    "objectID": "webbook.html#structure",
-    "href": "webbook.html#structure",
-    "title": "WebBook - Course Notes",
-    "section": "Structure",
-    "text": "Structure\nWebBook/\n├── _quarto.yml          # Configuration\n├── index.qmd            # Home page\n├── assets/              # Images, CSS, JS\n├── Module1/             # Your content\n│   ├── lecture1.qmd\n│   └── exercises.qmd\n└── Notebooks/           # Jupyter notebooks\n    └── analysis.ipynb",
-    "crumbs": [
-      "Home",
-      "Features",
-      "WebBook - Course Notes"
-    ]
-  },
-  {
-    "objectID": "webbook.html#writing-content",
-    "href": "webbook.html#writing-content",
-    "title": "WebBook - Course Notes",
-    "section": "Writing Content",
-    "text": "Writing Content\n\nQuarto Markdown (.qmd)\nBasic syntax:\n---\ntitle: \"Lecture Title\"\n---\n\n## Introduction\n\nRegular markdown text with **bold** and *italic*.\n\n### Code Examples\n\n```{python}\nimport numpy as np\nx = np.array([1, 2, 3])\nprint(x.mean())\n```\n\n### Math\n\nInline math: $E = mc^2$\n\nDisplay math:\n$$\n\\frac{\\partial u}{\\partial t} = \\nabla^2 u\n$$\n\n\nLive Interactive Code\nWith pyodide filter enabled:\n```{pyodide-python}\n# This runs in the browser!\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nx = np.linspace(0, 10, 100)\nplt.plot(x, np.sin(x))\nplt.show()\n```",
-    "crumbs": [
-      "Home",
-      "Features",
-      "WebBook - Course Notes"
-    ]
-  },
-  {
-    "objectID": "webbook.html#features",
-    "href": "webbook.html#features",
-    "title": "WebBook - Course Notes",
-    "section": "Features",
-    "text": "Features\n\nNavigation\n\nBreadcrumbs: Show current location\nSearch: Full-text search\nTable of Contents: Auto-generated from headers\n\n\n\nCross-References\nReference sections, figures, and equations:\nSee @sec-introduction for details.\n\n![Caption](image.png){#fig-diagram}\n\nAs shown in @fig-diagram...\n\n\nCallouts\n::: {.callout-note}\nThis is important information\n:::\n\n::: {.callout-warning}\nBe careful here!\n:::\n\n::: {.callout-tip}\nPro tip: ...\n:::\n\n\nTabsets\n::: {.panel-tabset}\n\n## Tab 1\nContent for tab 1\n\n## Tab 2\nContent for tab 2\n\n:::",
-    "crumbs": [
-      "Home",
-      "Features",
-      "WebBook - Course Notes"
-    ]
-  },
-  {
-    "objectID": "webbook.html#building",
-    "href": "webbook.html#building",
-    "title": "WebBook - Course Notes",
-    "section": "Building",
-    "text": "Building\n# Render entire book\npixi run quarto render WebBook\n\n# Preview with live reload\npixi run quarto preview WebBook\n\n# Render single page\npixi run quarto render WebBook/Module1/lecture1.qmd\nOutput goes to _build/book/.",
-    "crumbs": [
-      "Home",
-      "Features",
-      "WebBook - Course Notes"
-    ]
-  },
-  {
     "objectID": "webslides.html",
     "href": "webslides.html",
     "title": "WebSlides - Presentations",
@@ -768,471 +1128,111 @@
     ]
   },
   {
-    "objectID": "configuration.html",
-    "href": "configuration.html",
-    "title": "Configuration",
+    "objectID": "getting-started.html",
+    "href": "getting-started.html",
+    "title": "Getting Started",
     "section": "",
-    "text": "The main configuration file is WebBook/_quarto.yml. This controls all aspects of your course book.\n\n\nbook:\n  title: \"Your Course Title\"\n  author:\n    - \"Primary Author\"\n    - \"Secondary Author\"  # Optional\n  date: \"2025\"\n  bread-crumbs: True  # Navigation breadcrumbs\n\n\n\nThe template uses the live-html format which supports interactive Python code:\nformat:\n  live-html:\n    theme: [united, \"assets/theme.scss\"]\n    mainfont: \"Jost\"\n    fontsize: 0.9em\n    linestretch: 1.7\n    linkcolor: \"#C58812\"  # ANU honey color\nYou can customize:\n\ntheme: Choose from Quarto’s built-in themes (united, cosmo, flatly, etc.)\nmainfont: Any Google Font or web-safe font\nfontsize: Adjust base font size\nlinkcolor: Use your institution’s colors\n\n\n\n\nnavbar:\n  search: true\n  logo: assets/ANU-logo.jpg  # Replace with your logo\n  background: \"white\"\n  foreground: \"#C58812\"\n\nsidebar:\n  logo: assets/AuWorldEQ.jpg  # Optional sidebar logo\n  background: \"white\"\n\n\n\nStructure your content in the chapters section:\nchapters:\n  - part: \"**Module 1: Introduction**\"\n    chapters:\n      - Module1/lecture1.qmd\n      - Module1/lecture2.qmd\n\n  - part: \"**Module 2: Advanced Topics**\"\n    chapters:\n      - Module2/lecture1.qmd\n      - Module2/exercises.qmd\n\n\n\nSpecify Python packages available in the browser:\npyodide:\n  packages:\n    - micropip\n    - numpy\n    - matplotlib\n    - pandas\n    - xarray\n    - netcdf4\n\n\n\n\n\n\nWarning\n\n\n\nNot all Python packages are available in Pyodide. Check the Pyodide package list.\n\n\n\n\n\nBy default, code execution is disabled:\nexecute:\n  enabled: false\nThis means code in your .qmd files won’t run during build. For interactive code, use the pyodide filter or JupyterLite.\nTo enable execution during build:\nexecute:\n  enabled: true\n  freeze: auto  # Cache results",
+    "text": "Before you begin, make sure you have:\n\nA GitHub account\nGit installed on your computer\nPixi package manager (recommended) or Python 3.10+",
     "crumbs": [
       "Home",
-      "Configuration & Customization",
-      "Configuration"
+      "Introduction",
+      "Getting Started"
     ]
   },
   {
-    "objectID": "configuration.html#quarto-configuration",
-    "href": "configuration.html#quarto-configuration",
-    "title": "Configuration",
+    "objectID": "getting-started.html#prerequisites",
+    "href": "getting-started.html#prerequisites",
+    "title": "Getting Started",
     "section": "",
-    "text": "The main configuration file is WebBook/_quarto.yml. This controls all aspects of your course book.\n\n\nbook:\n  title: \"Your Course Title\"\n  author:\n    - \"Primary Author\"\n    - \"Secondary Author\"  # Optional\n  date: \"2025\"\n  bread-crumbs: True  # Navigation breadcrumbs\n\n\n\nThe template uses the live-html format which supports interactive Python code:\nformat:\n  live-html:\n    theme: [united, \"assets/theme.scss\"]\n    mainfont: \"Jost\"\n    fontsize: 0.9em\n    linestretch: 1.7\n    linkcolor: \"#C58812\"  # ANU honey color\nYou can customize:\n\ntheme: Choose from Quarto’s built-in themes (united, cosmo, flatly, etc.)\nmainfont: Any Google Font or web-safe font\nfontsize: Adjust base font size\nlinkcolor: Use your institution’s colors\n\n\n\n\nnavbar:\n  search: true\n  logo: assets/ANU-logo.jpg  # Replace with your logo\n  background: \"white\"\n  foreground: \"#C58812\"\n\nsidebar:\n  logo: assets/AuWorldEQ.jpg  # Optional sidebar logo\n  background: \"white\"\n\n\n\nStructure your content in the chapters section:\nchapters:\n  - part: \"**Module 1: Introduction**\"\n    chapters:\n      - Module1/lecture1.qmd\n      - Module1/lecture2.qmd\n\n  - part: \"**Module 2: Advanced Topics**\"\n    chapters:\n      - Module2/lecture1.qmd\n      - Module2/exercises.qmd\n\n\n\nSpecify Python packages available in the browser:\npyodide:\n  packages:\n    - micropip\n    - numpy\n    - matplotlib\n    - pandas\n    - xarray\n    - netcdf4\n\n\n\n\n\n\nWarning\n\n\n\nNot all Python packages are available in Pyodide. Check the Pyodide package list.\n\n\n\n\n\nBy default, code execution is disabled:\nexecute:\n  enabled: false\nThis means code in your .qmd files won’t run during build. For interactive code, use the pyodide filter or JupyterLite.\nTo enable execution during build:\nexecute:\n  enabled: true\n  freeze: auto  # Cache results",
+    "text": "Before you begin, make sure you have:\n\nA GitHub account\nGit installed on your computer\nPixi package manager (recommended) or Python 3.10+",
     "crumbs": [
       "Home",
-      "Configuration & Customization",
-      "Configuration"
+      "Introduction",
+      "Getting Started"
     ]
   },
   {
-    "objectID": "configuration.html#slides-configuration",
-    "href": "configuration.html#slides-configuration",
-    "title": "Configuration",
-    "section": "Slides Configuration",
-    "text": "Slides Configuration\nConfigure your slides in WebSlides/_quarto.yml:\nformat:\n  revealjs:\n    theme: [default, custom.scss]\n    logo: images/logo.png\n    footer: \"Course Name | 2025\"",
+    "objectID": "getting-started.html#creating-your-course-repository",
+    "href": "getting-started.html#creating-your-course-repository",
+    "title": "Getting Started",
+    "section": "Creating Your Course Repository",
+    "text": "Creating Your Course Repository\n\nStep 1: Use This Template\n\nGo to the EMSC-QuartoBook-Course repository\nClick the green “Use this template” button\nChoose “Create a new repository”\nFill in your repository details:\n\nOwner: Your GitHub username or organization\nRepository name: e.g., EMSC-4033-2025\nDescription: Brief course description\nPublic/Private: Choose based on your needs\n\nClick “Create repository”\n\n\n\n\n\n\n\nNote\n\n\n\nWhen you create a repository from a template, you get a fresh repository with no connection to the original. This is intentional - your course content is independent.\n\n\n\n\nStep 2: Clone Your Repository\ngit clone https://github.com/YOUR-USERNAME/YOUR-COURSE-NAME.git\ncd YOUR-COURSE-NAME\n\n\nStep 3: Set Up Your Environment\n\nUsing Pixi (Recommended)\nPixi manages all dependencies automatically:\n# Install dependencies\npixi install\n\n# Activate the environment\npixi shell\n\n\nUsing Python/pip\nIf you prefer not to use Pixi:\n# Create virtual environment\npython -m venv venv\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\n\n# Install Quarto separately from https://quarto.org/docs/get-started/\n\n# Install Python dependencies\npip install jupyterlite jupyterlite-pyodide-kernel ipython ipykernel",
     "crumbs": [
       "Home",
-      "Configuration & Customization",
-      "Configuration"
+      "Introduction",
+      "Getting Started"
     ]
   },
   {
-    "objectID": "configuration.html#pixi-environment",
-    "href": "configuration.html#pixi-environment",
-    "title": "Configuration",
-    "section": "Pixi Environment",
-    "text": "Pixi Environment\nEdit pixi.toml to add dependencies:\n[dependencies]\nquarto = \"&gt;=1.6.42,&lt;2\"\njupyterlite = \"&gt;=0.5.1,&lt;0.6\"\nmatplotlib = \"&gt;=3.8.0,&lt;4\"  # Add your packages\nnumpy = \"&gt;=1.26.0,&lt;2\"\nAfter modifying:\npixi install",
+    "objectID": "getting-started.html#first-build",
+    "href": "getting-started.html#first-build",
+    "title": "Getting Started",
+    "section": "First Build",
+    "text": "First Build\nTest that everything works:\n# Using pixi\npixi run quarto render WebBook\n\n# Or directly if quarto is in your PATH\nquarto render WebBook\nIf successful, you’ll see output in _build/book/.",
     "crumbs": [
       "Home",
-      "Configuration & Customization",
-      "Configuration"
+      "Introduction",
+      "Getting Started"
     ]
   },
   {
-    "objectID": "configuration.html#jupyterlite-configuration",
-    "href": "configuration.html#jupyterlite-configuration",
-    "title": "Configuration",
-    "section": "JupyterLite Configuration",
-    "text": "JupyterLite Configuration\nConfigure JupyterLite in jupyterlite/jupyter-lite.config.json:\n{\n  \"jupyter-config-data\": {\n    \"appName\": \"Your Course Name - JupyterLite\"\n  }\n}\nAdd content to jupyterlite/content/ to make notebooks available.",
+    "objectID": "getting-started.html#customizing-your-course",
+    "href": "getting-started.html#customizing-your-course",
+    "title": "Getting Started",
+    "section": "Customizing Your Course",
+    "text": "Customizing Your Course\n\nUpdate Course Information\nEdit WebBook/_quarto.yml:\nbook:\n  title: \"Your Course Title\"  # Change this\n  author:\n    - \"Your Name\"              # Change this\n  date: \"2025\"                 # Update year\n\n\nRepository Links\nUpdate the GitHub repository links in WebBook/_quarto.yml:\nother-links:\n  - text: Github Repository\n    icon: github\n    href: https://github.com/YOUR-USERNAME/YOUR-COURSE-NAME",
     "crumbs": [
       "Home",
-      "Configuration & Customization",
-      "Configuration"
+      "Introduction",
+      "Getting Started"
     ]
   },
   {
-    "objectID": "pixi-environment.html",
-    "href": "pixi-environment.html",
-    "title": "Pixi Environment Management",
-    "section": "",
-    "text": "Pixi is a fast, cross-platform package manager that manages both Python and system-level dependencies. It’s similar to conda but faster and more reproducible.",
+    "objectID": "getting-started.html#keeping-your-course-updated",
+    "href": "getting-started.html#keeping-your-course-updated",
+    "title": "Getting Started",
+    "section": "Keeping Your Course Updated",
+    "text": "Keeping Your Course Updated\nThe template includes an interactive update script that checks for: - Extension updates - Python package updates - JupyterLite rebuild needs - Template improvements\n./update-template.sh\nSee Template Doctor for details.",
     "crumbs": [
       "Home",
-      "Configuration & Customization",
-      "Pixi Environment Management"
+      "Introduction",
+      "Getting Started"
     ]
   },
   {
-    "objectID": "pixi-environment.html#what-is-pixi",
-    "href": "pixi-environment.html#what-is-pixi",
-    "title": "Pixi Environment Management",
-    "section": "",
-    "text": "Pixi is a fast, cross-platform package manager that manages both Python and system-level dependencies. It’s similar to conda but faster and more reproducible.",
+    "objectID": "getting-started.html#next-steps",
+    "href": "getting-started.html#next-steps",
+    "title": "Getting Started",
+    "section": "Next Steps",
+    "text": "Next Steps\n\nConfigure your course - Detailed configuration options\nCustomize the appearance - Themes, colors, and styling\nSet up automatic deployment - GitHub Pages configuration",
     "crumbs": [
       "Home",
-      "Configuration & Customization",
-      "Pixi Environment Management"
+      "Introduction",
+      "Getting Started"
     ]
   },
   {
-    "objectID": "pixi-environment.html#installing-pixi",
-    "href": "pixi-environment.html#installing-pixi",
-    "title": "Pixi Environment Management",
-    "section": "Installing Pixi",
-    "text": "Installing Pixi\n\nmacOS and Linux\nUsing the install script:\ncurl -fsSL https://pixi.sh/install.sh | bash\nOr using Homebrew (macOS):\nbrew install pixi\n\n\nWindows\nUsing PowerShell:\niwr -useb https://pixi.sh/install.ps1 | iex\nOr using winget:\nwinget install prefix-dev.pixi\n\n\nVerify Installation\nAfter installation, restart your terminal and verify:\npixi --version\nYou should see the pixi version number.",
+    "objectID": "getting-started.html#testing-locally",
+    "href": "getting-started.html#testing-locally",
+    "title": "Getting Started",
+    "section": "Testing Locally",
+    "text": "Testing Locally\nBefore pushing changes, test locally:\n# Render the book\npixi run quarto render WebBook\n\n# Preview in browser\npixi run quarto preview WebBook\nThe preview server will open your course in a web browser with live reload.",
     "crumbs": [
       "Home",
-      "Configuration & Customization",
-      "Pixi Environment Management"
+      "Introduction",
+      "Getting Started"
     ]
   },
   {
-    "objectID": "pixi-environment.html#why-pixi",
-    "href": "pixi-environment.html#why-pixi",
-    "title": "Pixi Environment Management",
-    "section": "Why Pixi?",
-    "text": "Why Pixi?\n\nFast: Much faster than conda\nReproducible: Lock files ensure everyone has identical environments\nCross-platform: Works on macOS, Linux, and Windows\nMultiple languages: Handles Python, R, Julia, and system tools\nTask runner: Built-in task management",
+    "objectID": "getting-started.html#deploying-to-github-pages",
+    "href": "getting-started.html#deploying-to-github-pages",
+    "title": "Getting Started",
+    "section": "Deploying to GitHub Pages",
+    "text": "Deploying to GitHub Pages\nOnce you push to the main branch, GitHub Actions will automatically:\n\nBuild your course book\nBuild your slides\nBuild JupyterLite\nDeploy everything to GitHub Pages\n\nYour course will be available at:\nhttps://YOUR-USERNAME.github.io/YOUR-COURSE-NAME/\n\n\n\n\n\n\nTip\n\n\n\nYou may need to enable GitHub Pages in your repository settings: - Go to Settings &gt; Pages - Set Source to “GitHub Actions”",
     "crumbs": [
       "Home",
-      "Configuration & Customization",
-      "Pixi Environment Management"
-    ]
-  },
-  {
-    "objectID": "pixi-environment.html#basic-usage",
-    "href": "pixi-environment.html#basic-usage",
-    "title": "Pixi Environment Management",
-    "section": "Basic Usage",
-    "text": "Basic Usage\n\nInstall Dependencies\npixi install\nThis reads pixi.toml and creates a locked environment in .pixi/envs/default/.\n\n\nRun Commands\n# Run in pixi environment\npixi run quarto render WebBook\n\n# Or activate shell\npixi shell\nquarto render WebBook\nexit\n\n\nAdd Packages\npixi add package-name\nOr edit pixi.toml directly:\n[dependencies]\nmatplotlib = \"&gt;=3.8.0,&lt;4\"\nThen run pixi install to update.",
-    "crumbs": [
-      "Home",
-      "Configuration & Customization",
-      "Pixi Environment Management"
-    ]
-  },
-  {
-    "objectID": "pixi-environment.html#configuration",
-    "href": "pixi-environment.html#configuration",
-    "title": "Pixi Environment Management",
-    "section": "Configuration",
-    "text": "Configuration\nThe pixi.toml file defines your environment:\n[workspace]\nname = \"your-course-name\"\nchannels = [\"conda-forge\"]\nplatforms = [\"osx-arm64\", \"osx-64\", \"linux-64\", \"win-64\"]\n\n[dependencies]\nquarto = \"&gt;=1.6.42,&lt;2\"\npython = \"&gt;=3.10,&lt;3.13\"\njupyterlite = \"&gt;=0.5.1,&lt;0.6\"\n\nVersion Constraints\n\n\"&gt;=1.0,&lt;2\" - Any 1.x version\n\"~=1.2.3\" - Compatible with 1.2.3\n\"*\" - Any version (not recommended)",
-    "crumbs": [
-      "Home",
-      "Configuration & Customization",
-      "Pixi Environment Management"
-    ]
-  },
-  {
-    "objectID": "pixi-environment.html#common-tasks",
-    "href": "pixi-environment.html#common-tasks",
-    "title": "Pixi Environment Management",
-    "section": "Common Tasks",
-    "text": "Common Tasks\n\nUpdate All Packages\npixi update\n\n\nList Installed Packages\npixi list\n\n\nClean Environment\nrm -rf .pixi\npixi install",
-    "crumbs": [
-      "Home",
-      "Configuration & Customization",
-      "Pixi Environment Management"
-    ]
-  },
-  {
-    "objectID": "pixi-environment.html#comparison-with-other-tools",
-    "href": "pixi-environment.html#comparison-with-other-tools",
-    "title": "Pixi Environment Management",
-    "section": "Comparison with Other Tools",
-    "text": "Comparison with Other Tools\n\n\n\nFeature\nPixi\nConda\nPip + venv\n\n\n\n\nSpeed\n⚡⚡⚡\n⚡\n⚡⚡\n\n\nReproducibility\n✅\n✅\n⚠️\n\n\nSystem packages\n✅\n✅\n❌\n\n\nLock files\n✅\n✅\n⚠️\n\n\nCross-platform\n✅\n✅\n✅",
-    "crumbs": [
-      "Home",
-      "Configuration & Customization",
-      "Pixi Environment Management"
-    ]
-  },
-  {
-    "objectID": "pixi-environment.html#using-pip-instead",
-    "href": "pixi-environment.html#using-pip-instead",
-    "title": "Pixi Environment Management",
-    "section": "Using pip Instead",
-    "text": "Using pip Instead\nIf you prefer pip, install Quarto separately and use:\npython -m venv venv\nsource venv/bin/activate\npip install -r requirements.txt\nCreate requirements.txt:\njupyterlite&gt;=0.5.1\njupyterlite-pyodide-kernel&gt;=0.5.2\nipython&gt;=9.4.0\nipykernel&gt;=6.30.1",
-    "crumbs": [
-      "Home",
-      "Configuration & Customization",
-      "Pixi Environment Management"
-    ]
-  },
-  {
-    "objectID": "jupyterlite.html",
-    "href": "jupyterlite.html",
-    "title": "JupyterLite",
-    "section": "",
-    "text": "JupyterLite provides a full Jupyter environment running entirely in the browser - no server required!",
-    "crumbs": [
-      "Home",
-      "Features",
-      "JupyterLite"
-    ]
-  },
-  {
-    "objectID": "jupyterlite.html#what-is-jupyterlite",
-    "href": "jupyterlite.html#what-is-jupyterlite",
-    "title": "JupyterLite",
-    "section": "What is JupyterLite?",
-    "text": "What is JupyterLite?\nA WebAssembly-powered Jupyter running in your browser: - Full Python environment - Jupyter notebook and lab interface - File system in browser storage - No installation needed",
-    "crumbs": [
-      "Home",
-      "Features",
-      "JupyterLite"
-    ]
-  },
-  {
-    "objectID": "jupyterlite.html#structure",
-    "href": "jupyterlite.html#structure",
-    "title": "JupyterLite",
-    "section": "Structure",
-    "text": "Structure\njupyterlite/\n├── content/         # Notebooks to include\n├── requirements.txt # Python packages\n└── jupyter-lite.config.json",
-    "crumbs": [
-      "Home",
-      "Features",
-      "JupyterLite"
-    ]
-  },
-  {
-    "objectID": "jupyterlite.html#adding-notebooks",
-    "href": "jupyterlite.html#adding-notebooks",
-    "title": "JupyterLite",
-    "section": "Adding Notebooks",
-    "text": "Adding Notebooks\nPlace .ipynb files in jupyterlite/content/:\ncp MyNotebook.ipynb jupyterlite/content/\nThey’ll be available in the JupyterLite file browser.",
-    "crumbs": [
-      "Home",
-      "Features",
-      "JupyterLite"
-    ]
-  },
-  {
-    "objectID": "jupyterlite.html#python-packages",
-    "href": "jupyterlite.html#python-packages",
-    "title": "JupyterLite",
-    "section": "Python Packages",
-    "text": "Python Packages\nEdit jupyterlite/requirements.txt:\nnumpy\nmatplotlib\npandas\nRebuild after changes:\ncd jupyterlite\njupyter lite build --contents content --output-dir dist",
-    "crumbs": [
-      "Home",
-      "Features",
-      "JupyterLite"
-    ]
-  },
-  {
-    "objectID": "jupyterlite.html#accessing",
-    "href": "jupyterlite.html#accessing",
-    "title": "JupyterLite",
-    "section": "Accessing",
-    "text": "Accessing\nAfter deployment, JupyterLite is available at:\nhttps://your-site.github.io/your-repo/jupyterlite/",
-    "crumbs": [
-      "Home",
-      "Features",
-      "JupyterLite"
-    ]
-  },
-  {
-    "objectID": "jupyterlite.html#limitations",
-    "href": "jupyterlite.html#limitations",
-    "title": "JupyterLite",
-    "section": "Limitations",
-    "text": "Limitations\nJupyterLite runs entirely in the browser, which brings some constraints:\n\nNetwork and Data\n\nLimited HTTP access: CORS restrictions apply\nNo direct downloads: Can’t fetch arbitrary data from the internet\nFile size limits: ~100MB practical limit\nWorkaround: Pre-load data files, or use Binder for data-intensive work\n\n\n\nPackage Availability\n\nOnly packages available in Pyodide\nCheck Pyodide packages\n\n\n\nStorage and Persistence\n\nFiles stored in browser only\nCleared if browser cache is cleared\nNo sharing between users\nDownload important results\n\n\n\nPerformance\n\nSlower than server-based Jupyter\nLimited memory\nBetter for learning than production",
-    "crumbs": [
-      "Home",
-      "Features",
-      "JupyterLite"
-    ]
-  },
-  {
-    "objectID": "jupyterlite.html#when-to-use-binder-instead",
-    "href": "jupyterlite.html#when-to-use-binder-instead",
-    "title": "JupyterLite",
-    "section": "When to Use Binder Instead",
-    "text": "When to Use Binder Instead\nJupyterLite is excellent for teaching and simple examples, but for complex research work, consider Binder:\n\nLarge datasets from the internet\nComplex package requirements\nNetwork-intensive operations\nCollaborative work\nProduction analysis ```",
-    "crumbs": [
-      "Home",
-      "Features",
-      "JupyterLite"
-    ]
-  },
-  {
-    "objectID": "troubleshooting.html",
-    "href": "troubleshooting.html",
-    "title": "Troubleshooting",
-    "section": "",
-    "text": "Problem: Missing Python dependencies\nSolution:\n# Update pixi environment\npixi install\n\n# Or if using pip\npip install pyyaml\n\n\n\nProblem: Jupyter kernel not found or misconfigured\nSolution:\n# Ensure ipykernel is installed\npixi install\n\n# Check kernel is available\npixi run jupyter kernelspec list\n\n\n\n\n\n\nProblem: GitHub Actions doesn’t have write permissions\nSolution: 1. Go to Settings &gt; Actions &gt; General 2. Under “Workflow permissions”, select “Read and write permissions” 3. Check “Allow GitHub Actions to create and approve pull requests”\n\n\n\nProblem: GitHub Pages not configured correctly\nSolution: 1. Settings &gt; Pages 2. Source: “GitHub Actions” (not “Deploy from branch”) 3. Wait a few minutes after first push\n\n\n\n\n\n\nProblem: Port already in use\nSolution:\n# Use different port\npixi run quarto preview WebBook --port 4000\n\n\n\nProblem: Browser cache or frozen execution results\nSolution:\n# Clear quarto cache\nrm -rf WebBook/.quarto\n\n# Hard refresh browser (Cmd+Shift+R or Ctrl+Shift+R)\n\n\n\n\n\n\nProblem: You’ve modified the same files as template updates\nSolution:\n# Checkout the PR branch locally\ngit fetch origin template-sync-YYYY-MM-DD\ngit checkout template-sync-YYYY-MM-DD\n\n# Merge main into it\ngit merge main\n\n# Resolve conflicts, then push\ngit push origin template-sync-YYYY-MM-DD\n\n\n\nProblem: Long time between syncs, or extensive template modifications\nSolution: - Review changes carefully section by section - Consider cherry-picking specific improvements - May need to manually merge some changes",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Troubleshooting"
-    ]
-  },
-  {
-    "objectID": "troubleshooting.html#common-issues",
-    "href": "troubleshooting.html#common-issues",
-    "title": "Troubleshooting",
-    "section": "",
-    "text": "Problem: Missing Python dependencies\nSolution:\n# Update pixi environment\npixi install\n\n# Or if using pip\npip install pyyaml\n\n\n\nProblem: Jupyter kernel not found or misconfigured\nSolution:\n# Ensure ipykernel is installed\npixi install\n\n# Check kernel is available\npixi run jupyter kernelspec list\n\n\n\n\n\n\nProblem: GitHub Actions doesn’t have write permissions\nSolution: 1. Go to Settings &gt; Actions &gt; General 2. Under “Workflow permissions”, select “Read and write permissions” 3. Check “Allow GitHub Actions to create and approve pull requests”\n\n\n\nProblem: GitHub Pages not configured correctly\nSolution: 1. Settings &gt; Pages 2. Source: “GitHub Actions” (not “Deploy from branch”) 3. Wait a few minutes after first push\n\n\n\n\n\n\nProblem: Port already in use\nSolution:\n# Use different port\npixi run quarto preview WebBook --port 4000\n\n\n\nProblem: Browser cache or frozen execution results\nSolution:\n# Clear quarto cache\nrm -rf WebBook/.quarto\n\n# Hard refresh browser (Cmd+Shift+R or Ctrl+Shift+R)\n\n\n\n\n\n\nProblem: You’ve modified the same files as template updates\nSolution:\n# Checkout the PR branch locally\ngit fetch origin template-sync-YYYY-MM-DD\ngit checkout template-sync-YYYY-MM-DD\n\n# Merge main into it\ngit merge main\n\n# Resolve conflicts, then push\ngit push origin template-sync-YYYY-MM-DD\n\n\n\nProblem: Long time between syncs, or extensive template modifications\nSolution: - Review changes carefully section by section - Consider cherry-picking specific improvements - May need to manually merge some changes",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Troubleshooting"
-    ]
-  },
-  {
-    "objectID": "troubleshooting.html#jupyterlite-issues",
-    "href": "troubleshooting.html#jupyterlite-issues",
-    "title": "Troubleshooting",
-    "section": "JupyterLite Issues",
-    "text": "JupyterLite Issues\n\nNotebooks not loading\nProblem: JupyterLite build failed or content not copied\nSolution:\n# Check jupyterlite directory exists\nls jupyterlite/content\n\n# Rebuild manually\ncd jupyterlite\njupyter lite build --contents content --output-dir dist\n\n\nPython packages not available\nProblem: Package not included in Pyodide or requirements\nSolution:\n\nCheck if package exists in Pyodide packages\nAdd to jupyterlite/requirements.txt\nRebuild JupyterLite",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Troubleshooting"
-    ]
-  },
-  {
-    "objectID": "troubleshooting.html#pixi-environment-issues",
-    "href": "troubleshooting.html#pixi-environment-issues",
-    "title": "Troubleshooting",
-    "section": "Pixi Environment Issues",
-    "text": "Pixi Environment Issues\n\nLock file out of sync\nProblem: pixi.lock doesn’t match pixi.toml\nSolution:\n# Update lock file\npixi install\n\n# Or clean and reinstall\nrm -rf .pixi\npixi install\n\n\nPlatform-specific issues\nProblem: Different OS or architecture\nSolution: Edit pixi.toml to include your platform:\nplatforms = [\"osx-arm64\", \"osx-64\", \"linux-64\", \"win-64\"]",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Troubleshooting"
-    ]
-  },
-  {
-    "objectID": "troubleshooting.html#getting-help",
-    "href": "troubleshooting.html#getting-help",
-    "title": "Troubleshooting",
-    "section": "Getting Help",
-    "text": "Getting Help\nIf you’re still stuck:\n\nCheck the documentation: Review relevant docs pages\nSearch existing issues: GitHub Issues\nAsk for help: Open a new issue with:\n\nWhat you’re trying to do\nWhat error you’re getting\nYour environment (OS, Quarto version)\nSteps to reproduce",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Troubleshooting"
-    ]
-  },
-  {
-    "objectID": "troubleshooting.html#useful-commands",
-    "href": "troubleshooting.html#useful-commands",
-    "title": "Troubleshooting",
-    "section": "Useful Commands",
-    "text": "Useful Commands\n\nDiagnostic Information\n# Check Quarto version\nquarto check\n\n# Check pixi environment\npixi info\n\n# List installed packages\npixi list\n\n# Check git status\ngit status\ngit log --oneline -5\n\n\nClean Build\nSometimes a clean rebuild solves issues:\n# Remove all build artifacts\nrm -rf _build\nrm -rf WebBook/.quarto\nrm -rf WebSlides/.quarto\n\n# Rebuild\npixi run quarto render WebBook\npixi run quarto render WebSlides\n\n\nReset to Template State\nIf you want to start fresh (⚠️ destroys local changes):\n# Save your content first!\ncp -r WebBook/YourContent ~/backup/\n\n# Reset to template\ngit fetch origin\ngit reset --hard origin/main\n\n# Restore your content\ncp -r ~/backup/YourContent WebBook/",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Troubleshooting"
-    ]
-  },
-  {
-    "objectID": "template-sync.html",
-    "href": "template-sync.html",
-    "title": "Template Synchronization",
-    "section": "",
-    "text": "The template includes an automated synchronization system that allows your course repository to receive updates from the template. This ensures you can benefit from bug fixes, new features, and improvements without manually merging changes.",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
-    ]
-  },
-  {
-    "objectID": "template-sync.html#overview",
-    "href": "template-sync.html#overview",
-    "title": "Template Synchronization",
-    "section": "",
-    "text": "The template includes an automated synchronization system that allows your course repository to receive updates from the template. This ensures you can benefit from bug fixes, new features, and improvements without manually merging changes.",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
-    ]
-  },
-  {
-    "objectID": "template-sync.html#how-it-works",
-    "href": "template-sync.html#how-it-works",
-    "title": "Template Synchronization",
-    "section": "How It Works",
-    "text": "How It Works\n\nAutomatic Sync Process\n\nMonthly Check: On the 1st of each month, GitHub Actions runs in your course repository\nComparison: The action compares your repo with the template repository\nPull Request: If changes are found, a PR is automatically created\nReview: You review the changes and decide whether to merge\nMerge: Accept the changes that make sense for your course\n\n\n\nThe Sync Workflow\nThe synchronization is configured in .github/workflows/template-sync.yml:\nname: Check for updates to template\n\non:\n  schedule:\n    - cron: \"0 0 1 * *\"  # Monthly on the 1st\n  workflow_dispatch:      # Manual trigger\n\njobs:\n  repo-sync:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: write\n      pull-requests: write\n    steps:\n      - name: Checkout\n        uses: actions/checkout@v4\n\n      - name: actions-template-sync\n        uses: AndreasAugustin/actions-template-sync@v2\n        with:\n          source_repo_path: ANU-RSES-Education/EMSC-QuartoBook-Course",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
-    ]
-  },
-  {
-    "objectID": "template-sync.html#manual-synchronization",
-    "href": "template-sync.html#manual-synchronization",
-    "title": "Template Synchronization",
-    "section": "Manual Synchronization",
-    "text": "Manual Synchronization\nYou can manually trigger a sync check:\n\nGo to your repository on GitHub\nClick Actions tab\nSelect “Check for updates to template” workflow\nClick “Run workflow” button",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
-    ]
-  },
-  {
-    "objectID": "template-sync.html#what-gets-synced",
-    "href": "template-sync.html#what-gets-synced",
-    "title": "Template Synchronization",
-    "section": "What Gets Synced",
-    "text": "What Gets Synced\nThe sync will attempt to update:\n\n✅ Build scripts (build.sh)\n✅ GitHub Actions workflows (.github/workflows/)\n✅ Pixi configuration (pixi.toml)\n✅ Template utilities and helpers\n⚠️ Configuration templates (_quarto.yml structure) - Handle with care\n❌ Your course content (WebBook chapters, slides)\n❌ Your customizations (when in different files)\n\n\n\n\n\n\n\nWarningSpecial Consideration: _quarto.yml\n\n\n\nThe _quarto.yml file is heavily modified in course repositories (it contains all your content structure). Template sync may suggest changes to this file, but these should be carefully reviewed before accepting.\nRecommended approach: - Review infrastructure changes (format settings, new features) - Keep your content structure (chapters, parts) - Merge selectively, don’t blindly accept",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
-    ]
-  },
-  {
-    "objectID": "template-sync.html#sync-configuration",
-    "href": "template-sync.html#sync-configuration",
-    "title": "Template Synchronization",
-    "section": "Sync Configuration",
-    "text": "Sync Configuration\nYou can configure which files to ignore in the sync process. Edit .github/workflows/template-sync.yml:\n- name: actions-template-sync\n  uses: AndreasAugustin/actions-template-sync@v2\n  with:\n    source_repo_path: ANU-RSES-Education/EMSC-QuartoBook-Course\n    ignored_files: |\n      WebBook/_quarto.yml\n      WebSlides/_quarto.yml\n      WebBook/Module*/**\nThis prevents the sync from touching your content-heavy configuration files.",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
-    ]
-  },
-  {
-    "objectID": "template-sync.html#handling-conflicts",
-    "href": "template-sync.html#handling-conflicts",
-    "title": "Template Synchronization",
-    "section": "Handling Conflicts",
-    "text": "Handling Conflicts\nWhen a sync PR is created, you may see conflicts if you’ve customized the same files.\n\nStrategy for Common Conflicts\nWebBook/_quarto.yml - Template changes: Infrastructure improvements (new features, bug fixes) - Your changes: Content structure, course title, author - Resolution: Carefully merge both - keep your content, accept infrastructure improvements\npixi.toml - Template changes: Version bumps, new common dependencies - Your changes: Course-specific packages - Resolution: Merge dependency lists\n.github/workflows/publish.yml - Template changes: Build optimizations, new deployment features - Your changes: Usually none (unless you’ve customized deployment) - Resolution: Usually safe to accept template changes\n\n\nConflict Resolution Process\n\nReview the PR: Read the description of what changed\nCheck the diff: Look at specific changes file by file\nTest locally (optional):\n# Fetch the sync PR branch\ngit fetch origin template-sync-&lt;date&gt;\ngit checkout template-sync-&lt;date&gt;\n\n# Build and test\npixi run quarto render WebBook\nResolve conflicts: Either through GitHub UI or locally\nMerge when ready: Only after you’re satisfied with the changes",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
-    ]
-  },
-  {
-    "objectID": "template-sync.html#customization-strategy",
-    "href": "template-sync.html#customization-strategy",
-    "title": "Template Synchronization",
-    "section": "Customization Strategy",
-    "text": "Customization Strategy\nTo minimize conflicts, follow these practices:\n\nSeparate Your Customizations\n✅ Good: Course-specific content in separate files\nWebBook/\n  Module1/\n    lecture1.qmd      # Your content\n  Module2/\n    lecture2.qmd      # Your content\n❌ Avoid: Heavily modifying template infrastructure files unless necessary\n\n\nUse Comments to Mark Changes\nIn files you must modify, mark your changes:\n# CUSTOM: Added for EMSC-3022 specific requirements\ncustom-setting: value\n# END CUSTOM\nThis makes it easier to preserve your changes during merges.",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
-    ]
-  },
-  {
-    "objectID": "template-sync.html#opting-out",
-    "href": "template-sync.html#opting-out",
-    "title": "Template Synchronization",
-    "section": "Opting Out",
-    "text": "Opting Out\nIf you don’t want automatic sync:\n\nDelete .github/workflows/template-sync.yml\nYou can still manually pull updates when desired\n\n\n\n\n\n\n\nTip\n\n\n\nEven if you opt out of automatic sync, keeping the file with the schedule commented out lets you manually trigger updates when needed.",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
-    ]
-  },
-  {
-    "objectID": "template-sync.html#sync-labels",
-    "href": "template-sync.html#sync-labels",
-    "title": "Template Synchronization",
-    "section": "Sync Labels",
-    "text": "Sync Labels\nPull requests from the sync action are labeled with: - template_sync - Identifies automated sync PRs\nYou can configure additional labels in the workflow:\npr_labels: template_sync,dependencies,infrastructure",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
-    ]
-  },
-  {
-    "objectID": "template-sync.html#troubleshooting",
-    "href": "template-sync.html#troubleshooting",
-    "title": "Template Synchronization",
-    "section": "Troubleshooting",
-    "text": "Troubleshooting\nSync PR has too many changes\nThis usually happens after a long time between syncs. Review carefully and consider: - Accepting in smaller chunks - Cherry-picking specific commits - Asking for help in the template repository issues\nSync fails with permissions error\nEnsure GitHub Actions has permissions: 1. Settings &gt; Actions &gt; General 2. Workflow permissions: “Read and write permissions” 3. “Allow GitHub Actions to create and approve pull requests” ✅\nWant to sync specific files only\nThe action uses patterns. You can configure exclusions (advanced):\npr_branch_name_prefix: template_sync_\nignored_files: \"WebBook/Module*/**,custom/**\"",
-    "crumbs": [
-      "Home",
-      "Maintenance",
-      "Template Synchronization"
+      "Introduction",
+      "Getting Started"
     ]
   }
 ]
