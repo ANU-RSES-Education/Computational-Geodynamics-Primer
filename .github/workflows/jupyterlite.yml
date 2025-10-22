@@ -1,0 +1,40 @@
+name: Build and Deploy Jupyterlite
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build-deploy-jupyterlite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install the dependencies
+        run: |
+          python -m pip install -r jupyterlite/requirements.txt
+      - name: Build the JupyterLite site
+        run: |
+          cd jupyterlite
+          cp README.md content
+          jupyter lite build --contents content --output-dir dist
+
+      - name: Deploy jupyterlite directory
+        uses: peaceiris/actions-gh-pages@v4
+
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          destination_dir: jupyterlite
+          publish_dir: jupyterlite/dist
+          keep_files: true
+
+      - name: check
+        run: pwd; ls -l; ls -l jupyterlite/dist

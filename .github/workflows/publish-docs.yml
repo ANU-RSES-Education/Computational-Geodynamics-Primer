@@ -1,0 +1,42 @@
+name: Publish Documentation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - '.github/workflows/publish-docs.yml'
+
+jobs:
+  build-deploy-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Add micromamba
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          micromamba-version: "1.5.6-0"
+          environment-file: .github/workflows/envs/renderer.yml
+          init-shell: bash
+          cache-environment: true
+          post-cleanup: "all"
+
+      - name: Render documentation with quarto
+        shell: bash -l {0}
+        run: |
+          cd docs
+          quarto render
+
+      - name: Deploy documentation
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          destination_dir: docs
+          publish_dir: _build/docs
+          keep_files: true

@@ -1,0 +1,92 @@
+project:
+  type: book
+  output-dir: ../_build/book
+
+book:
+  title: "EMSC Quarto"
+  author:
+    - "Louis Moresi"
+  date: "06/03/2024"
+  bread-crumbs: True
+  chapters:
+    - part: "Introduction"
+      chapters:
+        - index.qmd
+        - intro.qmd
+    - part: "Details"
+      chapters:
+        - summary.qmd
+        - references.qmd
+
+    - part: "Slides"
+      chapters:
+        - LectureSlides/Lecture1.qmd
+
+  appendices:
+    - Notebooks/BinderLandingPage.qmd
+    - Notebooks/TestNB1.ipynb
+    - Notebooks/TestQMD_NB1.qmd
+
+  navbar:
+    search: true
+    logo: assets/ANU-logo.png
+    background: "#C58812"  # ANU honey colour
+    foreground: white
+    left:
+      - text: "Introduction"
+        href: index.qmd
+      - text: "Details"
+        href: summary.qmd
+      - text: "Slides"
+        href: LectureSlides/Lecture1.qmd
+    right:
+      - icon: github
+        href: https://github.com/ANU-RSES-Education/EMSC-QuartoBook-Course
+        aria-label: GitHub
+
+  sidebar:
+    logo: assets/AuWorldEQ.jpg
+    style: "docked"
+    background: light
+
+bibliography: references.bib
+
+execute:
+  enabled: false
+
+format:
+  live-html:
+    theme: [cosmo, "assets/theme.scss"]
+    css: assets/styles.css
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    code-fold: false
+    linkcolor: "#C58812"
+    number-sections: false
+    number-depth: 1
+    # filters:
+    #   - pyodide
+
+    # code-links:
+    #   - text: Open in Binder
+    #     icon: rocket-takeoff
+    #     href: https://mybinder.org/v2/gh/ANU-RSES-Education/EMSC-QuartoBook/HEAD?labpath=WebBook/Notebooks%2FBinderLandingPage.qmd
+
+    other-links:
+      - text: Github Repository
+        icon: github
+        href: https://github.com/ANU-RSES-Education/EMSC-QuartoBook
+
+  # pdf:
+  #   documentclass: scrreprt
+
+pyodide:
+  packages:
+    - micropip
+    - netcdf4
+    - xarray
+    - pydap
+    - jinja2
+    - ssl
+    - owslib
