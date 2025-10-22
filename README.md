@@ -1,6 +1,6 @@
-# EMSC Quarto Course Template
+# Computational Geodynamics Primer
 
-A comprehensive GitHub template for creating interactive, web-based quantitative Earth and Marine Sciences courses. Developed by the Research School of Earth Sciences (RSES) at the Australian National University.
+An interactive textbook introducing computational methods for geodynamics. Built with Quarto and featuring live Python examples powered by pyodide.
 
 ## Features
 
@@ -12,25 +12,15 @@ A comprehensive GitHub template for creating interactive, web-based quantitative
 - **Automated Deployment** - Push to deploy via GitHub Actions
 - **Template Sync** - Automatically receive updates and improvements
 
-## Quick Start
+## Online Version
 
-### 1. Create Your Course
+[![Computational Geodynamics Primer](https://img.shields.io/badge/Primer-Book-orange)](https://ANU-RSES-Education.github.io/Computational-Geodynamics-Primer/book)
 
-Click **"Use this template"** above to create your own course repository.
+[View the book online](https://anu-rses-education.github.io/Computational-Geodynamics-Primer/book/)
 
-### 2. Read the Documentation
+## Local Development
 
-**[Full Documentation](https://anu-rses-education.github.io/EMSC-QuartoBook-Course/docs/)**
-
-The documentation covers:
-- [Getting Started Guide](https://anu-rses-education.github.io/EMSC-QuartoBook-Course/docs/getting-started.html)
-- [Configuration Options](https://anu-rses-education.github.io/EMSC-QuartoBook-Course/docs/configuration.html)
-- [Customization Guide](https://anu-rses-education.github.io/EMSC-QuartoBook-Course/docs/customization.html)
-- [Binder Integration](https://anu-rses-education.github.io/EMSC-QuartoBook-Course/docs/binder.html)
-- [Template Sync](https://anu-rses-education.github.io/EMSC-QuartoBook-Course/docs/template-sync.html)
-- [Troubleshooting](https://anu-rses-education.github.io/EMSC-QuartoBook-Course/docs/troubleshooting.html)
-
-### 3. Install Dependencies
+### Install Dependencies
 
 Using [Pixi](https://prefix.dev/docs/pixi/overview) (recommended):
 
@@ -47,60 +37,24 @@ pip install jupyterlite jupyterlite-pyodide-kernel ipython ipykernel
 quarto render WebBook
 ```
 
-### 4. Customize Your Course
+### Preview Locally
 
-1. Edit `WebBook/_quarto.yml` - Update title, author, and settings
-2. Add content to `WebBook/` - Create your lectures and materials
-3. Create slides in `WebSlides/` - Build presentations
-4. Push to deploy - GitHub Actions automatically builds and publishes
+Because the book uses pyodide for interactive Python examples, you need to serve it over HTTP (not just open HTML files):
 
-## Examples
-
-Courses built with this template (hosted under ANU-RSES-Education):
-
-- [EMSC-3022: Planetary Sciences](https://github.com/ANU-RSES-Education/EMSC-3022)
-- [Zero to Python for Earth Sciences](https://github.com/ANU-RSES-Education/Zero-2-Python-for-Earth-Sciences)
-
-## Technology Stack
-
-- [Quarto](https://quarto.org/) - Scientific publishing system
-- [Pixi](https://prefix.dev/docs/pixi/overview) - Package manager
-- [JupyterLite](https://jupyterlite.readthedocs.io/) - Browser-based Jupyter
-- [Pyodide](https://pyodide.org/) - Python in WebAssembly
-- [Reveal.js](https://revealjs.com/) - HTML presentations
-- GitHub Actions - Automated deployment
-
-## Repository Structure
-
-```
-EMSC-QuartoBook-Course/
-├── docs/                    # Template documentation
-├── WebBook/                 # Course book content
-│   ├── _quarto.yml         # Book configuration
-│   ├── assets/             # Images, CSS, logos
-│   └── *.qmd               # Course pages
-├── WebSlides/              # Presentation slides
-├── jupyterlite/            # JupyterLite configuration
-├── .github/workflows/      # Automated build & deploy
-├── pixi.toml              # Environment configuration
-└── build.sh               # Local build script
+```bash
+python serve-book.py
 ```
 
-## Keeping Up to Date
+This will:
+- Start a local HTTP server (default port 8000)
+- Automatically open your browser to view the book
+- Auto-select an available port if 8000 is in use
 
-This template includes automatic synchronization:
+Press `Ctrl+C` to stop the server.
 
-- **Automatic**: Monthly checks for template updates
-- **Manual**: Trigger sync anytime from Actions tab
-- **Safe**: Creates pull requests for review before merging
+## About
 
-See the [Template Sync documentation](https://anu-rses-education.github.io/EMSC-QuartoBook-Course/docs/template-sync.html) for details.
-
-## Getting Help
-
-- **Documentation**: [anu-rses-education.github.io/EMSC-QuartoBook-Course/docs/](https://anu-rses-education.github.io/EMSC-QuartoBook-Course/docs/)
-- **Issues**: [GitHub Issues](https://github.com/ANU-RSES-Education/EMSC-QuartoBook-Course/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/ANU-RSES-Education/EMSC-QuartoBook-Course/discussions)
+Built using the [EMSC Quarto Course Template](https://github.com/ANU-RSES-Education/EMSC-QuartoBook-Course), developed by the Research School of Earth Sciences (RSES) at the Australian National University
 
 ## License
 

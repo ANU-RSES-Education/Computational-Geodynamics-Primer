@@ -3,24 +3,25 @@ project:
   output-dir: ../_build/book
 
 book:
-  title: "EMSC Quarto"
+  title: "Computational Geodynamics Primer"
   author:
     - "Louis Moresi"
-  date: "06/03/2024"
+  date: today
   bread-crumbs: True
   chapters:
     - part: "Introduction"
       chapters:
         - index.qmd
         - intro.qmd
-    - part: "Details"
+    - part: "Content"
       chapters:
         - summary.qmd
         - references.qmd
 
-    - part: "Slides"
-      chapters:
-        - LectureSlides/Lecture1.qmd
+  # Uncomment when you add slides
+  # - part: "Slides"
+  #   chapters:
+  #     - LectureSlides/Lecture1.qmd
 
   appendices:
     - Notebooks/BinderLandingPage.qmd
@@ -41,7 +42,7 @@ book:
         href: LectureSlides/Lecture1.qmd
     right:
       - icon: github
-        href: https://github.com/ANU-RSES-Education/EMSC-QuartoBook-Course
+        href: https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer
         aria-label: GitHub
 
   sidebar:
@@ -76,7 +77,7 @@ format:
     other-links:
       - text: Github Repository
         icon: github
-        href: https://github.com/ANU-RSES-Education/EMSC-QuartoBook
+        href: https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer
 
   # pdf:
   #   documentclass: scrreprt
