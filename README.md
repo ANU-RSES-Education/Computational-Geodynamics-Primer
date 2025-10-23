@@ -57,13 +57,15 @@ Press `Ctrl+C` to stop.
 
 **For viewing a built book:**
 
-If you've already built the book with `quarto render WebBook`, you can serve it without rebuilding:
+Use `quarto render WebBook` to preview your writing, followed by:
 
 ```bash
 python serve-book.py
 ```
 
-This starts a local HTTP server (auto-selecting an available port from 8000+) and opens your browser. Use this when you want to view the built book without any rebuilding.
+This starts a local HTTP server (auto-selecting an available port from 8000+) and opens your browser.
+
+**Note:** If your book includes embedded slides or iframes with relative paths to other built content, use this method instead of `quarto preview`, as preview mode may not resolve all relative paths correctly.
 
 ## About
 
