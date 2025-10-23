@@ -39,18 +39,31 @@ quarto render WebBook
 
 ### Preview Locally
 
-Because the book uses pyodide for interactive Python examples, you need to serve it over HTTP (not just open HTML files):
+**For development (recommended):**
+
+Use Quarto's preview mode for auto-rebuilding and live reload:
+
+```bash
+quarto preview WebBook
+```
+
+This will:
+- Only rebuild changed files (much faster than full rebuild)
+- Auto-rebuild when you save changes
+- Serve the book and open your browser
+- Support live Python examples via pyodide
+
+Press `Ctrl+C` to stop.
+
+**For viewing a built book:**
+
+If you've already built the book with `quarto render WebBook`, you can serve it without rebuilding:
 
 ```bash
 python serve-book.py
 ```
 
-This will:
-- Start a local HTTP server (default port 8000)
-- Automatically open your browser to view the book
-- Auto-select an available port if 8000 is in use
-
-Press `Ctrl+C` to stop the server.
+This starts a local HTTP server (auto-selecting an available port from 8000+) and opens your browser. Use this when you want to view the built book without any rebuilding.
 
 ## About
 
