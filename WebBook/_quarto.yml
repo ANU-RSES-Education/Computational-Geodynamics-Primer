@@ -9,14 +9,65 @@ book:
   date: today
   bread-crumbs: True
   chapters:
-    - part: "Introduction"
+    - part: "Preface"
       chapters:
         - index.qmd
         - intro.qmd
-    - part: "Content"
+
+    # Core content - to be organized
+    - part: "**Part I: Mathematical Fundamentals**"
+      chapters:
+        - Part1-Fundamentals/placeholder.qmd
+
+    - part: "**Part II: Fluid Dynamics**"
+      chapters:
+        - Part2-FluidDynamics/placeholder.qmd
+        - Part2-FluidDynamics/inviscid-flows.qmd
+
+    - part: "**Part III: Geodynamics**"
+      chapters:
+        - Part3-Geodynamics/placeholder.qmd
+
+    - part: "**Part IV: Numerical Methods**"
+      chapters:
+        - Part4-NumericalMethods/placeholder.qmd
+
+    - part: "**Part V: Computational Exercises**"
+      chapters:
+        - Part5-Computational/placeholder.qmd
+        - Part5-Computational/Benchmarks/analytical-solutions.qmd
+
+    # Draft material - Geodynamics
+    - part: "**Draft: Geodynamics**"
+      chapters:
+        - DraftMaterial/ContinuumMechanics.qmd
+        - DraftMaterial/NavierStokes.qmd
+        - DraftMaterial/MantleDynamics.qmd
+        - DraftMaterial/StokesFlowApplications.qmd
+        - DraftMaterial/ThermalConvection.qmd
+        - DraftMaterial/LithosphericDynamics.qmd
+
+    # Draft material - Computational Methods
+    - part: "**Draft: Computational Methods**"
+      chapters:
+        - DraftMaterial/NumericalMethods1.qmd
+        - DraftMaterial/NumericalMethods2.qmd
+        - DraftMaterial/NumericalMethods3.qmd
+        - DraftMaterial/NumericalMethods4.qmd
+        - DraftMaterial/NumericalMethods5.qmd
+
+    # References
+    - part: "References"
       chapters:
         - summary.qmd
         - references.qmd
+
+    # Contributions
+    - part: "Contributing"
+      chapters:
+        - Contributions/contributing.qmd
+        - Contributions/style-guide.qmd
+        - Contributions/example-citations.qmd
 
   # Uncomment when you add slides
   # - part: "Slides"
@@ -66,8 +117,28 @@ format:
     linkcolor: "#C58812"
     number-sections: false
     number-depth: 1
-    # filters:
-    #   - pyodide
+    # Math rendering
+    html-math-method: mathjax
+    include-in-header:
+      - text: |
+          <script>
+          window.MathJax = {
+            tex: {
+              tags: 'ams',
+              packages: {'[+]': ['ams', 'amsmath', 'amssymb', 'color', 'newcommand', 'boldsymbol']},
+              inlineMath: [['$', '$'], ['\\(', '\\)']],
+              displayMath: [['$$', '$$'], ['\\[', '\\]']],
+              macros: {
+                dGamma: "{\\mathbf{d}\\boldsymbol{\\Gamma}}",
+                uv: "{\\mathbf{u}}",
+                vv: "{\\mathbf{v}}",
+                DIV: "{\\nabla\\cdot}",
+                GRAD: "{\\nabla}",
+                CURL: "{\\nabla\\times}"
+              }
+            }
+          };
+          </script>
 
     # code-links:
     #   - text: Open in Binder

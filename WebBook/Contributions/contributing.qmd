@@ -1,0 +1,68 @@
+# Contributing to the Computational Geodynamics Primer
+
+We welcome contributions to this book! This primer aims to provide a comprehensive introduction to computational geodynamics, covering both the theoretical foundations and practical computational methods.
+
+## Scope and Objectives
+
+This book is designed to:
+
+- Provide a solid mathematical foundation for understanding geodynamic processes
+- Introduce numerical methods commonly used in computational geodynamics
+- Bridge the gap between theory and practical implementation
+- Include hands-on computational exercises using modern tools
+
+## Target Audience
+
+- Graduate students in geophysics, geodynamics, and related fields
+- Researchers transitioning to computational geodynamics
+- Advanced undergraduates with strong mathematics and physics backgrounds
+
+## Topics Needed
+
+We are actively seeking contributions in the following areas:
+
+### Mathematical Foundations
+- Advanced tensor calculus for continuum mechanics
+- Variational principles in geodynamics
+- Asymptotic analysis and perturbation methods
+
+### Fluid Dynamics
+- Turbulence and transition in geophysical flows
+- Multi-phase flow in geological systems
+- Reactive flow and chemical transport
+
+### Geodynamics Applications
+- Subduction zone dynamics
+- Mid-ocean ridge processes
+- Continental deformation and orogenesis
+- Core dynamics and geodynamo theory
+- Planetary geodynamics
+
+### Numerical Methods
+- Advanced finite element methods (mixed formulations, stabilization)
+- Spectral methods for geodynamic problems
+- Particle-based methods (SPH, MPM)
+- Adaptive mesh refinement strategies
+- Parallel computing and scalability
+
+### Computational Exercises
+- Python implementations of basic algorithms
+- Jupyter notebooks with interactive examples
+- Benchmarking exercises
+- Real-world case studies
+
+## Style Guide
+
+Please see the [Style Guide](style-guide.qmd) for formatting conventions and best practices.
+
+## How to Contribute
+
+1. **Fork the repository** on GitHub
+2. **Create a new branch** for your contribution
+3. **Write your content** following the style guide
+4. **Test the build** locally using `quarto preview WebBook`
+5. **Submit a pull request** with a clear description of your contribution
+
+## Questions?
+
+If you have questions about contributing, please open an issue on the GitHub repository or contact the maintainers.

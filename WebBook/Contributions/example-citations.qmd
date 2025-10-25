@@ -1,0 +1,350 @@
+# Example: Using Citations and Math
+
+This chapter demonstrates how to use citations and mathematics in the book, showing both the source markup and the rendered output.
+
+For complete documentation, see the [Quarto Documentation](https://quarto.org/docs/authoring/markdown-basics.html) and specifically:
+
+- [Equations](https://quarto.org/docs/authoring/markdown-basics.html#equations)
+- [Citations](https://quarto.org/docs/authoring/citations.html)
+- [Cross-references](https://quarto.org/docs/authoring/cross-references.html)
+
+## Citations
+
+### Source Markup
+
+```markdown
+For a comprehensive introduction to geodynamics, see @turcotte2014.
+The numerical methods for mantle convection are well described in @zhong2007.
+
+Multiple citations can be grouped: [@moresi1995; @moresi1996; @tackley2008].
+
+For fluid dynamics fundamentals, classic texts include @batchelor1967 and @acheson1990.
+```
+
+### Rendered Output
+
+For a comprehensive introduction to geodynamics, see @turcotte2014. The numerical methods for mantle convection are well described in @zhong2007.
+
+Multiple citations can be grouped: [@moresi1995; @moresi1996; @tackley2008].
+
+For fluid dynamics fundamentals, classic texts include @batchelor1967 and @acheson1990.
+
+## Mathematics with Proper Rendering
+
+{{< include ../_math-preamble.qmd >}}
+
+### Inline Math
+
+#### Source Markup
+
+```markdown
+The Stokes equation for incompressible flow is $\DIV \sigma = \rho \mathbf{g}$
+where $\sigma$ is the stress tensor and $\rho$ is density.
+```
+
+#### Rendered Output
+
+The Stokes equation for incompressible flow is $\DIV \sigma = \rho \mathbf{g}$ where $\sigma$ is the stress tensor and $\rho$ is density.
+
+### Display Equations with Labels
+
+#### Source Markup
+
+````markdown
+$$
+\DIV \sigma + \rho \mathbf{g} = 0
+$$ {#eq-stokes-momentum}
+
+$$
+\DIV \uv = 0
+$$ {#eq-incompressible}
+
+We can reference equations: The momentum equation @eq-stokes-momentum
+combined with incompressibility @eq-incompressible forms the basis of
+mantle convection modeling.
+````
+
+#### Rendered Output
+
+$$
+\DIV \sigma + \rho \mathbf{g} = 0
+$$ {#eq-stokes-momentum}
+
+$$
+\DIV \uv = 0
+$$ {#eq-incompressible}
+
+We can reference equations: The momentum equation @eq-stokes-momentum combined with incompressibility @eq-incompressible forms the basis of mantle convection modeling.
+
+### Multi-line Equations
+
+#### Source Markup
+
+````markdown
+$$
+\begin{aligned}
+\frac{\partial T}{\partial t} + \uv \cdot \GRAD T &= \kappa \nabla^2 T + H \\
+\DIV \uv &= 0 \\
+\rho &= \rho_0(1 - \alpha T)
+\end{aligned}
+$$ {#eq-thermal-system}
+````
+
+#### Rendered Output
+
+$$
+\begin{aligned}
+\frac{\partial T}{\partial t} + \uv \cdot \GRAD T &= \kappa \nabla^2 T + H \\
+\DIV \uv &= 0 \\
+\rho &= \rho_0(1 - \alpha T)
+\end{aligned}
+$$ {#eq-thermal-system}
+
+The thermal convection system @eq-thermal-system couples temperature and velocity.
+
+## Colored Math (for emphasis)
+
+### Source Markup
+
+```markdown
+The $\Red{red}$ terms represent heating, while $\Blue{blue}$ terms represent cooling:
+
+$$
+\frac{\partial T}{\partial t} + \uv \cdot \GRAD T = \kappa \nabla^2 T + \Red{H} - \Blue{L}
+$$
+```
+
+### Rendered Output
+
+The $\Red{red}$ terms represent heating, while $\Blue{blue}$ terms represent cooling:
+
+$$
+\frac{\partial T}{\partial t} + \uv \cdot \GRAD T = \kappa \nabla^2 T + \Red{H} - \Blue{L}
+$$
+
+## Figures
+
+### Source Markup
+
+```markdown
+![Consider the fluid motions in a layer of arbitrary depth, $d$. The fluid is
+assumed to have constant properties such as viscosity, thermal expansivity,
+thermal diffusivity.](../Images/Diagrams/layer.png){#fig-layer-example width=350px}
+
+As shown in @fig-layer-example, the layer has depth $d$.
+```
+
+### Rendered Output
+
+![Consider the fluid motions in a layer of arbitrary depth, $d$. The fluid is assumed to have constant properties such as viscosity, thermal expansivity, thermal diffusivity.](../Images/Diagrams/layer.png){#fig-layer-example width=350px}
+
+As shown in @fig-layer-example, the layer has depth $d$.
+
+## Code Blocks
+
+### Python Code (Display Only)
+
+#### Source Markup
+
+````markdown
+```python
+import numpy as np
+
+def rayleigh_number(rho, g, alpha, delta_T, d, kappa, eta):
+    """Calculate Rayleigh number for thermal convection."""
+    return (rho * g * alpha * delta_T * d**3) / (kappa * eta)
+```
+````
+
+#### Rendered Output
+
+```python
+import numpy as np
+
+def rayleigh_number(rho, g, alpha, delta_T, d, kappa, eta):
+    """Calculate Rayleigh number for thermal convection."""
+    return (rho * g * alpha * delta_T * d**3) / (kappa * eta)
+```
+
+### Interactive Python (using pyodide)
+
+#### Source Markup
+
+````markdown
+```{{pyodide-python}}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Calculate Rayleigh number for different viscosities
+eta_values = np.logspace(19, 23, 50)
+Ra = 3300 * 10 * 3e-5 * 3000 * (2900e3)**3 / (1e-6 * eta_values)
+
+plt.figure(figsize=(8, 5))
+plt.loglog(eta_values, Ra)
+plt.xlabel('Viscosity (Pa·s)')
+plt.ylabel('Rayleigh Number')
+plt.title('Mantle Rayleigh Number vs Viscosity')
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+````
+
+#### Rendered Output
+
+```{pyodide-python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Calculate Rayleigh number for different viscosities
+eta_values = np.logspace(19, 23, 50)
+Ra = 3300 * 10 * 3e-5 * 3000 * (2900e3)**3 / (1e-6 * eta_values)
+
+plt.figure(figsize=(8, 5))
+plt.loglog(eta_values, Ra)
+plt.xlabel('Viscosity (Pa·s)')
+plt.ylabel('Rayleigh Number')
+plt.title('Mantle Rayleigh Number vs Viscosity')
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+
+## Using Global Macros
+
+### Source Markup
+
+At the top of your file, include the math preamble:
+
+```markdown
+{{< include ../_math-preamble.qmd >}}
+```
+
+Then use the defined macros:
+
+```markdown
+- Velocity: $\uv$ or $\vv$
+- Divergence: $\DIV \uv = 0$
+- Gradient: $\GRAD T$
+- Curl: $\CURL \mathbf{B}$
+- Colored text: $\Red{important}$, $\Blue{cold}$, $\Green{check}$
+```
+
+### Rendered Output
+
+Available macros (already included at the top of this page):
+
+- Velocity: $\uv$ or $\vv$
+- Divergence: $\DIV \uv = 0$
+- Gradient: $\GRAD T$
+- Curl: $\CURL \mathbf{B}$
+- Colored text: $\Red{important}$, $\Blue{cold}$, $\Green{check}$
+
+## Callout Blocks
+
+Callout blocks are useful for highlighting important information, tips, warnings, and notes. See the [Quarto Callout Blocks documentation](https://quarto.org/docs/authoring/callouts.html) for more details.
+
+### Source Markup
+
+````markdown
+:::{.callout-note}
+## Note Title (optional)
+
+This is a note callout. Use it for general information that readers should be aware of.
+:::
+
+:::{.callout-tip}
+## Tip: Numerical Stability
+
+When implementing finite difference schemes, always check the CFL condition:
+$$
+\Delta t \leq \frac{\Delta x^2}{2\kappa}
+$$
+:::
+
+:::{.callout-warning}
+## Warning
+
+The Boussinesq approximation breaks down when density variations exceed
+approximately 10% of the reference density.
+:::
+
+:::{.callout-important}
+## Important: Sign Conventions
+
+In this book, we use the convention that tensile stress is positive and
+compressive stress is negative.
+:::
+
+:::{.callout-caution}
+## Caution: Computational Cost
+
+Three-dimensional calculations can be extremely expensive. A grid with
+$100^3$ points requires solving systems with ~1 million unknowns.
+:::
+````
+
+### Rendered Output
+
+:::{.callout-note}
+## Note Title (optional)
+
+This is a note callout. Use it for general information that readers should be aware of.
+:::
+
+:::{.callout-tip}
+## Tip: Numerical Stability
+
+When implementing finite difference schemes, always check the CFL condition:
+$$
+\Delta t \leq \frac{\Delta x^2}{2\kappa}
+$$
+:::
+
+:::{.callout-warning}
+## Warning
+
+The Boussinesq approximation breaks down when density variations exceed approximately 10% of the reference density.
+:::
+
+:::{.callout-important}
+## Important: Sign Conventions
+
+In this book, we use the convention that tensile stress is positive and compressive stress is negative.
+:::
+
+:::{.callout-caution}
+## Caution: Computational Cost
+
+Three-dimensional calculations can be extremely expensive. A grid with $100^3$ points requires solving systems with ~1 million unknowns.
+:::
+
+### Collapsible Callouts
+
+You can make callouts collapsible (closed by default):
+
+#### Source Markup
+
+````markdown
+:::{.callout-note collapse="true"}
+## Derivation Details (click to expand)
+
+Here's the detailed derivation that advanced readers might want to see,
+but beginners can skip:
+
+Starting from the continuity equation...
+[lengthy derivation]
+:::
+````
+
+#### Rendered Output
+
+:::{.callout-note collapse="true"}
+## Derivation Details (click to expand)
+
+Here's the detailed derivation that advanced readers might want to see, but beginners can skip:
+
+Starting from the continuity equation, we apply the divergence theorem and integrate by parts to obtain the weak formulation...
+:::
+
+## References
+
+The bibliography will appear at the end of the book automatically based on all cited works.

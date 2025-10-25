@@ -1,0 +1,635 @@
+# Benchmark Problems: Analytical Solutions for Viscous Flows
+
+{{< include ../../_math-preamble.qmd >}}
+
+:::{.callout-warning collapse="true"}
+## 🚧 Under Review
+
+This entire chapter is newly added content adapted from ICFM Chapter 5 (One-Dimensional Viscous Flows). The analytical solutions are well-established in fluid mechanics, but their presentation here needs review for appropriate geodynamic context and computational implementation guidance.
+
+**Changes made:**
+- Extracted and converted ICFM Chapter 5 content (~400 lines of LaTeX)
+- Added comprehensive introduction explaining purpose of benchmarks
+- Reformulated all solutions using global math macros
+- Created 6 main sections: Couette, Poiseuille, Pipe flow, Mixed flows, Time-dependent, Hele-Shaw
+- Added 6 exercises with 3 detailed solutions
+- Added 4 computational exercises for numerical implementation
+- Included geodynamic relevance sections for each solution
+
+**Review needed:**
+- Verify that geodynamic applications are accurate (lithospheric shear zones, magma dikes, etc.)
+- Expand computational exercises with Python code templates
+- Add figures showing velocity profiles for each solution
+- Consider adding more complex benchmarks (e.g., 2D corner flow, spherical geometries)
+- Link to actual benchmark comparison studies in geodynamics literature
+:::
+
+## Introduction
+
+Analytical solutions to the Navier-Stokes equations are rare and precious. They serve multiple critical purposes in computational geodynamics:
+
+1. **Code Validation**: Compare numerical solutions against exact analytical results to verify implementation correctness
+2. **Convergence Testing**: Measure numerical error as a function of resolution to confirm expected convergence rates
+3. **Physical Intuition**: Build understanding of viscous flow behavior through exact solutions
+4. **Benchmark Standards**: Establish community-accepted test cases for comparing different numerical methods
+
+This chapter presents a collection of analytical solutions for viscous flows, focusing on one-dimensional problems where the nonlinear advection term vanishes, making exact solutions possible. While these flows are geometrically simple, they capture essential physics relevant to geodynamics:
+
+- **Couette flow**: Simple shear, analogous to lithospheric deformation
+- **Poiseuille flow**: Pressure-driven flow, relevant to channel flows and magma transport
+- **Pipe flow**: Axisymmetric geometry, applicable to cylindrical conduits
+- **Oscillating boundaries**: Time-dependent flows with diffusion
+
+:::{.callout-note}
+## Material adapted from MTH3360 Fluid Mechanics
+
+The problems in this chapter are adapted from the *MTH3360 Incompressible Fluid Mechanics* course materials (Monash University, 2010-2013). These classical fluid mechanics problems provide excellent benchmarks for computational geodynamics codes.
+:::
+
+## One-Dimensional Flows
+
+### Why the Nonlinear Term Vanishes
+
+The central difficulty in solving the Navier-Stokes equations lies in the nonlinear advection term $(\uv \cdot \GRAD) \uv$. However, in one-dimensional flows where only a single component of velocity is non-zero, say $\uv = (0, 0, w)$, this term vanishes.
+
+From continuity (incompressibility):
+$$
+\DIV \uv = \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z} = 0
+$$
+
+Since $u = v = 0$, we have $\partial w / \partial z = 0$, meaning $w$ is independent of $z$. Therefore:
+
+$$
+\begin{aligned}
+(\uv \cdot \GRAD) \uv &= \left( u\frac{\partial}{\partial x} + v\frac{\partial}{\partial y} + w\frac{\partial}{\partial z} \right) (u, v, w) \\
+&= \left( 0, 0, w\frac{\partial w}{\partial z} \right) \\
+&= \mathbf{0}
+\end{aligned}
+$$
+
+This linearization allows us to find exact analytical solutions to many problems.
+
+## Steady Plane Couette Flow
+
+### Problem Statement
+
+Consider steady viscous flow between two parallel rigid plates:
+
+- Lower plate at $z = 0$: fixed ($\uv = \mathbf{0}$)
+- Upper plate at $z = h$: moving with velocity $(U, 0, 0)$
+- Flow independent of $x$ and $y$ directions
+- No applied pressure gradient
+
+![Couette flow: Linear velocity profile between moving plates](../../Images/Diagrams/couette-flow.png){#fig-couette width=450px}
+
+### Solution
+
+From the symmetry assumptions and continuity, we know:
+- $w = 0$ everywhere
+- $\uv = (u(z), 0, 0)$
+
+The Navier-Stokes equations reduce to:
+$$
+0 = -\frac{1}{\rho}\frac{\partial p}{\partial x} + \nu\frac{d^2 u}{dz^2}
+$$
+
+Since there's no applied pressure gradient in the $x$-direction, $\partial p/\partial x = 0$, giving:
+$$
+\frac{d^2 u}{dz^2} = 0
+$$
+
+This integrates to:
+$$
+u = Az + B
+$$
+
+Applying boundary conditions:
+- At $z = 0$: $u = 0 \Rightarrow B = 0$
+- At $z = h$: $u = U \Rightarrow A = U/h$
+
+**Analytical Solution:**
+$$
+u(z) = U\frac{z}{h}
+$$ {#eq-couette-solution}
+
+### Physical Interpretation
+
+- **Velocity profile**: Linear from $0$ to $U$
+- **Vorticity**: Constant throughout the fluid, $\omega = \partial u/\partial z = U/h$
+- **Shear stress**: Constant, $\tau = \mu(du/dz) = \mu U/h$
+- **Stress transmission**: The tangential stress exerted by the upper plate is transmitted without change to the lower plate
+
+### Geodynamic Relevance
+
+Couette flow is the fundamental model for:
+- Simple shear deformation in the lithosphere
+- Shear zones in the mantle
+- Flow between tectonic plates
+- Laboratory experiments (rotary shear apparatus)
+
+## Steady Plane Poiseuille Flow
+
+### Problem Statement
+
+Steady viscous flow driven by a pressure gradient between two parallel fixed plates:
+
+- Both plates at $z = 0$ and $z = h$: no-slip ($\uv = \mathbf{0}$)
+- Applied pressure gradient: $dp/dx < 0$ (pressure decreases in flow direction)
+- Flow independent of $x$ and $y$ positions
+
+![Poiseuille flow: Parabolic velocity profile in pressure-driven channel flow](../../Images/Diagrams/poiseuille-flow.png){#fig-poiseuille width=450px}
+
+### Solution
+
+From continuity and boundary conditions:
+- $w = 0$ everywhere
+- $\uv = (u(z), 0, 0)$
+
+The Navier-Stokes equations give:
+$$
+0 = -\frac{1}{\rho}\frac{\partial p}{\partial x} + \nu\frac{d^2 u}{dz^2}
+$$
+
+Now $p = p(x)$ only, and $u = u(z)$ only. Both sides must equal a constant. Let:
+$$
+\frac{dp}{dx} = -\gamma \quad \text{(constant)}
+$$
+
+where $\gamma > 0$ for flow in the positive $x$-direction. Then:
+$$
+\frac{d^2 u}{dz^2} = -\frac{\gamma}{\mu}
+$$
+
+Integrating twice:
+$$
+u = -\frac{\gamma}{2\mu}z^2 + Az + B
+$$
+
+Applying boundary conditions:
+- At $z = 0$: $u = 0 \Rightarrow B = 0$
+- At $z = h$: $u = 0 \Rightarrow A = \gamma h/(2\mu)$
+
+**Analytical Solution:**
+$$
+u(z) = \frac{\gamma}{2\mu}z(h - z)
+$$ {#eq-poiseuille-solution}
+
+### Physical Interpretation
+
+- **Velocity profile**: Parabolic with maximum at $z = h/2$
+- **Maximum velocity**: $u_{max} = \gamma h^2/(8\mu)$
+- **Volume flux per unit width**: $Q = \int_0^h u \, dz = \gamma h^3/(12\mu)$
+- **Shear stress**: $\tau = \gamma(h - 2z)/2$, zero at centerline, maximum at walls
+- **Vorticity**: $\omega = \gamma(h - 2z)/(2\mu)$, positive at lower wall, negative at upper wall
+
+### Geodynamic Relevance
+
+Poiseuille flow models:
+- Channel flows in the mantle
+- Flow in magma-filled fractures and dikes
+- Pressure-driven flow in laboratory experiments
+- Return flow in subduction zones
+
+## Axisymmetric Pipe Flow (Hagen-Poiseuille Flow)
+
+### Problem Statement
+
+Steady viscous flow through a cylindrical pipe of radius $a$ under a constant applied pressure gradient:
+
+- No-slip boundary condition at $r = a$: $w = 0$
+- Axisymmetric flow: no dependence on $\theta$
+- Applied pressure gradient: $dp/dz = -\gamma$
+
+![Pipe flow: Parabolic velocity profile in a circular pipe](../../Images/Diagrams/pipe-flow.png){#fig-pipe-flow width=350px}
+
+### Solution
+
+In cylindrical coordinates $(r, \theta, z)$, assume $\mathbf{U} = (u(r), 0, w(r))$.
+
+From continuity in cylindrical coordinates:
+$$
+\frac{1}{r}\frac{\partial}{\partial r}(ru) + \frac{\partial w}{\partial z} = 0
+$$
+
+Since $w = w(r)$ only, this gives $u(r) = 0$.
+
+The momentum balance in the $z$-direction becomes:
+$$
+-\frac{1}{\rho}\frac{\partial p}{\partial z} + \frac{\nu}{r}\frac{d}{dr}\left(r\frac{dw}{dr}\right) = 0
+$$
+
+Since $p = p(z)$ only and $w = w(r)$ only:
+$$
+\frac{dp}{dz} = -\gamma \quad \text{(constant)}
+$$
+
+$$
+\frac{1}{r}\frac{d}{dr}\left(r\frac{dw}{dr}\right) = -\frac{\gamma}{\mu}
+$$
+
+The general solution is:
+$$
+w = -\frac{\gamma r^2}{4\mu} + A\ln r + B
+$$
+
+Boundary conditions:
+- Finite at $r = 0$: $A = 0$
+- $w(a) = 0$: $B = \gamma a^2/(4\mu)$
+
+**Analytical Solution:**
+$$
+w(r) = \frac{\gamma a^2}{4\mu}\left(1 - \frac{r^2}{a^2}\right)
+$$ {#eq-pipe-flow-solution}
+
+### Physical Interpretation
+
+- **Velocity profile**: Parabolic in $r$
+- **Maximum velocity**: $w_{max} = \gamma a^2/(4\mu)$ at $r = 0$
+- **Volume flux**: $Q = \int_0^a w \cdot 2\pi r \, dr = \pi\gamma a^4/(8\mu)$
+- **Average velocity**: $\bar{w} = Q/(\pi a^2) = \gamma a^2/(8\mu) = w_{max}/2$
+
+### Geodynamic Relevance
+
+Pipe flow is relevant to:
+- Magma ascent through cylindrical conduits
+- Fluid flow in porous media (Darcy flow in cylindrical pores)
+- Laboratory experiments with cylindrical geometry
+- Core dynamics in cylindrical coordinates
+
+## Mixed Couette-Poiseuille Flow
+
+### Problem Statement
+
+Flow driven by both a moving upper plate and a pressure gradient:
+
+- Lower plate at $z = 0$: fixed
+- Upper plate at $z = h$: velocity $(U, 0, 0)$
+- Applied pressure gradient: $dp/dx = -\gamma$
+
+This combines simple shear and pressure-driven flow.
+
+### Solution
+
+The governing equation is:
+$$
+\frac{d^2 u}{dz^2} = -\frac{\gamma}{\mu}
+$$
+
+with boundary conditions $u(0) = 0$ and $u(h) = U$.
+
+**Analytical Solution:**
+$$
+u(z) = \frac{\gamma}{2\mu}z(h - z) + U\frac{z}{h}
+$$ {#eq-mixed-flow-solution}
+
+This is simply the superposition of Poiseuille flow @eq-poiseuille-solution and Couette flow @eq-couette-solution.
+
+### Zero Net Flux Condition
+
+The volume flux per unit width is:
+$$
+Q = \int_0^h u \, dz = \frac{\gamma h^3}{12\mu} + \frac{Uh}{2}
+$$
+
+For zero net flux ($Q = 0$), the required pressure gradient is:
+$$
+\gamma = -\frac{6\mu U}{h^2}
+$$
+
+The negative value indicates the pressure gradient opposes the plate motion.
+
+## Time-Dependent Problems
+
+### Oscillating Plate (Stokes' Second Problem)
+
+An incompressible fluid occupies the half-space $z > 0$ above a rigid boundary at $z = 0$ that oscillates with velocity $U\cos(\alpha t)$.
+
+The velocity field $\uv = (u(z,t), 0, 0)$ satisfies:
+$$
+\frac{\partial u}{\partial t} = \nu\frac{\partial^2 u}{\partial z^2}
+$$ {#eq-diffusion-equation}
+
+This is the heat/diffusion equation with kinematic viscosity $\nu$ playing the role of thermal diffusivity.
+
+Seeking a solution of the form $u = \text{Re}\{f(z)e^{i\alpha t}\}$ and requiring $u \to 0$ as $z \to \infty$:
+
+**Analytical Solution:**
+$$
+u(z,t) = Ue^{-kz}\cos(kz - \alpha t)
+$$ {#eq-oscillating-plate-solution}
+
+where $k = \sqrt{\alpha/(2\nu)}$ is the inverse penetration depth.
+
+### Physical Interpretation
+
+- **Penetration depth**: $\delta = 1/k = \sqrt{2\nu/\alpha}$
+- Velocity amplitude decays exponentially with distance from the plate
+- Phase lag increases linearly with distance
+- At distance $z = \pi/k$, the fluid moves in the opposite direction to the plate
+
+This solution demonstrates **viscous diffusion** of momentum from the oscillating boundary into the fluid.
+
+## Exercises
+
+:::{.callout-note}
+Exercises marked with ⭐ have worked solutions provided.
+:::
+
+### Exercise 1: Mixed Couette-Poiseuille Flow ⭐
+
+Mixed Couette-Poiseuille flow is driven by moving the upper plate at $z = h$ with velocity $U$ and applying an **opposing** pressure gradient $dp/dx = \gamma > 0$ (opposing means the pressure gradient acts against the plate motion).
+
+a) Find the velocity profile in the flow
+b) Calculate the volume flux per unit width
+c) Determine the pressure gradient required to produce zero net volume flux
+
+### Exercise 2: Time-Dependent Couette Flow
+
+A viscous fluid at rest is confined between two rigid plates at $z = 0$ and $z = h$. The lower boundary is fixed, but at $t = 0$ the upper boundary is **impulsively** set in motion with velocity $(U, 0, 0)$.
+
+a) Show that the velocity field satisfies the diffusion equation @eq-diffusion-equation
+b) Calculate the velocity profile as a function of time
+c) Determine the vorticity distribution as a function of time
+d) Sketch the velocity profile at several times and show convergence to the steady Couette solution
+
+**Hint**: Use separation of variables with $u(z,t) = \sum_n A_n \sin(n\pi z/h)e^{-\lambda_n t}$
+
+### Exercise 3: Cylindrical Pipe Flow ⭐
+
+Derive the solution for steady viscous flow through an axisymmetric pipe of radius $a$ under a constant applied pressure gradient (Hagen-Poiseuille flow).
+
+a) Show that $u_r = 0$ from continuity
+b) Derive the governing equation for $u_z(r)$
+c) Solve with appropriate boundary conditions
+d) Calculate the volume flux
+e) Compare the average velocity to the maximum velocity
+
+**Reminder**: In cylindrical coordinates for axisymmetric problems:
+$$
+\nabla^2 f = \frac{1}{r}\frac{\partial}{\partial r}\left(r\frac{\partial f}{\partial r}\right) + \frac{\partial^2 f}{\partial z^2}
+$$
+
+### Exercise 4: Vorticity Generation in Poiseuille Flow ⭐
+
+Consider the plane Poiseuille flow problem.
+
+a) Show that negative/positive vorticity is continuously generated at the upper/lower boundary
+b) Explain the mechanism of vorticity generation at solid boundaries
+c) Consider the time-dependent problem where the flow is impulsively accelerated by a uniform pressure gradient
+d) Show that the unsteady component of velocity satisfies the heat equation
+e) Determine the initial condition for this equation
+
+### Exercise 5: Flow Down an Inclined Plane
+
+Consider a thin film of viscous fluid flowing down an inclined plane at angle $\theta$ to the horizontal under gravity.
+
+a) Set up the coordinate system and governing equations
+b) Determine the velocity profile assuming the upper surface is stress-free
+c) Calculate the volume flux per unit width
+d) Find the maximum velocity and its location
+e) Discuss the physical meaning of the stress-free boundary condition
+
+### Exercise 6: Hele-Shaw Flow
+
+In a thin film of fluid confined between two rigid boundaries separated by a small gap $h$, where $h \ll L$ (with $L$ a typical horizontal length scale):
+
+a) Show from incompressibility that the vertical velocity $W$ satisfies $W \sim U(h/L)$
+b) Show that $\eta\nabla^2\uv \sim \eta\partial^2\uv/\partial z^2$
+c) By estimating the magnitude of terms, show that $(\uv\cdot\GRAD)\uv \ll \eta\partial^2\uv/\partial z^2$ when $Re(h^2/L^2) \ll 1$
+d) Derive the governing equations for steady flow
+e) Show that the flow is always irrotational
+f) Explain why the Hele-Shaw cell is used to model potential flow experimentally
+
+## Computational Exercises
+
+:::{.callout-tip}
+## Python Implementation
+
+The following exercises ask you to implement numerical solutions and compare them to the analytical results. This is essential practice for validating computational methods.
+:::
+
+### Computational Exercise 1: Implement Couette Flow
+
+Write a Python program to solve the Couette flow problem numerically using finite differences:
+
+a) Discretize the domain $[0, h]$ with $N$ grid points
+b) Implement the steady-state solver using the discrete Laplacian
+c) Compare your numerical solution to the analytical solution @eq-couette-solution
+d) Plot the error as a function of grid resolution
+e) Verify that the error decreases as $\Delta z^2$ (second-order convergence)
+
+### Computational Exercise 2: Implement Poiseuille Flow
+
+Repeat Computational Exercise 1 for Poiseuille flow:
+
+a) Implement the steady-state solver
+b) Compare to the analytical solution @eq-poiseuille-solution
+c) Calculate the volume flux numerically and compare to the analytical value
+d) Test convergence with grid refinement
+
+### Computational Exercise 3: Time-Dependent Couette Flow
+
+Implement the time-dependent Couette flow problem (Exercise 2):
+
+a) Use the forward Euler method or Crank-Nicolson method for time stepping
+b) Implement appropriate initial and boundary conditions
+c) Animate the evolution of the velocity profile
+d) Compare to the analytical solution (look up the series solution)
+e) Investigate the diffusion time scale: how long to reach steady state?
+
+### Computational Exercise 4: Pipe Flow in Cylindrical Coordinates
+
+Implement the axisymmetric pipe flow solution:
+
+a) Set up the problem in cylindrical coordinates
+b) Handle the singularity at $r = 0$ properly
+c) Compare to the analytical solution @eq-pipe-flow-solution
+d) Calculate volume flux and verify against analytical result
+e) Explore convergence properties with grid refinement
+
+## Solutions to Selected Exercises
+
+:::{.callout-tip collapse="true"}
+## Solution to Exercise 1: Mixed Couette-Poiseuille Flow
+
+**(a) Velocity profile:**
+
+The governing equation is:
+$$
+\frac{d^2 u}{dz^2} = -\frac{\gamma}{\mu}
+$$
+
+Integrating twice:
+$$
+u = -\frac{\gamma}{2\mu}z^2 + Az + B
+$$
+
+Boundary conditions:
+- At $z = 0$: $u = 0 \Rightarrow B = 0$
+- At $z = h$: $u = U \Rightarrow A = U/h + \gamma h/(2\mu)$
+
+Therefore:
+$$
+u(z) = \frac{z}{h}\left(U + \frac{\gamma h^2}{2\mu}\right) - \frac{\gamma z^2}{2\mu}
+$$
+
+Since the pressure gradient **opposes** the plate motion ($\gamma > 0$), the term $-\gamma z^2/(2\mu)$ reduces the velocity.
+
+**(b) Volume flux:**
+
+$$
+Q = \int_0^h u \, dz = \frac{Uh}{2} + \frac{\gamma h^3}{12\mu} - \frac{\gamma h^3}{6\mu} = \frac{Uh}{2} - \frac{\gamma h^3}{12\mu}
+$$
+
+**(c) Zero flux condition:**
+
+Setting $Q = 0$:
+$$
+\frac{Uh}{2} = \frac{\gamma h^3}{12\mu}
+$$
+
+$$
+\gamma = \frac{6\mu U}{h^2}
+$$
+
+This is the pressure gradient magnitude required to exactly oppose the plate-driven flow.
+:::
+
+:::{.callout-tip collapse="true"}
+## Solution to Exercise 3: Cylindrical Pipe Flow
+
+**(a) Continuity:**
+
+In cylindrical coordinates:
+$$
+\frac{1}{r}\frac{\partial}{\partial r}(ru_r) + \frac{\partial u_z}{\partial z} = 0
+$$
+
+Since we assume $u_z = u_z(r)$ only (axisymmetric, fully-developed flow), $\partial u_z/\partial z = 0$, which gives:
+$$
+\frac{1}{r}\frac{d}{dr}(ru_r) = 0
+$$
+
+Integrating: $ru_r = \text{constant}$. Since $u_r$ must be finite at $r = 0$, the constant must be zero, so $u_r = 0$.
+
+**(b) Governing equation:**
+
+The $z$-component of the Navier-Stokes equation (steady, axisymmetric) is:
+$$
+-\frac{1}{\rho}\frac{\partial p}{\partial z} + \frac{\nu}{r}\frac{d}{dr}\left(r\frac{du_z}{dr}\right) = 0
+$$
+
+Since $p = p(z)$ and $u_z = u_z(r)$:
+$$
+\frac{dp}{dz} = -\gamma \quad \text{(constant)}
+$$
+
+$$
+\frac{1}{r}\frac{d}{dr}\left(r\frac{du_z}{dr}\right) = -\frac{\gamma}{\mu}
+$$
+
+**(c) Solution:**
+
+Integrating once:
+$$
+r\frac{du_z}{dr} = -\frac{\gamma r^2}{2\mu} + C_1
+$$
+
+For finite velocity at $r = 0$: $C_1 = 0$. Integrating again:
+$$
+u_z = -\frac{\gamma r^2}{4\mu} + C_2
+$$
+
+Boundary condition $u_z(a) = 0$ gives $C_2 = \gamma a^2/(4\mu)$:
+$$
+u_z(r) = \frac{\gamma a^2}{4\mu}\left(1 - \frac{r^2}{a^2}\right)
+$$
+
+**(d) Volume flux:**
+
+$$
+Q = \int_0^a u_z \cdot 2\pi r \, dr = 2\pi\frac{\gamma a^2}{4\mu}\int_0^a \left(1 - \frac{r^2}{a^2}\right)r \, dr
+$$
+
+$$
+Q = \frac{\pi\gamma a^2}{2\mu}\left[\frac{r^2}{2} - \frac{r^4}{4a^2}\right]_0^a = \frac{\pi\gamma a^4}{8\mu}
+$$
+
+**(e) Velocity comparison:**
+
+- Maximum velocity: $u_{max} = \gamma a^2/(4\mu)$ at $r = 0$
+- Average velocity: $\bar{u} = Q/(\pi a^2) = \gamma a^2/(8\mu)$
+- Ratio: $\bar{u}/u_{max} = 1/2$
+
+The average velocity is exactly half the maximum velocity for parabolic pipe flow.
+:::
+
+:::{.callout-tip collapse="true"}
+## Solution to Exercise 4: Vorticity in Poiseuille Flow
+
+**(a) Vorticity distribution:**
+
+For plane Poiseuille flow @eq-poiseuille-solution:
+$$
+u = \frac{\gamma z}{2\mu}(h - z)
+$$
+
+The vorticity (for 2D flow in the $x$-$z$ plane) is:
+$$
+\omega = \frac{du}{dz} = \frac{\gamma}{2\mu}(h - 2z)
+$$
+
+At the boundaries:
+- At $z = 0$: $\omega = \gamma h/(2\mu) > 0$ (positive vorticity)
+- At $z = h$: $\omega = -\gamma h/(2\mu) < 0$ (negative vorticity)
+- At $z = h/2$: $\omega = 0$ (vorticity cancels)
+
+**(b) Mechanism:**
+
+Vorticity is generated at solid boundaries through the no-slip condition. The boundary continuously generates vorticity that diffuses into the interior. The rate of vorticity generation is proportional to the velocity gradient at the wall.
+
+**(c-d) Time-dependent problem:**
+
+For the impulsive start problem, let $\uv = (u(z,t), 0, 0)$. From continuity: $w = 0$.
+
+The $x$-momentum equation is:
+$$
+\frac{\partial u}{\partial t} = -\frac{1}{\rho}\frac{dp_0}{dx} + \nu\frac{\partial^2 u}{\partial z^2}
+$$
+
+Since $dp_0/dx = -\gamma$ (constant), this is:
+$$
+\frac{\partial u}{\partial t} = \frac{\gamma}{\rho} + \nu\frac{\partial^2 u}{\partial z^2}
+$$
+
+**(e) Initial condition:**
+
+At $t = 0$, the fluid is at rest: $u(z, 0) = 0$. The boundary conditions are $u(0,t) = u(h,t) = 0$ for all $t > 0$.
+
+The steady-state solution is the Poiseuille profile. The unsteady solution approaches this as $t \to \infty$.
+:::
+
+## Summary
+
+This chapter presented fundamental analytical solutions for viscous flows that serve as essential benchmarks for validating computational geodynamics codes. Key takeaways:
+
+1. **One-dimensional flows** provide exact solutions because the nonlinear advection term vanishes
+2. **Couette flow** (simple shear) and **Poiseuille flow** (pressure-driven) are fundamental building blocks
+3. **Cylindrical geometries** (pipe flow) extend these concepts to axisymmetric cases
+4. **Time-dependent problems** demonstrate viscous diffusion of momentum
+5. **Numerical validation** against these solutions is essential for code verification
+
+In the following chapters, we will use these benchmark problems to validate more complex numerical methods including finite differences, finite elements, and spectral methods.
+
+## References
+
+The material in this chapter is adapted from:
+
+- **MTH3360 Incompressible Fluid Mechanics**, Louis Moresi, Monash University, 2010-2013
+- @batchelor1967: *An Introduction to Fluid Dynamics*
+- @acheson1990: *Elementary Fluid Dynamics*
+
+Additional recommended references for analytical solutions:
+
+- @turcotte2014: Chapter on viscous flow
+- @white2006: *Viscous Fluid Flow*, for comprehensive treatment of exact solutions
