@@ -14,6 +14,9 @@ WebBook/.quarto/*
 
 WebSlides/.quarto/*
 
+# Quarto temporary processing files
+*.quarto_ipynb
+
 # pixi environments
 .pixi
 *.egg-info
