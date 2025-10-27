@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Thermal Convection – Computational Geodynamics Primer</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../DraftMaterial/LithosphericDynamics.html" rel="next">
+<link href="../DraftMaterial/StokesFlowApplications.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a26bb016ce855eb6ac1f0ce73cb2e796.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: {
+    tags: 'ams',
+    packages: {'[+]': ['ams', 'amsmath', 'amssymb', 'color', 'newcommand', 'boldsymbol']},
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    macros: {
+      dGamma: "{\\mathbf{d}\\boldsymbol{\\Gamma}}",
+      uv: "{\\mathbf{u}}",
+      vv: "{\\mathbf{v}}",
+      DIV: "{\\nabla\\cdot}",
+      GRAD: "{\\nabla}",
+      CURL: "{\\nabla\\times}"
+    }
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../assets/ANU-logo.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/ANU-logo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Computational Geodynamics Primer</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
+<span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../summary.html"> 
+<span class="menu-text">Details</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../LectureSlides/Lecture1.qmd"> 
+<span class="menu-text">Slides</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../DraftMaterial/ContinuumMechanics.html"><strong>Draft: Geodynamics</strong></a></li><li class="breadcrumb-item"><a href="../DraftMaterial/ThermalConvection.html"><span class="chapter-title">Thermal Convection</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/AuWorldEQ.jpg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../assets/AuWorldEQ.jpg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Preface</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EMSC e-Course template</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part I: Mathematical Fundamentals</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part1-Fundamentals/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mathematical Fundamentals</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part II: Fluid Dynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part2-FluidDynamics/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fluid Dynamics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part2-FluidDynamics/inviscid-flows.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Steady Inviscid Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part III: Geodynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part3-Geodynamics/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Geodynamics Applications</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part IV: Numerical Methods</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part4-NumericalMethods/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numerical Methods</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part V: Computational Exercises</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part5-Computational/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part5-Computational/Benchmarks/analytical-solutions.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Benchmark Problems: Analytical Solutions for Viscous Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Draft: Geodynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/ContinuumMechanics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conservation Laws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NavierStokes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Navier-Stokes Equation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/MantleDynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Non-dimensional equations &amp; dimensionless numbers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/StokesFlowApplications.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Applications of Stokes Flow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/ThermalConvection.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Thermal Convection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/LithosphericDynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamics of the Lithosphere</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Draft: Computational Methods</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numerical Modeling in Solid Earth Dynamics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Survey of numerical methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction to the Finite Element Method</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Practical Finite Elements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Methods for Solving Numerical Problems</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">References</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Contributing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Contributions/contributing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Contributing to the Computational Geodynamics Primer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Contributions/style-guide.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Style Guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Contributions/example-citations.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Example: Using Citations and Math</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Notebooks/BinderLandingPage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Index of notebooks:</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Notebooks/TestNB1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Test Notebook</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Notebooks/TestQMD_NB1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quarto MD notebook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#critical-rayleigh-number-for-a-layer" id="toc-critical-rayleigh-number-for-a-layer" class="nav-link active" data-scroll-target="#critical-rayleigh-number-for-a-layer">Critical Rayleigh Number for a layer</a></li>
+  <li><a href="#boundary-layer-theory-boundary-rayleigh-number" id="toc-boundary-layer-theory-boundary-rayleigh-number" class="nav-link" data-scroll-target="#boundary-layer-theory-boundary-rayleigh-number">Boundary layer theory, Boundary Rayleigh Number</a></li>
+  <li><a href="#internal-heating" id="toc-internal-heating" class="nav-link" data-scroll-target="#internal-heating">Internal Heating</a></li>
+  <li><a href="#when-viscosity-is-not-constant" id="toc-when-viscosity-is-not-constant" class="nav-link" data-scroll-target="#when-viscosity-is-not-constant">When Viscosity is Not Constant</a></li>
+  <li><a href="#applications-and-discussion" id="toc-applications-and-discussion" class="nav-link" data-scroll-target="#applications-and-discussion">Applications and Discussion</a>
+  <ul class="collapse">
+  <li><a href="#mantle-rheology" id="toc-mantle-rheology" class="nav-link" data-scroll-target="#mantle-rheology">Mantle Rheology</a></li>
+  <li><a href="#convection-with-temperature-dependent-viscosity" id="toc-convection-with-temperature-dependent-viscosity" class="nav-link" data-scroll-target="#convection-with-temperature-dependent-viscosity">Convection with Temperature Dependent Viscosity</a></li>
+  <li><a href="#non-linear-viscosity-and-localisation" id="toc-non-linear-viscosity-and-localisation" class="nav-link" data-scroll-target="#non-linear-viscosity-and-localisation">Non-linear Viscosity and localisation</a></li>
+  <li><a href="#thermochemical-convection" id="toc-thermochemical-convection" class="nav-link" data-scroll-target="#thermochemical-convection">Thermochemical Convection</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1-critical-rayleigh-number" id="toc-exercise-1-critical-rayleigh-number" class="nav-link" data-scroll-target="#exercise-1-critical-rayleigh-number">Exercise 1: Critical Rayleigh Number ⭐</a></li>
+  <li><a href="#exercise-2-nusselt-number-scaling" id="toc-exercise-2-nusselt-number-scaling" class="nav-link" data-scroll-target="#exercise-2-nusselt-number-scaling">Exercise 2: Nusselt Number Scaling</a></li>
+  <li><a href="#exercise-3-thermal-boundary-layer-thickness" id="toc-exercise-3-thermal-boundary-layer-thickness" class="nav-link" data-scroll-target="#exercise-3-thermal-boundary-layer-thickness">Exercise 3: Thermal Boundary Layer Thickness ⭐</a></li>
+  <li><a href="#exercise-4-steady-vs.-time-dependent-convection" id="toc-exercise-4-steady-vs.-time-dependent-convection" class="nav-link" data-scroll-target="#exercise-4-steady-vs.-time-dependent-convection">Exercise 4: Steady vs.&nbsp;Time-Dependent Convection</a></li>
+  <li><a href="#exercise-5-internal-heating" id="toc-exercise-5-internal-heating" class="nav-link" data-scroll-target="#exercise-5-internal-heating">Exercise 5: Internal Heating</a></li>
+  <li><a href="#exercise-6-compressibility-effects" id="toc-exercise-6-compressibility-effects" class="nav-link" data-scroll-target="#exercise-6-compressibility-effects">Exercise 6: Compressibility Effects</a></li>
+  </ul></li>
+  <li><a href="#solutions-to-selected-exercises" id="toc-solutions-to-selected-exercises" class="nav-link" data-scroll-target="#solutions-to-selected-exercises">Solutions to Selected Exercises</a></li>
+  </ul>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../DraftMaterial/ContinuumMechanics.html"><strong>Draft: Geodynamics</strong></a></li><li class="breadcrumb-item"><a href="../DraftMaterial/ThermalConvection.html"><span class="chapter-title">Thermal Convection</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Thermal Convection</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hidden">
+<p>$$ % Global LaTeX macros for MathJax </p>
+% Differential operators
+% Color commands (MathJax compatible)
+<p>$$</p>
+</div>
+<p>Thermal convection describes the a process in which a fluid organizes itself into a structured flow pattern on a macroscopic scale to transport energy. Convection may be mechanically driven by stirring, but more commonly we refer to <em>natural convection</em> in which buoyancy due to a source of heat (and/or compositional variation) induces flow which transports and dissipates this anomalous buoyancy.</p>
+<p>The Earth’s interior, on a geological timescale is a highly viscous fluid which is heated from below by heat escaping from the core, and internally by the decay of radioactive elements. In this respect</p>
+<p>Description - what is involved ...</p>
+<p>Goal is to understand finite amplitude convection with complicated rheology and realistic initial, boundary conditions.</p>
+<section id="critical-rayleigh-number-for-a-layer" class="level2">
+<h2 class="anchored" data-anchor-id="critical-rayleigh-number-for-a-layer">Critical Rayleigh Number for a layer</h2>
+<p>Does convection always occur in a layer heated from below ? In principle this would always provide a way to transport additional heat, but how much work would convection have to do in order to transport this extra heat ? One way to determine the answer is to consider small disturbances to a layer with otherwise uniform temperature and see under what conditions the perturbations grow (presumably into fully developed convection). This approach allows us to make <em>linear</em> approximations to the otherwise non-linear equations by dropping the small, high order non-linear terms.</p>
+<p>We solve the incompressible flow equations (stream function form, <a href="MantleDynamics.html#eq-biharm" class="quarto-xref">Equation&nbsp;<span>12.4</span></a>) and energy conservation equation in stream function form:</p>
+<p><span class="math display">\[
+\frac{\partial T}{\partial t} +
+                 \left[     -\frac{\partial \psi}{\partial x_2}\frac{\partial T}{\partial x_1}
+                            +\frac  {\partial \psi}{\partial x_1}\frac{\partial T}{\partial x_2} \right]
+                        = \nabla^2 T
+\]</span></p>
+<p>By substituting throughout for a temperature which is a conductive profile with a small amplitude disturbance, <span class="math inline">\(\theta \ll 1\)</span></p>
+<p><span class="math display">\[
+T = 1- x_2 + \theta
+\]</span></p>
+<p>Remember that the equations are non-dimensional so that the layer depth is one, and the temperature drop is one.</p>
+<p>The advection term</p>
+<p><span class="math display">\[
+-\frac{\partial \psi}{\partial x_2}\frac{\partial T}{\partial x_1}
+                            +\frac  {\partial \psi}{\partial x_1}\frac{\partial T}{\partial x_2} \rightarrow
+                    -\frac{\partial \psi}{\partial x_2}\frac{\partial \theta}{\partial x_1} -\frac{\partial \psi}{\partial x_1}
+                    +\frac  {\partial \theta}{\partial x_2}\frac{\partial \psi}{\partial x_1}
+\]</span></p>
+<p>is dominated by the <span class="math inline">\(\partial \psi / \partial x_1\)</span> since all others are the product of small terms. (Since we also know that <span class="math inline">\(\psi \sim \theta\)</span> from equation (<a href="MantleDynamics.html#eq-biharm" class="quarto-xref">Equation&nbsp;<span>12.4</span></a>)). Therefore the energy conservation equation becomes</p>
+<p><span class="math display">\[
+\frac{\partial \theta}{\partial t} - \frac{\partial \psi}{\partial x_1} = \nabla^2 \theta
+\]</span></p>
+<p>which is linear.</p>
+<p>Boundary conditions for this problem are zero normal velocity on <span class="math inline">\(x_2 = 0,1\)</span> which implies <span class="math inline">\(\psi=0\)</span> at these boundaries. The form of the perturbation is such that <span class="math inline">\(\theta =0\)</span> on <span class="math inline">\(x_2 = 0,1\)</span>, and we allow free slip along these boundaries such that</p>
+<p><span class="math display">\[
+\sigma_{12} = \frac{\partial v_1}{\partial x_2} + \frac{\partial v_2}{\partial x_1} =0
+\]</span></p>
+<p>when <span class="math inline">\(x_2 = 0,1\)</span> which implies <span class="math inline">\(\nabla^2 \psi =0\)</span> there.</p>
+<p>Now introduce small harmonic perturbations to the driving terms and assuming a similar (i.e.&nbsp;harmonic) response in the flow. This takes the form</p>
+<p><span class="math display">\[
+\begin{split}
+                    \theta &amp;= \Theta(x_2) \exp(\sigma t) \sin kx_1 \\
+                    \psi &amp;= \Psi(x_2) \exp(\sigma t) \cos kx_1
+                \end{split}
+\]</span></p>
+<p>So that we can now separate variables. <span class="math inline">\(\sigma\)</span> is unknown, however, if <span class="math inline">\(\sigma &lt; 0\)</span> then the perturbations will decay, whereas if <span class="math inline">\(\sigma &gt; 0\)</span> they will grow.</p>
+<div id="fig-critical-ra" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-critical-ra-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../Images/Diagrams/crit_ra.png" class="img-fluid figure-img" width="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-critical-ra-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.1: Critical Rayleigh Number determination. A plot of growth rates for harmonic perturbations as a function of wavenumber for different <span class="math inline">\({\rm Ra}\)</span>. The critical value occurs when the maximum of the curve just touches the horizontal axis at zero.
+</figcaption>
+</figure>
+</div>
+<p>Substituting for the perturbations into the biharmonic equation and the linearized energy conservation equation gives</p>
+<p><span id="eq-psitheta1"><span class="math display">\[
+\left(\frac{d^2}{d{x_2}^2} -k^2 \right)^2 \Psi = -{\rm Ra} k \Theta
+\tag{14.1}\]</span></span></p>
+<p>and</p>
+<p><span class="math display">\[
+\sigma \Theta + k \Psi =    \left(\frac{d^2}{d{x_2}^2} -k^2 \right) \Theta
+\]</span></p>
+<p>Here we have shown and used the fact that</p>
+<p><span id="eq-psitheta2"><span class="math display">\[
+\nabla^2 \equiv \left(\frac{\partial^2}{\partial {x_2}^2} -k^2 \right)
+\tag{14.2}\]</span></span></p>
+<p>when a function is expanded in the form <span class="math inline">\(\phi(x,z) = \Phi(z).\sin kx\)</span> – more generally, this is the fourier transform of the Laplacian operator.</p>
+<p>Eliminating <span class="math inline">\(\Psi\)</span> between (<a href="#eq-psitheta1" class="quarto-xref">Equation&nbsp;<span>14.1</span></a>) and (<a href="#eq-psitheta2" class="quarto-xref">Equation&nbsp;<span>14.2</span></a>) gives</p>
+<p><span class="math display">\[
+\sigma \left(\frac{d^2}{d {x_2}^2 } - k^2 \right)^2 -{\rm Ra} k^2 \Theta =
+                \left(\frac{d^2}{d {x_2}^2} -k^2 \right)^3 \Theta
+\]</span></p>
+<p>This has a solution</p>
+<p><span class="math display">\[
+\Theta = \Theta_0 \sin \pi z
+\]</span></p>
+<p>which satisfies all the stated boundary conditions and implies</p>
+<p><span class="math display">\[
+\sigma =  \frac{k^2 {\rm Ra}}{(\pi^2 + k^2)^2} -(\pi^2 + k^2)
+\]</span></p>
+<p>a real function of <span class="math inline">\(k\)</span> and <span class="math inline">\(\rm Ra\)</span>.</p>
+<p>For a given wavenumber, what is the lowest value of <span class="math inline">\(\rm Ra\)</span> for which perturbations at that wavenumber will grow ?</p>
+<p><span class="math display">\[
+= \frac{(\pi^2 + k^2)^3}{k^2}
+\]</span></p>
+<p>The absolute minimum value of <span class="math inline">\({\rm Ra}\)</span> which produces growing perturbations is found by differentiating <span class="math inline">\({\rm Ra_0}\)</span> with respect to <span class="math inline">\(k\)</span> and setting equal to zero to find the extremum.</p>
+<p><span class="math display">\[
+{\rm Ra_c} = \frac{27}{4} \pi^4 = 657.51
+\]</span></p>
+<p>for a wavenumber of</p>
+<p><span class="math display">\[
+k = \frac{\pi}{2^{1/2}} = 2.22
+\]</span></p>
+<p>corresponding to a wavelength of 2.828 times the depth of the layer.</p>
+<p>Different boundary conditions produce different values of the critical Rayleigh number. If no-slip conditions are used, for example, then the <span class="math inline">\(\Theta\)</span> solution applied above does not satisfy the boundary conditions. In general, the critical Rayleigh number lies between about 100 and 3000.</p>
+</section>
+<section id="boundary-layer-theory-boundary-rayleigh-number" class="level2">
+<h2 class="anchored" data-anchor-id="boundary-layer-theory-boundary-rayleigh-number">Boundary layer theory, Boundary Rayleigh Number</h2>
+<p>Having determined the conditions under which convection will develop, we next consider what can be calculated about fully developed convection – i.e.&nbsp;when perturbations grow well beyond the linearization used to study the onset of instability.</p>
+<p>Let’s consider fully developed convection with high Rayleigh number. From observations of real fluids in laboratory situations, it is well known how this looks. High Rayleigh number convection is dominated by the advection of heat. Diffusion is too slow to carry heat far into the fluid before the buoyancy anomaly becomes unstable. This leads to thin, horizontal “boundary layers” where diffusive heat transfer into and out of the fluid occurs. These are separated by approximately isothermal regions in the fluid interior. The horizontal boundary layers are connected by vertical boundary layers which take the form of sheets or cylindrical plumes depending on a number of things including the Rayleigh number. For the time being we consider only the sheet like downwellings since that allows us to continue working in 2D.</p>
+<div id="fig-boundary-layer-theory-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boundary-layer-theory-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../Images/Diagrams/blt.png" class="img-fluid figure-img" width="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boundary-layer-theory-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.2: Boundary Layer Theory in its simplest form
+</figcaption>
+</figure>
+</div>
+<p>Boundary layer analysis is a highly sophisticated field, and is used in a broad range of situations where differences in scales between different physical effects produce narrow accommodation zones where the ‘weaker’ term dominates (e.g viscosity in ‘invicid’ flow around an obstacle).</p>
+<p>Here we first make a wild stab at an approximate theory describing the heat flow from a layer with a given Rayleigh number. The convective flow is shown in Figure <a href="#fig:blt1" data-reference-type="ref" data-reference="fig:blt1">1</a> together with our rough sketch of what actually happens.</p>
+<p>Assuming the simplified flow pattern of the sketch, steady state, and replacing all derivatives by crude differences we obtain (using a vorticity form)</p>
+<p><span class="math display">\[
+\kappa \nabla^2 T = (\mathbf{v} \cdot \nabla) T
+                    \mbox{\hspace{1cm}} \longrightarrow \mbox{\hspace{1cm}}
+                \frac{v \Delta T}{d} \sim \frac{\Delta T \kappa}{\delta^2}
+\]</span> and</p>
+<p><span class="math display">\[
+\nabla^2 \omega = \frac{g \rho \alpha}{\eta} \frac{\partial T}{\partial x}
+                    \mbox{\hspace{1cm}} \longrightarrow \mbox{\hspace{1cm}}
+                \frac{\omega}{\delta ^2}    \sim  \frac{g \rho \alpha \Delta T}{\eta \delta}
+\]</span></p>
+<p>where <span class="math inline">\(\omega\sim v / d\)</span> from the local rotation interpretation of vorticity and the approximate rigid-body rotation of the core of the convection cell, and <span class="math inline">\(v/d \sim \kappa / \delta^2\)</span>.</p>
+<p>This gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+            \frac{\delta}{d} &amp; \sim {\rm Ra}^{-1/3} \\
+            v &amp; \sim \frac{\kappa}{d} {\rm Ra}^{2/3}
+        \end{aligned}
+\]</span></p>
+<p>This theory balances diffusion of vorticity and temperature across and out of the boundary layer with advection of each quantity along the boundary layer to maintain a steady state.</p>
+<p>The Nusselt number is the ratio of advected heat transport to that purely conducted in the absence of fluid motion, or, using the above approximations,</p>
+<p><span class="math display">\[
+\begin{split}   
+                {\rm Nu}    &amp; \sim \frac{\rho C_p v \Delta T \delta}{(k \Delta T/d)d} \\
+                                &amp; \sim {\rm Ra}^{1/3}
+            \end{split}
+\]</span></p>
+<p>This latter result being observed in experiments to be in reasonably good agreement with observation.</p>
+<p>If we define a boundary Rayleigh number</p>
+<p><span class="math display">\[
+{\rm Ra_b} = \frac{g \rho \alpha \Delta T \delta^3}{\kappa \eta}
+\]</span></p>
+<p>then the expression for <span class="math inline">\(\delta\)</span> gives</p>
+<p><span class="math display">\[
+{\rm Ra_b} \sim 1
+\]</span></p>
+<p>so the boundary layer does not become more or less stable with increasing Rayleigh number (this is not universal – for internal heating the boundary layer becomes less stable at higher Rayleigh number).</p>
+<div id="fig-boundary-layer-theory-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boundary-layer-theory-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../Images/Diagrams/blt2.png" class="img-fluid figure-img" width="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boundary-layer-theory-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.3: Boundary Layer Theory which accounts for the thickness variations along the boundary layer as it matures.
+</figcaption>
+</figure>
+</div>
+<p>Another wrinkle can be added to the boundary layer theory by trying to account for the variation in the boundary layer thickness as it moves along the horizontal boundary. This refinement in the theory can account for the form of this thickness, the potential energy change in rising or sinking plumes, and the aspect ratio of the convection (width to height of convection roll) by maximizing Nusselt number as a function of aspect ratio.</p>
+<p>Consider the boundary layer to be very thin above the upwelling plume (left side). As it moves to the right, it cools and the depth to any particular isotherm increases (this is clearly seen in the simulation). This can be treated exactly like a one dimensional problem if we work in the Lagrangian frame of reference attached to the boundary layer. That is, take the 1D half-space cooling model and replace the time with <span class="math inline">\(x_1/v\)</span> (cf.&nbsp;the advection equation in which time and velocity / lengths are mixed).</p>
+<p>The standard solution is as follows. Assume a half-space at an intial temperature everywhere of <span class="math inline">\(T_0\)</span> to which a boundary condition, <span class="math inline">\(T=T_s\)</span> is applied at <span class="math inline">\(t=0,x_2=0\)</span>.</p>
+<p>We solve for <span class="math inline">\(T(x_2,t)\)</span> by first making a substitution,</p>
+<p><span class="math display">\[
+\theta = \frac{T-T_0}{T_s-T_0}
+\]</span></p>
+<p>which is a dimensionless temperature, into the standard diffusion equation to obtain</p>
+<p><span id="eq-difftheta"><span class="math display">\[
+\frac{\partial \theta(x_2,t)}{\partial t} = \kappa \frac{\partial ^2 \theta(x_2,t)}{\partial {x_2}^2}
+\tag{14.3}\]</span></span></p>
+<p>The boundary conditions on <span class="math inline">\(\theta\)</span> are simple:</p>
+<p><span class="math display">\[
+\begin{aligned}
+                &amp; \theta(x_2,0) = 0 \\
+                &amp; \theta(0,t) = 1   \\
+                &amp; \theta(\infty,0) = 0      
+            \end{aligned}
+\]</span></p>
+<div id="fig-cooling-half-space" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cooling-half-space-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../Images/Diagrams/CoolingHalfSpaceSolutions1.png" class="img-fluid figure-img" width="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cooling-half-space-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.4: Cooling half-space calculation
+</figcaption>
+</figure>
+</div>
+<p>In place of <span class="math inline">\(t,x_2\)</span>, we use the similarity transformation,</p>
+<p><span class="math display">\[
+\eta = \frac{x_2}{2\sqrt{\kappa t}}
+\]</span></p>
+<p>which is found (more or less) intuitively. Now we need to substitute</p>
+<p><span class="math display">\[
+\begin{aligned}
+            \frac{\partial \theta}{\partial t} &amp; = -\frac{d \theta}{d\eta}(\eta/2t) \\
+            \frac{\partial^2 \theta}{\partial {x_2}^2} &amp; = \frac{1}{4\kappa t}\frac{d^2 \theta}{d \eta^2}
+        \end{aligned}
+\]</span></p>
+<p>to transform (<a href="#eq-difftheta" class="quarto-xref">Equation&nbsp;<span>14.3</span></a>) into</p>
+<p><span id="eq-diffode"><span class="math display">\[
+-\eta \frac{d \theta}{d\eta} = \frac{1}{2} \frac{d^2 \theta}{d \eta^2}
+\tag{14.4}\]</span></span></p>
+<p>Boundary conditions transform to give</p>
+<p><span class="math display">\[
+\begin{aligned}
+                &amp; \theta(\eta=\infty) = 0   \\
+                &amp; \theta(\eta=0) = 1    
+            \end{aligned}
+\]</span></p>
+<p>Write <span class="math inline">\(\phi = d\theta / d\eta\)</span> (for convenience only) to rewrite (<a href="#eq-diffode" class="quarto-xref">Equation&nbsp;<span>14.4</span></a>) as</p>
+<p><span class="math display">\[
+\begin{aligned}
+                -\eta \phi &amp;= \frac{1}{2} \frac{d \phi}{d \eta}     \\
+            \intertext{or}
+                -\eta d\eta &amp;= \frac{1}{2} \frac{d\phi}{\phi}   
+            \end{aligned}
+\]</span></p>
+<p>This is a standard integral with solution</p>
+<p><span class="math display">\[
+\begin{aligned}
+                &amp; -\eta^2 = \log_e \phi -\log_e c_1 \\
+            \intertext{such that}
+                &amp; \phi = c_1 \exp(-\eta^2) = \frac{d\theta}{d\eta}
+            \end{aligned}
+\]</span></p>
+<p>This latter form is then integrated to give the solution:</p>
+<p><span class="math display">\[
+\theta = c_1 \int_0^\eta    \exp(-{\eta'}^2) d\eta' +1
+\]</span></p>
+<p>Boundary conditions give</p>
+<p><span class="math display">\[
+\theta = 1- \frac{2}{\sqrt{\pi}} \int_0^\eta\exp(-{\eta'}^2) d\eta'
+\]</span></p>
+<p>Which is the definition of the complementary error function (<span class="math inline">\(\mbox{\rm erfc}(\eta)\)</span>).</p>
+<p>Undoing the remaining substitutions gives</p>
+<p><span class="math display">\[
+\frac{T-T_0}{T_s-T_0}   = \mbox{\rm erfc}\left(   \frac{x_2}{2\sqrt{\kappa t}} \right)
+\]</span></p>
+<p>In our original context of the cooling boundary layer, then, the <span class="math inline">\(T_    s\)</span> is the surface temperature, <span class="math inline">\(T_0\)</span> is the interior temperature of the convection cell (<span class="math inline">\(\Delta T /2\)</span>) and <span class="math inline">\(t \leftarrow x_1/v\)</span>. The thickness of the boundary layer is found by assuming it is defined by a characteristic isotherm (doesn’t much matter which). The progression of this isotherm is</p>
+<p><span class="math display">\[
+\delta \propto \sqrt{\kappa t}
+\]</span></p>
+<p>or, in the Eulerian frame</p>
+<p><span class="math display">\[
+\delta \propto \sqrt{\kappa x_1 / v}
+\]</span></p>
+</section>
+<section id="internal-heating" class="level2">
+<h2 class="anchored" data-anchor-id="internal-heating">Internal Heating</h2>
+<p>The definition of the Rayleigh number when the layer is significantly internally heated is</p>
+<p><span class="math display">\[
+{\rm Ra} = \frac{g \rho^2 \alpha H d^5}{\eta \kappa k}
+\]</span> where <span class="math inline">\(H\)</span> is the rate of internal heat generation per unit mass.</p>
+<p>The rigorous definition of the Nusselt number is the heat flow through the upper surface divided by the average basal temperature. This allows a Nusselt number to be calculated for internally heated convection where the basal temperature is not known <em>a priori</em></p>
+<p>Internally heated convection is a problem to simulate in the lab, directly, but the same effect is achieved by reducing the temperature of the upper surface as a function of time.</p>
+</section>
+<section id="when-viscosity-is-not-constant" class="level2">
+<h2 class="anchored" data-anchor-id="when-viscosity-is-not-constant">When Viscosity is Not Constant</h2>
+<p>When viscosity is not constant, the equations are considerably complicated. It is no longer possible to form a pure biharmonic equation since <span class="math inline">\(\eta(x,z)\)</span> cannot be taken outside the differential operators. Nor can stream-function / vorticity formulations be used directly for the same reasons. Spectral methods — the decomposition of the problem into a sum of independent problems in the wavenumber domain — is no longer simple since the individual problems are coupled, not independent.</p>
+<p>The Rayleigh number is no longer uniquely defined for the system since the viscosity to which it refers must take some suitable average over the layer — the nature of this average depends on the circumstances.</p>
+<p>The form of convection changes since boundary layers at the top and bottom of the system (cold v hot) are no longer symmetric with each other.</p>
+<p>The convecting system gains another control parameter which is a measure of the viscosity contrast as a function of temperature.</p>
+</section>
+<section id="applications-and-discussion" class="level2">
+<h2 class="anchored" data-anchor-id="applications-and-discussion">Applications and Discussion</h2>
+<p>The application of realistic convection models to the Earth and other planets — particularly Venus.</p>
+<p>The simplest computational and boundary layer solutions to the Stokes’ convection equations made the simplifying assumption that the viscosity was constant. Despite the experimental evidence which suggests viscosity variations should dominate in the Earth, agreement with some important observations was remarkably good.</p>
+<p>The simulations were not able to produce plate-like motions at the surface (instead producing smoothly distributed deformation) but the average velocity, the heat flow and the observed pattern of subsidence of the ocean floor were well matched.</p>
+<section id="mantle-rheology" class="level3">
+<h3 class="anchored" data-anchor-id="mantle-rheology">Mantle Rheology</h3>
+<p>Experimental determination of the rheology of mantle materials gives</p>
+<p><span class="math display">\[
+\dot{\epsilon} \propto \sigma^n d^{-m} \exp\left( -\frac{E+PV}{RT} \right)
+\]</span></p>
+<p>where <span class="math inline">\(\sigma\)</span> is a stress, <span class="math inline">\(d\)</span> is grain size, <span class="math inline">\(E\)</span> is an activation energy, <span class="math inline">\(V\)</span> is an activation volume, and <span class="math inline">\(T\)</span> is absolute temperature. (<span class="math inline">\(R\)</span> is the universal gas constant).</p>
+<p>This translates to a viscosity</p>
+<p><span class="math display">\[
+\eta \propto \sigma^{1-n} d^m exp\left( \frac{E+PV}{RT} \right)
+\]</span></p>
+<p>In the mantle two forms of creep are possible, dislocation creep with <span class="math inline">\(n ~ 3.0\)</span>, <span class="math inline">\(m~0\)</span>, <span class="math inline">\(E ~ 430-540 KJ/mol\)</span>, <span class="math inline">\(V ~ 10 - 20 cm^3/mol\)</span>; and diffusion creep with <span class="math inline">\(n ~ 1.0\)</span>, <span class="math inline">\(m~2.5\)</span>, <span class="math inline">\(E ~ 240-300 KJ/mol\)</span>, <span class="math inline">\(V ~ 5-6 cm^3/mol\)</span>. This is for olivine — other minerals will produce different results, of course.</p>
+</section>
+<section id="convection-with-temperature-dependent-viscosity" class="level3">
+<h3 class="anchored" data-anchor-id="convection-with-temperature-dependent-viscosity">Convection with Temperature Dependent Viscosity</h3>
+<p>More sophisticated models included the effect of temperature dependent viscosity as a step towards more realistic simulations. In fact, the opposite was observed: convection with temperature dependent viscosity is a much worse description of the oceanic lithosphere than constant viscosity convection. It may, however, describe Venus rather well.</p>
+<p>Theoretical studies of the asymptotic limit of convection in which the viscosity variation becomes very large (comparable to values determined for mantle rocks in laboratory experiments) find that the upper surface becomes entirely stagnant with little or no observable motion. Vigorous convection continues underneath the stagnant layer with very little surface manifestation.</p>
+<p>This theoretical work demonstrates that the numerical simulations are producing correct results, and suggests that we should look for physics beyond pure viscous flow in explaining plate motions.</p>
+</section>
+<section id="non-linear-viscosity-and-localisation" class="level3">
+<h3 class="anchored" data-anchor-id="non-linear-viscosity-and-localisation">Non-linear Viscosity and localisation</h3>
+<p>Realistic rheological laws show the viscosity may depend upon stress. This makes the problem non-linear since the stress clearly depends upon viscosity. In order to obtain a solution it is necessary to iterate velocity and viscosity until they no longer change.</p>
+<p>The obvious association of plate boundaries with earthquake activity suggests that relevant effects are to be found in the brittle nature of the cold plates. Brittle materials have a finite strength and if they are stressed beyond that point they break. This is a familiar enough property of everyday materials, but rocks in the lithosphere are non-uniform, subject to great confining pressures and high temperatures, and they deform over extremely long periods of time. This makes it difficult to know how to apply laboratory results for rock breakage experiments to simulations of the plates.</p>
+<p>An ideal, very general rheological model for the brittle lithosphere would incorporate the effects due to small-scale cracks, faults, ductile shear localization due to dynamic recrystalization, anisotropy (... kitchen sink). Needless to say, most attempts to date to account for the brittle nature of the plates have greatly simplified the picture. Some models have imposed weak zones which represent plate boundaries, others have included sharp discontinuities which represent the plate-bounding faults, still others have used continuum methods in which the yield properties of the lithosphere are known but not the geometry of any breaks. Of these approaches, the continuum approach is best able to demonstrate the spectrum of behaviours as convection in the mantle interacts with brittle lithospheric plates. For studying the evolution of individual plate boundaries methods which explicitly include discontinuities work best.</p>
+<p>The simplest possible continuum formulation includes a yield stress expressed as an non-linear effective viscosity.</p>
+<p><span class="math display">\[
+\eta_{\rm eff} = \frac{\tau_{\rm yield}}{\dot{\varepsilon}}
+\]</span></p>
+<p>This formulation can be incorporated very easily into the mantle dynamics modeling approach that we have outlined above as it involves making modifications only to the viscosity law. There may be some numerical difficulties, however, as the strongly non-linear rheology can lead to dramatic variations in the viscosity across relatively narrow zones.</p>
+</section>
+<section id="thermochemical-convection" class="level3">
+<h3 class="anchored" data-anchor-id="thermochemical-convection">Thermochemical Convection</h3>
+<p>The Rayleigh number is defined in terms of thermal buoyancy but other sources of buoyancy are possible in fluids.</p>
+<p>For example, in the oceans, dissolved salt makes water heavy. When hot salty water (e.g.&nbsp;the outflows of shallow seas such as the Mediterranean) mixes with cold less salty water, there is a complicated interaction.</p>
+<p>This is double diffusive convection and produces remarkable layerings etc since the diffusion coefficients of salt and heat are different by a factor of 100.</p>
+<p>In the mantle, bulk chemical differences due to subduction of crustal material can be treated in a similar manner. From the point of view of the diffusion equations, the diffusivity of bulk chemistry in the mantle is tiny (pure advection).</p>
+<p>Fluid flows with chemical v. thermal bouyancy are termed thermochemical convection problems.</p>
+</section>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>🚧 Under Review
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This exercises section is newly added and tailored to thermal convection theory. The exercises focus on key concepts from the chapter but need expansion with additional problems on linear stability analysis and numerical methods.</p>
+<p><strong>Changes made:</strong> - Created 6 exercises aligned with thermal convection concepts - Added 2 worked solutions with detailed explanations - Exercises cover: critical Rayleigh number, Nusselt number, boundary layers, time-dependence, internal heating, and compressibility - Need to add: exercises on linear stability theory, perturbation analysis, experimental validation</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Exercises marked with ⭐ have worked solutions provided. Additional exercises will be added as the chapter develops.</p>
+</div>
+</div>
+<section id="exercise-1-critical-rayleigh-number" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1-critical-rayleigh-number">Exercise 1: Critical Rayleigh Number ⭐</h3>
+<p>For thermal convection in a layer heated from below:</p>
+<ol type="a">
+<li><p>Explain physically why there is a critical Rayleigh number below which convection cannot occur</p></li>
+<li><p>How does the critical Rayleigh number depend on the boundary conditions (free-slip vs.&nbsp;no-slip)?</p></li>
+<li><p>Why is the critical Rayleigh number different for different wavelengths of perturbations?</p></li>
+</ol>
+</section>
+<section id="exercise-2-nusselt-number-scaling" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2-nusselt-number-scaling">Exercise 2: Nusselt Number Scaling</h3>
+<ol type="a">
+<li><p>Derive the definition of the Nusselt number as the ratio of total heat flux to conductive heat flux</p></li>
+<li><p>Explain why <span class="math inline">\(Nu = 1\)</span> for pure conduction</p></li>
+<li><p>For mantle convection with <span class="math inline">\(Ra \sim 10^7\)</span>, estimate the Nusselt number using the scaling <span class="math inline">\(Nu \sim Ra^\beta\)</span>. What value of <span class="math inline">\(\beta\)</span> is appropriate?</p></li>
+</ol>
+</section>
+<section id="exercise-3-thermal-boundary-layer-thickness" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3-thermal-boundary-layer-thickness">Exercise 3: Thermal Boundary Layer Thickness ⭐</h3>
+<p>Using boundary layer theory:</p>
+<ol type="a">
+<li><p>Estimate the thermal boundary layer thickness <span class="math inline">\(\delta\)</span> as a function of Rayleigh number</p></li>
+<li><p>For Earth’s mantle with <span class="math inline">\(Ra \sim 10^7\)</span> and layer depth <span class="math inline">\(h = 2900\)</span> km, calculate <span class="math inline">\(\delta\)</span></p></li>
+<li><p>Compare this to estimates from seismic observations of the D” layer</p></li>
+</ol>
+</section>
+<section id="exercise-4-steady-vs.-time-dependent-convection" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4-steady-vs.-time-dependent-convection">Exercise 4: Steady vs.&nbsp;Time-Dependent Convection</h3>
+<ol type="a">
+<li><p>At what Rayleigh number does the transition from steady to time-dependent convection typically occur?</p></li>
+<li><p>Describe the physical mechanism that causes time-dependence at high <span class="math inline">\(Ra\)</span></p></li>
+<li><p>How does this relate to plate tectonics on Earth?</p></li>
+</ol>
+</section>
+<section id="exercise-5-internal-heating" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5-internal-heating">Exercise 5: Internal Heating</h3>
+<p>Modify the governing equations to include internal heating rate <span class="math inline">\(H\)</span> (W/kg):</p>
+<ol type="a">
+<li><p>Add the internal heating term to the energy equation</p></li>
+<li><p>Define an appropriate internal heating Rayleigh number</p></li>
+<li><p>Discuss how internal heating changes the convection pattern compared to bottom heating only</p></li>
+</ol>
+</section>
+<section id="exercise-6-compressibility-effects" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-6-compressibility-effects">Exercise 6: Compressibility Effects</h3>
+<ol type="a">
+<li><p>Under what conditions can the Boussinesq approximation be used for planetary mantles?</p></li>
+<li><p>Derive the anelastic approximation starting from the full compressible equations</p></li>
+<li><p>Calculate the adiabatic temperature gradient for Earth’s mantle and compare to the actual geotherm</p></li>
+</ol>
+</section>
+</section>
+<section id="solutions-to-selected-exercises" class="level2">
+<h2 class="anchored" data-anchor-id="solutions-to-selected-exercises">Solutions to Selected Exercises</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 1: Critical Rayleigh Number
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>(a) Physical explanation:</strong></p>
+<p>Convection requires that buoyancy forces overcome viscous resistance. At low Rayleigh numbers, viscous forces are too strong and any perturbation is damped. The critical <span class="math inline">\(Ra_c\)</span> represents the threshold where buoyancy and viscous forces balance.</p>
+<p>Below <span class="math inline">\(Ra_c\)</span>: Conduction is stable (viscous damping dominates) Above <span class="math inline">\(Ra_c\)</span>: Convection occurs (buoyancy dominates)</p>
+<p><strong>(b) Boundary condition dependence:</strong></p>
+<ul>
+<li><strong>Free-slip boundaries</strong>: <span class="math inline">\(Ra_c \approx 657\)</span> (easier to convect)</li>
+<li><strong>No-slip boundaries</strong>: <span class="math inline">\(Ra_c \approx 1708\)</span> (harder to convect)</li>
+<li><strong>One free, one no-slip</strong>: <span class="math inline">\(Ra_c \approx 1101\)</span> (intermediate)</li>
+</ul>
+<p>No-slip boundaries require higher <span class="math inline">\(Ra\)</span> because they impose additional constraints on the flow, increasing viscous dissipation.</p>
+<p><strong>(c) Wavelength dependence:</strong></p>
+<p>The Rayleigh number in linear stability analysis is wavelength-dependent: <span class="math display">\[
+Ra(\lambda) = \frac{g\alpha \Delta T h^3}{\kappa \nu} \cdot f(\lambda/h)
+\]</span></p>
+<p>Each wavelength has its own critical value. The global <span class="math inline">\(Ra_c\)</span> is the minimum over all wavelengths. Typically, the most unstable mode has wavelength <span class="math inline">\(\lambda \sim 2h\)</span> (aspect ratio ~ 1), which physical intuition: cells that are too wide or too narrow are less efficient at heat transport.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 3: Thermal Boundary Layer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>(a) Boundary layer scaling:</strong></p>
+<p>From boundary layer theory, heat balance gives: <span class="math display">\[
+\delta \sim h \cdot Ra^{-1/3}
+\]</span></p>
+<p>This comes from balancing vertical advection with vertical diffusion in the thermal boundary layer.</p>
+<p><strong>(b) Mantle calculation:</strong></p>
+<p>With <span class="math inline">\(Ra = 10^7\)</span> and <span class="math inline">\(h = 2900\)</span> km: <span class="math display">\[
+\delta \sim 2900 \text{ km} \times (10^7)^{-1/3} \sim 2900/215 \sim 13.5 \text{ km}
+\]</span></p>
+<p><strong>(c) Comparison with D” layer:</strong></p>
+<p>Seismic observations suggest the D” layer (thermal boundary layer at CMB) is $$100-300 km thick. Our estimate is much thinner, suggesting:</p>
+<ol type="1">
+<li>The D” layer may not be purely thermal (could include chemical layering)</li>
+<li>Local Rayleigh number near CMB might be lower than whole-mantle value</li>
+<li>Time-dependent effects and plumes complicate the simple boundary layer picture</li>
+<li>The scaling assumes steady state, but Earth’s convection is time-dependent</li>
+</ol>
+<p>This discrepancy is an active research topic!</p>
+</div>
+</div>
+</div>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../DraftMaterial";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../DraftMaterial/StokesFlowApplications.html" class="pagination-link" aria-label="Applications of Stokes Flow">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Applications of Stokes Flow</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../DraftMaterial/LithosphericDynamics.html" class="pagination-link" aria-label="Dynamics of the Lithosphere">
+        <span class="nav-page-text"><span class="chapter-title">Dynamics of the Lithosphere</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

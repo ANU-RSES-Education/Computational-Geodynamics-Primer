@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Index of notebooks: – Computational Geodynamics Primer</title>
+<title>Conservation Laws – Computational Geodynamics Primer</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../Notebooks/TestNB1.html" rel="next">
-<link href="../Contributions/example-citations.html" rel="prev">
+<link href="../DraftMaterial/NavierStokes.html" rel="next">
+<link href="../Part5-Computational/Benchmarks/analytical-solutions.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -93,6 +93,35 @@ window.MathJax = {
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
@@ -148,7 +177,7 @@ window.MathJax = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Notebooks/BinderLandingPage.html">Appendices</a></li><li class="breadcrumb-item"><a href="../Notebooks/BinderLandingPage.html">Index of notebooks:</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../DraftMaterial/ContinuumMechanics.html"><strong>Draft: Geodynamics</strong></a></li><li class="breadcrumb-item"><a href="../DraftMaterial/ContinuumMechanics.html"><span class="chapter-title">Conservation Laws</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -288,7 +317,7 @@ window.MathJax = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../DraftMaterial/ContinuumMechanics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conservation Laws</span></a>
+  <a href="../DraftMaterial/ContinuumMechanics.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Conservation Laws</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -413,7 +442,7 @@ window.MathJax = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../Notebooks/BinderLandingPage.html" class="sidebar-item-text sidebar-link active">
+  <a href="../Notebooks/BinderLandingPage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Index of notebooks:</span></a>
   </div>
 </li>
@@ -435,14 +464,22 @@ window.MathJax = {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#conservation-of-mass" id="toc-conservation-of-mass" class="nav-link active" data-scroll-target="#conservation-of-mass">Conservation of mass</a></li>
+  <li><a href="#conservation-of-heat-energy" id="toc-conservation-of-heat-energy" class="nav-link" data-scroll-target="#conservation-of-heat-energy">Conservation of (heat) energy</a></li>
+  <li><a href="#conservation-of-momentum" id="toc-conservation-of-momentum" class="nav-link" data-scroll-target="#conservation-of-momentum">Conservation of momentum</a></li>
+  </ul>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Notebooks/BinderLandingPage.html">Appendices</a></li><li class="breadcrumb-item"><a href="../Notebooks/BinderLandingPage.html">Index of notebooks:</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../DraftMaterial/ContinuumMechanics.html"><strong>Draft: Geodynamics</strong></a></li><li class="breadcrumb-item"><a href="../DraftMaterial/ContinuumMechanics.html"><span class="chapter-title">Conservation Laws</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Index of notebooks:</h1>
+<h1 class="title"><span class="chapter-title">Conservation Laws</span></h1>
 </div>
 
 
@@ -459,10 +496,143 @@ window.MathJax = {
 </header>
 
 
-<ul>
-<li><a href="../Notebooks/TestNB1.html">TestNB1 (ipynb)</a></li>
-<li><a href="../Notebooks/TestQMD_NB1.html">TestQMD (qmd)</a></li>
-</ul>
+<div class="hidden">
+<p>$$ % Global LaTeX macros for MathJax </p>
+% Differential operators
+% Color commands (MathJax compatible)
+<p>$$</p>
+</div>
+<p>We start by deriving the equations of motion, energy balance and so on through a conservation principle. This will give a useful insight into the different forms of the equations which we will later encounter.</p>
+<div id="fig-volume-element" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-volume-element-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../Images/Diagrams/vol_elt.jpg" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-volume-element-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.1: An arbitrary volume, <span class="math inline">\(\Omega\)</span> of material has a surface <span class="math inline">\(\Gamma\)</span>
+</figcaption>
+</figure>
+</div>
+<p>A general conservation law does not distinguish the quantity which is being conserved – it is a mathematical identity. Consider a quantity <span class="math inline">\(\phi\)</span> / unit mass which is carried around by a fluid. We can draw an arbitrary volume, <span class="math inline">\(\Omega\)</span> to contain some amount of this fluid at a given time. We label the surface of the volume <span class="math inline">\(\Omega\)</span> as <span class="math inline">\(\Gamma\)</span>, and define an outward vector <span class="math inline">\(\mathbf{d}\boldsymbol{\Gamma}\)</span> which is normal to the surface and represents an infinitesimally small element on the surface. <span class="math inline">\(\mathbf{d}\boldsymbol{\Gamma}\)</span> has a magnitude equal to the area of this element.</p>
+<p>In general, we also need to define a source/sink term, <span class="math inline">\(H\)</span> / unit mass which generates/consumes the quantity <span class="math inline">\(\phi\)</span>, and a flux term, <span class="math inline">\(\mathbf{F}\)</span> which is the “leakage” occurs across the surface when the fluid is stationary (e.g.&nbsp;this might represent diffusion of <span class="math inline">\(\phi\)</span>). The rate of change of <span class="math inline">\(\phi\)</span> is given by combining the contribution due to the source term, the stationary flux term, and the effect of motion of the fluid.</p>
+<p><span id="eq-cons1"><span class="math display">\[
+\frac{d}{dt} \int_{\Omega} \rho \phi d\Omega =
+            - \int_{\Gamma} \mathbf{F} \cdot \mathbf{d}\boldsymbol{\Gamma}
+            + \int_{\Omega} \rho H d\Omega
+            - \int _{\Gamma} \rho \phi \mathbf{v} \cdot \mathbf{d}\boldsymbol{\Gamma}
+\tag{10.1}\]</span></span></p>
+<p>where the final term is the change due to the fluid carrying <span class="math inline">\(\phi\)</span> through the volume. Fluxes are positive outward (by our definition of <span class="math inline">\(\mathbf{d}\boldsymbol{\Gamma}\)</span>), so a positive flux reduces <span class="math inline">\(\phi\)</span> within <span class="math inline">\(d\Omega\)</span> and negative signs are needed for these terms.</p>
+<p>We can use Gauss’ theorem to write surface integrals as volume integrals:</p>
+<p><span class="math display">\[\int_{\Gamma} \phi \mathbf{u} \cdot \mathbf{d}\boldsymbol{\Gamma}= \int_{\Omega}  \nabla \cdot (\phi \mathbf{u}) d\Omega\]</span></p>
+<p>One more thing: the test surface, <span class="math inline">\(\Gamma\)</span>, and volume, <span class="math inline">\(\Omega\)</span> are assumed to be <em>fixed in the lab reference frame</em> which means that the order of integration and differentiation can be interchanged</p>
+<p><span class="math display">\[\frac{d}{dt} \int_\Omega \rho \phi d\Omega =
+                \int_\Omega \frac{\partial \rho \phi}{\partial t} d\Omega\]</span></p>
+<p>That means we can write <span class="math display">\[
+\int_{\Gamma} \mathbf{F} \cdot \mathbf{d}\boldsymbol{\Gamma}+
+        \int _{\Gamma} \rho \phi \mathbf{v} \cdot \mathbf{d}\boldsymbol{\Gamma}=
+        \int_{\Omega} \nabla \cdot (\mathbf{F} +
+        \rho \phi \mathbf{v}) d\Omega
+\]</span></p>
+<p>and then rewrite the general conservation equation <a href="#eq-cons1" class="quarto-xref">Equation&nbsp;<span>10.1</span></a> as</p>
+<p><span class="math display">\[
+\int_{\Omega} \left[ \frac{d \rho \phi}{dt} +
+            \nabla \cdot (\mathbf{F} + \rho \phi \mathbf{v})
+            -\rho H \right] d\Omega =0
+\]</span></p>
+<p>Now this conservation law has to work no matter what shape we draw for the volume <span class="math inline">\(\Omega\)</span> and so the integral can only be zero for arbitrary <span class="math inline">\(\Omega\)</span> if the enclosed term is zero everywhere, i.e.&nbsp;</p>
+<p><span id="eq-cons2"><span class="math display">\[
+\frac{d \rho \phi}{dt} +
+            \nabla \cdot (\mathbf{F} + \rho \phi \mathbf{v})
+            -\rho H =0
+\tag{10.2}\]</span></span></p>
+<p>This is the general conservation rule for any property <span class="math inline">\(\phi\)</span> of a moving fluid. We now consider several quantities and develop specific conservation laws.</p>
+<section id="conservation-of-mass" class="level2">
+<h2 class="anchored" data-anchor-id="conservation-of-mass">Conservation of mass</h2>
+<p>In this case <span class="math inline">\(\phi=1\)</span> because</p>
+<p><span class="math display">\[\int_\Omega \rho d\Omega \rightarrow \mbox{mass}\]</span></p>
+<p>Of course, we also know that we cant diffuse or create mass which means <span class="math inline">\(\mathbf{F} = H = 0\)</span> and equation <a href="#eq-cons2" class="quarto-xref">Equation&nbsp;<span>10.2</span></a> simplifies to give</p>
+<p><span id="eq-maxxcons"><span class="math display">\[
+{\color{red} \frac{\partial \rho}{\partial t} +
+                \nabla \cdot \rho \mathbf{v} = 0}
+\tag{10.3}\]</span></span></p>
+</section>
+<section id="conservation-of-heat-energy" class="level2">
+<h2 class="anchored" data-anchor-id="conservation-of-heat-energy">Conservation of (heat) energy</h2>
+<p>The thermal energy / unit mass is <span class="math inline">\(C_p T\)</span> and the conductive heat flux <span class="math inline">\(\mathbf{F}\)</span> is given by <span class="math inline">\(\mathbf{F} = -k \nabla T\)</span>, (<span class="math inline">\(k\)</span> is the thermal conductivity).</p>
+<p>Then the general conservation equation <a href="#eq-cons2" class="quarto-xref">Equation&nbsp;<span>10.2</span></a> reduces to this</p>
+<p><span class="math display">\[\frac{\partial (\rho C_p T)}{\partial t} +
+             \nabla \cdot \left(-k \nabla T +
+             \rho C_p T \mathbf{v}\right) - \rho H = 0\]</span></p>
+<p>and if we rearrange these terms in the right way we find</p>
+<p><span class="math display">\[\frac{C_p T}{\rho} \left[ \frac{\partial \rho}{\partial t} +
+            \nabla \cdot \rho \mathbf{v} \right] +
+            \frac{\partial C_p T}{\partial t} +
+            \mathbf{v} \cdot \nabla C_p T =
+            \frac{1}{\rho} \nabla \cdot k \nabla T + H\]</span></p>
+<p>The term in square brackets is simply the statement of mass conservation and we know immediately that this is zero.</p>
+<p>If the heat capacity, <span class="math inline">\(C_p\)</span> and thermal conductivity, <span class="math inline">\(k\)</span> are constants, then the conservation equation becomes</p>
+<p><span id="eq-energycons"><span class="math display">\[
+{\color{red}  \left( \frac{\partial T}{\partial t} + \mathbf{v} \cdot \nabla T \right)=
+                        \kappa \nabla^2 T + \frac{H}{C_p} }
+\tag{10.4}\]</span></span> where <span class="math inline">\(\kappa\)</span> is the thermal diffusivity, <span class="math inline">\(\kappa = k/\rho C_p\)</span>.</p>
+<p>It probably did not go unnoticed that we assumed <span class="math inline">\(\rho\)</span> to be constant to get to this point. It is quite common to assume a material is near-enough incompressible that density changes can be ignored. In fact, this is a reasonable assumption even for air if the velocity is well below the speed of sound. It is also possible to keep assuming incompressibility even when accounting for density variations whose buoyancy effects drive deformation. There is a lot more detail on this in Ricard, 2015<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and we will come back to it soon.</p>
+<!-- This equation is only linear if the velocity field is specified in advance
+and is independent of $T$ (which is not a very interesting case). -->
+<p>A new bit of notation has appeared in the process of this derivation. The the <span class="math inline">\(\mathbf{v} \cdot \nabla\)</span> operator is a derivative that lies along the direction of motion <span class="math inline">\(\mathbf{v}\)</span>:</p>
+<p><span class="math display">\[\mathbf{v} \cdot \nabla \equiv v_j \frac{\partial}{\partial x_j}\]</span></p>
+<p>For later reference, this is how it looks: <span class="math display">\[(\mathbf{v} \cdot \nabla) T = v_1 \frac{\partial T}{\partial x_1} +
+                v_2 \frac{\partial T}{\partial x_2} + v_3 \frac{\partial T}{\partial x_3}\]</span></p>
+<p>The Laplacian, <span class="math inline">\(\nabla^2\)</span>, is this expression (for scalar <span class="math inline">\(T\)</span>)</p>
+<p><span class="math display">\[\nabla^2 T \equiv \frac{\partial^2 T}{\partial x_1^2} + \frac{\partial^2 T}{\partial x_2^2} + \frac{\partial^2 T}{\partial x_3^2}\]</span></p>
+</section>
+<section id="conservation-of-momentum" class="level2">
+<h2 class="anchored" data-anchor-id="conservation-of-momentum">Conservation of momentum</h2>
+<p>Momentum is a vector quantity, so the form of <a href="#eq-cons1" class="quarto-xref">Equation&nbsp;<span>10.1</span></a> is different. The source term in the momentum equation represents a body force, and the surface flux term represents a stress.</p>
+<p><span id="eq-momcons1"><span class="math display">\[
+\frac{d}{dt}\int_{\Omega} \rho \mathbf{v} d\Omega =
+            -   \int_{\Omega} \rho g \hat{\mathbf{z}} d\Omega  
+            +   \int_{\Gamma} \boldsymbol{\sigma} \cdot \mathbf{d}\boldsymbol{\Gamma}-
+                \int_{\Gamma} \rho \mathbf{v} (\mathbf{v} \cdot \mathbf{d}\boldsymbol{\Gamma})
+\tag{10.5}\]</span></span> Gravity provides a body force acting in the vertical direction, <span class="math inline">\(\hat{\mathbf{z}}\)</span>. We have introduced the stress tensor, <span class="math inline">\(\boldsymbol{\sigma}\)</span>; the force / unit area exerted on an arbitrarily oriented surface with normal <span class="math inline">\(\hat{\mathbf {n}}\)</span> is</p>
+<p><span class="math display">\[f_i = \sigma_{ij} n_j\]</span></p>
+<p>The application of Gauss’ theorem, and the equality holds for any choice of the volume gives this result:</p>
+<p><span id="eq-momcons2"><span class="math display">\[
+\frac{\partial}{\partial t}(\rho \mathbf{v})
+            +\rho g \hat{\mathbf{z}} - \nabla \cdot \sigma + \nabla \cdot (\rho \mathbf{v} \mathbf{v}) = 0
+\tag{10.6}\]</span></span></p>
+<p>Vector notation allows us to keep a number of equations written as one single equation. However, at this point, keeping the equations in vector notation makes the situation more confusing. What does that last term on the left hand side of <a href="#eq-momcons2" class="quarto-xref">Equation&nbsp;<span>10.6</span></a> mean ? It is clearer if we use the index notation instead</p>
+<p>Equation <a href="#eq-momcons2" class="quarto-xref">Equation&nbsp;<span>10.6</span></a> is equivalent to this:</p>
+<p><span id="eq-momindx"><span class="math display">\[
+{\color{green}  \frac{\partial \rho v_i}{\partial t}} + \rho g \delta_{i3} -
+            \frac{\partial \sigma_{ij}}{\partial x_j} +
+            \textcolor[rgb]{0.0,0.0,0.7}{ \frac{\partial(\rho v_i v_j)}{\partial x_j}} = 0
+\tag{10.7}\]</span></span></p>
+<p>where that peculiar final term on the left hand side is unambiguous. Repeated indeces in each term are implicitly summed. <span class="math inline">\(\delta_{ij}\)</span> is the kronecker delta which obeys:</p>
+<p><span class="math display">\[\delta_{ij} = \begin{cases}
+                0 &amp; \text{if $i \neq j$}, \\
+                1 &amp; \text{if $i = j$}.
+            \end{cases}\]</span></p>
+<p>If we expand the derivatives of products of two terms and recombine them in the right way:</p>
+<p><span class="math display">\[v_i \left[{\color{green}  \frac{\partial \rho}{\partial t}} +
+             {\color{blue}   \frac{\partial \rho v_j}{\partial x_j}} \right]
+            + {\color{green}  \rho \frac{\partial v_i}{\partial t}} + {\color{blue}  \rho v_j \frac{\partial v_i}{\partial x_j}} =
+            \frac{\partial \sigma_{ij}}{\partial x_j} -\rho g \delta_{i3}\]</span></p>
+<p>The term in square brackets is, in fact, a restatement of the conservation of mass derived above and must vanish. The remaining terms can now be written out in vector notation as</p>
+<p><span id="eq-momcons3"><span class="math display">\[
+{\color{red}    \rho \left( \frac{\partial \mathbf{v}}{\partial t}
+                            + (\mathbf{v} \cdot \nabla) \mathbf{v} \right) =
+                         \nabla \cdot \boldsymbol{\sigma} - g\rho\hat{\mathbf{z}}      }
+\tag{10.8}\]</span></span></p>
+<p>Note: The <span class="math inline">\(\mathbf{v} \cdot \nabla\)</span> notation we introduced earlier is now an operator on a vector. Written out it looks like this:</p>
+<p><span class="math display">\[\begin{split}
+                    (\mathbf{v} \cdot \nabla) \mathbf{u} =
+                        &amp; \hat{\boldsymbol{\imath}} \left( v_1 \frac{\partial u_1}{\partial x_1} +
+                        v_2 \frac{\partial u_1}{\partial x_2} + v_3 \frac{\partial u_1}{\partial x_3} \right) \\
+                            &amp; \hat{\boldsymbol{\jmath}} \left( v_1 \frac{\partial u_2}{\partial x_1} +
+                        v_2 \frac{\partial u_2}{\partial x_2} + v_3 \frac{\partial u_2}{\partial x_3} \right) \\
+                            &amp; \hat{\boldsymbol{k}} \left( v_1 \frac{\partial u_3}{\partial x_1} +
+                        v_2 \frac{\partial u_3}{\partial x_2} + v_3 \frac{\partial u_3}{\partial x_3} \right) \\                
+                \end{split}\]</span></p>
 
 
 <script type="ojs-module-contents">
@@ -479,6 +649,13 @@ eyJjb250ZW50cyI6W119
 <script type="vfs-file">
 W10=
 </script>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Ricard, Y. “Physics of Mantle Convection.” In Treatise on Geophysics, 23–71. Elsevier, 2015. https://doi.org/10.1016/B978-0-444-53802-4.00127-5.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script type="ojs-module-contents">
@@ -486,7 +663,7 @@ eyJjb250ZW50cyI6W119
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
-window._ojs.paths.runtimeToDoc = "../../Notebooks";
+window._ojs.paths.runtimeToDoc = "../../DraftMaterial";
 window._ojs.paths.runtimeToRoot = "../..";
 window._ojs.paths.docToRoot = "..";
 window._ojs.selfContained = false;
@@ -894,13 +1071,13 @@ window._ojs.runtime.interpretFromScriptTags();
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../Contributions/example-citations.html" class="pagination-link" aria-label="Example: Using Citations and Math">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Example: Using Citations and Math</span></span>
+      <a href="../Part5-Computational/Benchmarks/analytical-solutions.html" class="pagination-link" aria-label="Benchmark Problems: Analytical Solutions for Viscous Flows">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Benchmark Problems: Analytical Solutions for Viscous Flows</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../Notebooks/TestNB1.html" class="pagination-link" aria-label="Test Notebook">
-        <span class="nav-page-text"><span class="chapter-title">Test Notebook</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../DraftMaterial/NavierStokes.html" class="pagination-link" aria-label="Navier-Stokes Equation">
+        <span class="nav-page-text"><span class="chapter-title">Navier-Stokes Equation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

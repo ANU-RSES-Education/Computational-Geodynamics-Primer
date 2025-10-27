@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Navier-Stokes Equation – Computational Geodynamics Primer</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../DraftMaterial/MantleDynamics.html" rel="next">
+<link href="../DraftMaterial/ContinuumMechanics.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a26bb016ce855eb6ac1f0ce73cb2e796.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: {
+    tags: 'ams',
+    packages: {'[+]': ['ams', 'amsmath', 'amssymb', 'color', 'newcommand', 'boldsymbol']},
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    macros: {
+      dGamma: "{\\mathbf{d}\\boldsymbol{\\Gamma}}",
+      uv: "{\\mathbf{u}}",
+      vv: "{\\mathbf{v}}",
+      DIV: "{\\nabla\\cdot}",
+      GRAD: "{\\nabla}",
+      CURL: "{\\nabla\\times}"
+    }
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../assets/ANU-logo.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/ANU-logo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Computational Geodynamics Primer</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
+<span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../summary.html"> 
+<span class="menu-text">Details</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../LectureSlides/Lecture1.qmd"> 
+<span class="menu-text">Slides</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../DraftMaterial/ContinuumMechanics.html"><strong>Draft: Geodynamics</strong></a></li><li class="breadcrumb-item"><a href="../DraftMaterial/NavierStokes.html"><span class="chapter-title">Navier-Stokes Equation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/AuWorldEQ.jpg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../assets/AuWorldEQ.jpg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Preface</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EMSC e-Course template</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part I: Mathematical Fundamentals</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part1-Fundamentals/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mathematical Fundamentals</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part II: Fluid Dynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part2-FluidDynamics/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fluid Dynamics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part2-FluidDynamics/inviscid-flows.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Steady Inviscid Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part III: Geodynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part3-Geodynamics/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Geodynamics Applications</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part IV: Numerical Methods</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part4-NumericalMethods/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numerical Methods</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part V: Computational Exercises</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part5-Computational/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part5-Computational/Benchmarks/analytical-solutions.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Benchmark Problems: Analytical Solutions for Viscous Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Draft: Geodynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/ContinuumMechanics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conservation Laws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NavierStokes.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Navier-Stokes Equation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/MantleDynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Non-dimensional equations &amp; dimensionless numbers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/StokesFlowApplications.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Applications of Stokes Flow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/ThermalConvection.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Thermal Convection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/LithosphericDynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamics of the Lithosphere</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Draft: Computational Methods</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numerical Modeling in Solid Earth Dynamics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Survey of numerical methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction to the Finite Element Method</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Practical Finite Elements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Methods for Solving Numerical Problems</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">References</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Contributing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Contributions/contributing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Contributing to the Computational Geodynamics Primer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Contributions/style-guide.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Style Guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Contributions/example-citations.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Example: Using Citations and Math</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Notebooks/BinderLandingPage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Index of notebooks:</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Notebooks/TestNB1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Test Notebook</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Notebooks/TestQMD_NB1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quarto MD notebook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#viscosity" id="toc-viscosity" class="nav-link active" data-scroll-target="#viscosity">Viscosity</a></li>
+  <li><a href="#boussinesq-approximation-equation-of-state-density-variations" id="toc-boussinesq-approximation-equation-of-state-density-variations" class="nav-link" data-scroll-target="#boussinesq-approximation-equation-of-state-density-variations">Boussinesq Approximation, Equation of State, Density Variations</a></li>
+  <li><a href="#fluid-motion-eulerian-v.-lagrangian" id="toc-fluid-motion-eulerian-v.-lagrangian" class="nav-link" data-scroll-target="#fluid-motion-eulerian-v.-lagrangian">Fluid Motion: Eulerian v. Lagrangian</a></li>
+  <li><a href="#reading-material" id="toc-reading-material" class="nav-link" data-scroll-target="#reading-material">Reading Material</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1-material-derivative" id="toc-exercise-1-material-derivative" class="nav-link" data-scroll-target="#exercise-1-material-derivative">Exercise 1: Material Derivative ⭐</a></li>
+  <li><a href="#exercise-2-isothermal-atmosphere" id="toc-exercise-2-isothermal-atmosphere" class="nav-link" data-scroll-target="#exercise-2-isothermal-atmosphere">Exercise 2: Isothermal Atmosphere ⭐</a></li>
+  <li><a href="#exercise-3-vector-differential-operators" id="toc-exercise-3-vector-differential-operators" class="nav-link" data-scroll-target="#exercise-3-vector-differential-operators">Exercise 3: Vector Differential Operators ⭐</a></li>
+  <li><a href="#exercise-4-material-derivative-and-pollutant-transport" id="toc-exercise-4-material-derivative-and-pollutant-transport" class="nav-link" data-scroll-target="#exercise-4-material-derivative-and-pollutant-transport">Exercise 4: Material Derivative and Pollutant Transport ⭐</a></li>
+  <li><a href="#exercise-5-commutation-of-derivatives" id="toc-exercise-5-commutation-of-derivatives" class="nav-link" data-scroll-target="#exercise-5-commutation-of-derivatives">Exercise 5: Commutation of Derivatives</a></li>
+  <li><a href="#exercise-6-incompressibility-condition" id="toc-exercise-6-incompressibility-condition" class="nav-link" data-scroll-target="#exercise-6-incompressibility-condition">Exercise 6: Incompressibility Condition</a></li>
+  <li><a href="#exercise-7-pressure-field-in-inviscid-flow" id="toc-exercise-7-pressure-field-in-inviscid-flow" class="nav-link" data-scroll-target="#exercise-7-pressure-field-in-inviscid-flow">Exercise 7: Pressure Field in Inviscid Flow ⭐</a></li>
+  <li><a href="#exercise-8-cylindrical-polar-coordinates" id="toc-exercise-8-cylindrical-polar-coordinates" class="nav-link" data-scroll-target="#exercise-8-cylindrical-polar-coordinates">Exercise 8: Cylindrical Polar Coordinates ⭐</a></li>
+  <li><a href="#exercise-9-boussinesq-approximation-application" id="toc-exercise-9-boussinesq-approximation-application" class="nav-link" data-scroll-target="#exercise-9-boussinesq-approximation-application">Exercise 9: Boussinesq Approximation Application</a></li>
+  <li><a href="#exercise-10-reynolds-number-estimation" id="toc-exercise-10-reynolds-number-estimation" class="nav-link" data-scroll-target="#exercise-10-reynolds-number-estimation">Exercise 10: Reynolds Number Estimation</a></li>
+  </ul></li>
+  <li><a href="#solutions-to-selected-exercises" id="toc-solutions-to-selected-exercises" class="nav-link" data-scroll-target="#solutions-to-selected-exercises">Solutions to Selected Exercises</a></li>
+  </ul>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../DraftMaterial/ContinuumMechanics.html"><strong>Draft: Geodynamics</strong></a></li><li class="breadcrumb-item"><a href="../DraftMaterial/NavierStokes.html"><span class="chapter-title">Navier-Stokes Equation</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Navier-Stokes Equation</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hidden">
+<p>$$ % Global LaTeX macros for MathJax </p>
+% Differential operators
+% Color commands (MathJax compatible)
+<p>$$</p>
+</div>
+<p>In the previous section ({doc}<code>./ContinuumMechanics</code>), we looked a very general way use conservation principles to construct equations describing how sources, fluxes and material transport of varous quantities balance one another through time. This approach can also be used to generate conservation equations for additional physical variables (for example, angular momentum, electric current).</p>
+<p>One thing is still missing, though, and that is how we express the flux term for a quantity in terms of gradients in the quantity itself. We did this without any comment in the conservation of heat energy because we used Fourier’s law <span class="math inline">\(\mathbf{F} = -k \nabla T\)</span> to express the heat flux as a linear function of the temperature gradient. This is an empirical relationship that contains a physical constant that we are not able to derive from first principles. This missing relationship is known as a <strong>constitutive law</strong>.</p>
+<section id="viscosity" class="level2">
+<h2 class="anchored" data-anchor-id="viscosity">Viscosity</h2>
+<p>For a fluid, the constitutive relationship relating momentum flux to momentum gradients introduces a new physical parameter, <strong>viscosity</strong> which relates stress to rates of change in velocity gradients and a second viscosity relating to rates of volume change.</p>
+<p>If we make the assumption that the fluid is incompressible (<span class="math inline">\(\nabla \cdot \mathbf{v}\)</span>) which we already mentioned in deriving the temperature equation, we only have to worry about the viscosity that relates to velocity gradients</p>
+<p><span class="math display">\[
+\sigma_{ij} = \eta \left( \frac{\partial v_i}{\partial x_j} + \frac{\partial v_j}{\partial x_i}\right) - p\delta_{ij}
+\]</span></p>
+<p>(An expanded derivation for this is in Landau &amp; Lifschitz[REF] and they also talk extensively about rate of volume change effects).</p>
+<p>If the viscosity is constant, then we can substitute the constitutive law into the stress-divergence term of the momentum conservation equation. In index notation once again,</p>
+<p><span class="math display">\[
+\begin{split}
+                \nabla \cdot \boldsymbol{\sigma} &amp; =
+                    \frac{\partial}{\partial x_j} \eta
+                        \left( \frac{\partial v_i}{\partial x_j} +  \frac{\partial v_j}{\partial x_i} \right)
+                        - \frac{\partial p}{\partial x_j} \delta_{ij} \\
+                &amp; = \eta \frac{\partial^2 v_i}{\partial x_j \partial x_j} +
+                            \eta \frac{\partial^2 v_j}{\partial x_i \partial x_j} -
+                                \frac{\partial p}{\partial x_i}\\
+                &amp; = \eta \nabla^2 \mathbf{v} +
+                             \eta \textcolor[rgb]{0.0,0.7,0.0}{ \nabla (\nabla \cdot \mathbf{v})} - \nabla p       
+\end{split}
+\]</span></p>
+<p>the second (green) term in this final form must vanish because of the incompressibility assumption, so the momentum conservation equation becomes</p>
+<p>This is the Navier-Stokes equation. Once again some new notation has shown up uninvited. The Laplacian operator <span class="math inline">\(\nabla^2\)</span> is defined (in a scalar context) as</p>
+<p>and in a vector context as</p>
+<p><span class="math display">\[
+\begin{split}
+\nabla^2 \mathbf{u} &amp; = \nabla \nabla \cdot \mathbf{u} - \nabla \times (\nabla \times \mathbf{u}) \\
+                    &amp; = \mathbf{i} \nabla \cdot \nabla u_x +
+                        \mathbf{j} \nabla \cdot \nabla u_y +
+                        \mathbf{k} \nabla \cdot \nabla u_z
+                        \mathrm{\hspace{1cm} (Cartesian)}
+\end{split}
+\]</span></p>
+<p>In Cartesian coordinates, the Laplacian operator has a simple form, and the vector Laplacian is simply the scalar operator applied in each direction. In other coordinate systems this operator becomes substantially more complicated but this notation is handy because the equations always look the same no matter the coordinate system.</p>
+</section>
+<section id="boussinesq-approximation-equation-of-state-density-variations" class="level2">
+<h2 class="anchored" data-anchor-id="boussinesq-approximation-equation-of-state-density-variations">Boussinesq Approximation, Equation of State, Density Variations</h2>
+<p>The equation which relates pressure, temperature and density is known as the equation of state. For the equations derived so far, we have specified an incompressible fluid and that means the density can’t change at all.</p>
+<p>Can you see the problem ? We have also included a source term for momentum which relies on gravity acting on <em>density variations</em>. This conflict is typical in fluid mechanics: simplifying assumptions if taken to their logical limit imply only trivial solutions (no motions are possible, that sort of thing)</p>
+<p>We have to do something to get around this problem and the simplest thing to do is assume density <em>changes</em> are typically small relative to the magnitude of the density. Any terms in the equations which are multiplied by density can therefore assume that density is a large, constant value. Terms which contain gradients of density or density variations (where the constant terms cancel out) need to consider the equation of state.</p>
+<p>We call this the <em>Boussinesq approximation</em> and it is only good for nearly- incompressible fluids. In the Navier-Stokes equation, the hydrostatic pressure does not influence the velocity field at all. Only <em>differences</em> in density drive fluid flow, and so the only term where we need to worry about density not being constant is in the gravitational body forces.</p>
+<p>In the case of density variations due to temperature, the equation of state is this:</p>
+<p><span id="eq-boussinesq-state"><span class="math display">\[
+\rho = \rho_0 \left(1 - \alpha ( T-T_0 )\right)
+\tag{11.1}\]</span></span> where <span class="math inline">\(\rho_0\)</span> is the density at a reference temperature <span class="math inline">\(T_0\)</span>. <span class="math inline">\(\alpha\)</span> is the coefficient of thermal expansion. <span class="math inline">\(\alpha\)</span> is generally <em>much</em> smaller than one which justifies making the approximation in the first place.</p>
+<p>The energy and momentum conservation equations are now coupled through the buoyancy forces,</p>
+<p><span class="math display">\[
+g\rho\hat{\mathbf{z}} = g \rho_0 \left(1 - \alpha(T-T_0)\right)
+\]</span></p>
+<p>Density variations due to pressure produce a perfectly vertical, isotropic forcing term on the momentum conservation equation. In the steady state case, this is balanced by the hydrostatic pressure gradient. (The isotropic term does not contribute at all the the deviatoric part of the stress equation and thus cannot induce steady flow). This is the reason we can ignore the vertical density gradient due to the weight of the fluid.</p>
+<p>Another density variation is the one that results from variation in chemical composition from one fluid element to another. An example would be where two immiscible fluids live in the same region. Now density variations might be large – the fluid domains must be considered separately if we still want to assume small density changes due to temperature.</p>
+</section>
+<section id="fluid-motion-eulerian-v.-lagrangian" class="level2">
+<h2 class="anchored" data-anchor-id="fluid-motion-eulerian-v.-lagrangian">Fluid Motion: Eulerian v. Lagrangian</h2>
+<p>We have seen the <span class="math inline">\(\mathbf{v} \cdot \nabla\)</span> operator a number of times now. The presence of this term causes major complications when we want to find solutions to the equations of continuum mechanics since it introduces a strong non-linearity. It is this term which is behind turbulence in high speed flows.</p>
+<p>This term describes the <strong>advection</strong> of a quantity which accounts for the passive transport of something (temperature, momentum), by the motion of the fluid. Advection also presents some serious headaches in numerical methods and has spawned a vast literature devoted to efficient and accurate solution methods.</p>
+<p>One way to side-step<br>
+the complexity of advection is to consider an elemental volume of space which <em>moves with the fluid</em>. The surface flux term from equation <a href="ContinuumMechanics.html#eq-cons1" class="quarto-xref">Equation&nbsp;<span>10.1</span></a> vanishes at once if there is no motion of material in or out of the boundary. In reality, we are just sweeping the problem under the rug – it doesn’t actually go away altogether – but it can be useful to do this because every once in a while that term will cancel out before we need to actually do anything with it ! And, sometimes, when it comes to numerical methods, different views of the equations can lead to better approximations.</p>
+<p>Mathematically, we introduce a new notation:</p>
+<p><span class="math display">\[
+\frac{D \phi}{D t} = \frac{d}{dt} \phi\left[ x_1(t),x_2(t),x_3(t),t \right]
+\]</span></p>
+<p>where the change in the reference position <span class="math inline">\((x_1(t),x_2(t),x_3(t))\)</span> is governed by the local flow velocity:</p>
+<p><span class="math display">\[
+\frac{d x_1}{d t} = v_1 \;\;\;\;
+                    \frac{d x_2}{d t} = v_2  \;\;\;\;
+                    \frac{d x_3}{d t} = v_3
+\]</span></p>
+<p>and this keeps the reference point moving with the fluid. Differentiating gives</p>
+<p><span class="math display">\[
+\frac{D \phi}{D t} =    \frac{\partial \phi}{\partial t} +
+                                \frac{\partial \phi}{\partial x_1}\frac{d x_1}{d t} +
+                                \frac{\partial \phi}{\partial x_2}\frac{d x_2}{d t} +
+                                \frac{\partial \phi}{\partial x_3}\frac{d x_3}{d t}
+\]</span></p>
+<p>which leads to</p>
+<p><span class="math display">\[
+\frac{D \phi}{D t} =   \frac{\partial \phi}{\partial t} +
+                                    v_1 \frac{\partial \phi}{\partial x_1} +
+                                    v_2 \frac{\partial \phi}{\partial x_2} +
+                                    v_3 \frac{\partial \phi}{\partial x_3}
+\]</span></p>
+<p>which is equivalent to</p>
+<p><span class="math display">\[
+\frac{D \phi}{D t} = \frac{\partial \phi}{\partial t} +
+                (\mathbf{v} \cdot \nabla) \phi
+\]</span></p>
+<p>If we think of <span class="math inline">\(\phi\)</span> as the concentration of a dye in the fluid, then the above is a conservation equation assuming the dye does not diffuse and has no sources or sinks.</p>
+<p>Viewed from a reference frame locked to <em>a particular fluid element</em>, the energy conservation equation becomes</p>
+<p><span class="math display">\[
+\frac{D T}{Dt} =
+        \kappa \nabla^2 T + \frac{H}{C_p}
+\]</span></p>
+<p>and the momentum conservation equation now becomes</p>
+<p><span class="math display">\[
+\frac{D \mathbf{v} }{D t} =
+                \eta \nabla^2 \mathbf{v} - \nabla P     
+                - g\rho\hat{\mathbf{z}}
+\]</span></p>
+<p>This is a considerably more compact way of writing the equations, but it is now necessary to use a coordinate system which is locked into the fluid and rapidly deforms as the fluid flows. Before long, the coordinate system is unimaginably complex – the advection problem returns in another guise. This formulation is known as the Lagrangian formulation and contrasts with the Eulerian viewpoint which is fixed in space.</p>
+<p>From the numerical point of view, however, this approach can have some distinct advantages. The computer can often track the distorted coordinate system far better than it can handle successive applications of the <span class="math inline">\(\mathbf{v} \cdot \nabla\)</span> operator at a fixed point in space. We will return to this point later.</p>
+</section>
+<section id="reading-material" class="level2">
+<h2 class="anchored" data-anchor-id="reading-material">Reading Material</h2>
+<p>G.&nbsp;F. Davies. <em>Dynamic Earth</em>. Cambridge University Press, New York, 1999.</p>
+<p>J.&nbsp;Grotzinger, T.&nbsp;H. Jordan, F.&nbsp;Press, and R.&nbsp;Siever. <em>Understanding Earth</em>. W. H. Freeman &amp; Co, 5 edition, 2006. URL <a href="http://bcs.whfreeman.com/understandingearth5e/" class="uri">http://bcs.whfreeman.com/understandingearth5e/</a>.</p>
+<p>L.&nbsp;D. Landau and E.&nbsp;M. Lifshitz. <em>Fluid Mechanics</em>, volume&nbsp;6 of <em>Course of Theoretical Physics</em>. Pergamon Press, 1959.</p>
+<p>G.&nbsp;Schubert, D.&nbsp;L. Turcotte, and P.&nbsp;Olson. <em>Mantle Convection in Earth and Planets</em>. Cambridge University Press, UK, 2001.</p>
+<p>D.L. Turcotte and G.&nbsp;Schubert. <em>Geodynamics</em>. John Wiley and Sons, New York, 1982.</p>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>🚧 Under Review
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This exercises section was newly added and adapted from MTH3360 Fluid Mechanics course materials. The exercises have been modified to include geodynamic applications and use the book’s notation conventions, but may need further refinement for pedagogical flow and difficulty progression.</p>
+<p><strong>Changes made:</strong> - Adapted 8 exercises from ICFM Chapter 2 (Equations of Motion) - Added 2 new exercises on Boussinesq approximation and Reynolds number for geodynamic scenarios - Converted LaTeX notation to Quarto format with global math macros - Added detailed solutions to 5 exercises in collapsible callout blocks - Modified examples to use geodynamic contexts where appropriate</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Exercises marked with ⭐ have worked solutions provided.</p>
+</div>
+</div>
+<section id="exercise-1-material-derivative" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1-material-derivative">Exercise 1: Material Derivative ⭐</h3>
+<p>Under what condition is the advective rate-of-change equal to the total rate-of-change? In other words, when does: <span class="math display">\[
+\frac{D\mathbf{f}}{Dt} = (\mathbf{u}\cdot \nabla) \mathbf{f}
+\]</span></p>
+<p>Explain the physical meaning of this condition.</p>
+</section>
+<section id="exercise-2-isothermal-atmosphere" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2-isothermal-atmosphere">Exercise 2: Isothermal Atmosphere ⭐</h3>
+<p>Show that, in hydrostatic equilibrium, the pressure and density in an isothermal (constant temperature) atmosphere vary with height according to: <span class="math display">\[
+p(z) = p(0)\exp(-z/H_s) \quad \text{and} \quad \rho(z) = \rho(0)\exp(-z/H_s)
+\]</span></p>
+<p>where <span class="math inline">\(H_s = RT/g\)</span>, <span class="math inline">\(R = 287\)</span> J K<span class="math inline">\(^{-1}\)</span> kg<span class="math inline">\(^{-1}\)</span> is the specific gas constant, and <span class="math inline">\(z\)</span> points vertically upwards.</p>
+<p>Show that for realistic values of <span class="math inline">\(T\)</span> in the troposphere, the e-folding height scale <span class="math inline">\(H_s\)</span> is on the order of 8 km.</p>
+</section>
+<section id="exercise-3-vector-differential-operators" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3-vector-differential-operators">Exercise 3: Vector Differential Operators ⭐</h3>
+<p>The vector differential operator del (nabla) is defined as: <span class="math display">\[
+\nabla= \left(\frac{\partial}{\partial x}, \frac{\partial}{\partial y}, \frac{\partial}{\partial z}\right)
+\]</span></p>
+<p>Express in full Cartesian form the quantities: - <span class="math inline">\(\nabla\cdot\mathbf{u}\)</span> (divergence) - <span class="math inline">\(\nabla\times\mathbf{u}\)</span> (curl) - <span class="math inline">\(\mathbf{u}\cdot \nabla\)</span> (directional derivative) - <span class="math inline">\(\nabla\cdot \nabla\equiv \nabla^2\)</span> (Laplacian)</p>
+<p>Identify and explain the physical meaning of each operator.</p>
+</section>
+<section id="exercise-4-material-derivative-and-pollutant-transport" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4-material-derivative-and-pollutant-transport">Exercise 4: Material Derivative and Pollutant Transport ⭐</h3>
+<p>Consider a homogeneous, incompressible fluid with velocity <span class="math inline">\(\mathbf{u}= (\alpha x, -\alpha y, 0)\)</span> where <span class="math inline">\(\alpha\)</span> is constant. The concentration of a pollutant in the fluid is: <span class="math display">\[
+c(x,y,z,t) = c_0 + \gamma t + \beta x^2 y e^{-\alpha t}
+\]</span></p>
+<p>where <span class="math inline">\(c_0\)</span>, <span class="math inline">\(\gamma\)</span>, and <span class="math inline">\(\beta\)</span> are constants.</p>
+<ol type="a">
+<li><p>What is the (time) rate of change of concentration at a particular point (Eulerian perspective)?</p></li>
+<li><p>How does the concentration change following fluid parcels (Lagrangian perspective)?</p></li>
+<li><p>Consider a parcel at point <span class="math inline">\((1, 1, 0)\)</span> at <span class="math inline">\(t = 0\)</span>. What is its concentration at <span class="math inline">\(t = 1\)</span>?</p></li>
+</ol>
+</section>
+<section id="exercise-5-commutation-of-derivatives" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5-commutation-of-derivatives">Exercise 5: Commutation of Derivatives</h3>
+<p>Show that: <span class="math display">\[
+\frac{\partial}{\partial x}\left(\frac{Df}{Dt}\right) = \frac{D}{Dt}\left(\frac{\partial f}{\partial x}\right) + \frac{\partial \mathbf{u}}{\partial x} \cdot \nabla f
+\]</span></p>
+<p>Clarify the meaning of the final term using index notation.</p>
+<p><strong>Hint</strong>: Expand <span class="math inline">\(D/Dt\)</span> and use the product rule carefully.</p>
+</section>
+<section id="exercise-6-incompressibility-condition" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-6-incompressibility-condition">Exercise 6: Incompressibility Condition</h3>
+<p>Is the velocity field <span class="math inline">\(\mathbf{u}= (\cos x, xz^2, z\sin x)\)</span> kinematically admissible for an incompressible fluid? Justify your answer.</p>
+</section>
+<section id="exercise-7-pressure-field-in-inviscid-flow" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-7-pressure-field-in-inviscid-flow">Exercise 7: Pressure Field in Inviscid Flow ⭐</h3>
+<p>Find the pressure field in the inviscid, incompressible flow with velocity field <span class="math inline">\(\mathbf{u}= (kx, -ky, 0)\)</span>, where <span class="math inline">\(k\)</span> is a constant. Assume the flow is steady and the only body force is gravity.</p>
+<p><strong>Hint</strong>: Use the Euler equation (Navier-Stokes without viscosity).</p>
+</section>
+<section id="exercise-8-cylindrical-polar-coordinates" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-8-cylindrical-polar-coordinates">Exercise 8: Cylindrical Polar Coordinates ⭐</h3>
+<p>Show that the continuity equation in cylindrical polar coordinates <span class="math inline">\((r, \theta, z)\)</span> is: <span class="math display">\[
+\frac{1}{r}\frac{\partial(ru_r)}{\partial r} + \frac{1}{r}\frac{\partial u_\theta}{\partial \theta} + \frac{\partial u_z}{\partial z} = 0
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{U} = (u_r, u_\theta, u_z)\)</span> is the velocity in cylindrical coordinates.</p>
+<p><strong>Hint</strong>: Transform from Cartesian coordinates using the chain rule.</p>
+</section>
+<section id="exercise-9-boussinesq-approximation-application" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-9-boussinesq-approximation-application">Exercise 9: Boussinesq Approximation Application</h3>
+<p>Consider mantle convection where the temperature difference between the surface and CMB is <span class="math inline">\(\Delta T = 3000\)</span> K, thermal expansivity <span class="math inline">\(\alpha = 3 \times 10^{-5}\)</span> K<span class="math inline">\(^{-1}\)</span>, and reference density <span class="math inline">\(\rho_0 = 4000\)</span> kg m<span class="math inline">\(^{-3}\)</span>.</p>
+<ol type="a">
+<li><p>Calculate the density variation <span class="math inline">\(\Delta \rho = \rho_0 \alpha \Delta T\)</span></p></li>
+<li><p>What percentage of the reference density is this?</p></li>
+<li><p>Is the Boussinesq approximation valid for mantle convection?</p></li>
+<li><p>Under what conditions might the Boussinesq approximation break down in planetary interiors?</p></li>
+</ol>
+</section>
+<section id="exercise-10-reynolds-number-estimation" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-10-reynolds-number-estimation">Exercise 10: Reynolds Number Estimation</h3>
+<p>Calculate the Reynolds number for the following geodynamic scenarios:</p>
+<ol type="a">
+<li><p>Mantle convection: <span class="math inline">\(U = 50\)</span> mm/yr, <span class="math inline">\(L = 2900\)</span> km, <span class="math inline">\(\nu = 10^{17}\)</span> m<span class="math inline">\(^2\)</span>/s</p></li>
+<li><p>Magma flow in a dike: <span class="math inline">\(U = 1\)</span> m/s, <span class="math inline">\(L = 1\)</span> m, <span class="math inline">\(\nu = 10^3\)</span> m<span class="math inline">\(^2\)</span>/s</p></li>
+<li><p>Core convection: <span class="math inline">\(U = 0.1\)</span> mm/s, <span class="math inline">\(L = 3000\)</span> km, <span class="math inline">\(\nu = 10^{-6}\)</span> m<span class="math inline">\(^2\)</span>/s</p></li>
+</ol>
+<p>Comment on whether inertial effects are important in each case.</p>
+</section>
+</section>
+<section id="solutions-to-selected-exercises" class="level2">
+<h2 class="anchored" data-anchor-id="solutions-to-selected-exercises">Solutions to Selected Exercises</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 1: Material Derivative
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The material derivative is: <span class="math display">\[
+\frac{D\mathbf{f}}{Dt} = \frac{\partial \mathbf{f}}{\partial t} + (\mathbf{u}\cdot \nabla)\mathbf{f}
+\]</span></p>
+<p>For the advective term to equal the total derivative, we need: <span class="math display">\[
+\frac{\partial \mathbf{f}}{\partial t} = 0
+\]</span></p>
+<p><strong>Physical meaning</strong>: This occurs when the flow is <strong>steady</strong> (time-independent at fixed points in space). In steady flow, all changes experienced by a fluid parcel are due to its motion through spatially varying fields, not due to temporal changes at fixed locations.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 2: Isothermal Atmosphere
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In hydrostatic equilibrium: <span class="math inline">\(\frac{dp}{dz} = -\rho g\)</span></p>
+<p>For an ideal gas: <span class="math inline">\(p = \rho RT\)</span> where <span class="math inline">\(T\)</span> is constant.</p>
+<p>Therefore: <span class="math inline">\(\rho = \frac{p}{RT}\)</span></p>
+<p>Substituting into the hydrostatic equation: <span class="math display">\[
+\frac{dp}{dz} = -\frac{pg}{RT} = -\frac{p}{H_s}
+\]</span></p>
+<p>where <span class="math inline">\(H_s = RT/g\)</span> is the scale height.</p>
+<p>Integrating: <span class="math display">\[
+p(z) = p(0)\exp\left(-\frac{z}{H_s}\right)
+\]</span></p>
+<p>And from the equation of state: <span class="math display">\[
+\rho(z) = \frac{p(z)}{RT} = \rho(0)\exp\left(-\frac{z}{H_s}\right)
+\]</span></p>
+<p>For the troposphere, take <span class="math inline">\(T \approx 250\)</span> K: <span class="math display">\[
+H_s = \frac{287 \times 250}{9.81} \approx 7.3 \text{ km}
+\]</span></p>
+<p>This is indeed on the order of 8 km.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 3: Vector Differential Operators
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Divergence</strong> (scalar): <span class="math display">\[
+\nabla\cdot\mathbf{u}= \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z}
+\]</span> Index notation: <span class="math inline">\(\nabla_k u_k\)</span> or <span class="math inline">\(\partial u_k/\partial x_k\)</span></p>
+<p>Physical meaning: Rate of volume expansion per unit volume.</p>
+<p><strong>Curl</strong> (vector): <span class="math display">\[
+\nabla\times\mathbf{u}= \left(\frac{\partial w}{\partial y} - \frac{\partial v}{\partial z}, \frac{\partial u}{\partial z} - \frac{\partial w}{\partial x}, \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}\right)
+\]</span> Index notation: <span class="math inline">\(\varepsilon_{ijk}\partial u_k/\partial x_j\)</span></p>
+<p>Physical meaning: Local rotation or vorticity of the fluid.</p>
+<p><strong>Directional derivative</strong> (scalar operator): <span class="math display">\[
+\mathbf{u}\cdot \nabla= u\frac{\partial}{\partial x} + v\frac{\partial}{\partial y} + w\frac{\partial}{\partial z}
+\]</span> Index notation: <span class="math inline">\(u_k \partial/\partial x_k\)</span></p>
+<p>Physical meaning: Rate of change along the direction of velocity.</p>
+<p><strong>Laplacian</strong> (scalar): <span class="math display">\[
+\nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}
+\]</span> Index notation: <span class="math inline">\(\partial^2/\partial x_k \partial x_k\)</span></p>
+<p>Physical meaning: Measure of how much a field differs from its average over neighboring points.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 4: Pollutant Transport
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Given: <span class="math inline">\(\mathbf{u}= (\alpha x, -\alpha y, 0)\)</span> and <span class="math inline">\(c = c_0 + \gamma t + \beta x^2 y e^{-\alpha t}\)</span></p>
+<p><strong>(a) Eulerian rate of change</strong> (at fixed point): <span class="math display">\[
+\frac{\partial c}{\partial t} = \gamma - \alpha\beta x^2 y e^{-\alpha t}
+\]</span></p>
+<p><strong>(b) Lagrangian rate of change</strong> (following parcels): <span class="math display">\[
+\frac{Dc}{Dt} = \frac{\partial c}{\partial t} + \mathbf{u}\cdot \nabla c
+\]</span></p>
+<p>First calculate <span class="math inline">\(\nabla c\)</span>: <span class="math display">\[
+\nabla c = \left(2\beta xy e^{-\alpha t}, \beta x^2 e^{-\alpha t}, 0\right)
+\]</span></p>
+<p>Then: <span class="math display">\[
+\begin{aligned}
+\mathbf{u}\cdot \nabla c &amp;= \alpha x(2\beta xy e^{-\alpha t}) + (-\alpha y)(\beta x^2 e^{-\alpha t}) \\
+&amp;= 2\alpha\beta x^2y e^{-\alpha t} - \alpha\beta x^2 y e^{-\alpha t} \\
+&amp;= \alpha\beta x^2 y e^{-\alpha t}
+\end{aligned}
+\]</span></p>
+<p>Therefore: <span class="math display">\[
+\frac{Dc}{Dt} = \gamma - \alpha\beta x^2 y e^{-\alpha t} + \alpha\beta x^2 y e^{-\alpha t} = \gamma
+\]</span></p>
+<p>The concentration increases at constant rate <span class="math inline">\(\gamma\)</span> following fluid parcels!</p>
+<p><strong>(c) Concentration at <span class="math inline">\(t = 1\)</span></strong>:</p>
+<p>First find the particle path. The trajectory satisfies: <span class="math display">\[
+\frac{dx}{dt} = \alpha x, \quad \frac{dy}{dt} = -\alpha y
+\]</span></p>
+<p>Solutions: <span class="math inline">\(x(t) = x_0 e^{\alpha t}\)</span>, <span class="math inline">\(y(t) = y_0 e^{-\alpha t}\)</span></p>
+<p>Starting at <span class="math inline">\((x_0, y_0, 0) = (1, 1, 0)\)</span> at <span class="math inline">\(t = 0\)</span>: - At <span class="math inline">\(t = 1\)</span>: <span class="math inline">\(x(1) = e^\alpha\)</span>, <span class="math inline">\(y(1) = e^{-\alpha}\)</span></p>
+<p>Since <span class="math inline">\(Dc/Dt = \gamma\)</span>: <span class="math display">\[
+c(t) = c(0) + \int_0^t \gamma \, dt' = c(0) + \gamma t
+\]</span></p>
+<p>Initial concentration: <span class="math inline">\(c(0) = c_0 + \beta(1)^2(1)e^0 = c_0 + \beta\)</span></p>
+<p>Final concentration: <span class="math inline">\(c(1) = c_0 + \beta + \gamma\)</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 7: Pressure in Inviscid Flow
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Given: <span class="math inline">\(\mathbf{u}= (kx, -ky, 0)\)</span> (steady, inviscid, incompressible)</p>
+<p>Check incompressibility: <span class="math display">\[
+\nabla\cdot\mathbf{u}= k - k + 0 = 0 \quad \checkmark
+\]</span></p>
+<p>Calculate the advective acceleration: <span class="math display">\[
+(\mathbf{u}\cdot \nabla)\mathbf{u}= \left(kx\frac{\partial}{\partial x} - ky\frac{\partial}{\partial y}\right)(kx, -ky, 0)
+\]</span></p>
+<p><span class="math display">\[
+= (k^2 x, k^2 y, 0) = \nabla\left(\frac{k^2x^2}{2} + \frac{k^2y^2}{2}\right)
+\]</span></p>
+<p>Euler equation (inviscid Navier-Stokes): <span class="math display">\[
+(\mathbf{u}\cdot \nabla)\mathbf{u}= -\frac{1}{\rho}\nabla p - g\hat{\mathbf{k}}
+\]</span></p>
+<p>Therefore: <span class="math display">\[
+\nabla\left(\frac{k^2x^2}{2} + \frac{k^2y^2}{2}\right) = -\frac{1}{\rho}\nabla p - \nabla(gz)
+\]</span></p>
+<p>Integrating: <span class="math display">\[
+p = p_0 - \rho\left(\frac{k^2x^2}{2} + \frac{k^2y^2}{2} + gz\right)
+\]</span></p>
+<p>where <span class="math inline">\(p_0\)</span> is the pressure at the origin.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 8: Cylindrical Continuity Equation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Transform from Cartesian <span class="math inline">\((x, y, z)\)</span> to cylindrical <span class="math inline">\((r, \theta, z)\)</span>: <span class="math display">\[
+x = r\cos\theta, \quad y = r\sin\theta, \quad z = z
+\]</span></p>
+<p>Velocity transformation: <span class="math display">\[
+u_r = u\cos\theta + v\sin\theta, \quad u_\theta = -u\sin\theta + v\cos\theta, \quad u_z = w
+\]</span></p>
+<p>Using the chain rule: <span class="math display">\[
+\frac{\partial}{\partial x} = \cos\theta\frac{\partial}{\partial r} - \frac{\sin\theta}{r}\frac{\partial}{\partial \theta}
+\]</span></p>
+<p><span class="math display">\[
+\frac{\partial}{\partial y} = \sin\theta\frac{\partial}{\partial r} + \frac{\cos\theta}{r}\frac{\partial}{\partial \theta}
+\]</span></p>
+<p>Substitute into the Cartesian continuity equation <span class="math inline">\(\partial u/\partial x + \partial v/\partial y + \partial w/\partial z = 0\)</span> and use the velocity transformations. After simplification using trigonometric identities: <span class="math display">\[
+\frac{1}{r}\frac{\partial(ru_r)}{\partial r} + \frac{1}{r}\frac{\partial u_\theta}{\partial \theta} + \frac{\partial u_z}{\partial z} = 0
+\]</span></p>
+</div>
+</div>
+</div>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../DraftMaterial";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../DraftMaterial/ContinuumMechanics.html" class="pagination-link" aria-label="Conservation Laws">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Conservation Laws</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../DraftMaterial/MantleDynamics.html" class="pagination-link" aria-label="Non-dimensional equations &amp; dimensionless numbers">
+        <span class="nav-page-text"><span class="chapter-title">Non-dimensional equations &amp; dimensionless numbers</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

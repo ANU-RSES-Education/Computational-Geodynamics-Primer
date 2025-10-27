@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Benchmark Problems: Analytical Solutions for Viscous Flows – Computational Geodynamics Primer</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../DraftMaterial/ContinuumMechanics.html" rel="next">
+<link href="../../Part5-Computational/placeholder.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-a26bb016ce855eb6ac1f0ce73cb2e796.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: {
+    tags: 'ams',
+    packages: {'[+]': ['ams', 'amsmath', 'amssymb', 'color', 'newcommand', 'boldsymbol']},
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    macros: {
+      dGamma: "{\\mathbf{d}\\boldsymbol{\\Gamma}}",
+      uv: "{\\mathbf{u}}",
+      vv: "{\\mathbf{v}}",
+      DIV: "{\\nabla\\cdot}",
+      GRAD: "{\\nabla}",
+      CURL: "{\\nabla\\times}"
+    }
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../assets/styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/ANU-logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../assets/ANU-logo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Computational Geodynamics Primer</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../summary.html"> 
+<span class="menu-text">Details</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../LectureSlides/Lecture1.qmd"> 
+<span class="menu-text">Slides</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Part5-Computational/placeholder.html"><strong>Part V: Computational Exercises</strong></a></li><li class="breadcrumb-item"><a href="../../Part5-Computational/Benchmarks/analytical-solutions.html"><span class="chapter-title">Benchmark Problems: Analytical Solutions for Viscous Flows</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../assets/AuWorldEQ.jpg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../../assets/AuWorldEQ.jpg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Preface</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EMSC e-Course template</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part I: Mathematical Fundamentals</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Part1-Fundamentals/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mathematical Fundamentals</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part II: Fluid Dynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Part2-FluidDynamics/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fluid Dynamics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Part2-FluidDynamics/inviscid-flows.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Steady Inviscid Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part III: Geodynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Part3-Geodynamics/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Geodynamics Applications</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part IV: Numerical Methods</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Part4-NumericalMethods/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numerical Methods</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part V: Computational Exercises</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Part5-Computational/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Part5-Computational/Benchmarks/analytical-solutions.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Benchmark Problems: Analytical Solutions for Viscous Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Draft: Geodynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/ContinuumMechanics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conservation Laws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/NavierStokes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Navier-Stokes Equation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/MantleDynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Non-dimensional equations &amp; dimensionless numbers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/StokesFlowApplications.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Applications of Stokes Flow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/ThermalConvection.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Thermal Convection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/LithosphericDynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamics of the Lithosphere</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Draft: Computational Methods</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/NumericalMethods1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numerical Modeling in Solid Earth Dynamics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/NumericalMethods2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Survey of numerical methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/NumericalMethods3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction to the Finite Element Method</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/NumericalMethods4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Practical Finite Elements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../DraftMaterial/NumericalMethods5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Methods for Solving Numerical Problems</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">References</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Contributing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Contributions/contributing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Contributing to the Computational Geodynamics Primer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Contributions/style-guide.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Style Guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Contributions/example-citations.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Example: Using Citations and Math</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Notebooks/BinderLandingPage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Index of notebooks:</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Notebooks/TestNB1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Test Notebook</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Notebooks/TestQMD_NB1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quarto MD notebook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#one-dimensional-flows" id="toc-one-dimensional-flows" class="nav-link" data-scroll-target="#one-dimensional-flows">One-Dimensional Flows</a>
+  <ul class="collapse">
+  <li><a href="#why-the-nonlinear-term-vanishes" id="toc-why-the-nonlinear-term-vanishes" class="nav-link" data-scroll-target="#why-the-nonlinear-term-vanishes">Why the Nonlinear Term Vanishes</a></li>
+  </ul></li>
+  <li><a href="#steady-plane-couette-flow" id="toc-steady-plane-couette-flow" class="nav-link" data-scroll-target="#steady-plane-couette-flow">Steady Plane Couette Flow</a>
+  <ul class="collapse">
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement">Problem Statement</a></li>
+  <li><a href="#solution" id="toc-solution" class="nav-link" data-scroll-target="#solution">Solution</a></li>
+  <li><a href="#physical-interpretation" id="toc-physical-interpretation" class="nav-link" data-scroll-target="#physical-interpretation">Physical Interpretation</a></li>
+  <li><a href="#geodynamic-relevance" id="toc-geodynamic-relevance" class="nav-link" data-scroll-target="#geodynamic-relevance">Geodynamic Relevance</a></li>
+  </ul></li>
+  <li><a href="#steady-plane-poiseuille-flow" id="toc-steady-plane-poiseuille-flow" class="nav-link" data-scroll-target="#steady-plane-poiseuille-flow">Steady Plane Poiseuille Flow</a>
+  <ul class="collapse">
+  <li><a href="#problem-statement-1" id="toc-problem-statement-1" class="nav-link" data-scroll-target="#problem-statement-1">Problem Statement</a></li>
+  <li><a href="#solution-1" id="toc-solution-1" class="nav-link" data-scroll-target="#solution-1">Solution</a></li>
+  <li><a href="#physical-interpretation-1" id="toc-physical-interpretation-1" class="nav-link" data-scroll-target="#physical-interpretation-1">Physical Interpretation</a></li>
+  <li><a href="#geodynamic-relevance-1" id="toc-geodynamic-relevance-1" class="nav-link" data-scroll-target="#geodynamic-relevance-1">Geodynamic Relevance</a></li>
+  </ul></li>
+  <li><a href="#axisymmetric-pipe-flow-hagen-poiseuille-flow" id="toc-axisymmetric-pipe-flow-hagen-poiseuille-flow" class="nav-link" data-scroll-target="#axisymmetric-pipe-flow-hagen-poiseuille-flow">Axisymmetric Pipe Flow (Hagen-Poiseuille Flow)</a>
+  <ul class="collapse">
+  <li><a href="#problem-statement-2" id="toc-problem-statement-2" class="nav-link" data-scroll-target="#problem-statement-2">Problem Statement</a></li>
+  <li><a href="#solution-2" id="toc-solution-2" class="nav-link" data-scroll-target="#solution-2">Solution</a></li>
+  <li><a href="#physical-interpretation-2" id="toc-physical-interpretation-2" class="nav-link" data-scroll-target="#physical-interpretation-2">Physical Interpretation</a></li>
+  <li><a href="#geodynamic-relevance-2" id="toc-geodynamic-relevance-2" class="nav-link" data-scroll-target="#geodynamic-relevance-2">Geodynamic Relevance</a></li>
+  </ul></li>
+  <li><a href="#mixed-couette-poiseuille-flow" id="toc-mixed-couette-poiseuille-flow" class="nav-link" data-scroll-target="#mixed-couette-poiseuille-flow">Mixed Couette-Poiseuille Flow</a>
+  <ul class="collapse">
+  <li><a href="#problem-statement-3" id="toc-problem-statement-3" class="nav-link" data-scroll-target="#problem-statement-3">Problem Statement</a></li>
+  <li><a href="#solution-3" id="toc-solution-3" class="nav-link" data-scroll-target="#solution-3">Solution</a></li>
+  <li><a href="#zero-net-flux-condition" id="toc-zero-net-flux-condition" class="nav-link" data-scroll-target="#zero-net-flux-condition">Zero Net Flux Condition</a></li>
+  </ul></li>
+  <li><a href="#time-dependent-problems" id="toc-time-dependent-problems" class="nav-link" data-scroll-target="#time-dependent-problems">Time-Dependent Problems</a>
+  <ul class="collapse">
+  <li><a href="#oscillating-plate-stokes-second-problem" id="toc-oscillating-plate-stokes-second-problem" class="nav-link" data-scroll-target="#oscillating-plate-stokes-second-problem">Oscillating Plate (Stokes’ Second Problem)</a></li>
+  <li><a href="#physical-interpretation-3" id="toc-physical-interpretation-3" class="nav-link" data-scroll-target="#physical-interpretation-3">Physical Interpretation</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1-mixed-couette-poiseuille-flow" id="toc-exercise-1-mixed-couette-poiseuille-flow" class="nav-link" data-scroll-target="#exercise-1-mixed-couette-poiseuille-flow">Exercise 1: Mixed Couette-Poiseuille Flow ⭐</a></li>
+  <li><a href="#exercise-2-time-dependent-couette-flow" id="toc-exercise-2-time-dependent-couette-flow" class="nav-link" data-scroll-target="#exercise-2-time-dependent-couette-flow">Exercise 2: Time-Dependent Couette Flow</a></li>
+  <li><a href="#exercise-3-cylindrical-pipe-flow" id="toc-exercise-3-cylindrical-pipe-flow" class="nav-link" data-scroll-target="#exercise-3-cylindrical-pipe-flow">Exercise 3: Cylindrical Pipe Flow ⭐</a></li>
+  <li><a href="#exercise-4-vorticity-generation-in-poiseuille-flow" id="toc-exercise-4-vorticity-generation-in-poiseuille-flow" class="nav-link" data-scroll-target="#exercise-4-vorticity-generation-in-poiseuille-flow">Exercise 4: Vorticity Generation in Poiseuille Flow ⭐</a></li>
+  <li><a href="#exercise-5-flow-down-an-inclined-plane" id="toc-exercise-5-flow-down-an-inclined-plane" class="nav-link" data-scroll-target="#exercise-5-flow-down-an-inclined-plane">Exercise 5: Flow Down an Inclined Plane</a></li>
+  <li><a href="#exercise-6-hele-shaw-flow" id="toc-exercise-6-hele-shaw-flow" class="nav-link" data-scroll-target="#exercise-6-hele-shaw-flow">Exercise 6: Hele-Shaw Flow</a></li>
+  </ul></li>
+  <li><a href="#computational-exercises" id="toc-computational-exercises" class="nav-link" data-scroll-target="#computational-exercises">Computational Exercises</a>
+  <ul class="collapse">
+  <li><a href="#computational-exercise-1-implement-couette-flow" id="toc-computational-exercise-1-implement-couette-flow" class="nav-link" data-scroll-target="#computational-exercise-1-implement-couette-flow">Computational Exercise 1: Implement Couette Flow</a></li>
+  <li><a href="#computational-exercise-2-implement-poiseuille-flow" id="toc-computational-exercise-2-implement-poiseuille-flow" class="nav-link" data-scroll-target="#computational-exercise-2-implement-poiseuille-flow">Computational Exercise 2: Implement Poiseuille Flow</a></li>
+  <li><a href="#computational-exercise-3-time-dependent-couette-flow" id="toc-computational-exercise-3-time-dependent-couette-flow" class="nav-link" data-scroll-target="#computational-exercise-3-time-dependent-couette-flow">Computational Exercise 3: Time-Dependent Couette Flow</a></li>
+  <li><a href="#computational-exercise-4-pipe-flow-in-cylindrical-coordinates" id="toc-computational-exercise-4-pipe-flow-in-cylindrical-coordinates" class="nav-link" data-scroll-target="#computational-exercise-4-pipe-flow-in-cylindrical-coordinates">Computational Exercise 4: Pipe Flow in Cylindrical Coordinates</a></li>
+  </ul></li>
+  <li><a href="#solutions-to-selected-exercises" id="toc-solutions-to-selected-exercises" class="nav-link" data-scroll-target="#solutions-to-selected-exercises">Solutions to Selected Exercises</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Part5-Computational/placeholder.html"><strong>Part V: Computational Exercises</strong></a></li><li class="breadcrumb-item"><a href="../../Part5-Computational/Benchmarks/analytical-solutions.html"><span class="chapter-title">Benchmark Problems: Analytical Solutions for Viscous Flows</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Benchmark Problems: Analytical Solutions for Viscous Flows</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hidden">
+<p>$$ % Global LaTeX macros for MathJax </p>
+% Differential operators
+% Color commands (MathJax compatible)
+<p>$$</p>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>🚧 Under Review
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This entire chapter is newly added content adapted from ICFM Chapter 5 (One-Dimensional Viscous Flows). The analytical solutions are well-established in fluid mechanics, but their presentation here needs review for appropriate geodynamic context and computational implementation guidance.</p>
+<p><strong>Changes made:</strong> - Extracted and converted ICFM Chapter 5 content (~400 lines of LaTeX) - Added comprehensive introduction explaining purpose of benchmarks - Reformulated all solutions using global math macros - Created 6 main sections: Couette, Poiseuille, Pipe flow, Mixed flows, Time-dependent, Hele-Shaw - Added 6 exercises with 3 detailed solutions - Added 4 computational exercises for numerical implementation - Included geodynamic relevance sections for each solution</p>
+<p><strong>Review needed:</strong> - Verify that geodynamic applications are accurate (lithospheric shear zones, magma dikes, etc.) - Expand computational exercises with Python code templates - Add figures showing velocity profiles for each solution - Consider adding more complex benchmarks (e.g., 2D corner flow, spherical geometries) - Link to actual benchmark comparison studies in geodynamics literature</p>
+</div>
+</div>
+</div>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Analytical solutions to the Navier-Stokes equations are rare and precious. They serve multiple critical purposes in computational geodynamics:</p>
+<ol type="1">
+<li><strong>Code Validation</strong>: Compare numerical solutions against exact analytical results to verify implementation correctness</li>
+<li><strong>Convergence Testing</strong>: Measure numerical error as a function of resolution to confirm expected convergence rates</li>
+<li><strong>Physical Intuition</strong>: Build understanding of viscous flow behavior through exact solutions</li>
+<li><strong>Benchmark Standards</strong>: Establish community-accepted test cases for comparing different numerical methods</li>
+</ol>
+<p>This chapter presents a collection of analytical solutions for viscous flows, focusing on one-dimensional problems where the nonlinear advection term vanishes, making exact solutions possible. While these flows are geometrically simple, they capture essential physics relevant to geodynamics:</p>
+<ul>
+<li><strong>Couette flow</strong>: Simple shear, analogous to lithospheric deformation</li>
+<li><strong>Poiseuille flow</strong>: Pressure-driven flow, relevant to channel flows and magma transport</li>
+<li><strong>Pipe flow</strong>: Axisymmetric geometry, applicable to cylindrical conduits</li>
+<li><strong>Oscillating boundaries</strong>: Time-dependent flows with diffusion</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Material adapted from MTH3360 Fluid Mechanics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The problems in this chapter are adapted from the <em>MTH3360 Incompressible Fluid Mechanics</em> course materials (Monash University, 2010-2013). These classical fluid mechanics problems provide excellent benchmarks for computational geodynamics codes.</p>
+</div>
+</div>
+</section>
+<section id="one-dimensional-flows" class="level2">
+<h2 class="anchored" data-anchor-id="one-dimensional-flows">One-Dimensional Flows</h2>
+<section id="why-the-nonlinear-term-vanishes" class="level3">
+<h3 class="anchored" data-anchor-id="why-the-nonlinear-term-vanishes">Why the Nonlinear Term Vanishes</h3>
+<p>The central difficulty in solving the Navier-Stokes equations lies in the nonlinear advection term <span class="math inline">\((\mathbf{u}\cdot \nabla) \mathbf{u}\)</span>. However, in one-dimensional flows where only a single component of velocity is non-zero, say <span class="math inline">\(\mathbf{u}= (0, 0, w)\)</span>, this term vanishes.</p>
+<p>From continuity (incompressibility): <span class="math display">\[
+\nabla\cdot\mathbf{u}= \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z} = 0
+\]</span></p>
+<p>Since <span class="math inline">\(u = v = 0\)</span>, we have <span class="math inline">\(\partial w / \partial z = 0\)</span>, meaning <span class="math inline">\(w\)</span> is independent of <span class="math inline">\(z\)</span>. Therefore:</p>
+<p><span class="math display">\[
+\begin{aligned}
+(\mathbf{u}\cdot \nabla) \mathbf{u}&amp;= \left( u\frac{\partial}{\partial x} + v\frac{\partial}{\partial y} + w\frac{\partial}{\partial z} \right) (u, v, w) \\
+&amp;= \left( 0, 0, w\frac{\partial w}{\partial z} \right) \\
+&amp;= \mathbf{0}
+\end{aligned}
+\]</span></p>
+<p>This linearization allows us to find exact analytical solutions to many problems.</p>
+</section>
+</section>
+<section id="steady-plane-couette-flow" class="level2">
+<h2 class="anchored" data-anchor-id="steady-plane-couette-flow">Steady Plane Couette Flow</h2>
+<section id="problem-statement" class="level3">
+<h3 class="anchored" data-anchor-id="problem-statement">Problem Statement</h3>
+<p>Consider steady viscous flow between two parallel rigid plates:</p>
+<ul>
+<li>Lower plate at <span class="math inline">\(z = 0\)</span>: fixed (<span class="math inline">\(\mathbf{u}= \mathbf{0}\)</span>)</li>
+<li>Upper plate at <span class="math inline">\(z = h\)</span>: moving with velocity <span class="math inline">\((U, 0, 0)\)</span></li>
+<li>Flow independent of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> directions</li>
+<li>No applied pressure gradient</li>
+</ul>
+<div id="fig-couette" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-couette-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../Images/Diagrams/couette-flow.png" class="img-fluid figure-img" width="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-couette-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: Couette flow: Linear velocity profile between moving plates
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="solution" class="level3">
+<h3 class="anchored" data-anchor-id="solution">Solution</h3>
+<p>From the symmetry assumptions and continuity, we know: - <span class="math inline">\(w = 0\)</span> everywhere - <span class="math inline">\(\mathbf{u}= (u(z), 0, 0)\)</span></p>
+<p>The Navier-Stokes equations reduce to: <span class="math display">\[
+0 = -\frac{1}{\rho}\frac{\partial p}{\partial x} + \nu\frac{d^2 u}{dz^2}
+\]</span></p>
+<p>Since there’s no applied pressure gradient in the <span class="math inline">\(x\)</span>-direction, <span class="math inline">\(\partial p/\partial x = 0\)</span>, giving: <span class="math display">\[
+\frac{d^2 u}{dz^2} = 0
+\]</span></p>
+<p>This integrates to: <span class="math display">\[
+u = Az + B
+\]</span></p>
+<p>Applying boundary conditions: - At <span class="math inline">\(z = 0\)</span>: <span class="math inline">\(u = 0 \Rightarrow B = 0\)</span> - At <span class="math inline">\(z = h\)</span>: <span class="math inline">\(u = U \Rightarrow A = U/h\)</span></p>
+<p><strong>Analytical Solution:</strong> <span id="eq-couette-solution"><span class="math display">\[
+u(z) = U\frac{z}{h}
+\tag{9.1}\]</span></span></p>
+</section>
+<section id="physical-interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="physical-interpretation">Physical Interpretation</h3>
+<ul>
+<li><strong>Velocity profile</strong>: Linear from <span class="math inline">\(0\)</span> to <span class="math inline">\(U\)</span></li>
+<li><strong>Vorticity</strong>: Constant throughout the fluid, <span class="math inline">\(\omega = \partial u/\partial z = U/h\)</span></li>
+<li><strong>Shear stress</strong>: Constant, <span class="math inline">\(\tau = \mu(du/dz) = \mu U/h\)</span></li>
+<li><strong>Stress transmission</strong>: The tangential stress exerted by the upper plate is transmitted without change to the lower plate</li>
+</ul>
+</section>
+<section id="geodynamic-relevance" class="level3">
+<h3 class="anchored" data-anchor-id="geodynamic-relevance">Geodynamic Relevance</h3>
+<p>Couette flow is the fundamental model for: - Simple shear deformation in the lithosphere - Shear zones in the mantle - Flow between tectonic plates - Laboratory experiments (rotary shear apparatus)</p>
+</section>
+</section>
+<section id="steady-plane-poiseuille-flow" class="level2">
+<h2 class="anchored" data-anchor-id="steady-plane-poiseuille-flow">Steady Plane Poiseuille Flow</h2>
+<section id="problem-statement-1" class="level3">
+<h3 class="anchored" data-anchor-id="problem-statement-1">Problem Statement</h3>
+<p>Steady viscous flow driven by a pressure gradient between two parallel fixed plates:</p>
+<ul>
+<li>Both plates at <span class="math inline">\(z = 0\)</span> and <span class="math inline">\(z = h\)</span>: no-slip (<span class="math inline">\(\mathbf{u}= \mathbf{0}\)</span>)</li>
+<li>Applied pressure gradient: <span class="math inline">\(dp/dx &lt; 0\)</span> (pressure decreases in flow direction)</li>
+<li>Flow independent of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> positions</li>
+</ul>
+<div id="fig-poiseuille" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-poiseuille-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../Images/Diagrams/poiseuille-flow.png" class="img-fluid figure-img" width="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poiseuille-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: Poiseuille flow: Parabolic velocity profile in pressure-driven channel flow
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="solution-1" class="level3">
+<h3 class="anchored" data-anchor-id="solution-1">Solution</h3>
+<p>From continuity and boundary conditions: - <span class="math inline">\(w = 0\)</span> everywhere - <span class="math inline">\(\mathbf{u}= (u(z), 0, 0)\)</span></p>
+<p>The Navier-Stokes equations give: <span class="math display">\[
+0 = -\frac{1}{\rho}\frac{\partial p}{\partial x} + \nu\frac{d^2 u}{dz^2}
+\]</span></p>
+<p>Now <span class="math inline">\(p = p(x)\)</span> only, and <span class="math inline">\(u = u(z)\)</span> only. Both sides must equal a constant. Let: <span class="math display">\[
+\frac{dp}{dx} = -\gamma \quad \text{(constant)}
+\]</span></p>
+<p>where <span class="math inline">\(\gamma &gt; 0\)</span> for flow in the positive <span class="math inline">\(x\)</span>-direction. Then: <span class="math display">\[
+\frac{d^2 u}{dz^2} = -\frac{\gamma}{\mu}
+\]</span></p>
+<p>Integrating twice: <span class="math display">\[
+u = -\frac{\gamma}{2\mu}z^2 + Az + B
+\]</span></p>
+<p>Applying boundary conditions: - At <span class="math inline">\(z = 0\)</span>: <span class="math inline">\(u = 0 \Rightarrow B = 0\)</span> - At <span class="math inline">\(z = h\)</span>: <span class="math inline">\(u = 0 \Rightarrow A = \gamma h/(2\mu)\)</span></p>
+<p><strong>Analytical Solution:</strong> <span id="eq-poiseuille-solution"><span class="math display">\[
+u(z) = \frac{\gamma}{2\mu}z(h - z)
+\tag{9.2}\]</span></span></p>
+</section>
+<section id="physical-interpretation-1" class="level3">
+<h3 class="anchored" data-anchor-id="physical-interpretation-1">Physical Interpretation</h3>
+<ul>
+<li><strong>Velocity profile</strong>: Parabolic with maximum at <span class="math inline">\(z = h/2\)</span></li>
+<li><strong>Maximum velocity</strong>: <span class="math inline">\(u_{max} = \gamma h^2/(8\mu)\)</span></li>
+<li><strong>Volume flux per unit width</strong>: <span class="math inline">\(Q = \int_0^h u \, dz = \gamma h^3/(12\mu)\)</span></li>
+<li><strong>Shear stress</strong>: <span class="math inline">\(\tau = \gamma(h - 2z)/2\)</span>, zero at centerline, maximum at walls</li>
+<li><strong>Vorticity</strong>: <span class="math inline">\(\omega = \gamma(h - 2z)/(2\mu)\)</span>, positive at lower wall, negative at upper wall</li>
+</ul>
+</section>
+<section id="geodynamic-relevance-1" class="level3">
+<h3 class="anchored" data-anchor-id="geodynamic-relevance-1">Geodynamic Relevance</h3>
+<p>Poiseuille flow models: - Channel flows in the mantle - Flow in magma-filled fractures and dikes - Pressure-driven flow in laboratory experiments - Return flow in subduction zones</p>
+</section>
+</section>
+<section id="axisymmetric-pipe-flow-hagen-poiseuille-flow" class="level2">
+<h2 class="anchored" data-anchor-id="axisymmetric-pipe-flow-hagen-poiseuille-flow">Axisymmetric Pipe Flow (Hagen-Poiseuille Flow)</h2>
+<section id="problem-statement-2" class="level3">
+<h3 class="anchored" data-anchor-id="problem-statement-2">Problem Statement</h3>
+<p>Steady viscous flow through a cylindrical pipe of radius <span class="math inline">\(a\)</span> under a constant applied pressure gradient:</p>
+<ul>
+<li>No-slip boundary condition at <span class="math inline">\(r = a\)</span>: <span class="math inline">\(w = 0\)</span></li>
+<li>Axisymmetric flow: no dependence on <span class="math inline">\(\theta\)</span></li>
+<li>Applied pressure gradient: <span class="math inline">\(dp/dz = -\gamma\)</span></li>
+</ul>
+<div id="fig-pipe-flow" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pipe-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../Images/Diagrams/pipe-flow.png" class="img-fluid figure-img" width="350">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipe-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: Pipe flow: Parabolic velocity profile in a circular pipe
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="solution-2" class="level3">
+<h3 class="anchored" data-anchor-id="solution-2">Solution</h3>
+<p>In cylindrical coordinates <span class="math inline">\((r, \theta, z)\)</span>, assume <span class="math inline">\(\mathbf{U} = (u(r), 0, w(r))\)</span>.</p>
+<p>From continuity in cylindrical coordinates: <span class="math display">\[
+\frac{1}{r}\frac{\partial}{\partial r}(ru) + \frac{\partial w}{\partial z} = 0
+\]</span></p>
+<p>Since <span class="math inline">\(w = w(r)\)</span> only, this gives <span class="math inline">\(u(r) = 0\)</span>.</p>
+<p>The momentum balance in the <span class="math inline">\(z\)</span>-direction becomes: <span class="math display">\[
+-\frac{1}{\rho}\frac{\partial p}{\partial z} + \frac{\nu}{r}\frac{d}{dr}\left(r\frac{dw}{dr}\right) = 0
+\]</span></p>
+<p>Since <span class="math inline">\(p = p(z)\)</span> only and <span class="math inline">\(w = w(r)\)</span> only: <span class="math display">\[
+\frac{dp}{dz} = -\gamma \quad \text{(constant)}
+\]</span></p>
+<p><span class="math display">\[
+\frac{1}{r}\frac{d}{dr}\left(r\frac{dw}{dr}\right) = -\frac{\gamma}{\mu}
+\]</span></p>
+<p>The general solution is: <span class="math display">\[
+w = -\frac{\gamma r^2}{4\mu} + A\ln r + B
+\]</span></p>
+<p>Boundary conditions: - Finite at <span class="math inline">\(r = 0\)</span>: <span class="math inline">\(A = 0\)</span> - <span class="math inline">\(w(a) = 0\)</span>: <span class="math inline">\(B = \gamma a^2/(4\mu)\)</span></p>
+<p><strong>Analytical Solution:</strong> <span id="eq-pipe-flow-solution"><span class="math display">\[
+w(r) = \frac{\gamma a^2}{4\mu}\left(1 - \frac{r^2}{a^2}\right)
+\tag{9.3}\]</span></span></p>
+</section>
+<section id="physical-interpretation-2" class="level3">
+<h3 class="anchored" data-anchor-id="physical-interpretation-2">Physical Interpretation</h3>
+<ul>
+<li><strong>Velocity profile</strong>: Parabolic in <span class="math inline">\(r\)</span></li>
+<li><strong>Maximum velocity</strong>: <span class="math inline">\(w_{max} = \gamma a^2/(4\mu)\)</span> at <span class="math inline">\(r = 0\)</span></li>
+<li><strong>Volume flux</strong>: <span class="math inline">\(Q = \int_0^a w \cdot 2\pi r \, dr = \pi\gamma a^4/(8\mu)\)</span></li>
+<li><strong>Average velocity</strong>: <span class="math inline">\(\bar{w} = Q/(\pi a^2) = \gamma a^2/(8\mu) = w_{max}/2\)</span></li>
+</ul>
+</section>
+<section id="geodynamic-relevance-2" class="level3">
+<h3 class="anchored" data-anchor-id="geodynamic-relevance-2">Geodynamic Relevance</h3>
+<p>Pipe flow is relevant to: - Magma ascent through cylindrical conduits - Fluid flow in porous media (Darcy flow in cylindrical pores) - Laboratory experiments with cylindrical geometry - Core dynamics in cylindrical coordinates</p>
+</section>
+</section>
+<section id="mixed-couette-poiseuille-flow" class="level2">
+<h2 class="anchored" data-anchor-id="mixed-couette-poiseuille-flow">Mixed Couette-Poiseuille Flow</h2>
+<section id="problem-statement-3" class="level3">
+<h3 class="anchored" data-anchor-id="problem-statement-3">Problem Statement</h3>
+<p>Flow driven by both a moving upper plate and a pressure gradient:</p>
+<ul>
+<li>Lower plate at <span class="math inline">\(z = 0\)</span>: fixed</li>
+<li>Upper plate at <span class="math inline">\(z = h\)</span>: velocity <span class="math inline">\((U, 0, 0)\)</span></li>
+<li>Applied pressure gradient: <span class="math inline">\(dp/dx = -\gamma\)</span></li>
+</ul>
+<p>This combines simple shear and pressure-driven flow.</p>
+</section>
+<section id="solution-3" class="level3">
+<h3 class="anchored" data-anchor-id="solution-3">Solution</h3>
+<p>The governing equation is: <span class="math display">\[
+\frac{d^2 u}{dz^2} = -\frac{\gamma}{\mu}
+\]</span></p>
+<p>with boundary conditions <span class="math inline">\(u(0) = 0\)</span> and <span class="math inline">\(u(h) = U\)</span>.</p>
+<p><strong>Analytical Solution:</strong> <span id="eq-mixed-flow-solution"><span class="math display">\[
+u(z) = \frac{\gamma}{2\mu}z(h - z) + U\frac{z}{h}
+\tag{9.4}\]</span></span></p>
+<p>This is simply the superposition of Poiseuille flow <a href="#eq-poiseuille-solution" class="quarto-xref">Equation&nbsp;<span>9.2</span></a> and Couette flow <a href="#eq-couette-solution" class="quarto-xref">Equation&nbsp;<span>9.1</span></a>.</p>
+</section>
+<section id="zero-net-flux-condition" class="level3">
+<h3 class="anchored" data-anchor-id="zero-net-flux-condition">Zero Net Flux Condition</h3>
+<p>The volume flux per unit width is: <span class="math display">\[
+Q = \int_0^h u \, dz = \frac{\gamma h^3}{12\mu} + \frac{Uh}{2}
+\]</span></p>
+<p>For zero net flux (<span class="math inline">\(Q = 0\)</span>), the required pressure gradient is: <span class="math display">\[
+\gamma = -\frac{6\mu U}{h^2}
+\]</span></p>
+<p>The negative value indicates the pressure gradient opposes the plate motion.</p>
+</section>
+</section>
+<section id="time-dependent-problems" class="level2">
+<h2 class="anchored" data-anchor-id="time-dependent-problems">Time-Dependent Problems</h2>
+<section id="oscillating-plate-stokes-second-problem" class="level3">
+<h3 class="anchored" data-anchor-id="oscillating-plate-stokes-second-problem">Oscillating Plate (Stokes’ Second Problem)</h3>
+<p>An incompressible fluid occupies the half-space <span class="math inline">\(z &gt; 0\)</span> above a rigid boundary at <span class="math inline">\(z = 0\)</span> that oscillates with velocity <span class="math inline">\(U\cos(\alpha t)\)</span>.</p>
+<p>The velocity field <span class="math inline">\(\mathbf{u}= (u(z,t), 0, 0)\)</span> satisfies: <span id="eq-diffusion-equation"><span class="math display">\[
+\frac{\partial u}{\partial t} = \nu\frac{\partial^2 u}{\partial z^2}
+\tag{9.5}\]</span></span></p>
+<p>This is the heat/diffusion equation with kinematic viscosity <span class="math inline">\(\nu\)</span> playing the role of thermal diffusivity.</p>
+<p>Seeking a solution of the form <span class="math inline">\(u = \text{Re}\{f(z)e^{i\alpha t}\}\)</span> and requiring <span class="math inline">\(u \to 0\)</span> as <span class="math inline">\(z \to \infty\)</span>:</p>
+<p><strong>Analytical Solution:</strong> <span id="eq-oscillating-plate-solution"><span class="math display">\[
+u(z,t) = Ue^{-kz}\cos(kz - \alpha t)
+\tag{9.6}\]</span></span></p>
+<p>where <span class="math inline">\(k = \sqrt{\alpha/(2\nu)}\)</span> is the inverse penetration depth.</p>
+</section>
+<section id="physical-interpretation-3" class="level3">
+<h3 class="anchored" data-anchor-id="physical-interpretation-3">Physical Interpretation</h3>
+<ul>
+<li><strong>Penetration depth</strong>: <span class="math inline">\(\delta = 1/k = \sqrt{2\nu/\alpha}\)</span></li>
+<li>Velocity amplitude decays exponentially with distance from the plate</li>
+<li>Phase lag increases linearly with distance</li>
+<li>At distance <span class="math inline">\(z = \pi/k\)</span>, the fluid moves in the opposite direction to the plate</li>
+</ul>
+<p>This solution demonstrates <strong>viscous diffusion</strong> of momentum from the oscillating boundary into the fluid.</p>
+</section>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Exercises marked with ⭐ have worked solutions provided.</p>
+</div>
+</div>
+<section id="exercise-1-mixed-couette-poiseuille-flow" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1-mixed-couette-poiseuille-flow">Exercise 1: Mixed Couette-Poiseuille Flow ⭐</h3>
+<p>Mixed Couette-Poiseuille flow is driven by moving the upper plate at <span class="math inline">\(z = h\)</span> with velocity <span class="math inline">\(U\)</span> and applying an <strong>opposing</strong> pressure gradient <span class="math inline">\(dp/dx = \gamma &gt; 0\)</span> (opposing means the pressure gradient acts against the plate motion).</p>
+<ol type="a">
+<li>Find the velocity profile in the flow</li>
+<li>Calculate the volume flux per unit width</li>
+<li>Determine the pressure gradient required to produce zero net volume flux</li>
+</ol>
+</section>
+<section id="exercise-2-time-dependent-couette-flow" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2-time-dependent-couette-flow">Exercise 2: Time-Dependent Couette Flow</h3>
+<p>A viscous fluid at rest is confined between two rigid plates at <span class="math inline">\(z = 0\)</span> and <span class="math inline">\(z = h\)</span>. The lower boundary is fixed, but at <span class="math inline">\(t = 0\)</span> the upper boundary is <strong>impulsively</strong> set in motion with velocity <span class="math inline">\((U, 0, 0)\)</span>.</p>
+<ol type="a">
+<li>Show that the velocity field satisfies the diffusion equation <a href="#eq-diffusion-equation" class="quarto-xref">Equation&nbsp;<span>9.5</span></a></li>
+<li>Calculate the velocity profile as a function of time</li>
+<li>Determine the vorticity distribution as a function of time</li>
+<li>Sketch the velocity profile at several times and show convergence to the steady Couette solution</li>
+</ol>
+<p><strong>Hint</strong>: Use separation of variables with <span class="math inline">\(u(z,t) = \sum_n A_n \sin(n\pi z/h)e^{-\lambda_n t}\)</span></p>
+</section>
+<section id="exercise-3-cylindrical-pipe-flow" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3-cylindrical-pipe-flow">Exercise 3: Cylindrical Pipe Flow ⭐</h3>
+<p>Derive the solution for steady viscous flow through an axisymmetric pipe of radius <span class="math inline">\(a\)</span> under a constant applied pressure gradient (Hagen-Poiseuille flow).</p>
+<ol type="a">
+<li>Show that <span class="math inline">\(u_r = 0\)</span> from continuity</li>
+<li>Derive the governing equation for <span class="math inline">\(u_z(r)\)</span></li>
+<li>Solve with appropriate boundary conditions</li>
+<li>Calculate the volume flux</li>
+<li>Compare the average velocity to the maximum velocity</li>
+</ol>
+<p><strong>Reminder</strong>: In cylindrical coordinates for axisymmetric problems: <span class="math display">\[
+\nabla^2 f = \frac{1}{r}\frac{\partial}{\partial r}\left(r\frac{\partial f}{\partial r}\right) + \frac{\partial^2 f}{\partial z^2}
+\]</span></p>
+</section>
+<section id="exercise-4-vorticity-generation-in-poiseuille-flow" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4-vorticity-generation-in-poiseuille-flow">Exercise 4: Vorticity Generation in Poiseuille Flow ⭐</h3>
+<p>Consider the plane Poiseuille flow problem.</p>
+<ol type="a">
+<li>Show that negative/positive vorticity is continuously generated at the upper/lower boundary</li>
+<li>Explain the mechanism of vorticity generation at solid boundaries</li>
+<li>Consider the time-dependent problem where the flow is impulsively accelerated by a uniform pressure gradient</li>
+<li>Show that the unsteady component of velocity satisfies the heat equation</li>
+<li>Determine the initial condition for this equation</li>
+</ol>
+</section>
+<section id="exercise-5-flow-down-an-inclined-plane" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5-flow-down-an-inclined-plane">Exercise 5: Flow Down an Inclined Plane</h3>
+<p>Consider a thin film of viscous fluid flowing down an inclined plane at angle <span class="math inline">\(\theta\)</span> to the horizontal under gravity.</p>
+<ol type="a">
+<li>Set up the coordinate system and governing equations</li>
+<li>Determine the velocity profile assuming the upper surface is stress-free</li>
+<li>Calculate the volume flux per unit width</li>
+<li>Find the maximum velocity and its location</li>
+<li>Discuss the physical meaning of the stress-free boundary condition</li>
+</ol>
+</section>
+<section id="exercise-6-hele-shaw-flow" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-6-hele-shaw-flow">Exercise 6: Hele-Shaw Flow</h3>
+<p>In a thin film of fluid confined between two rigid boundaries separated by a small gap <span class="math inline">\(h\)</span>, where <span class="math inline">\(h \ll L\)</span> (with <span class="math inline">\(L\)</span> a typical horizontal length scale):</p>
+<ol type="a">
+<li>Show from incompressibility that the vertical velocity <span class="math inline">\(W\)</span> satisfies <span class="math inline">\(W \sim U(h/L)\)</span></li>
+<li>Show that <span class="math inline">\(\eta\nabla^2\mathbf{u}\sim \eta\partial^2\mathbf{u}/\partial z^2\)</span></li>
+<li>By estimating the magnitude of terms, show that <span class="math inline">\((\mathbf{u}\cdot\nabla)\mathbf{u}\ll \eta\partial^2\mathbf{u}/\partial z^2\)</span> when <span class="math inline">\(Re(h^2/L^2) \ll 1\)</span></li>
+<li>Derive the governing equations for steady flow</li>
+<li>Show that the flow is always irrotational</li>
+<li>Explain why the Hele-Shaw cell is used to model potential flow experimentally</li>
+</ol>
+</section>
+</section>
+<section id="computational-exercises" class="level2">
+<h2 class="anchored" data-anchor-id="computational-exercises">Computational Exercises</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Python Implementation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The following exercises ask you to implement numerical solutions and compare them to the analytical results. This is essential practice for validating computational methods.</p>
+</div>
+</div>
+<section id="computational-exercise-1-implement-couette-flow" class="level3">
+<h3 class="anchored" data-anchor-id="computational-exercise-1-implement-couette-flow">Computational Exercise 1: Implement Couette Flow</h3>
+<p>Write a Python program to solve the Couette flow problem numerically using finite differences:</p>
+<ol type="a">
+<li>Discretize the domain <span class="math inline">\([0, h]\)</span> with <span class="math inline">\(N\)</span> grid points</li>
+<li>Implement the steady-state solver using the discrete Laplacian</li>
+<li>Compare your numerical solution to the analytical solution <a href="#eq-couette-solution" class="quarto-xref">Equation&nbsp;<span>9.1</span></a></li>
+<li>Plot the error as a function of grid resolution</li>
+<li>Verify that the error decreases as <span class="math inline">\(\Delta z^2\)</span> (second-order convergence)</li>
+</ol>
+</section>
+<section id="computational-exercise-2-implement-poiseuille-flow" class="level3">
+<h3 class="anchored" data-anchor-id="computational-exercise-2-implement-poiseuille-flow">Computational Exercise 2: Implement Poiseuille Flow</h3>
+<p>Repeat Computational Exercise 1 for Poiseuille flow:</p>
+<ol type="a">
+<li>Implement the steady-state solver</li>
+<li>Compare to the analytical solution <a href="#eq-poiseuille-solution" class="quarto-xref">Equation&nbsp;<span>9.2</span></a></li>
+<li>Calculate the volume flux numerically and compare to the analytical value</li>
+<li>Test convergence with grid refinement</li>
+</ol>
+</section>
+<section id="computational-exercise-3-time-dependent-couette-flow" class="level3">
+<h3 class="anchored" data-anchor-id="computational-exercise-3-time-dependent-couette-flow">Computational Exercise 3: Time-Dependent Couette Flow</h3>
+<p>Implement the time-dependent Couette flow problem (Exercise 2):</p>
+<ol type="a">
+<li>Use the forward Euler method or Crank-Nicolson method for time stepping</li>
+<li>Implement appropriate initial and boundary conditions</li>
+<li>Animate the evolution of the velocity profile</li>
+<li>Compare to the analytical solution (look up the series solution)</li>
+<li>Investigate the diffusion time scale: how long to reach steady state?</li>
+</ol>
+</section>
+<section id="computational-exercise-4-pipe-flow-in-cylindrical-coordinates" class="level3">
+<h3 class="anchored" data-anchor-id="computational-exercise-4-pipe-flow-in-cylindrical-coordinates">Computational Exercise 4: Pipe Flow in Cylindrical Coordinates</h3>
+<p>Implement the axisymmetric pipe flow solution:</p>
+<ol type="a">
+<li>Set up the problem in cylindrical coordinates</li>
+<li>Handle the singularity at <span class="math inline">\(r = 0\)</span> properly</li>
+<li>Compare to the analytical solution <a href="#eq-pipe-flow-solution" class="quarto-xref">Equation&nbsp;<span>9.3</span></a></li>
+<li>Calculate volume flux and verify against analytical result</li>
+<li>Explore convergence properties with grid refinement</li>
+</ol>
+</section>
+</section>
+<section id="solutions-to-selected-exercises" class="level2">
+<h2 class="anchored" data-anchor-id="solutions-to-selected-exercises">Solutions to Selected Exercises</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 1: Mixed Couette-Poiseuille Flow
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>(a) Velocity profile:</strong></p>
+<p>The governing equation is: <span class="math display">\[
+\frac{d^2 u}{dz^2} = -\frac{\gamma}{\mu}
+\]</span></p>
+<p>Integrating twice: <span class="math display">\[
+u = -\frac{\gamma}{2\mu}z^2 + Az + B
+\]</span></p>
+<p>Boundary conditions: - At <span class="math inline">\(z = 0\)</span>: <span class="math inline">\(u = 0 \Rightarrow B = 0\)</span> - At <span class="math inline">\(z = h\)</span>: <span class="math inline">\(u = U \Rightarrow A = U/h + \gamma h/(2\mu)\)</span></p>
+<p>Therefore: <span class="math display">\[
+u(z) = \frac{z}{h}\left(U + \frac{\gamma h^2}{2\mu}\right) - \frac{\gamma z^2}{2\mu}
+\]</span></p>
+<p>Since the pressure gradient <strong>opposes</strong> the plate motion (<span class="math inline">\(\gamma &gt; 0\)</span>), the term <span class="math inline">\(-\gamma z^2/(2\mu)\)</span> reduces the velocity.</p>
+<p><strong>(b) Volume flux:</strong></p>
+<p><span class="math display">\[
+Q = \int_0^h u \, dz = \frac{Uh}{2} + \frac{\gamma h^3}{12\mu} - \frac{\gamma h^3}{6\mu} = \frac{Uh}{2} - \frac{\gamma h^3}{12\mu}
+\]</span></p>
+<p><strong>(c) Zero flux condition:</strong></p>
+<p>Setting <span class="math inline">\(Q = 0\)</span>: <span class="math display">\[
+\frac{Uh}{2} = \frac{\gamma h^3}{12\mu}
+\]</span></p>
+<p><span class="math display">\[
+\gamma = \frac{6\mu U}{h^2}
+\]</span></p>
+<p>This is the pressure gradient magnitude required to exactly oppose the plate-driven flow.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 3: Cylindrical Pipe Flow
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>(a) Continuity:</strong></p>
+<p>In cylindrical coordinates: <span class="math display">\[
+\frac{1}{r}\frac{\partial}{\partial r}(ru_r) + \frac{\partial u_z}{\partial z} = 0
+\]</span></p>
+<p>Since we assume <span class="math inline">\(u_z = u_z(r)\)</span> only (axisymmetric, fully-developed flow), <span class="math inline">\(\partial u_z/\partial z = 0\)</span>, which gives: <span class="math display">\[
+\frac{1}{r}\frac{d}{dr}(ru_r) = 0
+\]</span></p>
+<p>Integrating: <span class="math inline">\(ru_r = \text{constant}\)</span>. Since <span class="math inline">\(u_r\)</span> must be finite at <span class="math inline">\(r = 0\)</span>, the constant must be zero, so <span class="math inline">\(u_r = 0\)</span>.</p>
+<p><strong>(b) Governing equation:</strong></p>
+<p>The <span class="math inline">\(z\)</span>-component of the Navier-Stokes equation (steady, axisymmetric) is: <span class="math display">\[
+-\frac{1}{\rho}\frac{\partial p}{\partial z} + \frac{\nu}{r}\frac{d}{dr}\left(r\frac{du_z}{dr}\right) = 0
+\]</span></p>
+<p>Since <span class="math inline">\(p = p(z)\)</span> and <span class="math inline">\(u_z = u_z(r)\)</span>: <span class="math display">\[
+\frac{dp}{dz} = -\gamma \quad \text{(constant)}
+\]</span></p>
+<p><span class="math display">\[
+\frac{1}{r}\frac{d}{dr}\left(r\frac{du_z}{dr}\right) = -\frac{\gamma}{\mu}
+\]</span></p>
+<p><strong>(c) Solution:</strong></p>
+<p>Integrating once: <span class="math display">\[
+r\frac{du_z}{dr} = -\frac{\gamma r^2}{2\mu} + C_1
+\]</span></p>
+<p>For finite velocity at <span class="math inline">\(r = 0\)</span>: <span class="math inline">\(C_1 = 0\)</span>. Integrating again: <span class="math display">\[
+u_z = -\frac{\gamma r^2}{4\mu} + C_2
+\]</span></p>
+<p>Boundary condition <span class="math inline">\(u_z(a) = 0\)</span> gives <span class="math inline">\(C_2 = \gamma a^2/(4\mu)\)</span>: <span class="math display">\[
+u_z(r) = \frac{\gamma a^2}{4\mu}\left(1 - \frac{r^2}{a^2}\right)
+\]</span></p>
+<p><strong>(d) Volume flux:</strong></p>
+<p><span class="math display">\[
+Q = \int_0^a u_z \cdot 2\pi r \, dr = 2\pi\frac{\gamma a^2}{4\mu}\int_0^a \left(1 - \frac{r^2}{a^2}\right)r \, dr
+\]</span></p>
+<p><span class="math display">\[
+Q = \frac{\pi\gamma a^2}{2\mu}\left[\frac{r^2}{2} - \frac{r^4}{4a^2}\right]_0^a = \frac{\pi\gamma a^4}{8\mu}
+\]</span></p>
+<p><strong>(e) Velocity comparison:</strong></p>
+<ul>
+<li>Maximum velocity: <span class="math inline">\(u_{max} = \gamma a^2/(4\mu)\)</span> at <span class="math inline">\(r = 0\)</span></li>
+<li>Average velocity: <span class="math inline">\(\bar{u} = Q/(\pi a^2) = \gamma a^2/(8\mu)\)</span></li>
+<li>Ratio: <span class="math inline">\(\bar{u}/u_{max} = 1/2\)</span></li>
+</ul>
+<p>The average velocity is exactly half the maximum velocity for parabolic pipe flow.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 4: Vorticity in Poiseuille Flow
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>(a) Vorticity distribution:</strong></p>
+<p>For plane Poiseuille flow <a href="#eq-poiseuille-solution" class="quarto-xref">Equation&nbsp;<span>9.2</span></a>: <span class="math display">\[
+u = \frac{\gamma z}{2\mu}(h - z)
+\]</span></p>
+<p>The vorticity (for 2D flow in the <span class="math inline">\(x\)</span>-<span class="math inline">\(z\)</span> plane) is: <span class="math display">\[
+\omega = \frac{du}{dz} = \frac{\gamma}{2\mu}(h - 2z)
+\]</span></p>
+<p>At the boundaries: - At <span class="math inline">\(z = 0\)</span>: <span class="math inline">\(\omega = \gamma h/(2\mu) &gt; 0\)</span> (positive vorticity) - At <span class="math inline">\(z = h\)</span>: <span class="math inline">\(\omega = -\gamma h/(2\mu) &lt; 0\)</span> (negative vorticity) - At <span class="math inline">\(z = h/2\)</span>: <span class="math inline">\(\omega = 0\)</span> (vorticity cancels)</p>
+<p><strong>(b) Mechanism:</strong></p>
+<p>Vorticity is generated at solid boundaries through the no-slip condition. The boundary continuously generates vorticity that diffuses into the interior. The rate of vorticity generation is proportional to the velocity gradient at the wall.</p>
+<p><strong>(c-d) Time-dependent problem:</strong></p>
+<p>For the impulsive start problem, let <span class="math inline">\(\mathbf{u}= (u(z,t), 0, 0)\)</span>. From continuity: <span class="math inline">\(w = 0\)</span>.</p>
+<p>The <span class="math inline">\(x\)</span>-momentum equation is: <span class="math display">\[
+\frac{\partial u}{\partial t} = -\frac{1}{\rho}\frac{dp_0}{dx} + \nu\frac{\partial^2 u}{\partial z^2}
+\]</span></p>
+<p>Since <span class="math inline">\(dp_0/dx = -\gamma\)</span> (constant), this is: <span class="math display">\[
+\frac{\partial u}{\partial t} = \frac{\gamma}{\rho} + \nu\frac{\partial^2 u}{\partial z^2}
+\]</span></p>
+<p><strong>(e) Initial condition:</strong></p>
+<p>At <span class="math inline">\(t = 0\)</span>, the fluid is at rest: <span class="math inline">\(u(z, 0) = 0\)</span>. The boundary conditions are <span class="math inline">\(u(0,t) = u(h,t) = 0\)</span> for all <span class="math inline">\(t &gt; 0\)</span>.</p>
+<p>The steady-state solution is the Poiseuille profile. The unsteady solution approaches this as <span class="math inline">\(t \to \infty\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>This chapter presented fundamental analytical solutions for viscous flows that serve as essential benchmarks for validating computational geodynamics codes. Key takeaways:</p>
+<ol type="1">
+<li><strong>One-dimensional flows</strong> provide exact solutions because the nonlinear advection term vanishes</li>
+<li><strong>Couette flow</strong> (simple shear) and <strong>Poiseuille flow</strong> (pressure-driven) are fundamental building blocks</li>
+<li><strong>Cylindrical geometries</strong> (pipe flow) extend these concepts to axisymmetric cases</li>
+<li><strong>Time-dependent problems</strong> demonstrate viscous diffusion of momentum</li>
+<li><strong>Numerical validation</strong> against these solutions is essential for code verification</li>
+</ol>
+<p>In the following chapters, we will use these benchmark problems to validate more complex numerical methods including finite differences, finite elements, and spectral methods.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>The material in this chapter is adapted from:</p>
+<ul>
+<li><strong>MTH3360 Incompressible Fluid Mechanics</strong>, Louis Moresi, Monash University, 2010-2013</li>
+<li><span class="citation" data-cites="batchelor1967">Batchelor (<a href="../../references.html#ref-batchelor1967" role="doc-biblioref">1967</a>)</span>: <em>An Introduction to Fluid Dynamics</em></li>
+<li><span class="citation" data-cites="acheson1990">Acheson (<a href="../../references.html#ref-acheson1990" role="doc-biblioref">1990</a>)</span>: <em>Elementary Fluid Dynamics</em></li>
+</ul>
+<p>Additional recommended references for analytical solutions:</p>
+<ul>
+<li><span class="citation" data-cites="turcotte2014">Turcotte and Schubert (<a href="../../references.html#ref-turcotte2014" role="doc-biblioref">2014</a>)</span>: Chapter on viscous flow</li>
+<li><span class="citation" data-cites="white2006">White (<a href="../../references.html#ref-white2006" role="doc-biblioref">2006</a>)</span>: <em>Viscous Fluid Flow</em>, for comprehensive treatment of exact solutions</li>
+</ul>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-acheson1990" class="csl-entry" role="listitem">
+Acheson, D. J. 1990. <em>Elementary Fluid Dynamics</em>. Oxford University Press.
+</div>
+<div id="ref-batchelor1967" class="csl-entry" role="listitem">
+Batchelor, G. K. 1967. <em>An Introduction to Fluid Dynamics</em>. Cambridge University Press.
+</div>
+<div id="ref-turcotte2014" class="csl-entry" role="listitem">
+Turcotte, D., and G. Schubert. 2014. <em>Geodynamics</em>. 3rd ed. Cambridge University Press.
+</div>
+<div id="ref-white2006" class="csl-entry" role="listitem">
+White, F. M. 2006. <em>Viscous Fluid Flow</em>. 3rd ed. McGraw-Hill.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../Part5-Computational/Benchmarks";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../Part5-Computational/placeholder.html" class="pagination-link" aria-label="Computational Exercises">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Computational Exercises</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../DraftMaterial/ContinuumMechanics.html" class="pagination-link" aria-label="Conservation Laws">
+        <span class="nav-page-text"><span class="chapter-title">Conservation Laws</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

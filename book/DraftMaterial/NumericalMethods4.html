@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Practical Finite Elements – Computational Geodynamics Primer</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../DraftMaterial/NumericalMethods5.html" rel="next">
+<link href="../DraftMaterial/NumericalMethods3.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a26bb016ce855eb6ac1f0ce73cb2e796.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: {
+    tags: 'ams',
+    packages: {'[+]': ['ams', 'amsmath', 'amssymb', 'color', 'newcommand', 'boldsymbol']},
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    macros: {
+      dGamma: "{\\mathbf{d}\\boldsymbol{\\Gamma}}",
+      uv: "{\\mathbf{u}}",
+      vv: "{\\mathbf{v}}",
+      DIV: "{\\nabla\\cdot}",
+      GRAD: "{\\nabla}",
+      CURL: "{\\nabla\\times}"
+    }
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../assets/ANU-logo.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/ANU-logo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Computational Geodynamics Primer</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
+<span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../summary.html"> 
+<span class="menu-text">Details</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../LectureSlides/Lecture1.qmd"> 
+<span class="menu-text">Slides</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../DraftMaterial/NumericalMethods1.html"><strong>Draft: Computational Methods</strong></a></li><li class="breadcrumb-item"><a href="../DraftMaterial/NumericalMethods4.html"><span class="chapter-title">Practical Finite Elements</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../assets/AuWorldEQ.jpg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../assets/AuWorldEQ.jpg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Preface</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EMSC e-Course template</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part I: Mathematical Fundamentals</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part1-Fundamentals/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mathematical Fundamentals</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part II: Fluid Dynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part2-FluidDynamics/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fluid Dynamics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part2-FluidDynamics/inviscid-flows.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Steady Inviscid Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part III: Geodynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part3-Geodynamics/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Geodynamics Applications</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part IV: Numerical Methods</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part4-NumericalMethods/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numerical Methods</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Part V: Computational Exercises</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part5-Computational/placeholder.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Part5-Computational/Benchmarks/analytical-solutions.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Benchmark Problems: Analytical Solutions for Viscous Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Draft: Geodynamics</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/ContinuumMechanics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conservation Laws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NavierStokes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Navier-Stokes Equation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/MantleDynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Non-dimensional equations &amp; dimensionless numbers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/StokesFlowApplications.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Applications of Stokes Flow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/ThermalConvection.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Thermal Convection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/LithosphericDynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamics of the Lithosphere</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Draft: Computational Methods</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numerical Modeling in Solid Earth Dynamics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Survey of numerical methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction to the Finite Element Method</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods4.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Practical Finite Elements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../DraftMaterial/NumericalMethods5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Methods for Solving Numerical Problems</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">References</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Contributing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Contributions/contributing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Contributing to the Computational Geodynamics Primer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Contributions/style-guide.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Style Guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Contributions/example-citations.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Example: Using Citations and Math</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Notebooks/BinderLandingPage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Index of notebooks:</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Notebooks/TestNB1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Test Notebook</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Notebooks/TestQMD_NB1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quarto MD notebook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#weak-forms-of-real-equations" id="toc-weak-forms-of-real-equations" class="nav-link active" data-scroll-target="#weak-forms-of-real-equations">Weak Forms of Real Equations</a>
+  <ul class="collapse">
+  <li><a href="#d-heat-conduction" id="toc-d-heat-conduction" class="nav-link" data-scroll-target="#d-heat-conduction">1D Heat Conduction</a></li>
+  <li><a href="#d-heat-conduction-1" id="toc-d-heat-conduction-1" class="nav-link" data-scroll-target="#d-heat-conduction-1">2D Heat Conduction</a></li>
+  <li><a href="#d3d-fluid-flow" id="toc-d3d-fluid-flow" class="nav-link" data-scroll-target="#d3d-fluid-flow">2D/3D Fluid Flow</a></li>
+  </ul></li>
+  <li><a href="#galerkin-approximate-weak-form" id="toc-galerkin-approximate-weak-form" class="nav-link" data-scroll-target="#galerkin-approximate-weak-form">Galerkin Approximate Weak Form</a></li>
+  <li><a href="#generalization" id="toc-generalization" class="nav-link" data-scroll-target="#generalization">Generalization</a></li>
+  <li><a href="#discretization-shape-functions" id="toc-discretization-shape-functions" class="nav-link" data-scroll-target="#discretization-shape-functions">Discretization &amp; Shape Functions</a>
+  <ul class="collapse">
+  <li><a href="#naming-of-things-and-what-they-are-like" id="toc-naming-of-things-and-what-they-are-like" class="nav-link" data-scroll-target="#naming-of-things-and-what-they-are-like">Naming of Things and What They are Like}</a></li>
+  <li><a href="#element-matrices" id="toc-element-matrices" class="nav-link" data-scroll-target="#element-matrices">Element Matrices</a></li>
+  </ul></li>
+  <li><a href="#numerical-integration" id="toc-numerical-integration" class="nav-link" data-scroll-target="#numerical-integration">Numerical Integration</a></li>
+  <li><a href="#standard-form-for-everything" id="toc-standard-form-for-everything" class="nav-link" data-scroll-target="#standard-form-for-everything">Standard Form for Everything</a></li>
+  <li><a href="#constraints" id="toc-constraints" class="nav-link" data-scroll-target="#constraints">Constraints</a></li>
+  <li><a href="#stresses" id="toc-stresses" class="nav-link" data-scroll-target="#stresses">Stresses</a></li>
+  </ul>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../DraftMaterial/NumericalMethods1.html"><strong>Draft: Computational Methods</strong></a></li><li class="breadcrumb-item"><a href="../DraftMaterial/NumericalMethods4.html"><span class="chapter-title">Practical Finite Elements</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Practical Finite Elements</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hidden">
+<p>$$ % Global LaTeX macros for MathJax </p>
+% Differential operators
+% Color commands (MathJax compatible)
+<p>$$</p>
+</div>
+<p><span class="math display">\[
+\newcommand{\mathbf{d}\boldsymbol{\Gamma}}{\mathbf{d}\boldsymbol{\Gamma}}
+\newcommand{\mathop{\mathrm{erfc}}}{\mbox{\rm erfc}}
+\newcommand{\curly}{\sf }
+\newcommand{\Red     }[1]{\textcolor[rgb]{0.7,0.0,0.0}{ #1}}
+\newcommand{\Green   }[1]{\textcolor[rgb]{0.0,0.7,0.0}{ #1}}
+\newcommand{\Blue    }[1]{\textcolor[rgb]{0.0,0.0,0.7}{ #1}}
+\newcommand{\Emerald }[1]{\textcolor[rgb]{0.0,0.7,0.3}{ #1}}
+\]</span></p>
+<section id="weak-forms-of-real-equations" class="level2">
+<h2 class="anchored" data-anchor-id="weak-forms-of-real-equations">Weak Forms of Real Equations</h2>
+<p>As we discovered earlier, the Galerkin form of weighted residual approximate method can be made equivalent to a full variational problem if integration by parts is employed in the correct manner. This then allows the development of fully automatic variational methods for arbitrary strong forms of the governing equations. From here on we follow the notation of Hughes (The Finite Element Method) which is reasonably clear.</p>
+<section id="d-heat-conduction" class="level3">
+<h3 class="anchored" data-anchor-id="d-heat-conduction">1D Heat Conduction</h3>
+<p>The differential or strong form of the equation we have encountered a number of times is</p>
+<p><span class="math display">\[
+\begin{split}
+        \frac{d^2 u}{d x^2} - {\curly f} &amp;= 0 \;\;\; \text{on} \;\;\; \Omega \\
+        u(1) &amp; = {\curly g} \\
+        -\frac{d u}{d x} (0) &amp;= {\curly h}
+    \end{split}
+\]</span></p>
+<p>where the boundary conditions are supplied at either end of a domain of unit length.</p>
+<p>To find the weak form of the equation we need to have a set of functions <span class="math inline">\(\curly S\)</span> to use for the trial functions which satisfy the boundary condition <span class="math inline">\(\curly g\)</span> on <span class="math inline">\(u\)</span> at <span class="math inline">\(x=1\)</span>. We also need a set of weighting functions which are zero at <span class="math inline">\(x=1\)</span> which we call <span class="math inline">\(\curly V\)</span>. The weighting functions play the role of the variations.</p>
+<p>The statement of the weak form of the problem (as distinct from its solution which will wait till later) is then to find <span class="math inline">\(u \in {\curly S}\)</span> such that for all <span class="math inline">\(w \in {\curly V}\)</span></p>
+<p><span class="math display">\[
+{\int_0^1 \frac{d w }{d x} \frac{d u}{d x} dx - \int_0^1 w f dx + w(0) h = 0}
+\]</span></p>
+<p>This looks a lot like the variational solutions we found before. How do we get to it ? The procedure is relatively general (except that in higher dimensions it becomes more time consuming). First assume we have found the solution to the strong form, <span class="math inline">\(u\)</span>. This must satisfy</p>
+<p><span class="math display">\[
+0 = \int_0^1 w( \frac{d^2 u}{d x^2} - {\curly f} )dx
+\]</span></p>
+<p>by the definition of the problem, as long as <span class="math inline">\(w\)</span> is well behaved, which is ensured by a sensible choice of weighting functions. This starts to look a lot like the Galerkin approach although we are not yet seeking an approximate solution. Now integrate by parts to give</p>
+<p><span class="math display">\[
+0 = \int_0^1 \frac{d w }{d x} \frac{d u}{d x} dx - \int_0^1 w f dx - \left[ w \frac{d u}{d x} \right]_0^1
+\]</span></p>
+<p>the boundary conditions on <span class="math inline">\(du / dx\)</span> are substituted to give the weak form as above. We write the equation in terms of the symmetric operators:</p>
+<p><span class="math display">\[
+\begin{split}
+    a(w,u) &amp; \equiv     \int_0^1 \frac{d w }{d x} \frac{d u}{d x} dx \\
+    (w,{\curly f})  &amp; \equiv  \int_0^1 w f dx
+    \end{split}
+\]</span></p>
+<p>to obtain an abstract form which can be used for all the finite element formulations we derive here</p>
+<p><span id="eq-FEabst"><span class="math display">\[
+a(w,u) = (w,{\curly f})  + w(0){\curly h}
+\tag{19.1}\]</span></span></p>
+<p>Note, that the partial differentiation step produces a symmetric operator from the non symmetric initial form. This approach also works in 2D as follows.</p>
+</section>
+<section id="d-heat-conduction-1" class="level3">
+<h3 class="anchored" data-anchor-id="d-heat-conduction-1">2D Heat Conduction</h3>
+<p>Define a heat flux (vector), <span class="math inline">\(\mathbf{q}\)</span> related to temperature, <span class="math inline">\(u\)</span> as follows</p>
+<p><span class="math display">\[
+q_i = -K_{ij} \frac{\partial u}{\partial x_j}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{K}\)</span> is the symmetric conductivity tensor. (This is the generalized version of Fourier’s law). A volumetric heating rate of <span class="math inline">\(\curly f\)</span> gives the following strong form</p>
+<p><span class="math display">\[
+\begin{split}
+        \nabla q - {\curly f} &amp;= 0  \;\;\; \text{on} \;\;\; \Omega \\
+        u &amp; = {\curly g} \;\;\; \text{on} \;\;\;  \Gamma_{\curly g} \\
+        -q_i n_i &amp;= {\curly h} \;\;\; \text{on} \;\;\; \Gamma_{\curly h}
+    \end{split}
+\]</span></p>
+<p>where <span class="math inline">\(\Gamma_ {\curly g}\)</span> and <span class="math inline">\(\Gamma_{\curly h}\)</span> are the regions of the boundary with fixed temperatures and fixed fluxes respectively, <span class="math inline">\(\mathbf{n}\)</span> is the unit normal over <span class="math inline">\(\Gamma_{\curly h}\)</span>.</p>
+<p>The corresponding weak form (found in the usual way) is</p>
+<p><span class="math display">\[
+-\int_\Omega  \frac{\partial w}{\partial x_j} q_i d\Omega = \int_\Omega w {\curly f} d\Omega + \int_{\Gamma_{\curly h}} w{\curly h} d\Gamma
+\]</span></p>
+<p>The symmetry of the operator is not obvious here until we substitute the constitutive law to obtain</p>
+<p><span class="math display">\[
+\int_\Omega  \frac{\partial w}{\partial x_j} q_i d\Omega =
+     \int_\Omega  \frac{\partial w}{\partial x_j} K_{ij} \frac{\partial u}{\partial x_j} d\Omega =
+     \int_\Omega  (\nabla w)^T \mathbf{K} (\nabla u) d\Omega
+\]</span></p>
+</section>
+<section id="d3d-fluid-flow" class="level3">
+<h3 class="anchored" data-anchor-id="d3d-fluid-flow">2D/3D Fluid Flow</h3>
+<p>Now we finally come around to the problem we really need to solve. The strong form of the Stokes’ flow problem is identical to that of linear elasticity (which is what all the finite element textbooks deal with). The general constitutive law is</p>
+<p><span class="math display">\[
+\sigma_{ij} = c_{ijkl} \epsilon_{kl}
+\]</span></p>
+<p>which reduces to <span class="math inline">\(\sigma_{ij} = \eta \epsilon_{ij}\)</span> for homogeneous fluid. <span class="math inline">\(\epsilon_{ij}\)</span> is defined by</p>
+<p><span class="math display">\[
+\epsilon_{ij} = \frac{\partial u_i}{\partial x_j} +  \frac{\partial u_j}{\partial x_i}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{u}\)</span> now represents the fluid velocity.</p>
+<p>The strong form of the equation is</p>
+<p><span class="math display">\[
+\begin{split}
+        \frac{\partial \sigma_{ij}}{\partial x_j} + {\curly f}_i = 0  \;\;\; \text{on} \;\;\;  \Omega \\
+            u_i &amp; = {\curly g}_i \;\;\; \text{on} \;\;\;  \Gamma_{{\curly g}_i} \\
+            \sigma_{ij} n_i &amp;= {\curly h}_i \;\;\; \text{on} \;\;\; \Gamma_{{\curly h}_i}
+\end{split}
+\]</span></p>
+<p>with a corresponding weak form</p>
+<p><span class="math display">\[
+\int_\Omega \left(  \frac{\partial w_i}{\partial x_j} +  \frac{\partial w_j}{\partial x_i}  \right) \sigma_{ij} d \Omega =
+        \int_\Omega w_i {\curly f}_i d\Omega +
+        \sum_{d=1}^{n_{\rm dim}} \left[ \int_{\Gamma_{{\curly h}_i}} w_i h_i d\Gamma \right]
+\]</span></p>
+<p>Which is symmetric in the trial functions and the unknown velocities since</p>
+<p><span class="math display">\[
+\int_\Omega \left(  \frac{\partial w_i}{\partial x_j} +  \frac{\partial w_j}{\partial x_i}  \right) \sigma_{ij} d \Omega =
+    \int_\Omega \left(  \frac{\partial w_i}{\partial x_j} +  \frac{\partial w_j}{\partial x_i}  \right) c_{ijkl}
+        \left(  \frac{\partial u_i}{\partial x_j} +  \frac{\partial u_j}{\partial x_i} \right) d \Omega
+\]</span></p>
+</section>
+</section>
+<section id="galerkin-approximate-weak-form" class="level2">
+<h2 class="anchored" data-anchor-id="galerkin-approximate-weak-form">Galerkin Approximate Weak Form</h2>
+<p>We have one last task before we can develop a real numerical method. How do we get away from the highly abstract notion of trial functions, weighting functions, and weak forms to produce a compact system of equations which can be written out in a nice tidy matrix form. The answer lies in the Galerkin approximate solution method. Let us go back to the 1D problem for a moment. We have to express our solution in terms of a sum over basis functions as before</p>
+<p><span class="math display">\[
+w^h = \sum_{A=1}^{n} c_A  N_A
+\]</span> where the <span class="math inline">\(h\)</span> superscript indicates that we have moved from an infinite choice of functions to a finite one based on the discrete functions <span class="math inline">\(N_A\)</span> which we will define in a minute, although for now we need to ensure that they are zero where the boundary conditions apply in the same way as <span class="math inline">\(\curly V\)</span>. We define a corresponding expansion for <span class="math inline">\(u\)</span></p>
+<p><span class="math display">\[
+\begin{split}
+        u^h &amp;= \sum_{A=1}^{n} d_A  N_A + {\curly g}N_{n+1} \\
+        {\curly g}^h &amp;= {\curly g} N_{n+1}
+    \end{split}
+\]</span></p>
+<p>which includes an extra basis function to allow the boundary condition (<span class="math inline">\(u(1)={\curly g}\)</span>) to be satisfied.</p>
+<p>Substituting into (<a href="#eq-FEabst" class="quarto-xref">Equation&nbsp;<span>19.1</span></a>) gives</p>
+<p><span class="math display">\[
+a\left( \sum_{A=1}^n c_A N_A , \sum_{B=1}^n d_B N_B \right) =
+    \left( \sum_{A=1}^n c_A N_A , {\curly f} \right) + \left[ \sum_{A=1}^n c_A N_A(0) \right] {\curly h}
+    -a\left( \sum_{A=1}^n c_A N_A , {\curly g} N_{n+1} \right)
+\]</span></p>
+<p>Our operators are symmetric and wholly linear, so the order of summation and application of the operator can be interchanged freely to give: <span class="math display">\[
+0 =     \sum_{A=1}^n c_A G_A
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+G_A = \sum_{B=1}^n a(N_A,N_B)d_B - (N_A,{\curly f}) - N_A(0){\curly h} + a(N_A,A_{n+1}){\curly g}
+\]</span></p>
+<p>As we have done many times before, we appeal to the argument that the particular choice of variation must be totally arbitrary: this equation must hold no matter what <span class="math inline">\(w^h \in {\curly S}^h\)</span> we choose, and hence no matter what the combination of <span class="math inline">\(c_A\)</span> may be. This then means that <span class="math inline">\(G_A\)</span> must be identically zero independent of <span class="math inline">\(c_A\)</span>, i.e.</p>
+<p><span id="eq-gal2"><span class="math display">\[
+\sum_{B=1}^n a(N_A,N_B)d_B =  (N_A,{\curly f} )
+     - N_A(0){\curly h} +
+      a(N_A,A_{n+1}) {\curly g}
+\tag{19.2}\]</span></span></p>
+<p>As in the standard variational method, we have eliminated all references to the actual variation and left unknowns which only related to the physical variables (i.e.&nbsp;the coefficients of the expansion for <span class="math inline">\(u\)</span>).</p>
+<p>If we simply write <span id="eq-FEstdform"><span class="math display">\[
+\begin{split}
+        K_{AB} &amp;= a(N_A,N_B)\\
+        F_A &amp;= (N_A,{\curly f}) + N_A(0)h - a(N_A,N_n+1){\curly g}
+    \end{split}
+\tag{19.3}\]</span></span></p>
+<p>then we have a matrix formulation immediately since (<a href="#eq-gal2" class="quarto-xref">Equation&nbsp;<span>19.2</span></a>) now becomes</p>
+<p><span class="math display">\[
+\sum_{B=1}^n  K_{AB} d_B = F_A  \;\;\;\;\;\; A=1,2,3,\ldots
+\]</span></p>
+<p>or</p>
+<p><span class="math display">\[
+\mathbf{K d} = \mathbf{F}
+\]</span></p>
+<p>The matrix <span class="math inline">\(\mathbf{K}\)</span> is known as the stiffness matrix — the association with the matrix of stiffnesses from our discrete set of springs being obvious.</p>
+</section>
+<section id="generalization" class="level2">
+<h2 class="anchored" data-anchor-id="generalization">Generalization</h2>
+<p>The same argument can be applied to higher dimensions, and to problems with different constitutive laws, and vector unknowns, however, the identification of the components of the stiffness matrix with the operator <span class="math inline">\(a(\cdot,\cdot)\)</span> acting on every possible combination of the galerkin basis functions still holds. When the unknowns are vectors, the basis functions are used in each respective direction which complicates the notation even more than before. Essentially, though it means that the entries to <span class="math inline">\(\mathbf{K}\)</span> from each <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are actually matrices which are <span class="math inline">\(n_{\rm dim} \times n_{\rm dim}\)</span>.</p>
+<p>For example, in the constant viscosity Stokes’ flow problem, we now have</p>
+<p><span id="eq-festokes"><span class="math display">\[
+\left. K_{AB}\right|_{ij}  =    \int_\Omega
+                    \left(  \frac{\partial N_A}{\partial x_j} +  \frac{\partial N_A}{\partial x_i}  \right) \eta
+                    \left(  \frac{\partial N_B}{\partial x_j} +  \frac{\partial N_B}{\partial x_i} \right) d \Omega
+\tag{19.4}\]</span></span></p>
+</section>
+<section id="discretization-shape-functions" class="level2">
+<h2 class="anchored" data-anchor-id="discretization-shape-functions">Discretization &amp; Shape Functions</h2>
+<p>Although we have now nominally made our problem finite by expressing everything in terms of Galerkin basis functions, we have yet to decide what those functions ought to be. Whatever our choice, it should make the problem easy to compute numerically.</p>
+<p>!<img src="domain-decomp.png" class="img-fluid" alt="Splitting an arbitrary domain into patches is trivial in an integral formulation. Additionally, the irregular shape of the individual subdomains is easy to handle with standard changes of variables (Jacobians)"></p>
+<p>The choice of basis functions is very broad but we narrow it down by tying it very closely to the way we choose to split up the domain of our problem. With an integral method, the domain decomposition is simple since</p>
+<p><span id="eq-decomp"><span class="math display">\[
+\int_\Omega d\Omega = \int_{\Omega_1} d {\Omega_1} +
+            \int_{\Omega_2} d {\Omega_2} + \int_{\Omega_3} d {\Omega_3} + \ldots
+\tag{19.5}\]</span></span></p>
+<p>which means that the decomposition <a href="#domain-decomp">shown above</a> is as accurate as the representation of the boundary allows.</p>
+<p>The functions which interpolate the node points at the corners of subdomains are a suitable set for use as an approximate basis as we require for the Galerkin formulation. This is easy to see if we consider a one dimensional problem.</p>
+<p>!<img src="discretisation-1d.png" class="img-fluid" alt="Representing a piecewise linear function as a sum of pointy functions localized at the nodes."></p>
+<p>In the one dimensional case, the choice of subdomains is limited to breaking up the line into a number of segments, though not necessarily of equal length. If the approximation to the continuum field, <span class="math inline">\(u\)</span> is made by linear interpolation to give <span class="math inline">\(u^h\)</span>, then <span class="math inline">\(u^h\)</span> can also be expressed as a sum on the <a href="#discretisation-1d">local triangular functions <span class="math inline">\(N_A\)</span></a></p>
+<p><span class="math display">\[
+u^h = \sum_{A} u(x_A) N_A(x)
+\]</span></p>
+<p>This is an exact representation of the interpolation provided the <span class="math inline">\(N_A\)</span> takes the value one at node <span class="math inline">\(A\)</span> and zero at all other nodes, and varies in a linear manner in between.</p>
+<p>Note that the functions all take the same form apart from scaling. Also, because the basis functions are localized around a node and its neighbours, the direct interaction between a node and its immediate neighbours is non-zero but the interaction with more distant nodes is zero. This makes the stiffness matrix banded — more importantly it is sparse and therefore the potentially enormous number of interactions (the square of the number of unknowns) is contained. This procedure can be extended to higher dimensions and to higher order interpolations as shown in <img src="#shape-functions.png" class="img-fluid" alt="the Figure below"></p>
+<section id="naming-of-things-and-what-they-are-like" class="level3">
+<h3 class="anchored" data-anchor-id="naming-of-things-and-what-they-are-like">Naming of Things and What They are Like}</h3>
+<p>The interpolation functions are known as shape functions. The subdomains are known as elements. The elements correspond to the individual springs of our discrete example. The shape functions are pure interpolation functions of the required order within the element and can be differentiated the appropriate number of times. This means that the order of interpolation must match the order of derivatives in the FE operator. Crossing the element boundaries, the shape functions have discontinuous derivatives (as do the piecewise interpolations). Continuous derivative functions are possible (e.g.&nbsp;splines) but add significant complexity. Shape functions in 2D and 3D can be formed from the product of 1D shape functions in each direction.</p>
+<p>!<img src="shape-functions.png" class="img-fluid" alt="Extension of simple shape function concept (a) to higher order functions and (b) to higher dimensions"></p>
+</section>
+<section id="element-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="element-matrices">Element Matrices</h3>
+<p>The <a href="#domain-decomp">domain decomposition illustrated above</a> produces a minature version of the matrix problem on the individual elements themselves.</p>
+<p><span class="math display">\[
+{k^e}_{ij} {d^e}_j = {f^e}_i
+\]</span></p>
+<p>The interpretation of the local problem is similar to that of the individual springs in the discrete example we derived earlier. By assembling the individual under-constrained element problems into the full problem we obtain a soluble system with the correct number of boundary conditions etc. The local equilibrium problem is identical with that of the global problem. That is, we use the same variational form and the same operators to build the local matrices. In general, finite element methods are designed around the local element frame of reference and large problems assembled from smaller ones. The book-keeping involved is to track which degrees of freedom in the local problem are associated with which others in the global problem. Clearly the interaction coefficient between one degree of freedom and another is derived from the local equilibrium relationships of a number of elements because the shape function for a given nodal point is spread across a number of elements.</p>
+</section>
+</section>
+<section id="numerical-integration" class="level2">
+<h2 class="anchored" data-anchor-id="numerical-integration">Numerical Integration</h2>
+<p>The real power of finite elements comes from its ability to handle remarkably distorted geometries with ease. (Obviously this only applies in two or more dimensions). This is possible because simple mappings can be derived to convert a distorted element into a regular one (square, cubic, regular-tetrahedral). This takes the form of a change of variables which can be done {} if we make minor restrictions on the choice of distortions we allow the elements to have. This restriction takes the form of ensuring that the mappings which transform the element shape can be described by the shape functions of the element. This means that only linear mappings can be applied to linear elements. If we wish to map a curved boundary exactly, then elements which have the appropriate order shape functions have to be used even if they are not needed for the representation of the differential operator. (e.g.&nbsp;quadratic elements for a circular boundary). This concept produces “isoparametric” elements.</p>
+<p>The mapping shown in <a href=""></a> is achieved by a change of variables</p>
+<p><span class="math display">\[
+\int  \int_{\Omega^e} \phi dx dy = \int  \int_{\rm square} \phi {\curly j} d \xi d \eta
+\]</span></p>
+<p>where <span class="math inline">\({\curly j}\)</span> is the jacobian of the transformation defined by</p>
+<p><span class="math display">\[
+{\curly j} = {\rm det} \frac{\partial \mathbf{x}}{\partial \boldsymbol{\xi}} =
+            {\rm det} \left[ \begin{array}{cc}  
+                \frac{\partial x_1}{\partial \xi_1} &amp;  \frac{\partial x_1}{\partial \xi_2} \\
+                \frac{\partial x_2}{\partial \xi_1} &amp;  \frac{\partial x_2}{\partial \xi_2}
+                \end{array}    \right]
+\]</span></p>
+<p>In the isoparametric concept, the components of the jacobian can be written as, for example,</p>
+<p><span class="math display">\[
+\frac{\partial x_1}{\partial \xi_1} (\xi_1,\xi_2) =
+        \sum_{a=1}^{n_en} \frac{\partial N_a}{\partial \xi_1} {x_1}_a
+\]</span></p>
+<p>Now we have the integral of a number of things defined over a regular, square domain (or cube etc). A number of ways to estimate these integrals is available. For example, in 1D the familiar trapezium rule can integrate linearly interpolated functions exactly. Given that our approximate method has already reduced the degree of polynomial within the element to something manageable, it is possible to find integration schemes which produce the {} integral for our approximation — in other words introducing no further error.</p>
+<p>One possibility which is commonly used is Gaussian quadrature. This is a textbook method which can be made exact for any order of interpolation function desired. For linear interpolation in 2D, the following rule applies (assuming that we have transformed to a square element)</p>
+<p><span class="math display">\[
+\int_{-1}^{1} \!\! \int_{-1}^{1} \phi(\xi,\eta) d\xi d\eta  \ \ \ \cong \ \ \
+    \sum_{l=1}^{n_{\rm int}} \phi( \tilde{ \xi_l}, \tilde{ \eta_l}) W_l
+\]</span></p>
+<p>In which <span class="math inline">\(n_{\rm int}\)</span> is the number of points in the quadrature rule with co-ordinates <span class="math inline">\((\tilde{ \xi_l}, \tilde{ \eta_l})\)</span>. Each point has a weight associated with it of <span class="math inline">\(W_l\)</span>. For the four point rule:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(l\)</span></th>
+<th><span class="math inline">\(\tilde{\xi_l}\)</span></th>
+<th><span class="math inline">\(\tilde{\eta_l}\)</span></th>
+<th><span class="math inline">\(W_l\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(-1/\sqrt{3}\)</span> &amp; <span class="math inline">\(-1/\sqrt{3}\)</span></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><span class="math inline">\(1/\sqrt{3}\)</span> &amp; <span class="math inline">\(-1/\sqrt{3}\)</span></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><span class="math inline">\(-1/\sqrt{3}\)</span> &amp; <span class="math inline">\(1/\sqrt{3}\)</span></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><span class="math inline">\(1/\sqrt{3}\)</span> &amp; <span class="math inline">\(1/\sqrt{3}\)</span></td>
+<td>1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The four-point rule in two dimensions is constructed by applying a two point, one dimensional rule to each of the coordinates in turn. The integrals along the edges of the elements which are required to construct the boundary force vectors are therefore should be calculated using the one dimensional, two point rule which, along an edge of the bi-unit master element is</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(l\)</span></th>
+<th><span class="math inline">\(\tilde{\xi_l}\)</span></th>
+<th><span class="math inline">\(W_l\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(-1/\sqrt{3}\)</span></td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><span class="math inline">\(1/\sqrt{3}\)</span></td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>This naturally extends to three dimensional elements and their two dimensional boundaries.</p>
+</section>
+<section id="standard-form-for-everything" class="level2">
+<h2 class="anchored" data-anchor-id="standard-form-for-everything">Standard Form for Everything</h2>
+<p>Consider the heat 1D conduction problem one more time. We can rewrite the generalized Fourier law as</p>
+<p><span class="math display">\[
+q_i = - \kappa_{ij} \frac{\partial u}{\partial x_j} =
+    -\kappa_{ij} \left( \begin{array}{c} \frac{\partial}{\partial x_1} \\ \frac{\partial }{\partial x_2} \end{array} \right) u
+\]</span></p>
+<p>If we express <span class="math inline">\(u\)</span> in terms of the shape functions</p>
+<p><span class="math display">\[
+u = \sum_A d_A N_A (x)  \rightarrow
+    q_i = -\kappa_{ij} \sum_A \left( \begin{array}{c} {\displaystyle \frac{\partial N_A}{\partial x_1}} \\
+    { \displaystyle \frac{\partial N_A}{\partial x_2}} \end{array} \right) d_A
+    q_i = - \sum_A \kappa_{ij} \left. B_A \right|_{j} d_A
+\]</span></p>
+<p>This allows us to define a matrix <span class="math inline">\(\mathbf{B_A}\)</span> which comes directly from the operators contained in the constitutive law.</p>
+<p>Compare this with equation ( <a href="#eq-FEstdform" class="quarto-xref">Equation&nbsp;<span>19.3</span></a>) and, the more concrete example (<a href="#eq-festokes" class="quarto-xref">Equation&nbsp;<span>19.4</span></a>) and we see that the stiffness matrix coefficients can be obtained from</p>
+<p><span class="math display">\[
+K_{AB} = a(N_A,N_B) = \int_{\Omega} \mathbf{B}_A^T \mathbf{D} \mathbf{B}_B d\Omega
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{D}\)</span> is a matrix of material properties. This form can be used for all problems and may greatly simplify both programming and the automation of the development of the equations since now we simply need to be able to express the constitutive law in terms of the unknowns, build a material property matrix and plug this into standard machinery.</p>
+</section>
+<section id="constraints" class="level2">
+<h2 class="anchored" data-anchor-id="constraints">Constraints</h2>
+<p>We generally want to solve problems where there is a constraint on the unknowns. For example we wish to find a flow solution which also satisfies mass conservation (not unreasonable !). To see how this constraint may be applied we go back to the variational method and regard the equation <span class="math inline">\({\bf Kd = f}\)</span> in the light of the functional</p>
+<p><span class="math display">\[
+{\cal F} ({\bf d}) = \frac{{\bf d}^T{\bf Kd}}{2} - {\bf d}^T {\bf f}
+\]</span></p>
+<p>The vector which minimizes <span class="math inline">\({\cal F} ({\bf d})\)</span> is the solution to <span class="math inline">\({\bf Kd = f}\)</span> — this can be shown in the usual way. (Start with $ {F}({}) $, where <span class="math inline">\(\varepsilon\)</span> is a free, real parameter and <span class="math inline">\(\bf c\)</span> is arbitrary).</p>
+<p>Consider a single constraint,</p>
+<p><span class="math display">\[
+d_Q = {\curly g}
+\]</span></p>
+<p>which corresponds to specifying a value for one of the velocities in the problem having the index <span class="math inline">\(Q\)</span> in the global numbering system. This constraint should be written as a function of <span class="math inline">\(\bf d\)</span> in the following way:</p>
+<p><span class="math display">\[
+0 = {\cal G}({\bf d}) = {\bf 1}_Q^T{\bf d} - {\curly g}
+\]</span></p>
+<p><span class="math display">\[
+\begin{eqnarray*}
+{\bf 1}^T_Q = \left\langle 0 \ldots 0  \right. &amp; 1 &amp; \left. 0 \ldots 0 \right\rangle \\
+&amp; \uparrow &amp; \! \\  
+&amp; \text{  Q'th column} &amp; \nonumber
+\end{eqnarray*}
+\]</span></p>
+<p>Then finding the stationary value for the following function is equivalent to solving the constrained problem:</p>
+<p><span class="math display">\[
+{\cal H}({\bf d},m) = {\cal F}({\bf d}) + m{\cal G}({\bf d})
+\]</span></p>
+<p>The condition that <span class="math inline">\(\bf d\)</span> renders <span class="math inline">\(\cal H\)</span> stationary is</p>
+<p><span class="math display">\[
+0 = \left. \frac{d}{d\varepsilon} {\cal H}({\bf d}+\varepsilon{\bf c},m + \varepsilon l) \right|_{\varepsilon=0}
+\;\;\; \forall {\bf c},l
+\]</span></p>
+<p>Substituting for <span class="math inline">\(\cal H\)</span> gives:</p>
+<p><span class="math display">\[
+0 = \left. \frac{d}{d\varepsilon} \left[ {\cal F}({\bf d}+\varepsilon{\bf c} )+
+     (m+\varepsilon l){\cal G}({\bf d}+\varepsilon{\bf c} )\right] \right|_{\varepsilon=0}
+\]</span></p>
+<p><span class="math display">\[
+0= {\bf c}^T({\bf Kd -F) }+l {\cal G}({\bf d}) + m{\bf 1}_Q^T {\bf c}
+\]</span></p>
+<p><span class="math display">\[
+0= {\bf c}^T({\bf Kd} + m{\bf 1}_Q {\bf -f}) + l ({\bf 1}_Q^T {\bf d} -\mbox{\curly g})
+\]</span></p>
+<p>Since <span class="math inline">\(\bf c\)</span> and <span class="math inline">\(l\)</span> are strictly arbitrary,</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+{\bf Kd }+m{\bf 1}_Q &amp;=&amp; {\bf f}\\ \nonumber
+{\bf 1}_Q^T {\bf d} &amp; = &amp; {\curly g} \nonumber
+\end{eqnarray}
+\]</span></p>
+<p>Equivalently</p>
+<p><span class="math display">\[
+\left[ \begin{array}{cc} {\bf K} &amp; {\bf 1}_Q \\
+            {\bf 1}_Q^T &amp; 0 \end{array} \right]
+\left\{ \begin{array}{c} {\bf d} \\ \nonumber
+             m \end{array} \right\} =
+\left\{\begin{array}{c} {\bf f} \\ \nonumber
+             {\curly g} \end{array} \right\}
+\]</span></p>
+<p>which establishes the pattern expected for adding constraints to the physical problem: augmentation of all the matrices with some forces (<span class="math inline">\(\bf m\)</span>) as well as velocities (<span class="math inline">\(\bf d\)</span>) unknown. The coefficient matrix remains symmetric but is no longer positive definite.</p>
+<p>An alternative way to enforce constraints and one which proves slightly simpler to implement, is to make an approximation to the Lagrange-multiplier as follows:</p>
+<p><span class="math display">\[
+m \cong k {\cal G}({\bf d})
+\]</span></p>
+<p>in which <span class="math inline">\(k\)</span> is a large positive number. Form the following functional,</p>
+<p><span class="math display">\[
+{\cal J}({\bf d}) = {\cal F}({\bf d}) + \frac{k}{2} \left[{\cal G} ({\bf d})\right]^2
+\]</span></p>
+<p>and consider the extremal values for <span class="math inline">\(\cal J\)</span> which are defined by the following expression</p>
+<p><span class="math display">\[
+0 = \left. \frac{d}{d\varepsilon} \left( {\cal F}({\bf d}+\varepsilon {\bf c} )+
+    \frac{k}{2} \left[ {\cal G} ({\bf d} + \varepsilon{\bf c}) \right]^2 \right) \right| _{\varepsilon = 0}
+\]</span></p>
+<p><span class="math display">\[
+{\bf c}^T({\bf Kd - f}) + k {\bf G}({\bf d}) {\bf 1}_Q^T {\bf c}
+\]</span></p>
+<p>Substituting for <span class="math inline">\(\cal G\)</span> gives</p>
+<p><span class="math display">\[
+{\bf c}^T \left[ ({\bf K} + k{\bf 1}_Q{\bf 1}_Q^T){\bf d} - ({\bf f} + k {\curly g} {\bf 1}_Q) \right] = 0
+\]</span></p>
+<p>Since <span class="math inline">\(\bf c\)</span> is arbitrary, the following matrix equation is implied</p>
+<p><span class="math display">\[
+({\bf K} + k{\bf 1}_Q{\bf 1}_Q^T){\bf d} = ({\bf f} + k {\curly g} {\bf 1}_Q)
+\]</span></p>
+<p>Now the dimension of the problem is not changed; the constraints are introduced by addition of another matrix equation. In the limit <span class="math inline">\(k \rightarrow \infty\)</span>, <span class="math inline">\(d_Q \rightarrow {\curly g}\)</span> and the constraint is applied exactly. The constraint of incompressibility is applied as the limiting case of slight compressibility. The large constant is known as the penalty parameter and gives its name to the method; its value is chosen according to the accuracy of the machine used to compute the solution to the problem. A suitable value is somewhere between <span class="math inline">\(10^7\)</span> and <span class="math inline">\(10^9\)</span>, any smaller and the fluid volume may not be conserved during hydrostatic loading.</p>
+<p>The penalty method is computationally very simple, but can be ill conditioned. This becomes a serious issue when the matrix equation is not solved by direct methods. In the latter case, it is preferable to introduce additional variables. These take the form of pressures which, in the slightly compressible flow case can always be eliminated in favour of the constraint, and then recovered as</p>
+<p><span class="math display">\[
+p = - \lambda \nabla . {\bf u}
+\]</span></p>
+<p>The augmented matrix equation then becomes</p>
+<p><span class="math display">\[
+\left( \begin{array}{cc} \mathbf{K} &amp; \mathbf{G} \\ \mathbf{G}^T &amp;  0 \end{array} \right)
+\left( \begin{array}{c} \mathbf{u} \\  \mathbf{p} \end{array} \right)=
+\left( \begin{array}{c} \mathbf{f} \\  \mathbf{0} \end{array} \right)
+\]</span></p>
+<p>The components of the <span class="math inline">\(\mathbf{G}\)</span> matrix are, at the element level found from</p>
+<p><span class="math display">\[
+\left.  g^e_{a\tilde{a}}  \right|_{i} = -\int_{\Omega^e} {\rm div}(N_a) (\tilde{N})_{\tilde{a}} d\Omega
+\]</span></p>
+<p>The tilde indicates a pressure degree of freedom / shape function as constrasted with the standard velocity shape fucntions. The independent pressures require their own space of trial functions which can be of lower order than the velocity since the derivatives in the equations are also lower. In fact, it is necessary to use lower order functions for the pressure otherwise the problem is overconstrained and no non-trivial solution can be found. This is more of a difficulty when the penalty formulation is used since there are no additional variables and hence no associated trial functions. Instead a trick is used — the constraint terms are integrated using an order lower integration scheme than that required for exact solutions. The result turns out to be equivalent (usually) to the introduction of additional variables and lower order shape functions but the proof of this is another tricky matter.</p>
+<!-- ## Incremental Formulations
+
+In plasticity, for example, only incremental changes in the system are
+meaningful since the stress is degenerate to multiple strains and depends 
+on the loading history. In this situation one deals with an incremental 
+formulation of the entire problem replacing the stiffness matrix with 
+a tangent stiffness from a Newton-Raphson type procedure. This is not 
+an issue with simple fluids but should be understood when brittle solids 
+are considered. -->
+</section>
+<section id="stresses" class="level2">
+<h2 class="anchored" data-anchor-id="stresses">Stresses</h2>
+<p><strong>Note</strong> Derivatives of the shape functions are commonly not defined at the node points and consequently it is not possible to compute stresses etc at the nodal points. They are defined on the interiors of the elements and must be extrapolated to the nodes using some form of best fit procedure.</p>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../DraftMaterial";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../DraftMaterial/NumericalMethods3.html" class="pagination-link" aria-label="Introduction to the Finite Element Method">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Introduction to the Finite Element Method</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../DraftMaterial/NumericalMethods5.html" class="pagination-link" aria-label="Methods for Solving Numerical Problems">
+        <span class="nav-page-text"><span class="chapter-title">Methods for Solving Numerical Problems</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

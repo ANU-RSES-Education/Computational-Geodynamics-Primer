@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Index of notebooks: – Computational Geodynamics Primer</title>
+<title>Non-dimensional equations &amp; dimensionless numbers – Computational Geodynamics Primer</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../Notebooks/TestNB1.html" rel="next">
-<link href="../Contributions/example-citations.html" rel="prev">
+<link href="../DraftMaterial/StokesFlowApplications.html" rel="next">
+<link href="../DraftMaterial/NavierStokes.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -93,6 +93,35 @@ window.MathJax = {
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
@@ -148,7 +177,7 @@ window.MathJax = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Notebooks/BinderLandingPage.html">Appendices</a></li><li class="breadcrumb-item"><a href="../Notebooks/BinderLandingPage.html">Index of notebooks:</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../DraftMaterial/ContinuumMechanics.html"><strong>Draft: Geodynamics</strong></a></li><li class="breadcrumb-item"><a href="../DraftMaterial/MantleDynamics.html"><span class="chapter-title">Non-dimensional equations &amp; dimensionless numbers</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -298,7 +327,7 @@ window.MathJax = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../DraftMaterial/MantleDynamics.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Non-dimensional equations &amp; dimensionless numbers</span></a>
+  <a href="../DraftMaterial/MantleDynamics.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Non-dimensional equations &amp; dimensionless numbers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -413,7 +442,7 @@ window.MathJax = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../Notebooks/BinderLandingPage.html" class="sidebar-item-text sidebar-link active">
+  <a href="../Notebooks/BinderLandingPage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Index of notebooks:</span></a>
   </div>
 </li>
@@ -435,14 +464,32 @@ window.MathJax = {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-stream-function" id="toc-the-stream-function" class="nav-link active" data-scroll-target="#the-stream-function">The stream function</a></li>
+  <li><a href="#vorticity" id="toc-vorticity" class="nav-link" data-scroll-target="#vorticity">Vorticity</a></li>
+  <li><a href="#stream-function-vorticity-and-the-biharmonic-equation" id="toc-stream-function-vorticity-and-the-biharmonic-equation" class="nav-link" data-scroll-target="#stream-function-vorticity-and-the-biharmonic-equation">Stream-function, vorticity and the biharmonic equation</a></li>
+  <li><a href="#poloidaltoroidal-velocity-decomposition" id="toc-poloidaltoroidal-velocity-decomposition" class="nav-link" data-scroll-target="#poloidaltoroidal-velocity-decomposition">Poloidal/Toroidal velocity decomposition</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1-non-dimensionalizing-the-stokes-equation" id="toc-exercise-1-non-dimensionalizing-the-stokes-equation" class="nav-link" data-scroll-target="#exercise-1-non-dimensionalizing-the-stokes-equation">Exercise 1: Non-dimensionalizing the Stokes Equation</a></li>
+  <li><a href="#exercise-2-poloidal-toroidal-decomposition" id="toc-exercise-2-poloidal-toroidal-decomposition" class="nav-link" data-scroll-target="#exercise-2-poloidal-toroidal-decomposition">Exercise 2: Poloidal-Toroidal Decomposition</a></li>
+  <li><a href="#exercise-3-estimating-mantle-rayleigh-numbers" id="toc-exercise-3-estimating-mantle-rayleigh-numbers" class="nav-link" data-scroll-target="#exercise-3-estimating-mantle-rayleigh-numbers">Exercise 3: Estimating Mantle Rayleigh Numbers</a></li>
+  <li><a href="#exercise-4-stream-function-properties" id="toc-exercise-4-stream-function-properties" class="nav-link" data-scroll-target="#exercise-4-stream-function-properties">Exercise 4: Stream Function Properties ⭐</a></li>
+  <li><a href="#exercise-5-corner-flow-solution" id="toc-exercise-5-corner-flow-solution" class="nav-link" data-scroll-target="#exercise-5-corner-flow-solution">Exercise 5: Corner Flow Solution</a></li>
+  </ul></li>
+  <li><a href="#solutions-to-selected-exercises" id="toc-solutions-to-selected-exercises" class="nav-link" data-scroll-target="#solutions-to-selected-exercises">Solutions to Selected Exercises</a></li>
+  </ul>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Notebooks/BinderLandingPage.html">Appendices</a></li><li class="breadcrumb-item"><a href="../Notebooks/BinderLandingPage.html">Index of notebooks:</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../DraftMaterial/ContinuumMechanics.html"><strong>Draft: Geodynamics</strong></a></li><li class="breadcrumb-item"><a href="../DraftMaterial/MantleDynamics.html"><span class="chapter-title">Non-dimensional equations &amp; dimensionless numbers</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Index of notebooks:</h1>
+<h1 class="title"><span class="chapter-title">Non-dimensional equations &amp; dimensionless numbers</span></h1>
 </div>
 
 
@@ -459,10 +506,314 @@ window.MathJax = {
 </header>
 
 
-<ul>
-<li><a href="../Notebooks/TestNB1.html">TestNB1 (ipynb)</a></li>
-<li><a href="../Notebooks/TestQMD_NB1.html">TestQMD (qmd)</a></li>
-</ul>
+<div class="hidden">
+<p>$$ % Global LaTeX macros for MathJax </p>
+% Differential operators
+% Color commands (MathJax compatible)
+<p>$$</p>
+</div>
+<p>Before too long it would be a good idea to get a feeling for the flavour of these equations which continual rearrangements will not do — it is necessary to examine some solutions.</p>
+<p>First of all it is a good idea to make some simplifications based on the kinds of problems we will want to attack. The first thing to do, as is often the case when developing a model, is to test whether any of the terms in the equations are negligibly small, or dominant. To do this, we are going to need to have some physical insight into the kinds of problems we are going to solve - for example, some terms may be negligible for slow moving flow but not if the flow is fast (but what does <em>‘fast’</em> really mean ?)</p>
+<p>One trick that is very common in fluid dynamics is to re-scale the equations using units that are in some way <em>natural</em> to the problem we are trying to solve. This helps us to answer the question that came up a moment ago: if a typical velocity is 1, then <em>‘slow’</em> is <span class="math inline">\(v \ll 1\)</span> and <em>‘fast’</em> is when <span class="math inline">\(v \gg 1\)</span>.</p>
+<p>Remember that even very rational systems of units like the SI system are still arbitrary and based on the scale of human experience: a metre is not far off the length of a step when we walk, a second is our heartbeat, carry a litre of water when you go walking.</p>
+<p>We don’t need to define and name a whole new system of units any time we start analysing a new problem, but <em>the fact that we could do this</em> suggests there is a way to consider the scale of a problem independenly to the underlying character of the way things balance each other as the system changes through time.</p>
+<p>What we can do is consider ‘typical values’ for the independent dimensions of a system (mass, length, time, temperature, that sort of thing) which can be used to rescale the standard units. For example, we might rescale all lengths by the size of the system we are studying, <span class="math inline">\(d\)</span> (e.g.&nbsp;mantle thickness or depth of fluid in a lab tank), time according to the characteristic time for diffusion of heat over that distnace, and temperature by maximum temperature difference we observe at the start.</p>
+<div id="fig-layer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-layer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../Images/Diagrams/layer.png" class="img-fluid figure-img" width="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-layer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.1: Consider the fluid motions in a layer of arbitrary depth, <span class="math inline">\(d\)</span>. The fluid is assumed to have constant properties such as viscosity, thermal expansivity, thermal diffusivity. Small fluctuations in density due to temperature driven flow. Additional heat is carried (advected) by the flow from the hot boundary to the cool one whenever the fluid is moving.
+</figcaption>
+</figure>
+</div>
+<p>Various scalings result, with the new variables indicated using a prime (<span class="math inline">\('\)</span>).</p>
+<p><span class="math display">\[
+\begin{array}{llll}
+    x = d.x' &amp; \partial / \partial x =  (1/d) \partial / \partial x' &amp; \nabla = (1/d) \nabla '  \\
+    t = (d^2/\kappa) t'  &amp;  \partial / \partial t = (\kappa/d^2) \partial / \partial t' &amp; \\
+    T = \Delta T T' &amp; &amp; \\
+    v = (\kappa / d) v' &amp;&amp; \\
+    p= p_0 + (\eta \kappa / d^2) p'
+\end{array}
+\]</span></p>
+<p>where <span class="math inline">\(\nabla p_0 = - g \rho_0\)</span></p>
+<p>Substituting for all the existing terms in the Navier-Stokes equation (<span class="quarto-unresolved-ref">?eq-navstokes</span>) using the equation of state for thermally induced variation in density (<span class="quarto-unresolved-ref">?eq-state</span>) gives:</p>
+<p><span class="math display">\[
+\frac{\rho_0 \kappa}{d^2} \frac{D}{Dt'} \left( \frac{\kappa}{d} \mathbf{v}' \right) =
+                \frac{\eta}{d^2} \acute{\nabla}^2 \left( \frac{\kappa}{d} \mathbf{v}' \right)
+                - \frac{\eta \kappa}{d^3}  \acute{\nabla} p' + g \rho_0 \alpha \Delta T T' \hat{\mathbf{z}}
+\]</span></p>
+<p>Collecting everything together gives</p>
+<p><span class="math display">\[
+\frac{\rho_0 \kappa^2}{d^3} \frac{D\mathbf{v}'}{Dt'}  =
+                \frac{\eta \kappa}{d^3} \acute{\nabla}^2  \mathbf{v}'
+                - \frac{\eta \kappa}{d^3}  \acute{\nabla} p' + g \rho_0 \alpha \Delta T T' \hat{\mathbf{z}}
+\]</span></p>
+<p>Divide throughout by <span class="math inline">\(\eta \kappa / d^3\)</span> gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+    \frac{\rho \kappa}{\eta} \frac{D\mathbf{v}'}{Dt'}  &amp; =
+                     \acute{\nabla}^2  \mathbf{v}'  -  \acute{\nabla} p' +
+                     \frac{g \rho_0 \alpha \Delta T d^3}{\kappa \eta} T' \hat{\mathbf{z}} \nonumber \\
+            \textrm{or}  \;\;\;
+     \frac{1}{{\rm Pr}} \frac{D\mathbf{v}'}{Dt'} &amp; =
+                    \acute{\nabla}^2  \mathbf{v}'  -  \acute{\nabla} p' + {\rm Ra} T' \hat{\mathbf{z}}
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(\rm Pr\)</span> is known as the Prandtl number, and <span class="math inline">\(\rm Ra\)</span> is known as the Rayleigh number; both are non-dimensional numbers. By choosing to scale the equations (and this is still perfectly general as we haven’t forced any particular choice of scaling yet), we have condensed the different physical variable quantities into just two numbers. The benefit of this procedure is that it tells us how different quantities trade off against one another. For example, we see that if the density doubles, and the viscosity doubles, then the solution should remain unchanged.</p>
+<p>In fact, the main purpose of this particular exercise is about to be revealed. The value of mantle viscosity is believed to lie somewhere between <span class="math inline">\(10^{19}\)</span> and <span class="math inline">\(10^{23}\)</span> <span class="math inline">\({\rm Pa . s}\)</span>, the thermal diffusivity is around <span class="math inline">\(10^{-6}{\rm m}^2{\rm s}^{-1}\)</span>, and density around <span class="math inline">\(3300 {\rm kg . m}^{-3}\)</span>. This gives a Prandtl number greater than <span class="math inline">\(10^{20}\)</span>. Typical estimates for the Rayleigh number are between <span class="math inline">\(10^6\)</span> and <span class="math inline">\(10^8\)</span> depending on the supposed depth of convection, and the uncertain mantle viscosity.</p>
+<p>Obviously, the time-dependent term can be neglected for the mantle, since it is at least twenty orders of magnitude smaller than other terms in the equations. The benefit of this is that the nasty advection term for momentum is eliminated – flow in the mantle is at the opposite extreme to turbulent flow. The disadvantage is that the equations now become non-local: changes in the stress field are propogated instantly from point to point which can make the equations a lot harder to solve. This can be counter-intuitive but the consequences are important when considering the dynamic response of the Earth to changes in, for example, plate configurations.</p>
+<p>Incidentally, a third, independent dimensionless number can be derived for the thermally driven flow equations. This is the Nusselt number</p>
+<p><span class="math display">\[
+{\rm Nu} = \frac{Q}{k\Delta T}
+\]</span></p>
+<p>and is the ratio of actual heat transported by fluid motions in the layer compared to that transported conductively in the absence of fluid motion.</p>
+<p>All other dimensionless quantities for this system can be expressed as some combination of the Nusselt, Rayleigh and Prandtl numbers. The Prandtl number is a property of the fluid itself – typical values are: air, $$1; water, <span class="math inline">\(\sim\)</span> 6; non-conducting fluids <span class="math inline">\(10^3\)</span> or more; liquid metal, $$0.1. Rayleigh number and Nusselt number are both properties of the chosen geometry.</p>
+<section id="the-stream-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-stream-function">The stream function</h2>
+<p>For incompressible flows in two dimensions it can be very convenient to work with the stream-function – a scalar quantity which defines the flow everywhere. The stream function is the scalar quantity,<span class="math inline">\(\psi\)</span>, which satisfies</p>
+<p><span id="eq-strmfn"><span class="math display">\[
+v_1 = -\frac{\partial \psi}{\partial x_2} \mbox{\hspace{1cm}}
+                        v_2 = \frac{\partial \psi}{\partial x_1}
+\tag{12.1}\]</span></span></p>
+<p>so that, automatically,</p>
+<p><span class="math display">\[
+\frac{\partial v_1}{\partial x_1} + \frac{\partial v_2}{\partial x_2} = 0
+\]</span></p>
+<p>Importantly, computing the following</p>
+<p><span class="math display">\[
+(\mathbf{v} \cdot \nabla) \psi =
+                        v_1 \frac{\partial \psi}{\partial x_1} +
+                        v_2 \frac{\partial \psi}{\partial x_2} =
+                        \frac{\partial \psi}{\partial x_2} \frac{\partial \psi}{\partial x_1} -
+                        \frac{\partial \psi}{\partial x_1} \frac{\partial \psi}{\partial x_2} = 0
+\]</span></p>
+<p>tells us that <span class="math inline">\(\psi\)</span> does not change due to advection – in other words, contours of constant <span class="math inline">\(\psi\)</span> are streamlines of the fluid.</p>
+<p>Provided we limit ourselves to the xy plane, it is possible to think of equation (<a href="#eq-strmfn" class="quarto-xref">Equation&nbsp;<span>12.1</span></a>) as</p>
+<p><span class="math display">\[
+\mathbf{v} = \nabla \times (\psi \hat{\mathbf{k}})
+\]</span></p>
+<p>This form can be used to write down the 2D axisymetric version of equation (<a href="#eq-strmfn" class="quarto-xref">Equation&nbsp;<span>12.1</span></a>)</p>
+<p><span class="math display">\[
+\begin{aligned}
+                    u_r = -\frac{1}{r}\frac{\partial \psi}{\partial \theta} &amp; &amp;
+                    u_\theta = \frac{\partial \psi}{\partial r}
+\end{aligned}
+\]</span></p>
+<p>which automatically satisfies the incompressibility condition in plane polar coordinates <span class="math display">\[
+\frac{1}{r}\frac{\partial}{\partial r}(ru_r) + \frac{1}{r}\frac{\partial u_\theta}{\partial \theta} = 0
+\]</span></p>
+</section>
+<section id="vorticity" class="level2">
+<h2 class="anchored" data-anchor-id="vorticity">Vorticity</h2>
+<p>Vorticity is defined by <span class="math display">\[
+\boldsymbol{\omega} = \nabla \times \mathbf{v}
+\]</span></p>
+<p>In 2D, the vorticity can be regarded as a scalar as it has only one component which lies out of the plane of the flow.</p>
+<p><span class="math display">\[
+\omega = \frac{\partial v_2}{\partial x_1} -
+         \frac{\partial v_1}{\partial x_2}
+\]</span></p>
+<p>which is also exactly equal to twice the local measure of the spin in the fluid. Local here means that it applies to an infinitessimal region around the sample point but not to the fluid as a whole.</p>
+<p>This concept is most useful in the context of invicid flow where vorticity is conserved within the bulk of the fluid provided the fluid is subject to only conservative forces – that is ones which can be described as the gradient of a single-valued potential.</p>
+<p>In the context of viscous flow, the viscous effects acts cause diffusion of vorticity, and in our context, the fact that buoyancy forces result from to (irreversible) heat transport means that vorticity has sources. Taking the curl of the Navier-Stokes equation, and substituting for the vorticity where possible gives</p>
+<p><span class="math display">\[
+\frac{1}{\rm Pr} \left( \frac{D \boldsymbol{\omega}}{D t} -
+                (\boldsymbol{\omega} \cdot \nabla) \mathbf{v} \right) =
+                    \eta \nabla ^2 \boldsymbol{\omega} + {\rm Ra} \frac{\partial T}{\partial x_1}
+\]</span></p>
+<p>The pressure drops out because <span class="math inline">\(\nabla \times \nabla P = 0 \mbox{\hspace{0.5cm}} \forall P\)</span>.</p>
+</section>
+<section id="stream-function-vorticity-and-the-biharmonic-equation" class="level2">
+<h2 class="anchored" data-anchor-id="stream-function-vorticity-and-the-biharmonic-equation">Stream-function, vorticity and the biharmonic equation</h2>
+<p>In the context of highly viscous fluids in 2D, the vorticity equation is</p>
+<p><span id="eq-vorteqn"><span class="math display">\[
+\nabla ^2 \omega = - Ra \frac{\partial T}{\partial x_1}
+\tag{12.2}\]</span></span></p>
+<p>and, by considering the curl of <span class="math inline">\((-\partial \psi / \partial x_2, \partial \psi / \partial x_1, 0)\)</span> the stream function can be written</p>
+<p><span id="eq-psivort"><span class="math display">\[
+\nabla ^2 \psi = \omega
+\tag{12.3}\]</span></span></p>
+<p>This form is useful from a computational point of view because it is relatively easy to solve the Laplacian, and the code can be reused for each application of the operator. The Laplacian is also used for thermal diffusion – one subroutine for three different bits of physics which is elegant in itself if nothing else.</p>
+<p>The biharmonic operator is defined as</p>
+<p><span class="math display">\[
+\nabla^4 \equiv \nabla^2 ( \nabla ^2) \equiv
+                    \left( \frac{\partial ^4}{\partial x_1^4} +
+                    \frac{\partial ^2}{\partial x_1^2} \frac{\partial ^2}{\partial x_2^2} +
+                    \frac{\partial ^4}{\partial x_2^4} \right)
+\]</span></p>
+<p>The latter form being the representation in Cartesian coordinates.</p>
+<p>Using this form, it is easy to show that equations (<a href="#eq-vorteqn" class="quarto-xref">Equation&nbsp;<span>12.2</span></a>) and (<a href="#eq-psivort" class="quarto-xref">Equation&nbsp;<span>12.3</span></a>) can be combined to give</p>
+<p><span id="eq-biharm"><span class="math display">\[
+\nabla^4 \psi = -{\rm Ra} \frac{\partial T}{\partial x_1}
+\tag{12.4}\]</span></span></p>
+</section>
+<section id="poloidaltoroidal-velocity-decomposition" class="level2">
+<h2 class="anchored" data-anchor-id="poloidaltoroidal-velocity-decomposition">Poloidal/Toroidal velocity decomposition</h2>
+<p>The stream-function / vorticity form we have just used is a simplification of the more general case of the poloidal / toroidal velocity decomposition which turns out to be useful when we want to understand the balance of different contributions to the governing equation.</p>
+<p>We can make a Helmholtz decomposition of the velocity vector field:</p>
+<p><span class="math display">\[
+\mathbf{u} = \nabla \phi + \nabla \times \mathbf{A}
+\]</span></p>
+<p>Then for an incompressible flow, since <span class="math inline">\(\nabla \cdot \mathbf{u} = 0\)</span>, <span id="eq-curlA"><span class="math display">\[
+\mathbf{u} = \nabla \times \mathbf{A}
+\tag{12.5}\]</span></span></p>
+<p>Now suppose there is some direction (<span class="math inline">\(\hat{\mathbf{z}}\)</span>) which we expect to be physically favoured in the solutions, we can rewrite <a href="#eq-curlA" class="quarto-xref">Equation&nbsp;<span>12.5</span></a> as</p>
+<p><span id="eq-poltor"><span class="math display">\[
+\mathbf{u} = \textcolor[rgb]{0.7,0.0,0.0}{\nabla \times(\Psi \hat{\mathbf{z}})} +
+                 \textcolor[rgb]{0.0,0.0,0.7}{ \nabla \times\nabla \times(\Phi \hat{\mathbf{z}})}
+\tag{12.6}\]</span></span></p>
+<p>Where the first term on the right is the <span style="color: 0.7,0.0,0.0">Toroidal</span> part of the flow, and the second term is the <span style="color: 0.0,0.0,0.7">Poloidal</span> part. Why is this useful ? Let’s substitute (<a href="#eq-poltor" class="quarto-xref">Equation&nbsp;<span>12.6</span></a>) into the Stokes’ equation for a constant viscosity fluid</p>
+<p><span id="eq-cvstokes"><span class="math display">\[
+\eta \nabla^2 \mathbf{u} - \nabla p = g \rho \hat{\mathbf{z}}
+\tag{12.7}\]</span></span></p>
+<p>where <span class="math inline">\(\hat{\mathbf{z}}\)</span> is the vertical unit vector (defined by the direction of gravity) and is clearly the one identifiable special direction, then equate coefficients in the <span class="math inline">\(\hat{\mathbf{z}}\)</span> direction, and using the following results:</p>
+<p><span class="math display">\[
+\hat{\mathbf{z}} \cdot \nabla \times \nabla^2 \mathbf{u} =
+        - \nabla^2 \nabla_h^2\Psi
+\]</span></p>
+<p><span class="math display">\[
+\hat{\mathbf{z}} \cdot \nabla \times \nabla \times \nabla^2 \mathbf{u} =
+          \nabla^2 \nabla^2 \nabla_h^2\Phi
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\nabla_h = \left( \frac{\partial}{\partial x}, \frac{\partial}{\partial y}, 0 \right)
+\]</span></p>
+<p>is a gradient operator limited to the plane perpendicular to the special direction, <span class="math inline">\(\hat{\mathbf{z}}\)</span>.</p>
+<p>If we first take the curl of (<a href="#eq-cvstokes" class="quarto-xref">Equation&nbsp;<span>12.7</span></a>), and look at the <span class="math inline">\(\hat{\mathbf{z}}\)</span> direction,</p>
+<p><span class="math display">\[
+\hat{\mathbf{z}} \cdot \eta \nabla \times \nabla^2 \mathbf{u} =
+        -\eta \nabla^2 \nabla_h^2\Psi =
+        \hat{\mathbf{z}} \cdot \left( g \nabla \times \left( \rho \hat{\mathbf{z}}\right)\right) = 0
+\]</span></p>
+<p>we see that there is no contribution of the toroidal velocity field to the force balance. This balance occurs entirely through the poloidal part of the velocity field. If we take the curl twice and, once again, look at the <span class="math inline">\(\hat{\mathbf{z}}\)</span> direction:</p>
+<p><span class="math display">\[
+\hat{\mathbf{z}} \cdot \eta \nabla \times \nabla \times \nabla^2 \mathbf{u} =
+        \eta \nabla^2 \nabla^2 \nabla_h^2 \Phi =
+        \hat{\mathbf{z}} \cdot g \nabla \times \nabla \times \left( \rho \hat{\mathbf{z}}\right) =
+         \nabla_h^2 (\rho g)
+\]</span></p>
+<p>Which is the 3D equivalent of the biharmonic equation that we derived above.</p>
+<p>Note: if the viscosity varies in the <span class="math inline">\(\hat{\mathbf{z}}\)</span> direction, then this same decoupling still applies: bouyancy forces do not drive any toroidal flow. Lateral variations in viscosity (perpendicular to <span class="math inline">\(\hat{\mathbf{z}}\)</span>) couple the buoyancy to toroidal motion. This result is general in that it applies to the spherical geometry equally well assuming the radial direction (of gravity) to be special.</p>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>🚧 Under Review
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This exercises section is newly added as a placeholder for future content. These exercises are currently conceptual prompts that need to be developed with detailed problem statements, worked examples, and solutions.</p>
+<p><strong>Changes made:</strong> - Created 5 placeholder exercises aligned with chapter content - Added 1 worked solution for stream function properties - Exercises need expansion with numerical values and step-by-step guidance - Additional exercises should be added covering: dimensional analysis, scaling laws, corner flow details</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Exercises marked with ⭐ have worked solutions provided. Additional exercises will be added as the chapter develops.</p>
+</div>
+</div>
+<section id="exercise-1-non-dimensionalizing-the-stokes-equation" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1-non-dimensionalizing-the-stokes-equation">Exercise 1: Non-dimensionalizing the Stokes Equation</h3>
+<p>Starting from the dimensional Stokes equation, derive the non-dimensional form showing all intermediate steps. Identify where the Rayleigh number appears and explain its physical significance.</p>
+</section>
+<section id="exercise-2-poloidal-toroidal-decomposition" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2-poloidal-toroidal-decomposition">Exercise 2: Poloidal-Toroidal Decomposition</h3>
+<p>For the velocity field in spherical coordinates:</p>
+<ol type="a">
+<li><p>Show that any solenoidal (divergence-free) vector field can be decomposed into poloidal and toroidal components</p></li>
+<li><p>Explain why toroidal flow cannot generate buoyancy-driven convection</p></li>
+<li><p>Give examples of geophysical flows that are predominantly toroidal</p></li>
+</ol>
+</section>
+<section id="exercise-3-estimating-mantle-rayleigh-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3-estimating-mantle-rayleigh-numbers">Exercise 3: Estimating Mantle Rayleigh Numbers</h3>
+<p>Using typical mantle values, calculate the Rayleigh number for:</p>
+<ol type="a">
+<li>Whole mantle convection</li>
+<li>Upper mantle only convection</li>
+<li>Thermal boundary layer at the CMB (use appropriate length scale)</li>
+</ol>
+<p>Compare your results and discuss the implications for convection vigor.</p>
+</section>
+<section id="exercise-4-stream-function-properties" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4-stream-function-properties">Exercise 4: Stream Function Properties ⭐</h3>
+<p>For 2D incompressible flow, the stream function <span class="math inline">\(\psi\)</span> is defined such that: <span class="math display">\[
+u = \frac{\partial \psi}{\partial y}, \quad v = -\frac{\partial \psi}{\partial x}
+\]</span></p>
+<ol type="a">
+<li><p>Show that this automatically satisfies incompressibility</p></li>
+<li><p>Demonstrate that streamlines are curves of constant <span class="math inline">\(\psi\)</span></p></li>
+<li><p>Show that the volume flux between two streamlines equals the difference in <span class="math inline">\(\psi\)</span> values</p></li>
+</ol>
+</section>
+<section id="exercise-5-corner-flow-solution" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5-corner-flow-solution">Exercise 5: Corner Flow Solution</h3>
+<p>Examine the corner flow solution for subduction zones:</p>
+<ol type="a">
+<li><p>Verify that the given velocity field satisfies incompressibility</p></li>
+<li><p>Calculate the strain rate tensor for this flow</p></li>
+<li><p>Where is the maximum strain rate located?</p></li>
+<li><p>How does the solution change with the dip angle of the subducting slab?</p></li>
+</ol>
+</section>
+</section>
+<section id="solutions-to-selected-exercises" class="level2">
+<h2 class="anchored" data-anchor-id="solutions-to-selected-exercises">Solutions to Selected Exercises</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution to Exercise 4: Stream Function Properties
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>(a) Incompressibility:</strong></p>
+<p>The divergence of the velocity field is: <span class="math display">\[
+\nabla\cdot\mathbf{u}= \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} = \frac{\partial^2 \psi}{\partial x \partial y} - \frac{\partial^2 \psi}{\partial y \partial x} = 0
+\]</span></p>
+<p>The mixed partial derivatives are equal (Schwarz’s theorem), so incompressibility is automatically satisfied.</p>
+<p><strong>(b) Streamlines:</strong></p>
+<p>A streamline is tangent to the velocity vector at every point: <span class="math display">\[
+\frac{dy}{dx} = \frac{v}{u}
+\]</span></p>
+<p>Along a curve of constant <span class="math inline">\(\psi\)</span>: <span class="math display">\[
+d\psi = \frac{\partial \psi}{\partial x}dx + \frac{\partial \psi}{\partial y}dy = -v\,dx + u\,dy = 0
+\]</span></p>
+<p>Therefore: <span class="math inline">\(\frac{dy}{dx} = \frac{v}{u}\)</span>, confirming that lines of constant <span class="math inline">\(\psi\)</span> are streamlines.</p>
+<p><strong>(c) Volume flux:</strong></p>
+<p>The volume flux through a curve from point A to point B is: <span class="math display">\[
+Q = \int_A^B \mathbf{u}\cdot \hat{\mathbf{n}} \, ds
+\]</span></p>
+<p>where <span class="math inline">\(\hat{\mathbf{n}}\)</span> is the normal to the curve. Using the stream function definition and Stokes’ theorem, this equals: <span class="math display">\[
+Q = \psi_B - \psi_A
+\]</span></p>
+<p>The volume flux between streamlines is simply the difference in their <span class="math inline">\(\psi\)</span> values.</p>
+</div>
+</div>
+</div>
 
 
 <script type="ojs-module-contents">
@@ -479,6 +830,7 @@ eyJjb250ZW50cyI6W119
 <script type="vfs-file">
 W10=
 </script>
+</section>
 
 </main> <!-- /main -->
 <script type="ojs-module-contents">
@@ -486,7 +838,7 @@ eyJjb250ZW50cyI6W119
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
-window._ojs.paths.runtimeToDoc = "../../Notebooks";
+window._ojs.paths.runtimeToDoc = "../../DraftMaterial";
 window._ojs.paths.runtimeToRoot = "../..";
 window._ojs.paths.docToRoot = "..";
 window._ojs.selfContained = false;
@@ -894,13 +1246,13 @@ window._ojs.runtime.interpretFromScriptTags();
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../Contributions/example-citations.html" class="pagination-link" aria-label="Example: Using Citations and Math">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Example: Using Citations and Math</span></span>
+      <a href="../DraftMaterial/NavierStokes.html" class="pagination-link" aria-label="Navier-Stokes Equation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Navier-Stokes Equation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../Notebooks/TestNB1.html" class="pagination-link" aria-label="Test Notebook">
-        <span class="nav-page-text"><span class="chapter-title">Test Notebook</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../DraftMaterial/StokesFlowApplications.html" class="pagination-link" aria-label="Applications of Stokes Flow">
+        <span class="nav-page-text"><span class="chapter-title">Applications of Stokes Flow</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
