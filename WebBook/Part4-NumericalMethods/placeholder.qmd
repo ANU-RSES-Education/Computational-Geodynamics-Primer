@@ -1,0 +1,9 @@
+# Numerical Methods
+
+*Content to be added from migration*
+
+This part will cover:
+- Finite differences
+- Finite elements
+- Spectral methods
+- Time integration schemes

@@ -1,0 +1,35 @@
+# Global LaTeX/MathJax macros for the book
+# These will be available in all chapters
+
+macros:
+  # Vector/tensor notation
+  "\\dGamma": "\\mathbf{d}\\boldsymbol{\\Gamma}"
+  "\\bm": "\\boldsymbol{#1}"
+  "\\vec": "\\mathbf{#1}"
+
+  # Operators
+  "\\DIV": "\\nabla\\cdot"
+  "\\GRAD": "\\nabla"
+  "\\CURL": "\\nabla\\times"
+  "\\erfc": "\\mathrm{erfc}"
+
+  # Colors (MathJax compatible)
+  "\\Red": "\\color{red}{#1}"
+  "\\Green": "\\color{green}{#1}"
+  "\\Blue": "\\color{blue}{#1}"
+  "\\Emerald": "\\color{teal}{#1}"
+
+  # Common symbols
+  "\\uv": "\\mathbf{u}"
+  "\\vv": "\\mathbf{v}"
+  "\\nhat": "\\mathbf{\\hat{n}}"
+
+  # Differential operators
+  "\\DDt": "\\frac{D #1}{D t}"
+  "\\ddt": "\\frac{d #1}{d t}"
+  "\\ppt": "\\frac{\\partial #1}{\\partial t}"
+  "\\ppx": "\\frac{\\partial #1}{\\partial x}"
+
+  # Brackets
+  "\\avg": "\\langle #1 \\rangle"
+  "\\jump": "[\\![ #1 ]\\!]"

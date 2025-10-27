@@ -1,0 +1,25 @@
+::: {.hidden}
+$$
+% Global LaTeX macros for MathJax
+\newcommand{\dGamma}{\mathbf{d}\boldsymbol{\Gamma}}
+\newcommand{\uv}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\nhat}{\mathbf{\hat{n}}}
+\newcommand{\DIV}{\nabla\cdot}
+\newcommand{\GRAD}{\nabla}
+\newcommand{\CURL}{\nabla\times}
+\DeclareMathOperator{\erfc}{erfc}
+
+% Differential operators
+\newcommand{\DDt}[1]{\frac{D #1}{D t}}
+\newcommand{\ddt}[1]{\frac{d #1}{d t}}
+\newcommand{\ppt}[1]{\frac{\partial #1}{\partial t}}
+\newcommand{\ppx}[1]{\frac{\partial #1}{\partial x}}
+
+% Color commands (MathJax compatible)
+\newcommand{\Red}[1]{{\color{red} #1}}
+\newcommand{\Green}[1]{{\color{green} #1}}
+\newcommand{\Blue}[1]{{\color{blue} #1}}
+\newcommand{\Emerald}[1]{{\color{teal} #1}}
+$$
+:::
