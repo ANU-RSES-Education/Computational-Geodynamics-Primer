@@ -209,11 +209,6 @@ window.Quarto = {
   <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Geodynamics Primer</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -524,7 +519,7 @@ window.Quarto = {
 <img src="../Images/Diagrams/layer.png" class="img-fluid figure-img" width="450">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-layer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.1: Consider the fluid motions in a layer of arbitrary depth, <span class="math inline">\(d\)</span>. The fluid is assumed to have constant properties such as viscosity, thermal expansivity, thermal diffusivity. Small fluctuations in density due to temperature driven flow. Additional heat is carried (advected) by the flow from the hot boundary to the cool one whenever the fluid is moving.
+Figure&nbsp;11.1: Consider the fluid motions in a layer of arbitrary depth, <span class="math inline">\(d\)</span>. The fluid is assumed to have constant properties such as viscosity, thermal expansivity, thermal diffusivity. Small fluctuations in density due to temperature driven flow. Additional heat is carried (advected) by the flow from the hot boundary to the cool one whenever the fluid is moving.
 </figcaption>
 </figure>
 </div>
@@ -577,7 +572,7 @@ Figure&nbsp;12.1: Consider the fluid motions in a layer of arbitrary depth, <spa
 <p><span id="eq-strmfn"><span class="math display">\[
 v_1 = -\frac{\partial \psi}{\partial x_2} \mbox{\hspace{1cm}}
                         v_2 = \frac{\partial \psi}{\partial x_1}
-\tag{12.1}\]</span></span></p>
+\tag{11.1}\]</span></span></p>
 <p>so that, automatically,</p>
 <p><span class="math display">\[
 \frac{\partial v_1}{\partial x_1} + \frac{\partial v_2}{\partial x_2} = 0
@@ -591,11 +586,11 @@ v_1 = -\frac{\partial \psi}{\partial x_2} \mbox{\hspace{1cm}}
                         \frac{\partial \psi}{\partial x_1} \frac{\partial \psi}{\partial x_2} = 0
 \]</span></p>
 <p>tells us that <span class="math inline">\(\psi\)</span> does not change due to advection – in other words, contours of constant <span class="math inline">\(\psi\)</span> are streamlines of the fluid.</p>
-<p>Provided we limit ourselves to the xy plane, it is possible to think of equation (<a href="#eq-strmfn" class="quarto-xref">Equation&nbsp;<span>12.1</span></a>) as</p>
+<p>Provided we limit ourselves to the xy plane, it is possible to think of equation (<a href="#eq-strmfn" class="quarto-xref">Equation&nbsp;<span>11.1</span></a>) as</p>
 <p><span class="math display">\[
 \mathbf{v} = \nabla \times (\psi \hat{\mathbf{k}})
 \]</span></p>
-<p>This form can be used to write down the 2D axisymetric version of equation (<a href="#eq-strmfn" class="quarto-xref">Equation&nbsp;<span>12.1</span></a>)</p>
+<p>This form can be used to write down the 2D axisymetric version of equation (<a href="#eq-strmfn" class="quarto-xref">Equation&nbsp;<span>11.1</span></a>)</p>
 <p><span class="math display">\[
 \begin{aligned}
                     u_r = -\frac{1}{r}\frac{\partial \psi}{\partial \theta} &amp; &amp;
@@ -631,11 +626,11 @@ v_1 = -\frac{\partial \psi}{\partial x_2} \mbox{\hspace{1cm}}
 <p>In the context of highly viscous fluids in 2D, the vorticity equation is</p>
 <p><span id="eq-vorteqn"><span class="math display">\[
 \nabla ^2 \omega = - Ra \frac{\partial T}{\partial x_1}
-\tag{12.2}\]</span></span></p>
+\tag{11.2}\]</span></span></p>
 <p>and, by considering the curl of <span class="math inline">\((-\partial \psi / \partial x_2, \partial \psi / \partial x_1, 0)\)</span> the stream function can be written</p>
 <p><span id="eq-psivort"><span class="math display">\[
 \nabla ^2 \psi = \omega
-\tag{12.3}\]</span></span></p>
+\tag{11.3}\]</span></span></p>
 <p>This form is useful from a computational point of view because it is relatively easy to solve the Laplacian, and the code can be reused for each application of the operator. The Laplacian is also used for thermal diffusion – one subroutine for three different bits of physics which is elegant in itself if nothing else.</p>
 <p>The biharmonic operator is defined as</p>
 <p><span class="math display">\[
@@ -645,10 +640,10 @@ v_1 = -\frac{\partial \psi}{\partial x_2} \mbox{\hspace{1cm}}
                     \frac{\partial ^4}{\partial x_2^4} \right)
 \]</span></p>
 <p>The latter form being the representation in Cartesian coordinates.</p>
-<p>Using this form, it is easy to show that equations (<a href="#eq-vorteqn" class="quarto-xref">Equation&nbsp;<span>12.2</span></a>) and (<a href="#eq-psivort" class="quarto-xref">Equation&nbsp;<span>12.3</span></a>) can be combined to give</p>
+<p>Using this form, it is easy to show that equations (<a href="#eq-vorteqn" class="quarto-xref">Equation&nbsp;<span>11.2</span></a>) and (<a href="#eq-psivort" class="quarto-xref">Equation&nbsp;<span>11.3</span></a>) can be combined to give</p>
 <p><span id="eq-biharm"><span class="math display">\[
 \nabla^4 \psi = -{\rm Ra} \frac{\partial T}{\partial x_1}
-\tag{12.4}\]</span></span></p>
+\tag{11.4}\]</span></span></p>
 </section>
 <section id="poloidaltoroidal-velocity-decomposition" class="level2">
 <h2 class="anchored" data-anchor-id="poloidaltoroidal-velocity-decomposition">Poloidal/Toroidal velocity decomposition</h2>
@@ -659,16 +654,16 @@ v_1 = -\frac{\partial \psi}{\partial x_2} \mbox{\hspace{1cm}}
 \]</span></p>
 <p>Then for an incompressible flow, since <span class="math inline">\(\nabla \cdot \mathbf{u} = 0\)</span>, <span id="eq-curlA"><span class="math display">\[
 \mathbf{u} = \nabla \times \mathbf{A}
-\tag{12.5}\]</span></span></p>
-<p>Now suppose there is some direction (<span class="math inline">\(\hat{\mathbf{z}}\)</span>) which we expect to be physically favoured in the solutions, we can rewrite <a href="#eq-curlA" class="quarto-xref">Equation&nbsp;<span>12.5</span></a> as</p>
+\tag{11.5}\]</span></span></p>
+<p>Now suppose there is some direction (<span class="math inline">\(\hat{\mathbf{z}}\)</span>) which we expect to be physically favoured in the solutions, we can rewrite <a href="#eq-curlA" class="quarto-xref">Equation&nbsp;<span>11.5</span></a> as</p>
 <p><span id="eq-poltor"><span class="math display">\[
 \mathbf{u} = \textcolor[rgb]{0.7,0.0,0.0}{\nabla \times(\Psi \hat{\mathbf{z}})} +
                  \textcolor[rgb]{0.0,0.0,0.7}{ \nabla \times\nabla \times(\Phi \hat{\mathbf{z}})}
-\tag{12.6}\]</span></span></p>
-<p>Where the first term on the right is the <span style="color: 0.7,0.0,0.0">Toroidal</span> part of the flow, and the second term is the <span style="color: 0.0,0.0,0.7">Poloidal</span> part. Why is this useful ? Let’s substitute (<a href="#eq-poltor" class="quarto-xref">Equation&nbsp;<span>12.6</span></a>) into the Stokes’ equation for a constant viscosity fluid</p>
+\tag{11.6}\]</span></span></p>
+<p>Where the first term on the right is the <span style="color: 0.7,0.0,0.0">Toroidal</span> part of the flow, and the second term is the <span style="color: 0.0,0.0,0.7">Poloidal</span> part. Why is this useful ? Let’s substitute (<a href="#eq-poltor" class="quarto-xref">Equation&nbsp;<span>11.6</span></a>) into the Stokes’ equation for a constant viscosity fluid</p>
 <p><span id="eq-cvstokes"><span class="math display">\[
 \eta \nabla^2 \mathbf{u} - \nabla p = g \rho \hat{\mathbf{z}}
-\tag{12.7}\]</span></span></p>
+\tag{11.7}\]</span></span></p>
 <p>where <span class="math inline">\(\hat{\mathbf{z}}\)</span> is the vertical unit vector (defined by the direction of gravity) and is clearly the one identifiable special direction, then equate coefficients in the <span class="math inline">\(\hat{\mathbf{z}}\)</span> direction, and using the following results:</p>
 <p><span class="math display">\[
 \hat{\mathbf{z}} \cdot \nabla \times \nabla^2 \mathbf{u} =
@@ -683,7 +678,7 @@ v_1 = -\frac{\partial \psi}{\partial x_2} \mbox{\hspace{1cm}}
 \nabla_h = \left( \frac{\partial}{\partial x}, \frac{\partial}{\partial y}, 0 \right)
 \]</span></p>
 <p>is a gradient operator limited to the plane perpendicular to the special direction, <span class="math inline">\(\hat{\mathbf{z}}\)</span>.</p>
-<p>If we first take the curl of (<a href="#eq-cvstokes" class="quarto-xref">Equation&nbsp;<span>12.7</span></a>), and look at the <span class="math inline">\(\hat{\mathbf{z}}\)</span> direction,</p>
+<p>If we first take the curl of (<a href="#eq-cvstokes" class="quarto-xref">Equation&nbsp;<span>11.7</span></a>), and look at the <span class="math inline">\(\hat{\mathbf{z}}\)</span> direction,</p>
 <p><span class="math display">\[
 \hat{\mathbf{z}} \cdot \eta \nabla \times \nabla^2 \mathbf{u} =
         -\eta \nabla^2 \nabla_h^2\Psi =

@@ -209,11 +209,6 @@ window.Quarto = {
   <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Geodynamics Primer</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -509,7 +504,7 @@ window.Quarto = {
 <img src="../Images/Diagrams/vol_elt.jpg" class="img-fluid figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-volume-element-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.1: An arbitrary volume, <span class="math inline">\(\Omega\)</span> of material has a surface <span class="math inline">\(\Gamma\)</span>
+Figure&nbsp;9.1: An arbitrary volume, <span class="math inline">\(\Omega\)</span> of material has a surface <span class="math inline">\(\Gamma\)</span>
 </figcaption>
 </figure>
 </div>
@@ -520,7 +515,7 @@ Figure&nbsp;10.1: An arbitrary volume, <span class="math inline">\(\Omega\)</spa
             - \int_{\Gamma} \mathbf{F} \cdot \mathbf{d}\boldsymbol{\Gamma}
             + \int_{\Omega} \rho H d\Omega
             - \int _{\Gamma} \rho \phi \mathbf{v} \cdot \mathbf{d}\boldsymbol{\Gamma}
-\tag{10.1}\]</span></span></p>
+\tag{9.1}\]</span></span></p>
 <p>where the final term is the change due to the fluid carrying <span class="math inline">\(\phi\)</span> through the volume. Fluxes are positive outward (by our definition of <span class="math inline">\(\mathbf{d}\boldsymbol{\Gamma}\)</span>), so a positive flux reduces <span class="math inline">\(\phi\)</span> within <span class="math inline">\(d\Omega\)</span> and negative signs are needed for these terms.</p>
 <p>We can use Gauss’ theorem to write surface integrals as volume integrals:</p>
 <p><span class="math display">\[\int_{\Gamma} \phi \mathbf{u} \cdot \mathbf{d}\boldsymbol{\Gamma}= \int_{\Omega}  \nabla \cdot (\phi \mathbf{u}) d\Omega\]</span></p>
@@ -533,7 +528,7 @@ Figure&nbsp;10.1: An arbitrary volume, <span class="math inline">\(\Omega\)</spa
         \int_{\Omega} \nabla \cdot (\mathbf{F} +
         \rho \phi \mathbf{v}) d\Omega
 \]</span></p>
-<p>and then rewrite the general conservation equation <a href="#eq-cons1" class="quarto-xref">Equation&nbsp;<span>10.1</span></a> as</p>
+<p>and then rewrite the general conservation equation <a href="#eq-cons1" class="quarto-xref">Equation&nbsp;<span>9.1</span></a> as</p>
 <p><span class="math display">\[
 \int_{\Omega} \left[ \frac{d \rho \phi}{dt} +
             \nabla \cdot (\mathbf{F} + \rho \phi \mathbf{v})
@@ -544,22 +539,22 @@ Figure&nbsp;10.1: An arbitrary volume, <span class="math inline">\(\Omega\)</spa
 \frac{d \rho \phi}{dt} +
             \nabla \cdot (\mathbf{F} + \rho \phi \mathbf{v})
             -\rho H =0
-\tag{10.2}\]</span></span></p>
+\tag{9.2}\]</span></span></p>
 <p>This is the general conservation rule for any property <span class="math inline">\(\phi\)</span> of a moving fluid. We now consider several quantities and develop specific conservation laws.</p>
 <section id="conservation-of-mass" class="level2">
 <h2 class="anchored" data-anchor-id="conservation-of-mass">Conservation of mass</h2>
 <p>In this case <span class="math inline">\(\phi=1\)</span> because</p>
 <p><span class="math display">\[\int_\Omega \rho d\Omega \rightarrow \mbox{mass}\]</span></p>
-<p>Of course, we also know that we cant diffuse or create mass which means <span class="math inline">\(\mathbf{F} = H = 0\)</span> and equation <a href="#eq-cons2" class="quarto-xref">Equation&nbsp;<span>10.2</span></a> simplifies to give</p>
+<p>Of course, we also know that we cant diffuse or create mass which means <span class="math inline">\(\mathbf{F} = H = 0\)</span> and equation <a href="#eq-cons2" class="quarto-xref">Equation&nbsp;<span>9.2</span></a> simplifies to give</p>
 <p><span id="eq-maxxcons"><span class="math display">\[
 {\color{red} \frac{\partial \rho}{\partial t} +
                 \nabla \cdot \rho \mathbf{v} = 0}
-\tag{10.3}\]</span></span></p>
+\tag{9.3}\]</span></span></p>
 </section>
 <section id="conservation-of-heat-energy" class="level2">
 <h2 class="anchored" data-anchor-id="conservation-of-heat-energy">Conservation of (heat) energy</h2>
 <p>The thermal energy / unit mass is <span class="math inline">\(C_p T\)</span> and the conductive heat flux <span class="math inline">\(\mathbf{F}\)</span> is given by <span class="math inline">\(\mathbf{F} = -k \nabla T\)</span>, (<span class="math inline">\(k\)</span> is the thermal conductivity).</p>
-<p>Then the general conservation equation <a href="#eq-cons2" class="quarto-xref">Equation&nbsp;<span>10.2</span></a> reduces to this</p>
+<p>Then the general conservation equation <a href="#eq-cons2" class="quarto-xref">Equation&nbsp;<span>9.2</span></a> reduces to this</p>
 <p><span class="math display">\[\frac{\partial (\rho C_p T)}{\partial t} +
              \nabla \cdot \left(-k \nabla T +
              \rho C_p T \mathbf{v}\right) - \rho H = 0\]</span></p>
@@ -574,7 +569,7 @@ Figure&nbsp;10.1: An arbitrary volume, <span class="math inline">\(\Omega\)</spa
 <p><span id="eq-energycons"><span class="math display">\[
 {\color{red}  \left( \frac{\partial T}{\partial t} + \mathbf{v} \cdot \nabla T \right)=
                         \kappa \nabla^2 T + \frac{H}{C_p} }
-\tag{10.4}\]</span></span> where <span class="math inline">\(\kappa\)</span> is the thermal diffusivity, <span class="math inline">\(\kappa = k/\rho C_p\)</span>.</p>
+\tag{9.4}\]</span></span> where <span class="math inline">\(\kappa\)</span> is the thermal diffusivity, <span class="math inline">\(\kappa = k/\rho C_p\)</span>.</p>
 <p>It probably did not go unnoticed that we assumed <span class="math inline">\(\rho\)</span> to be constant to get to this point. It is quite common to assume a material is near-enough incompressible that density changes can be ignored. In fact, this is a reasonable assumption even for air if the velocity is well below the speed of sound. It is also possible to keep assuming incompressibility even when accounting for density variations whose buoyancy effects drive deformation. There is a lot more detail on this in Ricard, 2015<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and we will come back to it soon.</p>
 <!-- This equation is only linear if the velocity field is specified in advance
 and is independent of $T$ (which is not a very interesting case). -->
@@ -587,26 +582,26 @@ and is independent of $T$ (which is not a very interesting case). -->
 </section>
 <section id="conservation-of-momentum" class="level2">
 <h2 class="anchored" data-anchor-id="conservation-of-momentum">Conservation of momentum</h2>
-<p>Momentum is a vector quantity, so the form of <a href="#eq-cons1" class="quarto-xref">Equation&nbsp;<span>10.1</span></a> is different. The source term in the momentum equation represents a body force, and the surface flux term represents a stress.</p>
+<p>Momentum is a vector quantity, so the form of <a href="#eq-cons1" class="quarto-xref">Equation&nbsp;<span>9.1</span></a> is different. The source term in the momentum equation represents a body force, and the surface flux term represents a stress.</p>
 <p><span id="eq-momcons1"><span class="math display">\[
 \frac{d}{dt}\int_{\Omega} \rho \mathbf{v} d\Omega =
             -   \int_{\Omega} \rho g \hat{\mathbf{z}} d\Omega  
             +   \int_{\Gamma} \boldsymbol{\sigma} \cdot \mathbf{d}\boldsymbol{\Gamma}-
                 \int_{\Gamma} \rho \mathbf{v} (\mathbf{v} \cdot \mathbf{d}\boldsymbol{\Gamma})
-\tag{10.5}\]</span></span> Gravity provides a body force acting in the vertical direction, <span class="math inline">\(\hat{\mathbf{z}}\)</span>. We have introduced the stress tensor, <span class="math inline">\(\boldsymbol{\sigma}\)</span>; the force / unit area exerted on an arbitrarily oriented surface with normal <span class="math inline">\(\hat{\mathbf {n}}\)</span> is</p>
+\tag{9.5}\]</span></span> Gravity provides a body force acting in the vertical direction, <span class="math inline">\(\hat{\mathbf{z}}\)</span>. We have introduced the stress tensor, <span class="math inline">\(\boldsymbol{\sigma}\)</span>; the force / unit area exerted on an arbitrarily oriented surface with normal <span class="math inline">\(\hat{\mathbf {n}}\)</span> is</p>
 <p><span class="math display">\[f_i = \sigma_{ij} n_j\]</span></p>
 <p>The application of Gauss’ theorem, and the equality holds for any choice of the volume gives this result:</p>
 <p><span id="eq-momcons2"><span class="math display">\[
 \frac{\partial}{\partial t}(\rho \mathbf{v})
             +\rho g \hat{\mathbf{z}} - \nabla \cdot \sigma + \nabla \cdot (\rho \mathbf{v} \mathbf{v}) = 0
-\tag{10.6}\]</span></span></p>
-<p>Vector notation allows us to keep a number of equations written as one single equation. However, at this point, keeping the equations in vector notation makes the situation more confusing. What does that last term on the left hand side of <a href="#eq-momcons2" class="quarto-xref">Equation&nbsp;<span>10.6</span></a> mean ? It is clearer if we use the index notation instead</p>
-<p>Equation <a href="#eq-momcons2" class="quarto-xref">Equation&nbsp;<span>10.6</span></a> is equivalent to this:</p>
+\tag{9.6}\]</span></span></p>
+<p>Vector notation allows us to keep a number of equations written as one single equation. However, at this point, keeping the equations in vector notation makes the situation more confusing. What does that last term on the left hand side of <a href="#eq-momcons2" class="quarto-xref">Equation&nbsp;<span>9.6</span></a> mean ? It is clearer if we use the index notation instead</p>
+<p>Equation <a href="#eq-momcons2" class="quarto-xref">Equation&nbsp;<span>9.6</span></a> is equivalent to this:</p>
 <p><span id="eq-momindx"><span class="math display">\[
 {\color{green}  \frac{\partial \rho v_i}{\partial t}} + \rho g \delta_{i3} -
             \frac{\partial \sigma_{ij}}{\partial x_j} +
             \textcolor[rgb]{0.0,0.0,0.7}{ \frac{\partial(\rho v_i v_j)}{\partial x_j}} = 0
-\tag{10.7}\]</span></span></p>
+\tag{9.7}\]</span></span></p>
 <p>where that peculiar final term on the left hand side is unambiguous. Repeated indeces in each term are implicitly summed. <span class="math inline">\(\delta_{ij}\)</span> is the kronecker delta which obeys:</p>
 <p><span class="math display">\[\delta_{ij} = \begin{cases}
                 0 &amp; \text{if $i \neq j$}, \\
@@ -622,7 +617,7 @@ and is independent of $T$ (which is not a very interesting case). -->
 {\color{red}    \rho \left( \frac{\partial \mathbf{v}}{\partial t}
                             + (\mathbf{v} \cdot \nabla) \mathbf{v} \right) =
                          \nabla \cdot \boldsymbol{\sigma} - g\rho\hat{\mathbf{z}}      }
-\tag{10.8}\]</span></span></p>
+\tag{9.8}\]</span></span></p>
 <p>Note: The <span class="math inline">\(\mathbf{v} \cdot \nabla\)</span> notation we introduced earlier is now an operator on a vector. Written out it looks like this:</p>
 <p><span class="math display">\[\begin{split}
                     (\mathbf{v} \cdot \nabla) \mathbf{u} =

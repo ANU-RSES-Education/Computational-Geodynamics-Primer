@@ -209,11 +209,6 @@ window.Quarto = {
   <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Geodynamics Primer</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -529,7 +524,7 @@ window.Quarto = {
 <p>We start with the numerical solution of a very simple differential equation. In fact we choose something simple enough that we already know the answer.</p>
 <p><span id="eq-ode_decay"><span class="math display">\[
 \frac{d\theta}{dt} = - k \theta
-\tag{16.1}\]</span></span></p>
+\tag{15.1}\]</span></span></p>
 <p>This is the equation which governs radioactive decay, in which case <span class="math inline">\(\theta\)</span> is the amount of the radioactive isotope remaining and <span class="math inline">\(d\theta /  dt\)</span> is the activity that we can measure. <span class="math inline">\(k\)</span> is closely related to the half life.</p>
 <p>The solution to this equation is</p>
 <p><span class="math display">\[
@@ -555,7 +550,7 @@ window.Quarto = {
         &amp; \Rightarrow   \beta = \frac{d \theta}{dt} = \frac{\theta_{n+1} - \theta_n}{\Delta t}
     \end{split}
 \]</span></p>
-<p>This is a first order difference expression for the derivative which we substitute into the original differential equation (<a href="#eq-ode_decay" class="quarto-xref">Equation&nbsp;<span>16.1</span></a>) at the current timestep</p>
+<p>This is a first order difference expression for the derivative which we substitute into the original differential equation (<a href="#eq-ode_decay" class="quarto-xref">Equation&nbsp;<span>15.1</span></a>) at the current timestep</p>
 <p><span class="math display">\[
 \frac{\theta_{n+1} - \theta_n}{\Delta t} = - k \theta_n
 \]</span></p>
@@ -578,7 +573,7 @@ window.Quarto = {
 <p>The local time coordinate is <span class="math inline">\(t' = t - (n-1)\Delta t\)</span>, and when we differentiate</p>
 <p><span id="eq-dthdt2"><span class="math display">\[
 \frac{d \theta}{dt} = \beta + 2 \gamma t'
-\tag{16.2}\]</span></span></p>
+\tag{15.2}\]</span></span></p>
 <p>To solve for <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> we fit the curve through the sample points:</p>
 <p><span class="math display">\[
 \begin{split}
@@ -593,7 +588,7 @@ window.Quarto = {
             \gamma &amp;= \left( \theta_{n+1} + \theta_{n-1} -2 \theta_n \right) \frac{1}{2\Delta t^2}
     \end{split}
 \]</span></p>
-<p>By substituting into \( (<a href="#eq-dthdt2" class="quarto-xref">Equation&nbsp;<span>16.2</span></a>) \), and then into the original differential equation \( (<a href="#eq-ode_decay" class="quarto-xref">Equation&nbsp;<span>16.1</span></a>) \) we obtain the following</p>
+<p>By substituting into \( (<a href="#eq-dthdt2" class="quarto-xref">Equation&nbsp;<span>15.2</span></a>) \), and then into the original differential equation \( (<a href="#eq-ode_decay" class="quarto-xref">Equation&nbsp;<span>15.1</span></a>) \) we obtain the following</p>
 <p><span class="math display">\[
 \left. \frac{d\theta}{dt} \right|_{t=n\Delta t} = \beta + 2\gamma \Delta t =
                 \frac{1}{2\Delta t} \left( \theta_{n+1} - \theta_{n-1} \right)  = -k \theta_n

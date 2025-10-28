@@ -209,11 +209,6 @@ window.Quarto = {
   <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Geodynamics Primer</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -564,7 +559,7 @@ window.Quarto = {
 <p>In the case of density variations due to temperature, the equation of state is this:</p>
 <p><span id="eq-boussinesq-state"><span class="math display">\[
 \rho = \rho_0 \left(1 - \alpha ( T-T_0 )\right)
-\tag{11.1}\]</span></span> where <span class="math inline">\(\rho_0\)</span> is the density at a reference temperature <span class="math inline">\(T_0\)</span>. <span class="math inline">\(\alpha\)</span> is the coefficient of thermal expansion. <span class="math inline">\(\alpha\)</span> is generally <em>much</em> smaller than one which justifies making the approximation in the first place.</p>
+\tag{10.1}\]</span></span> where <span class="math inline">\(\rho_0\)</span> is the density at a reference temperature <span class="math inline">\(T_0\)</span>. <span class="math inline">\(\alpha\)</span> is the coefficient of thermal expansion. <span class="math inline">\(\alpha\)</span> is generally <em>much</em> smaller than one which justifies making the approximation in the first place.</p>
 <p>The energy and momentum conservation equations are now coupled through the buoyancy forces,</p>
 <p><span class="math display">\[
 g\rho\hat{\mathbf{z}} = g \rho_0 \left(1 - \alpha(T-T_0)\right)
@@ -577,7 +572,7 @@ g\rho\hat{\mathbf{z}} = g \rho_0 \left(1 - \alpha(T-T_0)\right)
 <p>We have seen the <span class="math inline">\(\mathbf{v} \cdot \nabla\)</span> operator a number of times now. The presence of this term causes major complications when we want to find solutions to the equations of continuum mechanics since it introduces a strong non-linearity. It is this term which is behind turbulence in high speed flows.</p>
 <p>This term describes the <strong>advection</strong> of a quantity which accounts for the passive transport of something (temperature, momentum), by the motion of the fluid. Advection also presents some serious headaches in numerical methods and has spawned a vast literature devoted to efficient and accurate solution methods.</p>
 <p>One way to side-step<br>
-the complexity of advection is to consider an elemental volume of space which <em>moves with the fluid</em>. The surface flux term from equation <a href="ContinuumMechanics.html#eq-cons1" class="quarto-xref">Equation&nbsp;<span>10.1</span></a> vanishes at once if there is no motion of material in or out of the boundary. In reality, we are just sweeping the problem under the rug – it doesn’t actually go away altogether – but it can be useful to do this because every once in a while that term will cancel out before we need to actually do anything with it ! And, sometimes, when it comes to numerical methods, different views of the equations can lead to better approximations.</p>
+the complexity of advection is to consider an elemental volume of space which <em>moves with the fluid</em>. The surface flux term from equation <a href="ContinuumMechanics.html#eq-cons1" class="quarto-xref">Equation&nbsp;<span>9.1</span></a> vanishes at once if there is no motion of material in or out of the boundary. In reality, we are just sweeping the problem under the rug – it doesn’t actually go away altogether – but it can be useful to do this because every once in a while that term will cancel out before we need to actually do anything with it ! And, sometimes, when it comes to numerical methods, different views of the equations can lead to better approximations.</p>
 <p>Mathematically, we introduce a new notation:</p>
 <p><span class="math display">\[
 \frac{D \phi}{D t} = \frac{d}{dt} \phi\left[ x_1(t),x_2(t),x_3(t),t \right]

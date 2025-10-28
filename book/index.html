@@ -32,7 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./intro.html" rel="next">
+<link href="./Part1-Fundamentals/placeholder.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -179,11 +179,6 @@ window.MathJax = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Computational Geodynamics Primer</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
   </div>
 </li>
       </ul>
@@ -440,7 +435,10 @@ window.MathJax = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#what-is-a-model" id="toc-what-is-a-model" class="nav-link" data-scroll-target="#what-is-a-model">What is a Model?</a></li>
+  <li><a href="#mathematical-background" id="toc-mathematical-background" class="nav-link" data-scroll-target="#mathematical-background">Mathematical Background</a></li>
+  <li><a href="#programming-in-python" id="toc-programming-in-python" class="nav-link" data-scroll-target="#programming-in-python">Programming in Python</a></li>
   <li><a href="#book-structure" id="toc-book-structure" class="nav-link" data-scroll-target="#book-structure">Book Structure</a>
   <ul class="collapse">
   <li><a href="#part-i-mathematical-fundamentals" id="toc-part-i-mathematical-fundamentals" class="nav-link" data-scroll-target="#part-i-mathematical-fundamentals">Part I: Mathematical Fundamentals</a></li>
@@ -449,9 +447,6 @@ window.MathJax = {
   <li><a href="#part-iv-numerical-methods" id="toc-part-iv-numerical-methods" class="nav-link" data-scroll-target="#part-iv-numerical-methods">Part IV: Numerical Methods</a></li>
   <li><a href="#part-v-computational-exercises" id="toc-part-v-computational-exercises" class="nav-link" data-scroll-target="#part-v-computational-exercises">Part V: Computational Exercises</a></li>
   </ul></li>
-  <li><a href="#who-this-book-is-for" id="toc-who-this-book-is-for" class="nav-link" data-scroll-target="#who-this-book-is-for">Who This Book Is For</a></li>
-  <li><a href="#how-to-use-this-book" id="toc-how-to-use-this-book" class="nav-link" data-scroll-target="#how-to-use-this-book">How to Use This Book</a></li>
-  <li><a href="#what-youll-learn" id="toc-what-youll-learn" class="nav-link" data-scroll-target="#what-youll-learn">What You’ll Learn</a></li>
   </ul>
 <div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></nav>
     </div>
@@ -490,26 +485,44 @@ window.MathJax = {
 </header>
 
 
-<section id="welcome" class="level2">
-<h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
-<p>This book develops a quantitative understanding of the dynamic processes within the Earth and sister planets. These processes are largely driven by the internal heat of the planet escaping to the surface. Some of this heat is left over from planetary formation, while the rest originates from the decay of radioactive elements.</p>
-<p>Our approach combines: - <strong>Mathematical descriptions</strong> of Earth’s physical processes - <strong>Computational methods</strong> to solve these equations numerically - <strong>Physical insight</strong> into why planets behave as they do</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>```anlqsgxr Images/Diagrams/EarthProcessesPlume.png</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>width: 100mm</td>
-</tr>
-<tr class="even">
-<td>name: mantle-slice</td>
-</tr>
-</tbody>
-</table>
-<p>A schematic of the Earth’s interior showing the key processes that drive planetary dynamics ```</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Our goal is to develop a quantitative understanding of the dynamic processes within the Earth and sister planets. These dynamic processes are largely driven by the internal heat of the planet escaping to the surface through whatever mechanisms are available. Some of the heat is left over from the original formation of the planet, and the rest originates in the decay of radioactive elements. In the Earth’s early history and elsewhere in the solar system, tidal heating, chemical segregation, and impacts have all played a role in supplying the interior heat budget.</p>
+<div id="fig-mantle-slice" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mantle-slice-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Images/Diagrams/EarthProcessesPlume.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mantle-slice-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A schematic of the Earth’s interior showing the key processes that drive planetary dynamics including mantle convection, plumes, and plate tectonics.
+</figcaption>
+</figure>
+</div>
+<p>This is because the Earth’s dynamics is completely dominated by <strong>Plate Tectonics</strong> — a unique manifestation of interior heat loss as far as we are aware. Understanding why plate tectonics is a possible outcome of a hot planet, and also why it is not the only possible outcome, is one of our key tasks. If we can understand how different dynamic modes are selected for planets of different size, composition, and heat budget, then we have a powerful way to predict the geological behaviour of extrasolar planets. Plate tectonics creates efficient cycling mechanisms which link the interior of the Earth with the Atmosphere and Oceans; it may prove essential for sustaining life.</p>
+</section>
+<section id="what-is-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-model">What is a Model?</h2>
+<p>Global-scale geodynamics is a discipline where we cannot do controlled experiments on the basic processes we are studying. Instead, we rely on observing the Earth and other terrestrial planets and moons, and looking for multiple manifestations of the same processes under different conditions to give us control on certain parameters.</p>
+<p>While it is not possible to do experiments at the planetary scale over geological time, it <strong>is</strong> possible to perform experiments at a physically manageable size and, by careful scaling, to generalise the results to geologically relevant space and time-scales. If these processes of interest can be understood through a mathematical description, then the equations are automatically applicable at geological time and space scales provided the assumptions which go into developing the mathematical model are still valid.</p>
+<p>When we talk about “modeling” in geodynamics, we mean several related but distinct things:</p>
+<ul>
+<li><strong>Laboratory-based physical models</strong> which can be scaled to give meaningful, quantitative insight into deformation at geological scales.</li>
+<li><strong>Mathematical descriptions</strong> of the world and their use to approximate physical reality.</li>
+<li><strong>Computational solutions</strong> of these descriptions (where needed) and the concept of a numerical model.</li>
+<li>How to construct a model</li>
+<li>How to use a model (these are quite different things!)</li>
+<li>Exploring parameter variation to understand dominant effects.</li>
+</ul>
+</section>
+<section id="mathematical-background" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-background">Mathematical Background</h2>
+<p>These notes contain material at different levels. There is broadly descriptive content which introduces the subject and leads up to more advanced mathematical material. It should be possible to follow these notes without detailed knowledge of how the mathematical results are obtained, but it is expected that you can use the results to solve real problems in geophysics.</p>
+<p>Familiarity with <strong>vector &amp; tensor notation</strong> and <strong>index notation</strong> is required for understanding the kinds of equations we will be dealing with. We interchange these notations and tend to write everything out in full for the Cartesian case. In other geometries, vector notation generally still holds, but the definition of the operators can be very different, and it is always worth checking before using them.</p>
+</section>
+<section id="programming-in-python" class="level2">
+<h2 class="anchored" data-anchor-id="programming-in-python">Programming in Python</h2>
+<p>All of the examples in this book are based around <strong>Python code</strong>, which is easy to pick up and very powerful. Many Python codes are actually <strong>Fortran</strong> or <strong>C</strong> codes in disguise, with Python providing a more convenient way to operate and coordinate programs than older approaches.</p>
+<p>Python is a very flexible language which is constantly improving. The flexibility can make it hard to know where to start or how to find documentation. <strong>Jupyter notebooks</strong> add interactivity to Python and make it much more straightforward to dig into the details of the code you are running. We use Jupyter notebooks extensively for examples in this book, and these can be run live using browser-based Python (pyodide) or online Jupyter environments (Binder).</p>
 </section>
 <section id="book-structure" class="level2">
 <h2 class="anchored" data-anchor-id="book-structure">Book Structure</h2>
@@ -533,22 +546,6 @@ window.MathJax = {
 <section id="part-v-computational-exercises" class="level3">
 <h3 class="anchored" data-anchor-id="part-v-computational-exercises">Part V: Computational Exercises</h3>
 <p>Practical examples and benchmarks demonstrating the concepts throughout the book.</p>
-</section>
-</section>
-<section id="who-this-book-is-for" class="level2">
-<h2 class="anchored" data-anchor-id="who-this-book-is-for">Who This Book Is For</h2>
-<p>This material is designed for advanced undergraduate or graduate students in: - Geophysics and geodynamics - Earth science - Physics with planetary science interests - Applied mathematics with Earth science applications</p>
-<p>You will need: - Basic knowledge of calculus and linear algebra - Familiarity with programming (preferably Python, but not essential) - Curiosity about how planets work!</p>
-</section>
-<section id="how-to-use-this-book" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use-this-book">How to Use This Book</h2>
-<p>Each chapter combines: - <strong>Conceptual explanations</strong> of the physical and mathematical principles - <strong>Mathematical derivations</strong> where you’ll see where equations come from - <strong>Interactive code examples</strong> that you can run directly in your browser - <strong>Exercises</strong> to test your understanding</p>
-<p>The interactive code examples use <strong>Pyodide</strong>, which runs Python directly in your browser via WebAssembly. You can modify the code and see results immediately without installing anything.</p>
-</section>
-<section id="what-youll-learn" class="level2">
-<h2 class="anchored" data-anchor-id="what-youll-learn">What You’ll Learn</h2>
-<p>By working through this book, you will understand: - How to formulate mathematical models of physical processes - How to solve these models computationally - How these models help us understand planetary evolution - How different planets can evolve along different paths - How to build and validate your own geodynamic models</p>
-<p>Let’s get started with an introduction to what we mean by “modeling” in geodynamics.</p>
 
 
 <script type="ojs-module-contents">
@@ -565,6 +562,7 @@ eyJjb250ZW50cyI6W119
 <script type="vfs-file">
 W10=
 </script>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -983,8 +981,8 @@ window._ojs.runtime.interpretFromScriptTags();
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Part1-Fundamentals/placeholder.html" class="pagination-link" aria-label="Mathematical Fundamentals">
+        <span class="nav-page-text"><span class="chapter-title">Mathematical Fundamentals</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

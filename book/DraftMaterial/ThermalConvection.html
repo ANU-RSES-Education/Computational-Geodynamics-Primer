@@ -209,11 +209,6 @@ window.Quarto = {
   <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Geodynamics Primer</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -527,7 +522,7 @@ window.Quarto = {
 <section id="critical-rayleigh-number-for-a-layer" class="level2">
 <h2 class="anchored" data-anchor-id="critical-rayleigh-number-for-a-layer">Critical Rayleigh Number for a layer</h2>
 <p>Does convection always occur in a layer heated from below ? In principle this would always provide a way to transport additional heat, but how much work would convection have to do in order to transport this extra heat ? One way to determine the answer is to consider small disturbances to a layer with otherwise uniform temperature and see under what conditions the perturbations grow (presumably into fully developed convection). This approach allows us to make <em>linear</em> approximations to the otherwise non-linear equations by dropping the small, high order non-linear terms.</p>
-<p>We solve the incompressible flow equations (stream function form, <a href="MantleDynamics.html#eq-biharm" class="quarto-xref">Equation&nbsp;<span>12.4</span></a>) and energy conservation equation in stream function form:</p>
+<p>We solve the incompressible flow equations (stream function form, <a href="MantleDynamics.html#eq-biharm" class="quarto-xref">Equation&nbsp;<span>11.4</span></a>) and energy conservation equation in stream function form:</p>
 <p><span class="math display">\[
 \frac{\partial T}{\partial t} +
                  \left[     -\frac{\partial \psi}{\partial x_2}\frac{\partial T}{\partial x_1}
@@ -546,7 +541,7 @@ T = 1- x_2 + \theta
                     -\frac{\partial \psi}{\partial x_2}\frac{\partial \theta}{\partial x_1} -\frac{\partial \psi}{\partial x_1}
                     +\frac  {\partial \theta}{\partial x_2}\frac{\partial \psi}{\partial x_1}
 \]</span></p>
-<p>is dominated by the <span class="math inline">\(\partial \psi / \partial x_1\)</span> since all others are the product of small terms. (Since we also know that <span class="math inline">\(\psi \sim \theta\)</span> from equation (<a href="MantleDynamics.html#eq-biharm" class="quarto-xref">Equation&nbsp;<span>12.4</span></a>)). Therefore the energy conservation equation becomes</p>
+<p>is dominated by the <span class="math inline">\(\partial \psi / \partial x_1\)</span> since all others are the product of small terms. (Since we also know that <span class="math inline">\(\psi \sim \theta\)</span> from equation (<a href="MantleDynamics.html#eq-biharm" class="quarto-xref">Equation&nbsp;<span>11.4</span></a>)). Therefore the energy conservation equation becomes</p>
 <p><span class="math display">\[
 \frac{\partial \theta}{\partial t} - \frac{\partial \psi}{\partial x_1} = \nabla^2 \theta
 \]</span></p>
@@ -570,14 +565,14 @@ T = 1- x_2 + \theta
 <img src="../Images/Diagrams/crit_ra.png" class="img-fluid figure-img" width="450">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-critical-ra-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.1: Critical Rayleigh Number determination. A plot of growth rates for harmonic perturbations as a function of wavenumber for different <span class="math inline">\({\rm Ra}\)</span>. The critical value occurs when the maximum of the curve just touches the horizontal axis at zero.
+Figure&nbsp;13.1: Critical Rayleigh Number determination. A plot of growth rates for harmonic perturbations as a function of wavenumber for different <span class="math inline">\({\rm Ra}\)</span>. The critical value occurs when the maximum of the curve just touches the horizontal axis at zero.
 </figcaption>
 </figure>
 </div>
 <p>Substituting for the perturbations into the biharmonic equation and the linearized energy conservation equation gives</p>
 <p><span id="eq-psitheta1"><span class="math display">\[
 \left(\frac{d^2}{d{x_2}^2} -k^2 \right)^2 \Psi = -{\rm Ra} k \Theta
-\tag{14.1}\]</span></span></p>
+\tag{13.1}\]</span></span></p>
 <p>and</p>
 <p><span class="math display">\[
 \sigma \Theta + k \Psi =    \left(\frac{d^2}{d{x_2}^2} -k^2 \right) \Theta
@@ -585,9 +580,9 @@ Figure&nbsp;14.1: Critical Rayleigh Number determination. A plot of growth rates
 <p>Here we have shown and used the fact that</p>
 <p><span id="eq-psitheta2"><span class="math display">\[
 \nabla^2 \equiv \left(\frac{\partial^2}{\partial {x_2}^2} -k^2 \right)
-\tag{14.2}\]</span></span></p>
+\tag{13.2}\]</span></span></p>
 <p>when a function is expanded in the form <span class="math inline">\(\phi(x,z) = \Phi(z).\sin kx\)</span> – more generally, this is the fourier transform of the Laplacian operator.</p>
-<p>Eliminating <span class="math inline">\(\Psi\)</span> between (<a href="#eq-psitheta1" class="quarto-xref">Equation&nbsp;<span>14.1</span></a>) and (<a href="#eq-psitheta2" class="quarto-xref">Equation&nbsp;<span>14.2</span></a>) gives</p>
+<p>Eliminating <span class="math inline">\(\Psi\)</span> between (<a href="#eq-psitheta1" class="quarto-xref">Equation&nbsp;<span>13.1</span></a>) and (<a href="#eq-psitheta2" class="quarto-xref">Equation&nbsp;<span>13.2</span></a>) gives</p>
 <p><span class="math display">\[
 \sigma \left(\frac{d^2}{d {x_2}^2 } - k^2 \right)^2 -{\rm Ra} k^2 \Theta =
                 \left(\frac{d^2}{d {x_2}^2} -k^2 \right)^3 \Theta
@@ -626,7 +621,7 @@ k = \frac{\pi}{2^{1/2}} = 2.22
 <img src="../Images/Diagrams/blt.png" class="img-fluid figure-img" width="450">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boundary-layer-theory-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.2: Boundary Layer Theory in its simplest form
+Figure&nbsp;13.2: Boundary Layer Theory in its simplest form
 </figcaption>
 </figure>
 </div>
@@ -675,7 +670,7 @@ Figure&nbsp;14.2: Boundary Layer Theory in its simplest form
 <img src="../Images/Diagrams/blt2.png" class="img-fluid figure-img" width="450">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boundary-layer-theory-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.3: Boundary Layer Theory which accounts for the thickness variations along the boundary layer as it matures.
+Figure&nbsp;13.3: Boundary Layer Theory which accounts for the thickness variations along the boundary layer as it matures.
 </figcaption>
 </figure>
 </div>
@@ -689,7 +684,7 @@ Figure&nbsp;14.3: Boundary Layer Theory which accounts for the thickness variati
 <p>which is a dimensionless temperature, into the standard diffusion equation to obtain</p>
 <p><span id="eq-difftheta"><span class="math display">\[
 \frac{\partial \theta(x_2,t)}{\partial t} = \kappa \frac{\partial ^2 \theta(x_2,t)}{\partial {x_2}^2}
-\tag{14.3}\]</span></span></p>
+\tag{13.3}\]</span></span></p>
 <p>The boundary conditions on <span class="math inline">\(\theta\)</span> are simple:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -704,7 +699,7 @@ Figure&nbsp;14.3: Boundary Layer Theory which accounts for the thickness variati
 <img src="../Images/Diagrams/CoolingHalfSpaceSolutions1.png" class="img-fluid figure-img" width="450">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cooling-half-space-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.4: Cooling half-space calculation
+Figure&nbsp;13.4: Cooling half-space calculation
 </figcaption>
 </figure>
 </div>
@@ -719,10 +714,10 @@ Figure&nbsp;14.4: Cooling half-space calculation
             \frac{\partial^2 \theta}{\partial {x_2}^2} &amp; = \frac{1}{4\kappa t}\frac{d^2 \theta}{d \eta^2}
         \end{aligned}
 \]</span></p>
-<p>to transform (<a href="#eq-difftheta" class="quarto-xref">Equation&nbsp;<span>14.3</span></a>) into</p>
+<p>to transform (<a href="#eq-difftheta" class="quarto-xref">Equation&nbsp;<span>13.3</span></a>) into</p>
 <p><span id="eq-diffode"><span class="math display">\[
 -\eta \frac{d \theta}{d\eta} = \frac{1}{2} \frac{d^2 \theta}{d \eta^2}
-\tag{14.4}\]</span></span></p>
+\tag{13.4}\]</span></span></p>
 <p>Boundary conditions transform to give</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -730,7 +725,7 @@ Figure&nbsp;14.4: Cooling half-space calculation
                 &amp; \theta(\eta=0) = 1    
             \end{aligned}
 \]</span></p>
-<p>Write <span class="math inline">\(\phi = d\theta / d\eta\)</span> (for convenience only) to rewrite (<a href="#eq-diffode" class="quarto-xref">Equation&nbsp;<span>14.4</span></a>) as</p>
+<p>Write <span class="math inline">\(\phi = d\theta / d\eta\)</span> (for convenience only) to rewrite (<a href="#eq-diffode" class="quarto-xref">Equation&nbsp;<span>13.4</span></a>) as</p>
 <p><span class="math display">\[
 \begin{aligned}
                 -\eta \phi &amp;= \frac{1}{2} \frac{d \phi}{d \eta}     \\

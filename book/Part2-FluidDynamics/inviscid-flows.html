@@ -229,11 +229,6 @@ window.Quarto = {
   <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Geodynamics Primer</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -631,12 +626,12 @@ window.Quarto = {
 <p>Since <span class="math inline">\(\mathbf{u}\cdot \nabla\)</span> is the derivative in the direction <span class="math inline">\(\mathbf{u}\)</span> (tangent to streamlines), it follows that:</p>
 <p><strong>Bernoulli’s Equation:</strong> <span id="eq-bernoulli"><span class="math display">\[
 \frac{1}{2}|\mathbf{u}|^2 + \frac{p}{\rho} + \Omega = \text{constant along each streamline}
-\tag{5.1}\]</span></span></p>
+\tag{4.1}\]</span></span></p>
 <p>although the constant will generally be different on different streamlines.</p>
 </section>
 <section id="physical-interpretation" class="level3">
 <h3 class="anchored" data-anchor-id="physical-interpretation">Physical Interpretation</h3>
-<p>Bernoulli’s equation <a href="#eq-bernoulli" class="quarto-xref">Equation&nbsp;<span>5.1</span></a> represents energy conservation along a streamline:</p>
+<p>Bernoulli’s equation <a href="#eq-bernoulli" class="quarto-xref">Equation&nbsp;<span>4.1</span></a> represents energy conservation along a streamline:</p>
 <ul>
 <li><span class="math inline">\(\frac{1}{2}|\mathbf{u}|^2\)</span> = kinetic energy per unit mass</li>
 <li><span class="math inline">\(\frac{p}{\rho}\)</span> = pressure work per unit mass</li>
@@ -685,7 +680,7 @@ z = z_0 + \frac{\omega^2 r^2}{2g}
 <img src="../Images/Diagrams/draining-tank.png" class="img-fluid figure-img" width="350">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-torricelli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.1: Flow from a draining tank through a small orifice
+Figure&nbsp;4.1: Flow from a draining tank through a small orifice
 </figcaption>
 </figure>
 </div>
@@ -698,7 +693,7 @@ Figure&nbsp;5.1: Flow from a draining tank through a small orifice
 <p>Since <span class="math inline">\(u_B \ll u_A\)</span>:</p>
 <p><strong>Torricelli’s Theorem:</strong> <span id="eq-torricelli"><span class="math display">\[
 u_A = \sqrt{2gh}
-\tag{5.2}\]</span></span></p>
+\tag{4.2}\]</span></span></p>
 <p>The outflow speed is that of free fall from height <span class="math inline">\(h\)</span> under gravity. This neglects viscous dissipation of energy.</p>
 </section>
 <section id="geodynamic-application-magma-ascent" class="level3">
@@ -719,7 +714,7 @@ u_{\text{exit}} \sim \sqrt{2 \times 10 \times 0.1 \times 5000} \sim 30 \text{ m/
 <img src="../Images/Diagrams/stagnation-point.png" class="img-fluid figure-img" width="400">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stagnation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.2: Flow around a bluff body showing the stagnation point
+Figure&nbsp;4.2: Flow around a bluff body showing the stagnation point
 </figcaption>
 </figure>
 </div>
@@ -729,7 +724,7 @@ Figure&nbsp;5.2: Flow around a bluff body showing the stagnation point
 \]</span></p>
 <p><strong>Stagnation Pressure:</strong> <span id="eq-stagnation-pressure"><span class="math display">\[
 p_{\text{stag}} = p_0 + \frac{1}{2}\rho U_0^2
-\tag{5.3}\]</span></span></p>
+\tag{4.3}\]</span></span></p>
 <p>The pressure <span class="math inline">\(p_{\text{stag}}\)</span> is the <strong>total</strong> or <strong>Pitot pressure</strong> (also called the <strong>total head</strong>), differing from the static pressure <span class="math inline">\(p_0\)</span> by the <strong>dynamic pressure</strong> <span class="math inline">\(\frac{1}{2}\rho U_0^2\)</span>.</p>
 </section>
 <section id="the-pitot-tube" class="level3">
@@ -740,7 +735,7 @@ p_{\text{stag}} = p_0 + \frac{1}{2}\rho U_0^2
 <img src="../Images/Diagrams/pitot-tube.png" class="img-fluid figure-img" width="400">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pitot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.3: Pitot tube for measuring flow velocity via pressure measurement
+Figure&nbsp;4.3: Pitot tube for measuring flow velocity via pressure measurement
 </figcaption>
 </figure>
 </div>
@@ -765,7 +760,7 @@ p_{\text{dyn}} \sim \frac{1}{2} \times 3300 \times (1.6 \times 10^{-9})^2 \sim 4
 <p>A useful vector identity relates the advective acceleration to vorticity:</p>
 <p><strong>Vector Identity:</strong> <span id="eq-vorticity-identity"><span class="math display">\[
 (\mathbf{u}\cdot \nabla)\mathbf{u}= \nabla\left(\frac{1}{2}|\mathbf{u}|^2\right) - \mathbf{u}\times \boldsymbol{\omega}
-\tag{5.4}\]</span></span></p>
+\tag{4.4}\]</span></span></p>
 <p>where <span class="math inline">\(\boldsymbol{\omega} = \nabla\times\mathbf{u}\)</span> is the <strong>vorticity</strong>.</p>
 <p>This identity allows us to rewrite the Euler equation as: <span class="math display">\[
 \frac{\partial \mathbf{u}}{\partial t} + \nabla\left(\frac{1}{2}|\mathbf{u}|^2\right) - \mathbf{u}\times \boldsymbol{\omega} = -\frac{1}{\rho}\nabla p - \nabla\Omega
@@ -781,21 +776,21 @@ p_{\text{dyn}} \sim \frac{1}{2} \times 3300 \times (1.6 \times 10^{-9})^2 \sim 4
 \]</span></p>
 <p>From vector calculus, any irrotational vector field can be expressed as the gradient of a scalar <strong>velocity potential</strong> <span class="math inline">\(\phi\)</span>: <span id="eq-velocity-potential"><span class="math display">\[
 \mathbf{u}= \nabla\phi
-\tag{5.5}\]</span></span></p>
+\tag{4.5}\]</span></span></p>
 </section>
 <section id="incompressible-irrotational-flow" class="level3">
 <h3 class="anchored" data-anchor-id="incompressible-irrotational-flow">Incompressible Irrotational Flow</h3>
-<p>For incompressible flow, <span class="math inline">\(\nabla\cdot\mathbf{u}= 0\)</span>. Substituting <a href="#eq-velocity-potential" class="quarto-xref">Equation&nbsp;<span>5.5</span></a>: <span class="math display">\[
+<p>For incompressible flow, <span class="math inline">\(\nabla\cdot\mathbf{u}= 0\)</span>. Substituting <a href="#eq-velocity-potential" class="quarto-xref">Equation&nbsp;<span>4.5</span></a>: <span class="math display">\[
 \nabla\cdot(\nabla\phi) = \nabla^2 \phi = 0
 \]</span></p>
 <p><strong>Laplace’s Equation:</strong> <span id="eq-laplace"><span class="math display">\[
 \nabla^2 \phi = 0
-\tag{5.6}\]</span></span></p>
+\tag{4.6}\]</span></span></p>
 <p>This is the governing equation for incompressible, irrotational (potential) flow. Laplace’s equation is linear and has extensive mathematical theory, making potential flows analytically tractable.</p>
 </section>
 <section id="bernoullis-equation-for-irrotational-flow" class="level3">
 <h3 class="anchored" data-anchor-id="bernoullis-equation-for-irrotational-flow">Bernoulli’s Equation for Irrotational Flow</h3>
-<p>For irrotational flow, <a href="#eq-vorticity-identity" class="quarto-xref">Equation&nbsp;<span>5.4</span></a> gives: <span class="math display">\[
+<p>For irrotational flow, <a href="#eq-vorticity-identity" class="quarto-xref">Equation&nbsp;<span>4.4</span></a> gives: <span class="math display">\[
 (\mathbf{u}\cdot \nabla)\mathbf{u}= \nabla\left(\frac{1}{2}|\mathbf{u}|^2\right)
 \]</span></p>
 <p>The unsteady Euler equation becomes: <span class="math display">\[
@@ -807,12 +802,12 @@ p_{\text{dyn}} \sim \frac{1}{2} \times 3300 \times (1.6 \times 10^{-9})^2 \sim 4
 <p>Integrating:</p>
 <p><strong>Unsteady Bernoulli’s Equation (irrotational):</strong> <span id="eq-unsteady-bernoulli"><span class="math display">\[
 \frac{\partial \phi}{\partial t} + \frac{1}{2}|\nabla\phi|^2 + \frac{p}{\rho} + \Omega = f(t)
-\tag{5.7}\]</span></span></p>
+\tag{4.7}\]</span></span></p>
 <p>where <span class="math inline">\(f(t)\)</span> is an arbitrary function of time (can be absorbed into <span class="math inline">\(\phi\)</span> by redefining the potential).</p>
 <p>For <strong>steady</strong> irrotational flow: <span id="eq-steady-irrotational-bernoulli"><span class="math display">\[
 \frac{1}{2}|\mathbf{u}|^2 + \frac{p}{\rho} + \Omega = \text{constant everywhere}
-\tag{5.8}\]</span></span></p>
-<p>Unlike the general case <a href="#eq-bernoulli" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>, Bernoulli’s constant is the <strong>same on all streamlines</strong> for irrotational flow.</p>
+\tag{4.8}\]</span></span></p>
+<p>Unlike the general case <a href="#eq-bernoulli" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>, Bernoulli’s constant is the <strong>same on all streamlines</strong> for irrotational flow.</p>
 </section>
 <section id="geodynamic-relevance-of-potential-flow" class="level3">
 <h3 class="anchored" data-anchor-id="geodynamic-relevance-of-potential-flow">Geodynamic Relevance of Potential Flow</h3>
@@ -829,7 +824,7 @@ p_{\text{dyn}} \sim \frac{1}{2} \times 3300 \times (1.6 \times 10^{-9})^2 \sim 4
 <h2 class="anchored" data-anchor-id="stream-function-2d-flows">Stream Function (2D Flows)</h2>
 <p>For two-dimensional incompressible flow in the <span class="math inline">\(x\)</span>-<span class="math inline">\(y\)</span> plane, we can define a <strong>stream function</strong> <span class="math inline">\(\psi(x,y)\)</span> such that: <span id="eq-stream-function"><span class="math display">\[
 u = \frac{\partial \psi}{\partial y}, \quad v = -\frac{\partial \psi}{\partial x}
-\tag{5.9}\]</span></span></p>
+\tag{4.9}\]</span></span></p>
 <p>This automatically satisfies incompressibility: <span class="math display">\[
 \nabla\cdot\mathbf{u}= \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} = \frac{\partial^2 \psi}{\partial x \partial y} - \frac{\partial^2 \psi}{\partial y \partial x} = 0
 \]</span></p>

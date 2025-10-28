@@ -209,11 +209,6 @@ window.Quarto = {
   <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Geodynamics Primer</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -562,7 +557,7 @@ window.Quarto = {
 <p>to obtain an abstract form which can be used for all the finite element formulations we derive here</p>
 <p><span id="eq-FEabst"><span class="math display">\[
 a(w,u) = (w,{\curly f})  + w(0){\curly h}
-\tag{19.1}\]</span></span></p>
+\tag{18.1}\]</span></span></p>
 <p>Note, that the partial differentiation step produces a symmetric operator from the non symmetric initial form. This approach also works in 2D as follows.</p>
 </section>
 <section id="d-heat-conduction-1" class="level3">
@@ -637,7 +632,7 @@ w^h = \sum_{A=1}^{n} c_A  N_A
     \end{split}
 \]</span></p>
 <p>which includes an extra basis function to allow the boundary condition (<span class="math inline">\(u(1)={\curly g}\)</span>) to be satisfied.</p>
-<p>Substituting into (<a href="#eq-FEabst" class="quarto-xref">Equation&nbsp;<span>19.1</span></a>) gives</p>
+<p>Substituting into (<a href="#eq-FEabst" class="quarto-xref">Equation&nbsp;<span>18.1</span></a>) gives</p>
 <p><span class="math display">\[
 a\left( \sum_{A=1}^n c_A N_A , \sum_{B=1}^n d_B N_B \right) =
     \left( \sum_{A=1}^n c_A N_A , {\curly f} \right) + \left[ \sum_{A=1}^n c_A N_A(0) \right] {\curly h}
@@ -655,15 +650,15 @@ G_A = \sum_{B=1}^n a(N_A,N_B)d_B - (N_A,{\curly f}) - N_A(0){\curly h} + a(N_A,A
 \sum_{B=1}^n a(N_A,N_B)d_B =  (N_A,{\curly f} )
      - N_A(0){\curly h} +
       a(N_A,A_{n+1}) {\curly g}
-\tag{19.2}\]</span></span></p>
+\tag{18.2}\]</span></span></p>
 <p>As in the standard variational method, we have eliminated all references to the actual variation and left unknowns which only related to the physical variables (i.e.&nbsp;the coefficients of the expansion for <span class="math inline">\(u\)</span>).</p>
 <p>If we simply write <span id="eq-FEstdform"><span class="math display">\[
 \begin{split}
         K_{AB} &amp;= a(N_A,N_B)\\
         F_A &amp;= (N_A,{\curly f}) + N_A(0)h - a(N_A,N_n+1){\curly g}
     \end{split}
-\tag{19.3}\]</span></span></p>
-<p>then we have a matrix formulation immediately since (<a href="#eq-gal2" class="quarto-xref">Equation&nbsp;<span>19.2</span></a>) now becomes</p>
+\tag{18.3}\]</span></span></p>
+<p>then we have a matrix formulation immediately since (<a href="#eq-gal2" class="quarto-xref">Equation&nbsp;<span>18.2</span></a>) now becomes</p>
 <p><span class="math display">\[
 \sum_{B=1}^n  K_{AB} d_B = F_A  \;\;\;\;\;\; A=1,2,3,\ldots
 \]</span></p>
@@ -681,7 +676,7 @@ G_A = \sum_{B=1}^n a(N_A,N_B)d_B - (N_A,{\curly f}) - N_A(0){\curly h} + a(N_A,A
 \left. K_{AB}\right|_{ij}  =    \int_\Omega
                     \left(  \frac{\partial N_A}{\partial x_j} +  \frac{\partial N_A}{\partial x_i}  \right) \eta
                     \left(  \frac{\partial N_B}{\partial x_j} +  \frac{\partial N_B}{\partial x_i} \right) d \Omega
-\tag{19.4}\]</span></span></p>
+\tag{18.4}\]</span></span></p>
 </section>
 <section id="discretization-shape-functions" class="level2">
 <h2 class="anchored" data-anchor-id="discretization-shape-functions">Discretization &amp; Shape Functions</h2>
@@ -691,7 +686,7 @@ G_A = \sum_{B=1}^n a(N_A,N_B)d_B - (N_A,{\curly f}) - N_A(0){\curly h} + a(N_A,A
 <p><span id="eq-decomp"><span class="math display">\[
 \int_\Omega d\Omega = \int_{\Omega_1} d {\Omega_1} +
             \int_{\Omega_2} d {\Omega_2} + \int_{\Omega_3} d {\Omega_3} + \ldots
-\tag{19.5}\]</span></span></p>
+\tag{18.5}\]</span></span></p>
 <p>which means that the decomposition <a href="#domain-decomp">shown above</a> is as accurate as the representation of the boundary allows.</p>
 <p>The functions which interpolate the node points at the corners of subdomains are a suitable set for use as an approximate basis as we require for the Galerkin formulation. This is easy to see if we consider a one dimensional problem.</p>
 <p>!<img src="discretisation-1d.png" class="img-fluid" alt="Representing a piecewise linear function as a sum of pointy functions localized at the nodes."></p>
@@ -817,7 +812,7 @@ u = \sum_A d_A N_A (x)  \rightarrow
     q_i = - \sum_A \kappa_{ij} \left. B_A \right|_{j} d_A
 \]</span></p>
 <p>This allows us to define a matrix <span class="math inline">\(\mathbf{B_A}\)</span> which comes directly from the operators contained in the constitutive law.</p>
-<p>Compare this with equation ( <a href="#eq-FEstdform" class="quarto-xref">Equation&nbsp;<span>19.3</span></a>) and, the more concrete example (<a href="#eq-festokes" class="quarto-xref">Equation&nbsp;<span>19.4</span></a>) and we see that the stiffness matrix coefficients can be obtained from</p>
+<p>Compare this with equation ( <a href="#eq-FEstdform" class="quarto-xref">Equation&nbsp;<span>18.3</span></a>) and, the more concrete example (<a href="#eq-festokes" class="quarto-xref">Equation&nbsp;<span>18.4</span></a>) and we see that the stiffness matrix coefficients can be obtained from</p>
 <p><span class="math display">\[
 K_{AB} = a(N_A,N_B) = \int_{\Omega} \mathbf{B}_A^T \mathbf{D} \mathbf{B}_B d\Omega
 \]</span></p>

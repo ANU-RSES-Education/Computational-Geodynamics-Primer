@@ -229,11 +229,6 @@ window.Quarto = {
   <a href="../../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Geodynamics Primer</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -659,7 +654,7 @@ window.Quarto = {
 <img src="../../Images/Diagrams/couette-flow.png" class="img-fluid figure-img" width="450">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-couette-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.1: Couette flow: Linear velocity profile between moving plates
+Figure&nbsp;8.1: Couette flow: Linear velocity profile between moving plates
 </figcaption>
 </figure>
 </div>
@@ -679,7 +674,7 @@ u = Az + B
 <p>Applying boundary conditions: - At <span class="math inline">\(z = 0\)</span>: <span class="math inline">\(u = 0 \Rightarrow B = 0\)</span> - At <span class="math inline">\(z = h\)</span>: <span class="math inline">\(u = U \Rightarrow A = U/h\)</span></p>
 <p><strong>Analytical Solution:</strong> <span id="eq-couette-solution"><span class="math display">\[
 u(z) = U\frac{z}{h}
-\tag{9.1}\]</span></span></p>
+\tag{8.1}\]</span></span></p>
 </section>
 <section id="physical-interpretation" class="level3">
 <h3 class="anchored" data-anchor-id="physical-interpretation">Physical Interpretation</h3>
@@ -711,7 +706,7 @@ u(z) = U\frac{z}{h}
 <img src="../../Images/Diagrams/poiseuille-flow.png" class="img-fluid figure-img" width="450">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poiseuille-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.2: Poiseuille flow: Parabolic velocity profile in pressure-driven channel flow
+Figure&nbsp;8.2: Poiseuille flow: Parabolic velocity profile in pressure-driven channel flow
 </figcaption>
 </figure>
 </div>
@@ -734,7 +729,7 @@ u = -\frac{\gamma}{2\mu}z^2 + Az + B
 <p>Applying boundary conditions: - At <span class="math inline">\(z = 0\)</span>: <span class="math inline">\(u = 0 \Rightarrow B = 0\)</span> - At <span class="math inline">\(z = h\)</span>: <span class="math inline">\(u = 0 \Rightarrow A = \gamma h/(2\mu)\)</span></p>
 <p><strong>Analytical Solution:</strong> <span id="eq-poiseuille-solution"><span class="math display">\[
 u(z) = \frac{\gamma}{2\mu}z(h - z)
-\tag{9.2}\]</span></span></p>
+\tag{8.2}\]</span></span></p>
 </section>
 <section id="physical-interpretation-1" class="level3">
 <h3 class="anchored" data-anchor-id="physical-interpretation-1">Physical Interpretation</h3>
@@ -767,7 +762,7 @@ u(z) = \frac{\gamma}{2\mu}z(h - z)
 <img src="../../Images/Diagrams/pipe-flow.png" class="img-fluid figure-img" width="350">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipe-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.3: Pipe flow: Parabolic velocity profile in a circular pipe
+Figure&nbsp;8.3: Pipe flow: Parabolic velocity profile in a circular pipe
 </figcaption>
 </figure>
 </div>
@@ -794,7 +789,7 @@ w = -\frac{\gamma r^2}{4\mu} + A\ln r + B
 <p>Boundary conditions: - Finite at <span class="math inline">\(r = 0\)</span>: <span class="math inline">\(A = 0\)</span> - <span class="math inline">\(w(a) = 0\)</span>: <span class="math inline">\(B = \gamma a^2/(4\mu)\)</span></p>
 <p><strong>Analytical Solution:</strong> <span id="eq-pipe-flow-solution"><span class="math display">\[
 w(r) = \frac{\gamma a^2}{4\mu}\left(1 - \frac{r^2}{a^2}\right)
-\tag{9.3}\]</span></span></p>
+\tag{8.3}\]</span></span></p>
 </section>
 <section id="physical-interpretation-2" class="level3">
 <h3 class="anchored" data-anchor-id="physical-interpretation-2">Physical Interpretation</h3>
@@ -830,8 +825,8 @@ w(r) = \frac{\gamma a^2}{4\mu}\left(1 - \frac{r^2}{a^2}\right)
 <p>with boundary conditions <span class="math inline">\(u(0) = 0\)</span> and <span class="math inline">\(u(h) = U\)</span>.</p>
 <p><strong>Analytical Solution:</strong> <span id="eq-mixed-flow-solution"><span class="math display">\[
 u(z) = \frac{\gamma}{2\mu}z(h - z) + U\frac{z}{h}
-\tag{9.4}\]</span></span></p>
-<p>This is simply the superposition of Poiseuille flow <a href="#eq-poiseuille-solution" class="quarto-xref">Equation&nbsp;<span>9.2</span></a> and Couette flow <a href="#eq-couette-solution" class="quarto-xref">Equation&nbsp;<span>9.1</span></a>.</p>
+\tag{8.4}\]</span></span></p>
+<p>This is simply the superposition of Poiseuille flow <a href="#eq-poiseuille-solution" class="quarto-xref">Equation&nbsp;<span>8.2</span></a> and Couette flow <a href="#eq-couette-solution" class="quarto-xref">Equation&nbsp;<span>8.1</span></a>.</p>
 </section>
 <section id="zero-net-flux-condition" class="level3">
 <h3 class="anchored" data-anchor-id="zero-net-flux-condition">Zero Net Flux Condition</h3>
@@ -851,12 +846,12 @@ Q = \int_0^h u \, dz = \frac{\gamma h^3}{12\mu} + \frac{Uh}{2}
 <p>An incompressible fluid occupies the half-space <span class="math inline">\(z &gt; 0\)</span> above a rigid boundary at <span class="math inline">\(z = 0\)</span> that oscillates with velocity <span class="math inline">\(U\cos(\alpha t)\)</span>.</p>
 <p>The velocity field <span class="math inline">\(\mathbf{u}= (u(z,t), 0, 0)\)</span> satisfies: <span id="eq-diffusion-equation"><span class="math display">\[
 \frac{\partial u}{\partial t} = \nu\frac{\partial^2 u}{\partial z^2}
-\tag{9.5}\]</span></span></p>
+\tag{8.5}\]</span></span></p>
 <p>This is the heat/diffusion equation with kinematic viscosity <span class="math inline">\(\nu\)</span> playing the role of thermal diffusivity.</p>
 <p>Seeking a solution of the form <span class="math inline">\(u = \text{Re}\{f(z)e^{i\alpha t}\}\)</span> and requiring <span class="math inline">\(u \to 0\)</span> as <span class="math inline">\(z \to \infty\)</span>:</p>
 <p><strong>Analytical Solution:</strong> <span id="eq-oscillating-plate-solution"><span class="math display">\[
 u(z,t) = Ue^{-kz}\cos(kz - \alpha t)
-\tag{9.6}\]</span></span></p>
+\tag{8.6}\]</span></span></p>
 <p>where <span class="math inline">\(k = \sqrt{\alpha/(2\nu)}\)</span> is the inverse penetration depth.</p>
 </section>
 <section id="physical-interpretation-3" class="level3">
@@ -898,7 +893,7 @@ Note
 <h3 class="anchored" data-anchor-id="exercise-2-time-dependent-couette-flow">Exercise 2: Time-Dependent Couette Flow</h3>
 <p>A viscous fluid at rest is confined between two rigid plates at <span class="math inline">\(z = 0\)</span> and <span class="math inline">\(z = h\)</span>. The lower boundary is fixed, but at <span class="math inline">\(t = 0\)</span> the upper boundary is <strong>impulsively</strong> set in motion with velocity <span class="math inline">\((U, 0, 0)\)</span>.</p>
 <ol type="a">
-<li>Show that the velocity field satisfies the diffusion equation <a href="#eq-diffusion-equation" class="quarto-xref">Equation&nbsp;<span>9.5</span></a></li>
+<li>Show that the velocity field satisfies the diffusion equation <a href="#eq-diffusion-equation" class="quarto-xref">Equation&nbsp;<span>8.5</span></a></li>
 <li>Calculate the velocity profile as a function of time</li>
 <li>Determine the vorticity distribution as a function of time</li>
 <li>Sketch the velocity profile at several times and show convergence to the steady Couette solution</li>
@@ -975,7 +970,7 @@ Note
 <ol type="a">
 <li>Discretize the domain <span class="math inline">\([0, h]\)</span> with <span class="math inline">\(N\)</span> grid points</li>
 <li>Implement the steady-state solver using the discrete Laplacian</li>
-<li>Compare your numerical solution to the analytical solution <a href="#eq-couette-solution" class="quarto-xref">Equation&nbsp;<span>9.1</span></a></li>
+<li>Compare your numerical solution to the analytical solution <a href="#eq-couette-solution" class="quarto-xref">Equation&nbsp;<span>8.1</span></a></li>
 <li>Plot the error as a function of grid resolution</li>
 <li>Verify that the error decreases as <span class="math inline">\(\Delta z^2\)</span> (second-order convergence)</li>
 </ol>
@@ -985,7 +980,7 @@ Note
 <p>Repeat Computational Exercise 1 for Poiseuille flow:</p>
 <ol type="a">
 <li>Implement the steady-state solver</li>
-<li>Compare to the analytical solution <a href="#eq-poiseuille-solution" class="quarto-xref">Equation&nbsp;<span>9.2</span></a></li>
+<li>Compare to the analytical solution <a href="#eq-poiseuille-solution" class="quarto-xref">Equation&nbsp;<span>8.2</span></a></li>
 <li>Calculate the volume flux numerically and compare to the analytical value</li>
 <li>Test convergence with grid refinement</li>
 </ol>
@@ -1007,7 +1002,7 @@ Note
 <ol type="a">
 <li>Set up the problem in cylindrical coordinates</li>
 <li>Handle the singularity at <span class="math inline">\(r = 0\)</span> properly</li>
-<li>Compare to the analytical solution <a href="#eq-pipe-flow-solution" class="quarto-xref">Equation&nbsp;<span>9.3</span></a></li>
+<li>Compare to the analytical solution <a href="#eq-pipe-flow-solution" class="quarto-xref">Equation&nbsp;<span>8.3</span></a></li>
 <li>Calculate volume flux and verify against analytical result</li>
 <li>Explore convergence properties with grid refinement</li>
 </ol>
@@ -1124,7 +1119,7 @@ Q = \frac{\pi\gamma a^2}{2\mu}\left[\frac{r^2}{2} - \frac{r^4}{4a^2}\right]_0^a 
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>(a) Vorticity distribution:</strong></p>
-<p>For plane Poiseuille flow <a href="#eq-poiseuille-solution" class="quarto-xref">Equation&nbsp;<span>9.2</span></a>: <span class="math display">\[
+<p>For plane Poiseuille flow <a href="#eq-poiseuille-solution" class="quarto-xref">Equation&nbsp;<span>8.2</span></a>: <span class="math display">\[
 u = \frac{\gamma z}{2\mu}(h - z)
 \]</span></p>
 <p>The vorticity (for 2D flow in the <span class="math inline">\(x\)</span>-<span class="math inline">\(z\)</span> plane) is: <span class="math display">\[
