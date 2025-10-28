@@ -4,6 +4,8 @@
 
 Our goal is to develop a quantitative understanding of the dynamic processes within the Earth and sister planets. These dynamic processes are largely driven by the internal heat of the planet escaping to the surface through whatever mechanisms are available. Some of the heat is left over from the original formation of the planet, and the rest originates in the decay of radioactive elements. In the Earth's early history and elsewhere in the solar system, tidal heating, chemical segregation, and impacts have all played a role in supplying the interior heat budget.
 
+![A schematic of the Earth's interior showing the key processes that drive planetary dynamics including mantle convection, plumes, and plate tectonics.](Images/Diagrams/EarthProcessesPlume.png){#fig-mantle-slice width=80%}
+
 This is because the Earth's dynamics is completely dominated by **Plate Tectonics** — a unique manifestation of interior heat loss as far as we are aware. Understanding why plate tectonics is a possible outcome of a hot planet, and also why it is not the only possible outcome, is one of our key tasks. If we can understand how different dynamic modes are selected for planets of different size, composition, and heat budget, then we have a powerful way to predict the geological behaviour of extrasolar planets. Plate tectonics creates efficient cycling mechanisms which link the interior of the Earth with the Atmosphere and Oceans; it may prove essential for sustaining life.
 
 ## What is a Model?
