@@ -177,7 +177,7 @@ window.MathJax = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">EMSC e-Course template</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Computational Geodynamics Primer</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -435,8 +435,17 @@ window.MathJax = {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#what-is-a-model" id="toc-what-is-a-model" class="nav-link" data-scroll-target="#what-is-a-model">What is a Model?</a></li>
+  <li><a href="#mathematical-background" id="toc-mathematical-background" class="nav-link" data-scroll-target="#mathematical-background">Mathematical Background</a></li>
+  <li><a href="#programming-in-python" id="toc-programming-in-python" class="nav-link" data-scroll-target="#programming-in-python">Programming in Python</a></li>
+  </ul>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer"><i class="bi bi-github"></i>Github Repository</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -459,7 +468,34 @@ window.MathJax = {
 </header>
 
 
-<p>This is a book created from markdown and executable code.</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Our goal is to develop a quantitative understanding of the dynamic processes within the Earth and sister planets. These dynamic processes are largely driven by the internal heat of the planet escaping to the surface through whatever mechanisms are available. Some of the heat is left over from the original formation of the planet, and the rest originates in the decay of radioactive elements. In the Earth’s early history and elsewhere in the solar system, tidal heating, chemical segregation, and impacts have all played a role in supplying the interior heat budget.</p>
+<p>This is because the Earth’s dynamics is completely dominated by <strong>Plate Tectonics</strong> — a unique manifestation of interior heat loss as far as we are aware. Understanding why plate tectonics is a possible outcome of a hot planet, and also why it is not the only possible outcome, is one of our key tasks. If we can understand how different dynamic modes are selected for planets of different size, composition, and heat budget, then we have a powerful way to predict the geological behaviour of extrasolar planets. Plate tectonics creates efficient cycling mechanisms which link the interior of the Earth with the Atmosphere and Oceans; it may prove essential for sustaining life.</p>
+</section>
+<section id="what-is-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-model">What is a Model?</h2>
+<p>Global-scale geodynamics is a discipline where we cannot do controlled experiments on the basic processes we are studying. Instead, we rely on observing the Earth and other terrestrial planets and moons, and looking for multiple manifestations of the same processes under different conditions to give us control on certain parameters.</p>
+<p>While it is not possible to do experiments at the planetary scale over geological time, it <strong>is</strong> possible to perform experiments at a physically manageable size and, by careful scaling, to generalise the results to geologically relevant space and time-scales. If these processes of interest can be understood through a mathematical description, then the equations are automatically applicable at geological time and space scales provided the assumptions which go into developing the mathematical model are still valid.</p>
+<p>When we talk about “modeling” in geodynamics, we mean several related but distinct things:</p>
+<ul>
+<li><strong>Laboratory-based physical models</strong> which can be scaled to give meaningful, quantitative insight into deformation at geological scales.</li>
+<li><strong>Mathematical descriptions</strong> of the world and their use to approximate physical reality.</li>
+<li><strong>Computational solutions</strong> of these descriptions (where needed) and the concept of a numerical model.</li>
+<li>How to construct a model</li>
+<li>How to use a model (these are quite different things!)</li>
+<li>Exploring parameter variation to understand dominant effects.</li>
+</ul>
+</section>
+<section id="mathematical-background" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-background">Mathematical Background</h2>
+<p>These notes contain material at different levels. There is broadly descriptive content which introduces the subject and leads up to more advanced mathematical material. It should be possible to follow these notes without detailed knowledge of how the mathematical results are obtained, but it is expected that you can use the results to solve real problems in geophysics.</p>
+<p>Familiarity with <strong>vector &amp; tensor notation</strong> and <strong>index notation</strong> is required for understanding the kinds of equations we will be dealing with. We interchange these notations and tend to write everything out in full for the Cartesian case. In other geometries, vector notation generally still holds, but the definition of the operators can be very different, and it is always worth checking before using them.</p>
+</section>
+<section id="programming-in-python" class="level2">
+<h2 class="anchored" data-anchor-id="programming-in-python">Programming in Python</h2>
+<p>All of the examples in this book are based around <strong>Python code</strong>, which is easy to pick up and very powerful. Many Python codes are actually <strong>Fortran</strong> or <strong>C</strong> codes in disguise, with Python providing a more convenient way to operate and coordinate programs than older approaches.</p>
+<p>Python is a very flexible language which is constantly improving. The flexibility can make it hard to know where to start or how to find documentation. <strong>Jupyter notebooks</strong> add interactivity to Python and make it much more straightforward to dig into the details of the code you are running. We use Jupyter notebooks extensively for examples in this book, and these can be run live using browser-based Python (pyodide) or online Jupyter environments (Binder).</p>
 <p>See <span class="citation" data-cites="knuth84">(<a href="references.html#ref-knuth84" role="doc-biblioref"><strong>knuth84?</strong></a>)</span> for additional discussion of literate programming.</p>
 
 
@@ -477,6 +513,7 @@ eyJjb250ZW50cyI6W119
 <script type="vfs-file">
 W10=
 </script>
+</section>
 
 </main> <!-- /main -->
 <script type="ojs-module-contents">
@@ -892,8 +929,8 @@ window._ojs.runtime.interpretFromScriptTags();
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="EMSC e-Course template">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">EMSC e-Course template</span></span>
+      <a href="./index.html" class="pagination-link" aria-label="Computational Geodynamics Primer">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Computational Geodynamics Primer</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
