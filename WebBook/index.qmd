@@ -5,16 +5,40 @@ author: "Louis Moresi"
 date: today
 ---
 
-## Welcome
+## Overview
 
-This book develops a quantitative understanding of the dynamic processes within the Earth and sister planets. These processes are largely driven by the internal heat of the planet escaping to the surface. Some of this heat is left over from planetary formation, while the rest originates from the decay of radioactive elements.
+Our goal is to develop a quantitative understanding of the dynamic processes within the Earth and sister planets. These dynamic processes are largely driven by the internal heat of the planet escaping to the surface through whatever mechanisms are available. Some of the heat is left over from the original formation of the planet, and the rest originates in the decay of radioactive elements. In the Earth's early history and elsewhere in the solar system, tidal heating, chemical segregation, and impacts have all played a role in supplying the interior heat budget.
 
-Our approach combines:
-- **Mathematical descriptions** of Earth's physical processes
-- **Computational methods** to solve these equations numerically
-- **Physical insight** into why planets behave as they do
+![A schematic of the Earth's interior showing the key processes that drive planetary dynamics including mantle convection, plumes, and plate tectonics.](Images/Diagrams/EarthProcessesPlume.png){#fig-mantle-slice width=80%}
 
-![A schematic of the Earth's interior showing the key processes that drive planetary dynamics including mantle convection, plumes, and plate tectonics.](Images/Diagrams/EarthProcessesPlume.png){#fig-mantle-processes width=80%}
+This is because the Earth's dynamics is completely dominated by **Plate Tectonics** — a unique manifestation of interior heat loss as far as we are aware. Understanding why plate tectonics is a possible outcome of a hot planet, and also why it is not the only possible outcome, is one of our key tasks. If we can understand how different dynamic modes are selected for planets of different size, composition, and heat budget, then we have a powerful way to predict the geological behaviour of extrasolar planets. Plate tectonics creates efficient cycling mechanisms which link the interior of the Earth with the Atmosphere and Oceans; it may prove essential for sustaining life.
+
+## What is a Model?
+
+Global-scale geodynamics is a discipline where we cannot do controlled experiments on the basic processes we are studying. Instead, we rely on observing the Earth and other terrestrial planets and moons, and looking for multiple manifestations of the same processes under different conditions to give us control on certain parameters.
+
+While it is not possible to do experiments at the planetary scale over geological time, it **is** possible to perform experiments at a physically manageable size and, by careful scaling, to generalise the results to geologically relevant space and time-scales. If these processes of interest can be understood through a mathematical description, then the equations are automatically applicable at geological time and space scales provided the assumptions which go into developing the mathematical model are still valid.
+
+When we talk about "modeling" in geodynamics, we mean several related but distinct things:
+
+- **Laboratory-based physical models** which can be scaled to give meaningful, quantitative insight into deformation at geological scales.
+- **Mathematical descriptions** of the world and their use to approximate physical reality.
+- **Computational solutions** of these descriptions (where needed) and the concept of a numerical model.
+- How to construct a model
+- How to use a model (these are quite different things!)
+- Exploring parameter variation to understand dominant effects.
+
+## Mathematical Background
+
+These notes contain material at different levels. There is broadly descriptive content which introduces the subject and leads up to more advanced mathematical material. It should be possible to follow these notes without detailed knowledge of how the mathematical results are obtained, but it is expected that you can use the results to solve real problems in geophysics.
+
+Familiarity with **vector & tensor notation** and **index notation** is required for understanding the kinds of equations we will be dealing with. We interchange these notations and tend to write everything out in full for the Cartesian case. In other geometries, vector notation generally still holds, but the definition of the operators can be very different, and it is always worth checking before using them.
+
+## Programming in Python
+
+All of the examples in this book are based around **Python code**, which is easy to pick up and very powerful. Many Python codes are actually **Fortran** or **C** codes in disguise, with Python providing a more convenient way to operate and coordinate programs than older approaches.
+
+Python is a very flexible language which is constantly improving. The flexibility can make it hard to know where to start or how to find documentation. **Jupyter notebooks** add interactivity to Python and make it much more straightforward to dig into the details of the code you are running. We use Jupyter notebooks extensively for examples in this book, and these can be run live using browser-based Python (pyodide) or online Jupyter environments (Binder).
 
 ## Book Structure
 
@@ -34,37 +58,3 @@ The computational techniques needed to solve the mathematical equations describi
 
 ### Part V: Computational Exercises
 Practical examples and benchmarks demonstrating the concepts throughout the book.
-
-## Who This Book Is For
-
-This material is designed for advanced undergraduate or graduate students in:
-- Geophysics and geodynamics
-- Earth science
-- Physics with planetary science interests
-- Applied mathematics with Earth science applications
-
-You will need:
-- Basic knowledge of calculus and linear algebra
-- Familiarity with programming (preferably Python, but not essential)
-- Curiosity about how planets work!
-
-## How to Use This Book
-
-Each chapter combines:
-- **Conceptual explanations** of the physical and mathematical principles
-- **Mathematical derivations** where you'll see where equations come from
-- **Interactive code examples** that you can run directly in your browser
-- **Exercises** to test your understanding
-
-The interactive code examples use **Pyodide**, which runs Python directly in your browser via WebAssembly. You can modify the code and see results immediately without installing anything.
-
-## What You'll Learn
-
-By working through this book, you will understand:
-- How to formulate mathematical models of physical processes
-- How to solve these models computationally
-- How these models help us understand planetary evolution
-- How different planets can evolve along different paths
-- How to build and validate your own geodynamic models
-
-Let's get started with an introduction to what we mean by "modeling" in geodynamics.

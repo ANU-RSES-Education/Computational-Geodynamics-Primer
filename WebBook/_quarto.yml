@@ -12,7 +12,6 @@ book:
     - part: "Preface"
       chapters:
         - index.qmd
-        - intro.qmd
 
     # Core content - to be organized
     - part: "**Part I: Mathematical Fundamentals**"
