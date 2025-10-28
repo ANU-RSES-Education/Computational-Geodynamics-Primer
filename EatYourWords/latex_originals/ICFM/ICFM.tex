@@ -1,0 +1,4436 @@
+%!TEX TS-program = xelatex
+
+
+\documentclass[10pt]{report}
+\input{../../../../+LaTeX/LectureNotesSetup.tex}
+
+% Different versions of this document ...
+% including answers / example solutions or not
+
+\hideanswers  % all of them !!
+
+\hideanswersOne
+\hideanswersTwo
+\hideanswersThree
+\hideanswersFour
+\hideanswersFive
+\hideanswersSix
+\hideanswersSeven
+
+\hideexamplesolutions % all of them !!
+
+\hideexamplesOne
+\hideexamplesTwo
+\hideexamplesThree
+\hideexamplesFour
+\hideexamplesFive
+\hideexamplesSix
+\hideexamplesSeven
+
+\hideadvanced
+\hidelecturehints
+
+
+
+\begin{document}
+
+%
+% Home bake the title
+%
+
+\thispagestyle{empty}
+\setlength{\unitlength}{\linewidth}
+\begin{picture}(0,0)
+	\put(-0.05,-0.05){\includegraphics[width=1.1\linewidth]{../../../../+LaTeX/MonashLetterHeadCrestCrop.png}}
+\end{picture}
+\vfill
+{\LARGE MTH3360 --- Fluid Mechanics \\[2ex] }
+{\LARGE Part 2: Incompressible Fluids \\ }
+\vfill
+
+\begin{examplesolution}
+{\Large Included: selected worked examples \\}
+\end{examplesolution}
+
+\begin{answer}
+{\Large Included: solutions to selected exercises \\ }
+\end{answer}
+
+\begin{lecturehints}
+{\Large Included: hints for lectures \\}
+\end{lecturehints}
+
+\vfill
+
+\begin{center}
+	\includegraphics[width=0.95\linewidth]{FrontPage.001.png}
+\end{center}
+\vfill
+{\Large louis.moresi@monash.edu}\\[0.5em]
+{\Large 2010; 2011; 2012; 2013}
+
+
+\newpage
+\subsection*{Bibliography}
+
+\begin{description}
+\item[]Acheson, D.J., 1990. Elementary Fluid Dynamics, Oxford University Press.
+\item[]Batchelor, G.K., 1967. Introduction to Fluid Dynamics. Cambridge University Press.
+\item[]T. E. Faber, T. E., 1995, Fluid Dynamics for Physicists. Cambridge University Press.
+\item[]Kundu, P., Cohen, I., 2001, Fluid Mechanics (ISBN-13: 9780121782511), Elsevier Academic Press.
+\item[]Lighthill, J., 1986. An Informal Introduction to Theoretical Fluid Mechanics. Oxford University Press.
+\item[]Landau, L. D., and Lifschitz, E. M., 1959.  Fluid mechanics - Volume VI of Course of Theoretical Physics, Addison-Wesley (advanced text)
+\item[] National Academy of Fluid Mechanics Films: \texttt{http://web.mit.edu/hml/ncfmf.html}
+\end{description}
+
+\subsection*{Acknowledgements}
+
+These notes draw heavily on the lectures given by Professor Bruce Morton,
+Professor Michael Reeder, Dr Simon Clarke at Monash University and
+Professor Roger Smith at the University of Munich.
+
+\subsection*{Cover images}
+\begin{center}
+{\includegraphics[width=0.5\linewidth]{FrontPage.003.png}}
+\end{center}
+\begin{enumerate}[label=\alph{enumi} --- ] %for small alpha-characters within brackets.
+	\footnotesize
+\item  Flow past a wing-cross-section visualised by suspended
+		particles in a thin layer of slowly flowing water.
+\item  The French alps seen from the air in the Spring of 2010.
+	   Viscous flow is an important component of mountain building (orogeny)
+       on geological timescales.
+\item  The free-surface of a rapidly rotating vortex in a cylindrical column
+       of water seen from beneath.
+\item  A Geostationary Meteorological Satellite (GMS) image of super typhoon Mitag,
+ 	   5 March 2002. The image comes from the University of Madison, Wisconsin
+\item  Water from a running tap showing how the cross sectional
+       area of the flow reduces as the fluid gains speed
+\item  Taylor-Couette flow at a rotation rate above the point where secondary vortices
+       appear, but just below the onset of instability.
+\item  Zonal flows which develop spontaneously in a rapidly-rotating, fluid-filled sphere
+
+\item  Buoyant plume of warm water created by switching on a heating element in a tank of water and visualised by its shadow
+
+\item  MISR images of a von Karman vortex street. The alternating double row of vortices form in the wake of an obstacle, in this instance the eastern Pacific island of Guadalupe. This volcanic Mexican island reaches a maximum elevation of 1.3 kilometers. Theisland is about 35 kilometers long and is located 260 kilometers west of Baja California. The vortex pattern is made visible by the marine stratocumulus clouds around Guadalupe Island.
+\end{enumerate}
+
+{\footnotesize Images in {\em(a,e,f,g,h)} taken at the Swiss Science Center Technorama
+Winterthur, Switzerland, 2010, by LM -- (\url{http://www.technorama.ch}).
+Photograph of the alps {\em (b)} by LM of a view provided by Swiss International Airlines.
+Image {\em (d)} comes from the University of Madison, Wisconsin.
+{\em(i)} NASA visible earth -- \url{http://visibleearth.nasa.gov/view_rec.php?vev1id=6586} }
+
+\tableofcontents
+
+\chapter{Fluid Flow and Conservation of Mass}
+\pagenumbering{arabic}
+
+%
+% Essentially this section is about kinematics of fluid flows and it
+% would be useful to say as much.
+%
+
+\section{Description of fluid flow}
+
+Fluids, generally liquids or gases, but, under the right conditions, also some solids, flow
+when subjected to stresses. In describing fluid flow, we are usually not at all interested
+in describing the relative displacement of points in the fluid as we must do when we
+describe the deformation of elastic solids, for example. Instead, the description of an
+ideal fluid flow requires a specification or determination of the \textbf{velocity field},
+i.e. a specification of the fluid velocity at every point in the region. In general, this
+will define a \textbf{vector field} of position and time, ${\bf u}={\bf u}({\bf x},t)$.
+
+\textbf{Steady flow} occurs when \textbf{u} is independent of time (i.e.,  ${\partial {\bf u}}/{\partial t}=0)$. Otherwise the flow is  \textbf{unsteady}.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=3.5in]{Section3.pdf}}
+\label{fig1.3}
+\caption{ Streamlines of flow through a constriction}
+\end{figure}
+
+\textbf{Streamlines} are lines which at a given instant are everywhere in the direction of
+the velocity (analogous to electric or magnetic field lines). In steady flow the streamlines
+are independent of time, but the velocity can vary in magnitude along a streamline (as in
+flow through a constriction in a pipe).
+
+\textbf{Particle paths} are lines traced out by ``marked" particles as time evolves. In
+steady flow particle paths are identical to streamlines; in unsteady flow they are
+different, and sometimes very different. Particle paths are visualized in the laboratory
+using small floating particles of the same density as the fluid. Sometimes they are referred
+to as \textbf{trajectories}.
+
+\textbf{Filament lines} or \textbf{streaklines} are traced out over time by all particles
+passing through a given point; they may be visualized, for example, using a hypodermic
+needle and releasing a slow stream of dye. In steady flow these are streamlines; in unsteady
+flow they are neither streamlines nor particle paths.
+
+It should be emphasised that streamlines represent the velocity field at a specific instant
+of time, whereas particle paths and streak lines provide a representation of the velocity
+field over a finite period of time. In the laboratory one can obtain a record of streamlines
+photographically by seeding the fluid with small neutrally buoyant particles that move with
+the flow and taking a short exposure (e.g. 0.1 sec), long enough for each particle to trace
+out a short segment of line; the eye readily links these segments into continuous
+streamlines. Particle paths and streak lines are obtained from a time exposure long enough
+for the particle or dye trace to traverse the region of observation.
+
+\section{Equations for streamlines}
+\begin{wrapfigure}{r}{3in}
+\centerline{\includegraphics[width=3in]{Section4.pdf}}
+\label{fig1.4}
+\caption{ Fluid motion at a point is tangential to the streamline at a point }
+\end{wrapfigure}
+
+The streamline through the point $P$, say $(x,y,z)$, has the direction of  ${\bf u} = (u,v,w)$. Let $Q$ be the neighbouring point $(x + \delta x, y + \delta y, z + \delta z)$ on the streamline. Then $\delta x \approx  u \delta t , \delta y \approx  v \delta t , \delta z \approx w \delta t$ and as $\delta t \to  0$, we obtain the differential relationship
+
+%
+% I quite like the exam answer I got here which starts with $\delta {\bm l} \times {\bm v} = 0
+% because the lines are everywhere tangent to the flow field
+%
+
+\begin{equation}
+\label{eq11}
+\frac{dx}{u}=\frac{dy}{v}=\frac{dz}{w},
+\end{equation}
+between the displacement $d{\bf x}$ along a streamline and the velocity components. Equation (\ref{eq11}) gives two differential equations (why?). Alternatively, we can represent the streamline parametrically (with time as parameter) as
+\begin{equation}
+\label{eq2}
+\int {\frac{dx}{u}} =\int {dt},\quad \int {\frac{dy}{v}} =\int {dt},\quad  \int {\frac{dz}{w}} =\int {dt} .
+\end{equation}
+
+%% Example - streamlines
+
+\begin{examplebox}
+Find the streamlines for the velocity field ${\bf u}=(-\Omega y, \Omega x,0)$, where $\Omega $ is a constant.
+
+\begin{examplesolution1}
+Equation (\ref{eq1}) gives
+\begin{equation*}
+	-\frac{dx}{\Omega y}=\frac{dy}{\Omega x}=\frac{dz}{0}.
+\end{equation*}
+The first pair of ratios give $\int {\Omega (xdx+ydy)=0} $ or x$^{2}$ + y$^{2}$ = F(z) ,
+where F is an arbitrary function of z. The second pair give $\int {dz} $ = 0 or z = constant.
+
+Hence the streamlines are circles $x^{2} + y^{2} = c^{2}$ in planes z = constant
+(we have replaced F(z), a constant when z is constant, by $c^{2}$).
+
+Note that the velocity at P with position vector \textbf{x} can be expressed as
+$u=\Omega k\times x$ and corresponds with \textbf{solid body rotation} about
+the\textbf{ k} axis with angular velocity \textbf{$\Omega$}. (See Exercise 1.4.)
+
+%
+% Calculate the pressure !
+%
+
+\end{examplesolution1}
+\end{examplebox}
+
+
+Trajectories can be calculated from the definition of the velocity field,
+\[
+\frac{dx}{dt}=u,
+\quad
+\frac{dy}{dt}=v,
+\quad
+\frac{dz}{dt}=w,
+\]
+where $u=u(x,y,z,t)$, $v=v(x,y,z,t)$ and $w=w(x,y,z,t)$.
+Generally this is very difficult as one has to know the velocity field for all time,
+and the velocity field is one of the principle unknowns in the problem !
+
+
+%
+% These are constitutive properties and are necessarily phenomenological / empirical
+% - again worth stating somewhere explicitly (LM)
+%
+
+\section{Distinctive properties of fluids}
+
+Although fluids are molecular in nature, they can be treated as  \textit{continuous media} for most
+practical purposes, exceptions being rarefied gases, granular materials in a `fluidized' state, and some suspensions such as concrete where the suspended particles are large compared to other `important'
+length scales in the flow such as boundary layer thicknesses.
+
+\subsection{Compressibility}
+
+Real fluids generally show some \textbf{compressibility} defined as
+\[
+\frac{1}{\rho }\frac{d\rho }{dp}=
+	\frac{\hbox{changes in density per unit change in pressure}}{\hbox{density}},
+\]
+but at normal atmospheric flow speed, the compressibility of air is a
+relatively small effect and for liquids it is generally negligible. Note that
+sound waves owe their existence to compressibility effects as do ``sonic
+booms", produced by aircraft flying faster than sound. For many purposes it
+is accurate to assume our fluids are \textbf{incompressible}, i.e. they
+undergo no change in density with pressure. For the present we shall assume
+also that they are \textbf{homogeneous}, i.e., density $\rho $ = constant.
+
+Pressure fluctuations in the fluid due to motion are small relative to the
+ambient pressure if
+\begin{equation}
+	M^{2} \ll 1
+\end{equation}
+where $M$ is the Mach number: the ratio of the ambient fluid velocity to the
+sound speed.
+
+\begin{lecturehints}
+Typical sound speeds are $\sim 340 m/s$ for air at room temperature,
+$\sim 1500 m/s$ for water, and as much as $10 km/s$ in rocks in the deep Earth.
+\end{lecturehints}
+
+
+\subsection{Viscosity}
+
+When one solid body slides over another, \textbf{frictional forces} act
+between them to reduce the relative motion. Friction acts also when layers
+of fluid flow over one another. When two solid bodies are in contact (more
+precisely when there is a normal force acting between them) at rest, there
+is a threshold tangential force \textit{below which} relative motion will not occur. It is
+called the \textbf{limiting friction}. An example is a solid body resting on
+a flat surface under the action of gravity (see figure below).
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=4in]{Section5.pdf}}
+\label{fig1.5}
+\caption{ Force balance for a block sliding on a surface and resisted by friction }
+\end{figure}
+
+As $T$ is increased from zero, $F = T$ until $T = \mu N$, where $\mu $ is the
+so-called coefficient of limiting friction and depends on the degree of roughness
+between the surface. For $T > \quad \mu N$, the body will overcome the
+frictional force and accelerate. A distinguishing characteristic of most
+fluids in their inability to support tangential stresses between layers
+without motion occurring; i.e. there is no analogue of limiting friction.
+Exceptions are certain types of so-called visco-elastic fluids
+such as paints, slurries and foods.
+
+% TODO - Paint ??!! fluids with yield stresses ...
+
+Fluid friction is characterized by \textbf{viscosity,} which is a measure of
+the magnitude of tangential frictional forces in flows with velocity
+gradients. \textbf{Viscous forces} are important in many flows, but least
+important in flow past ``streamlined" bodies. We shall be concerned mainly
+with \textbf{inviscid} flows where friction is not important, but it is
+essential to acquire some idea of the sort of flow in which friction may be
+neglected without completely misrepresenting the behaviour. As we shall see,
+neglecting friction is risky!
+
+To begin with we shall be concerned mainly with \textbf{homogeneous,
+incompressible inviscid flows}.
+
+% \subsection{Viscoelasticity}
+
+
+\section{Incompressible flows}
+
+We generalise the idea of a streamline and consider an element of fluid
+bounded by a ``tube of streamlines", known as a \textbf{stream tube.} No
+fluid can cross the walls of the stream tube as they are everywhere in the
+direction of flow.
+
+% TODO Clarify: mass flux - fluxes are often given per unit area.
+
+Hence for incompressible fluids the mass flux ( = mass flow per unit time)
+across section 1 ( = $\rho v_{1}S_{1})$ is equal to that across section
+2 ( = $\rho v_{2}S_{2})$, as there can be no accumulation of fluid
+between these sections. Hence $vS$ = constant and in the limit, for stream
+tubes of small cross-section,
+\[
+vS = \hbox{\textbf{constant along an elementary stream tube}.}
+\]
+This result is true for both steady and unsteady flows. The statement is
+obvious for steady flow as the stream tube does not change shape -- think
+about a the analogy with a pipe.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=0.5\linewidth]{Section6.pdf} \hspace{4ex}
+            \includegraphics[width=0.2\linewidth]{DSC_4302a.jpg}}
+\caption{ A conceptual diagram of a stream tube and (right)
+          something not dissimilar from real life  }
+\label{fig1.6}
+\end{figure}
+
+It follows that, where streamlines contract the velocity increases, where
+they expand it decreases. Clearly, the streamline pattern contains a great
+deal of information about the velocity distribution.
+
+All vector fields with the property that
+\[
+\hbox{(vector magnitude)} \times \hbox{(area of tube)}
+\]
+remains constant along a tube are called \textbf{solenoidal}. The velocity
+field for an incompressible fluid is solenoidal.
+
+\section{Conservation of mass: the continuity equation}
+
+\begin{wrapfigure}{r}{2in}
+\centerline{\includegraphics[width=1.5in]{Section7.pdf}}
+\caption{ Volume element, $V$ bounded by surface $S$}
+\label{fig1.7}
+\end{wrapfigure}
+
+
+Apply the divergence theorem
+\[
+\int_V {\nabla . {\bf u} } dV=\int_S {\bf u} . {\bf n}dS
+\]
+to an arbitrarily chosen volume $V$ with \textbf{closed} surface $S$.
+The mass flux across the elemental area $dS$ is $\rho {\bf u}.
+{\bf n}dS$.
+
+If the fluid is incompressible and there are no mass sources or sinks within
+$S$, then there can be neither continuing accumulation of fluid within $V$ nor
+continuing loss. It follows that the net flux of fluid across the surface $S$
+must be zero, i.e.,
+\[
+\int_S  {\bf u} . {\bf n}dS=0,
+\]
+whereupon. $\int_V {\nabla . {\bf u} } dV=0$. This holds for an
+arbitrary volume $V$, and therefore $\nabla . {\bf u}=0$ throughout an
+incompressible flow without mass sources or sinks. This is the continuity
+equation for a \textbf{homogeneous, incompressible} fluid. It corresponds
+with mass conservation.
+
+The stream tube in figure \ref{fig1.6} is a special choice of the surface $S$
+in which the flow is perpendicular to the ends of the tube ($S_{1}$,$S_{2}$), and parallel to the
+sides. Thus the fluxes across the ends must be equal (and opposite -- since we consider
+the sign)
+
+
+\section{Strain rate, Velocity gradients, and Vorticity}
+
+In elasticity theory, the constitutive behaviour of materials is described through the relationship
+between the applied forces and the resulting deformation. In fluids, the appropriate variable to relate
+to the applied forces or stresses is the \textit{strain-rate}.
+
+In Cartesian coordinates, the strain rate tensor, $\mathbf{D}$, is given by:
+\begin{equation}
+	D_{ij} = \frac{1}{2} \left( \frac{\partial u_{i}}{\partial x_{j}} +
+	                            \frac{\partial u_{j}}{\partial x_{i}} \right)
+\end{equation}
+It is the symmetric part of the velocity gradient tensor, $\mathbf{L}$,
+\begin{equation}
+	L_{ij} = \frac{\partial u_{i}}{\partial x_{j}}
+\end{equation}
+and non-symmetric part of the tensor is a rotation rate, $\mathbf{W}$
+\begin{equation}
+	L_{{ij}} = D_{ij} + W_{ij} = \frac{1}{2} \left( \frac{\partial u_{i}}{\partial x_{j}} +
+	                                    \frac{\partial u_{j}}{\partial x_{i}} \right) +
+	                             \frac{1}{2} \left( \frac{\partial u_{i}}{\partial x_{j}} -
+	                                    \frac{\partial u_{j}}{\partial x_{i}} \right)
+\end{equation}
+$\mathbf{W}$ is half the usual fluid vorticity, $\nabla \times \mathbf{u}$, which we will encounter in chapter 4.
+
+The strain-rate tensor can be decomposed into a (scalar) \textit{volumetric} part $D_{v}$ which describes the rate
+of change of volume, and a \textit{deviatoric} part, $\mathbf{D'}$ which describes shearing motions:
+\begin{equation}
+	D_{v} = D_{kk}
+\end{equation}
+%%
+\begin{equation}
+	D'_{ij} = D_{ij} - \frac{1}{3} D_{v} \delta_{ij}
+\end{equation}
+The deviatoric part is a traceless tensor.
+
+\divider
+\pagebreak
+
+%% Exercises
+
+\section{Exercises}
+
+%------------------------------------------------------------------
+
+\begin{questionstar}
+Find streamlines for the velocity field ${{\bf u}}=(\alpha x,-\alpha y,0)$,
+where $\alpha $ is constant, and sketch them for the case $\alpha  > 0$.
+\label{qn:streamlines1}
+\end{questionstar}
+
+\begin{questionstar}
+Calculate the parcel trajectories for the velocity field defined by ${{\bf u}}=(e^{-t}z,0,0)$.
+\label{qn:trajectories}
+\end{questionstar}
+
+\begin{questionstar}
+Consider the unsteady flow ${{\bf u}}=(u_0 ,kt,0)$, where $u_{0}$ and $k$ are positive constants.
+\begin{itemize}
+\item Show that the streamlines are straight lines, and sketch them at two different times.
+\item Show that the fluid follows a parabolic path as time proceeds.
+\end{itemize}
+\label{qn:streamlines-time}
+\end{questionstar}
+
+
+\begin{question}
+	Show that the expression $u=\Omega \cdot ({\bf k}\times {\bf x})$ describes solid body rotation
+	about the\textbf{ k} axis with angular velocity $\Omega $ --- you should show that the velocity
+	is consistent with rotation at a constant rate, $\Omega$ about the origin \textit{and} you should
+	show that the flow does not produce any change in shape.
+	\textit{Hint: which means the flow must have a zero strain rate.}
+\label{qn:rigidbody}
+\end{question}
+
+\begin{question}
+ A stream is broad and shallow with width 8 m, mean depth 0.5 m and mean speed 1~m s$^{-1}$.
+ \begin{itemize}
+ \item What is its volume flux (rate of flow per second) in m$^{3}$ s$^{-1}$ ?
+ \item It enters a pool of mean depth 3 m and width 6 m: what then is its mean speed ?
+ \item It continues over a waterfall in a single column with mean speed 10 ms$^{-1}$ at its base: what is the mean diameter of this column at the base of the waterfall?
+ \item Will the diameter of the water column at the top of the waterfall be greater, equal to, or less at its base? Why?
+ \end{itemize}
+\label{qn:fluxes}
+\end{question}
+
+\divider
+\pagebreak
+
+% -------------------------------------------------
+
+%% Solutions to Exercises
+
+\begin{answer1}
+
+\section{Solutions to Selected Exercises}
+
+\begin{questionnumber}{\ref{qn:streamlines1}}
+Streamlines for the velocity field ${{\bf u}}=(\alpha x,-\alpha y,0)$,
+where $\alpha $ is constant.
+
+	\begin{wrapfigure}{r}{2.5in}
+		\includegraphics[width=2.0in]{ExercisesCh1-Q1-plot}
+		\caption*{ Solution for $c=1, 3, 5, \ldots $ }
+	\end{wrapfigure}
+
+	We use ${dx}/{u} = {dy}/{v} = {dz}/{w}$
+	\[
+	 \frac{dy}{dx} = -y/x; \;\; \frac{dz}{dx}=0
+	\]
+	Which has solutions with $z$ constant (i.e. streamlines are in 2D) and with
+	\[
+	 \ln |y| = -ln |x| + c \;\; \mbox{\rm or} \;\; yx = c
+	\]
+
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:trajectories}}
+	Particle paths, integrate $d{\bm x}/dt = {\bm u}; {\bm x}(0) = {\bm x}_{0}$.
+	\[
+	 \frac{dx}{dt} = e^{-t}z; \;\; \frac{dy}{dt}=0 \;\; \frac{dz}{dt}=0
+	\]
+	\[
+	 y=y_{0}; \;\; z=z_{0}; \;\;  \frac{dx}{dt} = e^{-t}z_{0};
+	\]
+	\[
+	x = z_{0}(1-e^{-t}) + x_{0}
+	\]
+\end{questionnumber}
+
+
+\begin{questionnumber}{\ref{qn:streamlines-time}}
+
+To find the material parcel trajectories for the velocity field defined by ${{\bf u}}=(e^{-t}z,0,0)$.
+
+	\begin{wrapfigure}{r}{2.5in}
+	\includegraphics[width=2.0in]{ExercisesCh1-Q2-plot}
+	\caption*{ Solution for $c=-2, -1, \ldots 2$ and $t=0$ (blue) $t=1$ (green) $t=2$ (red); $k=1$, $u_{0}=1$ }
+	\end{wrapfigure}
+
+	We use ${dx}/{u} = {dy}/{v} = {dz}/{w}$
+	\[
+	 \frac{dy}{dx} = kt/u_{0}; \;\; \frac{dz}{dx}=0
+	\]
+	\[
+	y = \frac{kt}{u_{0}}x + c; \;\; z= c_{1}
+	\]
+	Particle paths, integrate $d{\bm x}/dt = {\bm u}; {\bm x}(0) = {\bm x}_{0}$ (Parametric equation with $t$).
+	\[
+	x = u_{0}t + x_{0}; \;\; y = \frac{1}{2}kt^{2} + y_{0}; \;\; z=z_{0}
+	\]
+	eliminate $t$ between $x$ and $y$ equations,
+	\[
+	 y = \frac{k}{2 u_{0}^{2}}(x-x_{0})^{2} + y_{0}
+	\]
+	Parabolic path !
+\end{questionnumber}
+
+\pagebreak[4]
+
+\begin{questionnumber}{\ref{qn:rigidbody}}
+	Write the curl as
+	\[
+		\left|\begin{array}{ccc}\hat{\bm \imath} & \hat{\bm \jmath} & \hat{\bm k} \\0 & 0 &
+			\Omega \\ x & y & z\end{array}\right| = ( -\Omega y, \Omega x, 0 )
+	\]
+	which is the definition of a rigid body rotation.
+	To demonstrate this, calculate the strain rate
+	\[
+	D_{ij} = \frac{1}{2} \left( \frac{\partial u_{i}}{\partial x_{j}} +  \frac{\partial u_{j}}{\partial x_{i}} \right)
+	\]
+	which is clearly zero everywhere for this particular flow.
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:fluxes}}
+	\begin{itemize}
+		 \item Given the information we have, the only way to calculate the volume flux is by area
+		       $\times$ average flow speed, i.e. 4 m$^{3}$ s$^{-1}$
+		 \item Conserving mass in an incompressible fluid means conserving the volume flux in this case.
+		       Given a pool of cross section 18 m$^{2}$, flow speed is volume flux / area, i.e. (2/9) ms$^{-1}$.
+		 \item Assuming a roughly circular cross section, conserve the volume flux as before,
+		        estimate the new area, and the diameter follows (here roughly 0.7m).
+		 \item The diameter is smaller because the fluid is accelerating during its fall.
+		       You can use the Bernouilli theorem --- the fluid surface must be a streamline by definition,
+		       and the pressure is equal to the atmospheric pressure if we assume that the interaction between
+		       the air and the water is a small effect. The increase in speed results from changes
+		       to the gravitational potential energy.
+	 \end{itemize}
+\end{questionnumber}
+
+
+
+
+\end{answer1}
+
+% -------------------------------------------------
+
+\cleardoublepage
+
+\chapter{Equation of Motion}
+\section{Newton's Second Law}
+The equation of motion is an expression of Newton's second law:
+\[
+\hbox{\textbf{mass}}\times \hbox{\textbf{acceleration = force.}}
+\]
+However, in contrast to the case of rigid-body dynamics, we need to apply an
+additional constraint, a continuity equation, or mass-conservation equation.
+Because of this constraint, it is not possible, in general, to specify the
+\textit{force}, or more precisely \textit{force field} independently, as in rigid body problems.
+
+To apply Newton's second law we must focus our attention on a particular
+element of fluid, say the small rectangular element, which at time $t$ has
+vertex at $P [=(x,y,z)$] and edges of length $\delta x$, $\delta y$, $\delta
+z$. The mass of this element is $\rho\ \delta x \delta y\delta z$,
+where $\rho $ is the fluid \textbf{density} (or mass per unit volume), which
+we shall assume constant.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=4.5in]{Section21.pdf}}
+\label{fig1.1}
+\caption{ A rectangular fluid volume element }
+\end{figure}
+
+The velocity in the fluid, ${\bf u} = {\bf u}(x,y,z)$ is a function both of
+position $(x,y,z)$ and time $t$, and from this we must derive a formula for the
+acceleration of the element of fluid which is changing its position with
+time. Consider, for example, steady flow through a constriction in a pipe
+(see the first diagram in Chapter 1). Elements of fluid must accelerate into
+the constriction as the streamlines close in and decelerate beyond as they
+open out again. Thus, in general, the acceleration of an element (i.e., the
+rate of change of \textbf{u} with time for that element) includes a rate of
+change at a fixed position $\partial {\bf u}/\partial t$ plus a change
+associated with its change of position with time. We derive an expression
+for the latter below.
+
+The forces acting on the elements $\delta x\ \delta y\ \delta z$ comprise:
+\begin{description}
+\item[(i)] \textbf{body forces}, which are forces per unit mass acting throughout
+the fluid because of external causes, such as the gravitational
+\textbf{weight}, and
+\item[(ii)] \textbf{contact forces} acting across the surface of the element from
+adjacent elements.
+\end{description}
+These are discussed further below.
+
+\section{Rate-of-change moving with the fluid}
+We consider first the rate of change of a scalar property, for example the
+temperature of a fluid, following a fluid element. The temperature of a
+fluid, $T = T(x,y,z,t)$, comprises a scalar field in which $T$ will vary, in
+general, both with the position and with time (as in the water in a kettle
+which is on the boil). Suppose that an element of fluid moves from
+$P[=(x,y,z)]$ at time $t$ to $Q[=(x+\delta
+x,y+\delta y,z+\delta z)]$at time $ t + \delta t$.
+Note that if we stay at a particular point $(x_{0},y_{0},z_{0})$, then
+$T(x_{0},y_{0},z_{0},t)$ is effectively a function of $t$ only, but that
+if we move with the fluid, $T(x,y,z)$ is a function both of position $(x,y,z)$
+and time $t$. It follows that the total change in $T$ between $P$ and $Q$ in time
+$\delta t$ is
+\[
+\delta T=T_Q -T_P =T(x+\delta
+x,y+\delta y,z+\delta z,t+\delta
+t)-T(x,y,z,t)\quad ,
+\]
+and hence the total rate of change of $T$ moving with the fluid is
+\[
+\mathop {\lim }\limits_{\delta t\to 0} \frac{\delta T}{\delta
+t}=\mathop {\lim }\limits_{\delta t\to 0}
+\frac{T(x+\delta x,y+\delta
+y,z+\delta z,t+\delta
+t)-T(x,y,z,t)}{\delta t}.
+\]
+For small increments $\delta x$, $\delta y$, $\delta z$, $\delta t$ we may
+use a Taylor expansion
+\begin{align*}
+&T(x+\delta x,y+\delta y,z+\delta
+z,t+\delta t) \\
+& =T(x,y,z,t)+\left[
+{\frac{\partial T}{\partial x}} \right]_P \delta x+
+\left[ {\frac{\partial T}{\partial y}} \right]_P \delta y+\left[
+{\frac{\partial T}{\partial z}} \right]_P \delta z+\left[
+{\frac{\partial T}{\partial t}} \right]_P \delta t \\
+& \quad +
+\hbox{higher order terms in }\delta
+x,\delta y,\delta z,\delta t.
+\end{align*}
+Hence the rate of change moving with the fluid element
+\begin{align*}
+\mathop {\lim }\limits_{\delta t\to 0} \frac{\delta T}{\delta
+t}
+&=\mathop {\lim }\limits_{\delta t\to 0} \left[ {\frac{\partial
+T}{\partial t}\delta t+\frac{\partial T}{\partial x}\delta
+x+\frac{\partial T}{\partial y}\delta y+\frac{\partial
+T}{\partial z}\delta z} \right]/\delta t
+\\
+&
+=\frac{\partial T}{\partial t}+u\frac{\partial T}{\partial
+x}+v\frac{\partial T}{\partial y}+w\frac{\partial
+T}{\partial z}
+\end{align*}
+since higher order terms $\to0$ and $u = dx/dt$, $v = dy/dt$, $w = dz/dt$, where
+${\bf x} = {\bf x}(t)$ is the coordinate vector of the
+moving fluid element. To emphasize that we mean the \textbf{total rate of
+change moving with the fluid} we write
+\begin{equation}
+\label{eq1}
+\frac{DT}{Dt}=\frac{\partial T}{\partial t}+u\frac{\partial T}{\partial
+x}+v\frac{\partial T}{\partial y}+w\frac{\partial T}{\partial z}\quad .
+\end{equation}
+Here, $\partial T/\partial t$ is the \textbf{local rate of change} with
+time at a fixed position $(x,y,z)$, while
+\[
+u\frac{\partial T}{\partial x}+v\frac{\partial T}{\partial
+y}+w\frac{\partial T}{\partial z}={\bf u}. \nabla T
+\]
+is the \textbf{advective rate of change} associated with the movement of the
+fluid element.
+
+\begin{examplebox}
+Show that
+\[ \frac{D{{\bf F}}}{Dt}=\frac{\partial {{\bf F}}}{\partial
+t}+\left( {{{\bf u}}. \nabla } \right){{\bf F}}\]
+represents the
+total rate-of-change of any vector field ${\bf F}$ moving with the fluid
+velocity (velocity field ${\bf u}$), and in particular that the
+acceleration (or total change in ${\bf u}$ moving with the fluid) is
+\[ \frac{D{{\bf u}}}{Dt}=\frac{\partial {{\bf u}}}{\partial t}+\left(
+{{{\bf u}}. \nabla } \right){{\bf u}}. \]
+
+\begin{examplesolution2}
+	The previous result for the rate-of-change of a scalar
+	field can be applied to each of the component of \textbf{F}, or to each of
+	the velocity components (u,v,w) and these results follow at once.
+\end{examplesolution2}
+\end{examplebox}
+
+\begin{examplebox}
+Show that \[\frac{D{{\bf x}}}{Dt}={{\bf u}}\]
+
+\begin{examplesolution2}
+	\[
+	\begin{array}{l}
+	\frac{D{{\bf x}}}{Dt}=\frac{\partial {{\bf x}}}{\partial t}+\left(
+	{{{\bf u}}. \nabla } \right){{\bf x}} \\
+	=0+\left( {u\frac{\partial }{\partial x}+v\frac{\partial }{\partial
+	y}+w\frac{\partial }{\partial z}} \right)\left( {x,y,z} \right) \\
+	=\left( {u,v,w} \right) \\
+	\end{array}
+	\]
+	as x, y, z, t are independent variables.
+\end{examplesolution2}
+\end{examplebox}
+
+\section{Internal forces in a fluid (see Acheson p. 203)}
+An element of fluid experiences \textit{contact} or internal forces across its surface due
+to the action of adjacent elements. These are in many respects similar to
+the normal reaction and tangential friction forces exerted between two rigid
+bodies, except, as noted earlier, friction in fluids acts only when the
+fluid is in non-uniform motion.
+
+\begin{wrapfigure}{r}{2.5in}
+\centerline{\includegraphics[width=2.5in]{Section22.pdf}}
+\label{fig1.2}
+\caption{ A surface element separating two regions of a fluid }
+\end{wrapfigure}
+
+Consider a region of fluid divided into two parts by the (imaginary) surface
+$S$, and let $\delta S$ be a small element of $S$ containing the point $P$ and
+with region 1 below and region 2 above $S$. Let $(\delta X, \delta Y,
+\delta Z)$ denote the force exerted \textbf{on} fluid in region 1
+\textbf{by} fluid region 2 across $\delta S$.
+
+This elementary force is the resultant (vector sum) of a set of contact
+forces acting across $\delta S$, in general it will not act through $P$;
+alternatively, resolution of the forces will yield a force ($\delta X$,
+$\delta Y$, $\delta Z$) acting through $P$ together with an elementary couple
+with moment of magnitude on the order of $(\delta S)^{1/2}(\delta
+X^2+\delta Y^2+\delta Z^2)^1/2$, which $\to  0$ as $\delta S \to 0$.
+
+The main force per unit area exerted by fluid 2 on fluid 1 across $\delta
+S$,
+\[
+\left[ {\frac{\delta X}{\delta S},\frac{\delta Y}{\delta
+S},\frac{\delta Z}{\delta S}} \right]
+\]
+is called the \textbf{mean stress}. The limit as $\delta S \to  0$ in such
+a way that it always contains $P$, if it exists, is the \textbf{stress} at $P$
+across $S$. Stress is a force per unit area. The stress ${\bf F}$ is
+generally inclined to the normal ${\bf n}$ to $S$ at $P$, and varies both in
+magnitude and direction as the orientation ${\bf n}$ of $S$ is varied about
+the fixed point $P$.
+
+The stress  ${\bf F}$ may be resolved into a \textbf{normal reaction} $N$, or
+\textbf{tension}, acting normal to $S$ and \textbf{shearing stress} $T$,
+tangential to $S$, each per unit area.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=4in]{Section23.pdf}}
+\label{fig2.3}
+\caption{ Surface traction on a surface element }
+\end{figure}
+
+The stress and its reaction (exerted by fluid in region 1 on fluid in region
+2) are equal and opposite. [This follows by considering the equilibrium of
+an infinitesimal slice at $P$].
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=2in]{Section24.pdf}}
+\label{fig2.4}
+\caption{ Force balance on a surface element }
+\end{figure}
+
+\section{Fluid and solids: pressure}
+If the stress in a material \textbf{at rest }(or in uniform motion) is
+always normal to the measuring surface for all points $P$ and surfaces $S$, the
+material is termed a \textbf{fluid}; otherwise it is a \textbf{solid}.
+Solids at rest sustain tangential stresses because of their elasticity (for
+example, a drawn bow). By assuming the material to be at rest we eliminate
+the shearing stress due to internal friction. Many real fluids conform
+closely to this definition including air and water (although there are more
+complex fluids possessing both viscosity and elasticity). A fluid can be
+defined also as a material offering no \textbf{initial} resistance to shear
+stress, although it is important to realize that frictional shearing
+stresses appear as soon as motion begins, and even the smallest force will
+initiate motion in a fluid in time. The property of internal friction in a
+fluid is known as \textbf{viscosity}.
+
+Although the term tension is usual in the theory of elasticity, in fluid
+dynamics the term \textbf{pressure} is used to denote the hydrostatic
+stress, reversed in sign. In a fluid at rest the stress acts normally
+outwards from a surface, whereas the pressure thrust acts normally
+\textbf{inwards} from the fluid towards the surface.
+
+Physically, pressure is the transfer of momentum per unit area per unit time
+(the momentum flux) across any surface $\delta S$.
+
+\subsection{Isotropy of pressure}
+The pressure at a point $P$ in a continuous fluid is \textbf{isotropic}; i.e.,
+it is the same for all directions ${\bf n}$. This is proved by considering
+the equilibrium of a small tetrahedral element of fluid with three faces
+normal to the coordinate axes and one slant face. The proof may be found in
+any text on fluid mechanics.
+
+In an ideal fluid the force exerted on the fluid separated by a small
+imaginary surface ${\bf n}\delta S$ is $p{\bf n}\delta S$. The
+\textbf{pressure thrust} on a surface is the gross force on the surface due
+to pressure acting normally inwards, i.e.$\int_S {-p{{\bf n}}dS}
+$ evaluated over the surface $S$. The pressure is independent  of the
+surface element chosen.
+
+\subsection{Pressure gradient forces in a fluid in macroscopic equilibrium}
+Pressure is independent of direction at a point, but may vary from point to
+point in a fluid.
+
+Consider the equilibrium of a thin cylindrical element of fluid $PQ$ of length
+$\delta s$ and cross-section $A$, and with its ends normal to $PQ$. In particular,
+consider the
+forces in the direction $P$ for the fluid at rest. Then pressure acts normally
+inwards on the curved cylindrical surface and has no component in the
+direction of $PQ$. Thus the only contributions are from the plane ends.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=3in]{Section25.pdf}}
+\label{fig2.5}
+\caption{ Forces due to pressure gradients in a fluid }
+\end{figure}
+
+The net force in the direction in the direction $s$ (i.e. the direction $PQ$)
+due to the pressure thrusts on the surface of the element is
+\[
+pA-(p+\delta p)A=-\frac{\partial p}{\partial
+s}A\delta s=-\frac{\partial p}{\partial s}\delta V,
+\]
+where $\delta V$ is the volume of the cylinder. In the limit $\delta s \to
+ 0$ and $A \to  0$, the net pressure thrust $\to -(\partial
+p/\partial s)dV$, or $-\partial p/\partial
+s=-{\bf \hat {s}}. \nabla p$ per unit volume of
+fluid ($-{{\bf \hat {s}}}$ being a unit vector in the direction $PQ$). It
+follows that -$\nabla p$ is the pressure gradient force per unit volume of
+fluid, and $-{{\bf \hat {n}}}. \nabla p$ is the component of
+pressure gradient force per unit volume in a given direction ${{\bf \hat
+{n}}}$.
+
+\begin{wrapfigure}{r}{2.5in}
+\centerline{\includegraphics[width=2.5in]{Section26.pdf}}
+\label{fig2.6}
+\caption{ }
+\end{wrapfigure}
+
+The cylindrical element shown right is in equilibrium under the action of
+the pressure over its surface and its weight. The horizontal component of
+pressure gradient force per unit volume is $-{{\bf i}}.
+\nabla p=-\partial p/\partial x=0$.
+
+Thus $p$ is independent of horizontal distance $x$, and is similarly independent
+of horizontal distance $y$. It follows that $p = p(z)$ and surfaces of equal
+pressure (\textbf{isobaric surfaces}) are horizontal in a fluid at rest.
+
+\subsection{Equilibrium of a vertical element}
+
+\begin{wrapfigure}{r}{2.5in}
+\centerline{\includegraphics[width=2.5in]{Section27.pdf}}
+\label{fig2.7}
+\caption{ }
+\end{wrapfigure}
+
+For a vertical cylindrical element at rest in equilibrium under the action
+of pressure thrusts and the weight of fluid
+\[-{{\bf k}}. \nabla p\delta V+\rho g\delta
+V=0,\]
+ where ${{\bf k}}=(0,0,1)$.
+
+Thus ${dp}/{dz}=\rho g$, per unit volume, since $p =
+p(z)$ only [otherwise we would write $\partial p/\partial z$].
+Hence $\rho ={\left( {{dp}/ {dz}} \right)} / g$ is a function of $z$ at most, i.e., $\rho  =
+\rho (z)$. Here $z$ measures downwards so that $\hbox{sgn} (\delta z) = \hbox{sgn}
+(\delta p)$. Normally we take $z$ upwards whereupon
+\[
+\frac{dp}{dz}=-\rho g.
+\]
+(Show this.) The equation above is generally called the \textbf{hydrostatic
+equation}.
+
+\subsection{Liquids and gases}
+Liquids undergo little change in volume with pressure over a very large
+range in pressure and it is frequently a good assumption to assume that
+$\rho $ = constant (which is the definition of a homogeneous fluid). In that
+case, the foregoing equation (with $z$ pointing downwards) integrates to give
+\[
+p=p_0 +\rho gz ,
+\]
+where $p = p_{0}$ at the level $z = 0$.
+
+Ideal gases are such that pressure, density and temperature are related
+through the ideal gas equation, $p = \rho RT$, where $T$ is the absolute
+temperature and $R$ is the specific gas constant. If a certain volume of gas
+is isothermal (i.e., has constant temperature), then pressure and density
+vary exponentially with depth with a so-called \textbf{e-folding} scale
+$H_{s} = RT/g$ (see exercises).
+
+\subsection{Archimedes Principle}
+In a fluid at rest the net pressure gradient force per unit volume acts
+vertically upwards and is equal to $-dp/dz$ (when $z$ points upwards) and the
+gravitational force per unit volume is $\rho g$. Hence, for equilibrium,
+$dp/dz = -\rho g$.
+
+\begin{wrapfigure}{r}{2.5in}
+\centerline{\includegraphics[width=2.5in]{Section28.pdf}}
+\label{fig1.8}
+\caption{ }
+\end{wrapfigure}
+
+Consider the vertically-oriented cylindrical element $P_{1} P_{2}$ of an
+immersed body in equilibrium, which intersects the surface of the body to
+form surface elements $\delta S_{1}$ and $\delta S_{2}$ which have
+normals $\textbf{n}_{1}$, $\textbf{n}_{2}$ inclined at angles $\theta _1$,
+$\theta _2 $ to the vertical. The net upward thrust on these small
+surfaces is:
+\[
+\hbox{Thrust} =p_2 \cos \theta _2 \delta S_2 -p_1 \cos \theta _1
+\delta S_1 =(p_2 -p_1 )\delta S\quad ,
+\]
+where $\delta S_{1} \cos \theta _{1 }=\delta S_{2} \cos \theta
+_{2}=\delta S$ is the horizontal cross-sectional area of the cylinder.
+
+Since, $p_2 -p_1 =-\int_{z_1 }^{z_2 } {\rho gdz} $,
+the net upward thrust is:
+\[\hbox{Thrust}=\left( {\int_{z_2 }^{z_1 } {\rho gdz} }
+\right)\delta S = \hbox{weight of liquid displaced}. \]
+
+If this integration is now continued over the whole body we obtain one
+version of \textbf{Archimedes Principle} which states that the resultant
+thrust on an immersed body in equilibrium has magnitude equal to the weight
+of fluid displaced and acts upward through the centre of mass of the
+displaced fluid (provided that the gravitational field is uniform).
+
+\section{Equation of Motion for an inviscid fluid}
+If we apply Newton's second law to a unit volume of fluid:
+\begin{description}
+\item[(i)] the mass of the element is $\rho $ kg m$^{-3}$ ;
+\item[(ii)] the acceleration must be that \textbf{following the fluid element} to
+take account both of the change in velocity with time at a fixed point and
+of the change with position of the velocity field at a fixed time,
+\[
+\frac{D{{\bf u}}}{Dt}=\frac{\partial {{\bf u}}}{\partial
+t}+({{\bf u}}. \nabla ){{\bf
+u}}=\frac{\partial {{\bf u}}}{\partial
+t}+u\frac{\partial {{\bf u}}}{\partial
+x}+v\frac{\partial {{\bf u}}}{\partial
+y}+w\frac{\partial {{\bf u}}}{\partial z};
+\]
+\item[(iii)] the total force acting on the element (neglecting viscosity or fluid
+friction) comprises the contact force acting across the surface of the
+element -$\nabla p$ per unit volume, which is a \textbf{pressure gradient
+force} arising from the difference in pressure across the element, and any
+body forces \textbf{F}, acting throughout the fluid including especially the
+gravitational weight per unit volume, $-g\rho \textbf{k}$.
+\end{description}
+
+The resulting \textbf{equation of motion} or \textbf{momentum equation} for
+inviscid fluid flow, known as \textbf{Euler's equation}, is
+\begin{alignat*}{4}
+& \rho \frac{\partial u}{\partial t} & +
+& \rho  \left( {{{\bf u}}. \nabla } \right){{\bf u}}  & =
+& -\nabla p & + &\  \textbf{F} , \\
+&\hbox{\;\;(A)}&
+&\hbox{\;\; \;\; (B) }&
+&\hbox{\;\;\;(C)}&
+&\hbox{(D)}\end{alignat*}
+where (A) --- local acceleration, (B) --- acceleration due to advection of momentum, (C) --- pressure gradient force and (D) --- body force.
+
+In rectangular cartesian coordinates $(x,y,z)$ with velocity components
+$(u,v,w)$ the component equations are
+\begin{align*}
+&\frac{\partial u}{\partial t}+u\frac{\partial u}{\partial
+x}+v\frac{\partial u}{\partial y}+w\frac{\partial
+u}{\partial z}=-\frac{1}{\rho }\frac{\partial p}{\partial
+x}+X, \\
+& \frac{\partial v}{\partial t}+u\frac{\partial v}{\partial
+x}+v\frac{\partial v}{\partial y}+w\frac{\partial
+v}{\partial z}=-\frac{1}{\rho }\frac{\partial p}{\partial
+y}+Y, \\
+& \frac{\partial w}{\partial t}+u\frac{\partial w}{\partial
+x}+v\frac{\partial w}{\partial y}+w\frac{\partial
+w}{\partial z}=-\frac{1}{\rho }\frac{\partial p}{\partial
+z}+Z
+\end{align*}
+where $ \textbf{F} = (X,Y,Z)$ is the external force per unit mass (or body
+force). These are \textbf{three} partial differential equations in the
+\textbf{four} dependent variables $u$, $v$, $w$, $p$ and four independent variables
+$x$, $y$, $z$, $t$. For a complete system we require \textbf{four} equations in the
+four variables, and the extra equation is the conservation of mass or
+\textbf{continuity equation,} which for an incompressible fluid has the form
+\[
+\nabla . {\bf u}=0\quad\hbox{or} \quad \frac{\partial
+u}{\partial x}+\frac{\partial v}{\partial y}+\frac{\partial
+w}{\partial z}=0\quad .
+\]
+There is no equivalent to the continuity equation in either particle or
+rigid body mechanics, because in general mass is permanently associated with
+bodies. In fluids, however, we must ensure that holes do not appear or that
+fluid does not double up, and we do this by requiring that $\nabla .
+{\bf u}=0$ which implies that in the absence of sources or sinks there can be no
+net flow either into or out of any closed surface. We may regard this as a
+geometric condition on the flow of an incompressible fluid. It is not, of
+course, satisfied by a compressible fluid (c.f. a bicycle pump). We say that
+any incompressible flow satisfying the continuity equation $\nabla .
+{{\bf u}}=0$ is a \textbf{kinematically possible motion}.
+
+The Euler equation plus continuity equation are extremely important but
+extremely difficult to solve. With possible further force terms on the
+right, they represent the behaviour of gaseous stars, the flow of oceans and
+atmosphere, the motion of the earth's mantle, blood flow, air flow in the
+lungs, many processes of chemistry and chemical engineering, the flow of
+water in rivers and in the permeable earth, aerodynamics of aeroplanes, and
+so forth.
+
+The difficulty of solution, and there are probably no more than a dozen or
+so solutions known for very simple geometries, arises from the
+\textbf{non-linear} term $({\bf u}. \nabla ){\bf u}$ as a result of which if
+\textbf{u}$_{1}$ and \textbf{u}$_{ 2}$ are two solutions of the equation
+$c_{1 }\textbf{u}_{ 1} + c_{2 }\textbf{u}_{ 2}$ (where $c_{1 }$ and
+$c_{2}$ are constants) is in general \textit{not} a solution, so that we lose one of our
+main methods of solution.
+
+\begin{examplebox}
+Suppose that the velocity field is ${{\bf u}}=(-\Omega
+y,\Omega x,0)$ for $\Omega $ constant. Show that it is a
+kinematically possible flow for an incompressible liquid in a uniform
+gravitational field $F\equiv g=(0,0,-g)$. Determine the corresponding
+pressure field.
+
+\begin{examplesolution2}
+	(i) This is a \textbf{kinematically possible} steady incompressible flow, as
+	\textbf{u} satisfies the continuity equation
+	\[
+	\nabla . {{\bf u}}=\frac{\partial u}{\partial
+	x}+\frac{\partial v}{\partial y}+\frac{\partial w}{\partial
+	z}=0+0+0=0.
+	\]
+	(ii) We find the corresponding pressure field from Euler's equation
+	\[
+	{{\bf u}}. \nabla {{\bf u}}=-\frac{1}{\rho }\nabla
+	p-g{{\bf k}}.
+	\]
+	If the given velocity field is substituted in the Euler's equation and it is
+	rearranged in component form,
+	\[
+	\frac{\partial p}{\partial x}=\rho \Omega ^2x,\frac{\partial
+	p}{\partial y}=\rho \Omega ^2y,\frac{\partial p}{\partial
+	z}=-\rho g.
+	\]
+	We may now solve these three equations as follows.
+
+	$\frac{\partial p}{\partial x}\equiv \left( {\frac{\partial
+	p}{\partial x}} \right)_{y,z\mbox{constant}} =\rho \Omega
+	^2x\Rightarrow p=\textstyle{1 \over 2}\rho \Omega
+	^2x^2+$constant
+
+	where ``constant'' can include arbitrary functions of both y and z (Check:
+	$\partial p/\partial x=\rho \Omega ^2x+0)$. We continue in
+	like manner with the other component equations:
+	\[
+	\frac{\partial p}{\partial y}=\rho \Omega
+	^2y\Rightarrow
+	p=\textstyle{1 \over 2}\rho \Omega
+	^2y^2+g(z,x)
+	\]
+	\[
+	\frac{\partial p}{\partial z}=-\rho g
+	\Rightarrow p=-\rho gz+h(x,y),
+	\]
+	where f$(y,z)$, g$(z,x)$ and h$(x,y)$ are \textbf{arbitrary functions}. By
+	comparison of the three solutions we see that f$(y,z)$ must incorporate
+	$\textstyle{1 \over 2}\rho \Omega ^2y^2$ and -$\rho $gz and so forth.
+	Hence the full solution is
+
+	$p=\textstyle{1 \over 2}\rho \Omega
+	^2(x^2+y^2)-\rho gz+$ constant ,
+
+	and we find that this solution does in fact satisfy each of the component
+	Euler equations. On a free surface containing the origin O (x = 0, y = 0, z
+	= 0), p = p$_{o} \quad \Rightarrow $ the constant = p$_{o}$, where p$_{o}$ is
+	atmospheric pressure, and r$^{2}$ = x$^{2}$ + y$^{2}$,
+	\[
+	p=p_0 +\textstyle{1 \over 2}\rho \Omega ^2r^2-\rho
+	gz\quad .
+	\]
+	(iii) The equation for the free surface is now given by p = p$_{0}$ over the
+	whole liquid surface, which therefore has equation
+	\[
+	z=\frac{\rho \Omega ^2}{2\rho g}r^2=\frac{\Omega
+	^2}{2g}r^2\quad .
+	\]
+	(iv) Streamlines in flow are given by
+
+	$\frac{dx}{u}=\frac{dy}{v}=\frac{dz}{w}$ or
+	$\frac{dx}{-\Omega y}=\frac{dy}{\Omega x}=\frac{dz}{0}$
+
+	yielding two relations
+
+	$\int {\Omega xdx+\int {\Omega
+	ydy=0\Rightarrow } } $ x$^{2}$ + y$^{2}$ =
+	constant
+	\[
+	\int
+	{dz=0
+	\Rightarrow
+	z=\mbox{const}}
+	ant,
+	\]
+	and streamlines are circles about the z-axis in planes z = constant. The
+	velocity field represents rigid body rotation of fluid with angular velocity
+	$\Omega $ about the axis 0z (imagine a tin of water on turntable).
+\end{examplesolution2}
+\end{examplebox}
+
+
+\section{Equations of motion in cylindrical polars}
+
+\begin{wrapfigure}{r}{2.0in}
+\centerline{\includegraphics[width=1.9in]{Section29.pdf}}
+\label{fig9}
+\caption{ Cylindrical polar coordinates }
+\end{wrapfigure}
+
+Take the cylindrical polars $(r,\theta,z)$ and velocity
+$(v_r ,v_\theta ,v_z )$. This is more complicated than rectangular
+cartesians as $v_{r}$, and $v_{\theta }$ change in direction with $P$ (in fact
+$0P$ rotates about $0z$ with angular velocity $v_{\theta }/r$). Suppose that
+${\hat {\bf r}}, {\hat {\bf n}}, {\hat {\bf k}}$ are
+the unit vectors at $P$ in the radial, azimuthal and axial directions, as
+sketched. Then ${\hat {\bf k}}$ is fixed in direction (and, of course,
+magnitude) but ${\hat {\bf r}}$ and ${\hat {\bf n}}$ rotate in
+the plane $z=0$ as $P$ moves, and it follows that $d{\hat {\bf k}}/dt =
+\textbf{0}$, but that
+\[
+\frac{d}{dt}{{\hat {\bf r}}}={{\dot {\hat
+{\bf r}}}}={{\hat {\bf n}}}\dot {\theta }, {{\dot
+{\hat {\bf n}}}}=(-{{ \hat {\bf r}}})\dot {\theta
+}=-{{\hat {\bf r}}}\dot {\theta }
+\]
+Hence, as $\dot {\theta }=v_\theta /r$,
+\begin{align*}
+& {{\bf v}}=(v_r {{\hat {\bf r}}}+v_\theta {{
+\hat {\bf n}}}+v_z {{\hat {\bf k}}}), \\
+& {{\dot {\bf v}}}=\dot {v}_r {{\hat {\bf r}}}+v_r
+{{\dot {\hat {\bf r}}}}+\dot {v}_\theta {{\hat
+{\bf n}}}+v_\theta {{\dot {\hat {\bf n}}}}+\dot {v}_z
+{{\hat {\bf k}}} \\
+& \phantom{{{\dot {\bf v}}}} =(\dot {v}_r -v_\theta ^2 /r){{\hat
+{\bf r}}}+(\dot {v}_\theta +v_r v_\theta /r){{\hat {\bf n}}}+ \dot {v}_z {{\hat {\bf k}}}.
+\end{align*}
+Recalling also that $d/dt$ must be interpreted here as $D/Dt$, the acceleration
+is
+\[
+\left[ {\frac{Dv_r }{Dt}-\frac{v_\theta ^2 }{r},\frac{Dv_\theta
+}{Dt}+\frac{v_r v_\theta }{r},\frac{Dv_z }{Dt}} \right]\quad .
+\]
+If we now write $(u,v,w)$ in place of $(v_{r} ,v_{\theta } ,v_{z} )$,
+Euler's equations in cylindrical polar coordinates take the form
+\begin{align*}
+&
+\frac{\partial u}{\partial t}+u\frac{\partial u}{\partial
+r}+\frac{v}{r}\frac{\partial u}{\partial \theta
+}+w\frac{\partial u}{\partial
+z}-\frac{v^2}{r}=-\frac{1}{\rho }\frac{\partial
+p}{\partial r}+F_r ,
+\\
+&
+\frac{\partial v}{\partial t}+u\frac{\partial v}{\partial
+r}+\frac{v}{r}\frac{\partial v}{\partial \theta
+}+w\frac{\partial v}{\partial z
+}+\frac{uv}{r}=-\frac{1}{\rho r}\frac{\partial
+p}{\partial \theta }+F_\theta ,
+\\
+&
+\frac{\partial w}{\partial t}+u\frac{\partial w}{\partial
+r}+\frac{v}{r}\frac{\partial w}{\partial \theta
+}+w\frac{\partial w}{\partial z}=-\frac{1}{\rho
+r}\frac{\partial p}{\partial z}+F_z , \\
+& \frac{1}{r}\frac{\partial \left( {ru} \right)}{\partial
+r}+\frac{1}{r}\frac{\partial v}{\partial \theta
+}+\frac{\partial w}{\partial z}=0
+\\
+\end{align*}
+
+\section{Dynamic or perturbation pressure}
+
+If in the Euler equation for an incompressible fluid,
+\begin{equation}
+\label{eq22}
+\frac{D{{\bf u}}}{Dt}=-\frac{1}{\rho }\nabla p+{\rm
+{\bf g}}\quad ,
+\end{equation}
+we put ${\bf u}=0$ to represent the equilibrium or rest state,
+\begin{equation}
+\label{eq23}
+{{\bf 0}}=-\frac{1}{\rho }\nabla p_0 +{{\bf g}}
+\end{equation}
+This is merely the hydrostatic equation
+\[
+\nabla p_0 =\rho {{\bf g}}\quad \mbox{or}\quad \frac{\partial
+p_0 }{\partial x}=0,\frac{\partial p_0 }{\partial
+y}=0,\frac{\partial p_0 }{\partial z}=\rho g
+\]
+where $p_0$ is the hydrostatic pressure. Subtracting (\ref{eq22}) - (\ref{eq23}) we
+obtain
+\[
+\frac{D{{\bf u}}}{Dt}=-\frac{1}{\rho }\nabla (p-p_0
+)=-\frac{1}{\rho }\nabla p_d
+\]
+where $p_{d} = p - p_{0}$ = (total pressure) - (hydrostatic pressure) is
+known as the \textbf{dynamic pressure} (or sometimes, especially in
+dynamical meteorology, the perturbation pressure). The dynamic pressure is
+the excess of total pressure over hydrostatic pressure, and is the only part
+of the pressure field associated with motion.
+
+We shall usually omit the suffix $d$ since it is fairly clear that if
+\textbf{g} is included we are using \textbf{total} pressure, and if no
+\textbf{g} appears we are using the dynamic pressure,
+\[
+\frac{D{{\bf u}}}{Dt}=\frac{\partial {{\bf u}}}{\partial
+t}+({{\bf u}}. \nabla ){{\bf
+u}}=-\frac{1}{\rho }\nabla p\quad .
+\]
+
+\section{Incompressible viscous fluids}
+
+It can be shown that the viscous (frictional) forces in a fluid may be
+expressed as $\mu \nabla ^2{\bf u}=\rho \nu \nabla ^2{\bf u}$ where \textit{$\mu $} the
+\textbf{coefficient of viscosity} and $\nu =\mu /\rho $ the
+\textbf{kinematic viscosity} provide a measure of the magnitude of the
+frictional forces in particular fluid, i.e., $\mu $ and $\nu $ are
+properties of the fluid and are relatively small in air or water and large
+in glycerine or heavy oil.
+
+In a viscous fluid the equation of motion for unit mass,
+\begin{alignat}{5}
+& \frac{\partial {\bf u}}{\partial t} & +
+& \left( {{{\bf u}}. \nabla } \right){{\bf u}}  & =
+& -\frac{1}{\rho }\nabla p & + &\  \textbf{F} & + &\nu \nabla ^2{\bf u}, \label{eq:NavierStokes}\\
+&\hbox{(A)}&
+&\ \ \ \hbox{(B) }&
+&\ \ \ \ \hbox{(C)}&
+&\hbox{(D)}&
+&\ \ \hbox{(E)} \nonumber
+\end{alignat}
+is known as the \textbf{Navier-Stokes' equation}. The various terms are: (A) --- local acceleration, (B) --- advective acceleration, (C) --- pressure gradient force, (D) --- body force, and (E) --- viscous force.
+
+The viscous term is small relative to other terms except close to
+boundaries, yet it contains the highest order derivatives $(\partial_x ^2{\rm
+{\bf u}},\partial_y ^2{{\bf u}},\partial_z ^2{{\bf u}})$, and hence determines the
+number of spatial boundary conditions that must be imposed to determine a
+solution.
+
+We require also the continuity equation,
+\[
+\nabla . {\bf u}=0,
+\]
+to close the system of four differential equations in four dependent
+variables.
+
+The Navier-Stokes equation is too difficult for us to handle at present and
+we shall concentrate on Euler's equation from which we can learn much about
+fluid flow. Euler's equation is still non-linear, but there are clever
+methods to bypass this difficulty.
+
+\section{Boundary conditions for fluid flow}
+\begin{description}
+\item[(i)] \textbf{Solid boundaries}: there can be no normal component of velocity
+(through the boundary). If friction is neglected there may be free slip
+along the boundary, but friction has the effect of slowing down fluid near
+the boundary and it is observed experimentally that there is no relative
+motion at the boundary, either normal or tangential to the boundary. In
+fluids with low viscosity this tangential slowing down occurs in a thin
+\textbf{boundary layer}, and in a number of important applications this
+boundary layer is so thin that it can be neglected and we can say
+approximately that the fluid slips at the surface; in many other cases the
+entire boundary layer separates from the boundary and the inviscid model is
+a very poor approximation.
+
+Thus, in an inviscid flow (also called an ideal fluid) the fluid velocity
+must be tangential at a rigid body, and:
+\begin{itemize}
+\item for a surface at rest ${{\bf n}}. {{\bf u}}={\rm
+{\bf 0}}$;
+\item for a surface with velocity $\textbf{ u}_{s }$ then ${{\bf n}}.
+\left( {{{\bf u}}-{{\bf u}}_s } \right)={{\bf 0}}$ .
+\end{itemize}
+\item[(ii)] \textbf{Free boundaries}: at an interface between two fluids (of which
+one might be water and one air) the pressure must be continuous, or else
+there would be a finite force on an infinitesimally small element of fluid
+causing unbounded acceleration; and the component of velocity
+\textbf{normal} to the interface must be continuous. If viscosity is
+neglected the two fluids may slip over each other. If there is liquid under
+air, we may take $ p = p_{0}  = $atmospheric pressure at the interface, where
+$p_{0}$ is taken as constant. If surface tension is important there may be a
+pressure difference across the curved interface.
+\end{description}
+
+\subsection{An alternative boundary condition}
+As the velocity at a boundary of an \textbf{inviscid fluid} must be wholly
+tangential, it follows that a fluid particle once at the surface must always
+remain at the surface. Hence for a surface or boundary with equation
+\[
+F(x,y,z,t)=0\quad ,
+\]
+if the coordinates of a fluid particle satisfy this equation at one instant,
+they must satisfy it always. Hence, moving with the fluid at the boundary,
+\[
+\frac{DF}{Dt}=0
+\]
+or
+\[ \frac{\partial F}{\partial t}+{{\bf u}}. \nabla
+F=0, \]
+as F must remain zero for all time for each particle at the surface.
+
+\divider
+\pagebreak
+
+\section{Exercises}
+
+% ====================================
+
+
+
+\begin{questionstar}
+	Under what condition is the advective rate-of-change equal to the total
+	rate-of-change?
+\label{qn:DDt}
+\end{questionstar}
+
+\begin{questionstar}
+	Show that, in hydrostatic equilibrium, the pressure and density in an
+	isothermal (i.e. constant temperature) atmosphere vary with height
+	according to the formulae
+	\[ p(z)=p(0)\exp (-z/H_s ) \quad \hbox{and}\quad \rho (z)=\rho
+	(0)\exp (-z/H_s ). \]
+	 where $H_s ={RT/ g}$ and $z$ points vertically upwards. Show
+	that for realistic values of $T$ in the troposphere and
+	$R=287 \hbox{ J K}^{-1}\hbox{kg}^{-1}$, the e-folding height
+	scale $H_{s}$ is on the order of 8 km.
+	\label{qn:lapseheight}
+\end{questionstar}
+
+\begin{questionstar}
+	The vector differential operator del (or nabla) is defined as
+	\[
+	\nabla =\left( {\frac{\partial }{\partial x},\frac{\partial }{\partial
+	y},\frac{\partial }{\partial z}} \right)
+	\]
+	in rectangular cartesian coordinates. Express in full cartesian form the
+	quantities: $\nabla . {\bf u}$, $\nabla \times {\bf u}$, ${\bf u}. \nabla $
+	,$\nabla . \nabla $, and identify each.
+	\label{qn:deloperator}
+\end{questionstar}
+
+\begin{questionstar}
+		Consider a homogeneous, incompressible fluid with velocity
+		${\bf u} = (\alpha x, -\alpha y, 0)$ where $\alpha$ is constant.
+		Further suppose that the concentration of a certain pollutant in the fluid is found to be
+	    \[ c(x,y,z,t) = c_0 + \gamma t + \beta x^2 y e^{-\alpha t}, \]
+     	where $c_0$, $\gamma$ and $\beta$ are constants.
+
+	    What is the (time) rate of change of the concentration of the pollutant
+	    at a particular point? How does the concentration change following fluid parcels?
+	    Consider a parcel at the point $(1,1, 0)$ at $t = 0$. What is its concentration at $t = 1$?
+	    \label{qn:pollute}
+\end{questionstar}
+
+
+\begin{question}
+	Show that
+	\[\frac{\partial }{\partial x}\left( {\frac{Df}{Dt}}
+	\right)=\frac{D}{Dt}\left( \frac{\partial f}{\partial x} \right)  +  \frac{\partial {{\bf u}}}{\partial x} \cdot \nabla
+	f. \]
+	Clarify the meaning of the final term using index notation.
+	\label{qn:DDt2}
+\end{question}
+
+\begin{question}
+	You are on a small raft floating in a pool, and you throw a heavy anchor
+	overboard. Does the water level of the pool rise, fall or remain the same?
+	\textit{Carefully} justify your answer.
+	\label{qn:raftanchor}
+\end{question}
+
+\begin{question}
+	Is the velocity field ${{\bf u}}=\left( {\cos x,xz^2,z\sin x} \right)$
+	kinematically admissible for an incompressible fluid~? Explain your answer~?
+	\label{qn:admissible}
+\end{question}
+
+\begin{question}
+	Find the pressure field in the inviscid, incompressible flow with
+	velocity field ${{\bf u}}=\left( {kx,-ky,0} \right)$, where $k$ is a
+	constant.
+	\label{qn:pressurefield}
+\end{question}
+
+\begin{question}
+	 Show that ${{ \dot {\hat {\bf r}}}}={{\hat {\bf n}}} \dot {\theta }$
+	 and ${{\dot {\hat {\bf n}}}}=-{{\hat {\bf r}}}\dot {\theta }$.
+	 \label{qn:rthetan}
+\end{question}
+
+
+\begin{question}
+	 Show that the continuity equation in cylindrical polar coordinates is
+	\[
+	\frac{1}{r}\frac{\partial \left( {ru} \right)}{\partial
+	r}+\frac{1}{r}\frac{\partial v}{\partial \theta
+	}+\frac{\partial w}{\partial z}=0.
+	\]
+	\label{qn:divu-rthetaz}
+\end{question}
+
+
+% -------------------------------------------------
+
+
+%% Solutions to Exercises
+
+\begin{answer2}
+
+\newpage
+
+\section{Solutions to Selected Exercises}
+
+
+%\begin{questionnumber}{\ref{qn:DDt}} % No solution yet !
+%	Under what condition is the advective rate-of-change equal to the total
+%	rate-of-change?
+%\end{questionstar}
+
+
+\begin{questionnumber}{\ref{qn:lapseheight}}
+\[
+	p = \rho RT; \;\; \frac{dp}{dz} = -\rho g; \;\; T = \mbox{\rm constant}
+\]
+\[
+	\frac{dp}{dz} = -\frac{pg}{RT} = -\frac{p}{H_{s}}
+\]
+Solution is
+\[
+	p = p_{0} exp\left[-\frac{gz}{RT}\right] = p_{0} exp\left[-\frac{z}{H_{s}}\right]
+\]
+Hence
+\[
+\rho = \frac{p}{RT} = \frac{p_{0}}{RT} exp\left[-\frac{z}{H_{s}}\right] =
+                      \rho_{0} exp\left[-\frac{z}{H_{s}}\right]
+\]
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:deloperator}}
+
+Divergence of velocity
+\[
+\nabla \cdot {\bm u} = \frac{\partial u}{\partial x} +
+                       \frac{\partial v}{\partial y} +
+                       \frac{\partial w}{\partial z}; \;\; \mbox{\rm or} \;\;
+\nabla \cdot {\bm u} = \frac{\partial u_{k}}{\partial x_{k}}
+\]
+
+Curl of velocity (or vorticity)
+\[
+\nabla \times {\bm u} =
+               \left( \frac{\partial w}{\partial y} -  \frac{\partial v}{\partial z},
+                      \frac{\partial u}{\partial z} -  \frac{\partial w}{\partial x},
+                      \frac{\partial v}{\partial x} -  \frac{\partial u}{\partial y} \right); \;\; \mbox{\rm or} \;\;
+\left( \nabla \times {\bm u} \right)_{i} = \varepsilon_{ijk}\frac{\partial u_{k}}{\partial x_{j}}
+\]
+Directional derivative along streamline (scaled by velocity)
+\[
+({\bm u}\cdot \nabla) =
+        u\frac{\partial}{\partial x} + v \frac{\partial}{\partial y} + w\frac{\partial}{\partial z} ; \;\; \mbox{\rm or} \;\;
+({\bm u}\cdot \nabla) = u_{k}\frac{\partial}{\partial x_{k}}
+\]
+Laplacian (of a scalar)
+\[
+    \nabla \cdot \nabla \equiv \nabla^{2} =
+ 				\frac{\partial^{2}}{\partial x^{2}} +
+				 \frac{\partial^{2}}{\partial y^{2}} +
+				  \frac{\partial^{2}}{\partial z^{2}}  ; \;\; \mbox{\rm or} \;\;
+    \nabla \cdot \nabla = \frac{\partial}{\partial x_{k}}\frac{\partial}{\partial x_{k}}
+\]
+
+Take care with these last two ... the notation gets stretched a little when trying to make it work for both scalar and vector operands.
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:pollute}}
+At a particular point, $x,y$ are fixed, therefore
+\[
+     \frac{\partial c}{\partial t} = \gamma - \alpha \beta x^{2}y e^{-\alpha t}
+\]
+\[
+\frac{Dc}{Dt} = \frac{\partial c}{\partial t} + {\bm u}\cdot \nabla c =
+	\gamma - \alpha \beta x^{2}y e^{-\alpha t} +
+             \alpha \beta 2 x y   e^{-\alpha t} - \alpha y \beta x^{2} e^{-\alpha t} =
+    \gamma
+\]
+Initial condition ($t=0$), $x_{0},y_{0} = 1$, $c = c_{0} + \beta$.
+At $t=1$, for the same parcel of fluid, integrate the previous result
+\[
+   c(t) = c(0) + \int_{0}^{t}\frac{Dc}{Dt} dt = c_{0} + \beta + \gamma t
+\]
+Alternatively, particle paths are
+\[
+x = x_{0} e^{\alpha t}; \;\;\; y = y_{0} e^{-\alpha t}; \;\;\; z = z_{0}
+\]
+Gives, at $t=1$, $x=\exp(\alpha t)$, $y=\exp(-\alpha t)$, and substitute into $\partial c / \partial t$ above
+to obtain the same result:
+\[
+   c(1) = c_{0} + \beta + \gamma
+\]
+
+\end{questionnumber}
+
+%\begin{questionnumber}{\ref{qn:DDt2}}
+%	Show that
+%	\[\frac{\partial }{\partial x}\left( {\frac{Df}{Dt}}
+%	\right)=\frac{D}{Dt}\left( \frac{\partial f}{\partial x} \right)  +  \frac{\partial {{\bf u}}}{\partial x} \cdot \nabla
+%	f. \]
+%	Clarify the meaning of the final term using index notation.
+%\end{questionnumber}
+
+
+\begin{questionnumber}{\ref{qn:raftanchor}}
+
+A floating object displaces its weight in water, a submerged object displaces its volume of
+water. Assuming the anchor is dense enough to sink (which would be the most useful type of anchor, in
+my opinion) then it must displace less when submerged than when floating as part of the raft. Thus the
+water level will drop.
+
+More precisely, the difference in the volume of water diplaced is
+\[
+ \delta V = M_{{\rm anchor}} \left( \frac{1}{\rho_{w}} - \frac{1}{\rho_{w}} \right) > 0
+\]
+How much the water drops depends on the geometry of the pool.
+
+A related question: \textit{did sinking the titanic raise or lower sea level ?}
+\end{questionnumber}
+
+%\begin{questionnumber}{\ref{qn:admissible}}
+%	Kinematically admissible means that it satisfies the incompressibility constraint $\nabla\cdot{\bm u}=0$
+%\[
+%\nabla \cdot \left( {\cos x,xz^2,z\sin x} \right) = -\sin x + 0 + \sin x = 0
+%\]
+%It does !
+%\end{questionnumber}
+
+
+\begin{questionnumber}{\ref{qn:pressurefield}}
+
+The flow is governed by Euler's equation for a steady flow (no time dependence has been
+specified).
+\[
+ \nabla p = -\rho \left\{ ({\bm u}\cdot \nabla){\bm u} + g\hat{\bm k}  \right\}
+\]
+\[
+ ({\bm u}\cdot \nabla){\bm u} =
+         \left( kx\frac{\partial}{\partial x} - ky\frac{\partial}{\partial y} \right)
+         \left( {kx,-ky,0} \right)
+         = \left( {k^{2}x, k^{2}y,0} \right) = \nabla\left( \frac{1}{2}k^{2}x^{2} + \frac{1}{2}k^{2}y^{2} \right)
+\]
+The final form here anticipates us writing
+\[
+\nabla p = -\rho \nabla \left\{  \frac{1}{2}k^{2}x^{2} + \frac{1}{2}k^{2}y^{2} + gz \right\}
+\]
+and so
+\[
+ p = p_{0} - \rho \left\{  \frac{1}{2}k^{2}x^{2} + \frac{1}{2}k^{2}y^{2} + gz \right\}
+\]
+%This also follows from Bernoulli's equation given the flow is a series of (open) streamlines passing a stagnation point, I think. But the far field values are all infinite !!
+\end{questionnumber}
+
+%\begin{questionnumber}{\ref{qn:rthetan}}
+%	 Show that ${{ \dot {\hat {\bf r}}}}={{\hat {\bf n}}} \dot {\theta }$
+%	 and ${{\dot {\hat {\bf n}}}}=-{{\hat {\bf r}}}\dot {\theta }$.
+%\end{questionnumber}
+
+
+\begin{questionnumber}{\ref{qn:divu-rthetaz}}
+
+The notation is not 100\% clear in this question, so I'm changing it a little.
+
+We have
+\begin{equation}
+	x = r \cos\theta; \;\; y = r \sin\theta; \;\; z \;\; \text{unchanged}
+\label{eq:xy-rtheta}
+\end{equation}
+or
+\[
+    r = ( x^{2} + y^{2} )^{{1/2}}; \;\;  \theta = \arctan (y/x)
+\]
+\[
+    \frac{\partial}{\partial x} = \frac{\partial r}{\partial x}\frac{\partial }{\partial r} +
+                                  \frac{\partial \theta}{\partial x}\frac{\partial }{\partial \theta} =
+                                  \cos\theta \frac{\partial }{\partial r} -
+                                  \frac{\sin\theta}{r}   \frac{\partial }{\partial \theta}
+\]
+\[
+    \frac{\partial}{\partial y} = \frac{\partial r}{\partial y}\frac{\partial }{\partial r} +
+                                  \frac{\partial \theta}{\partial y}\frac{\partial }{\partial \theta} =
+                                  \sin\theta \frac{\partial }{\partial r} +
+                                  \frac{\cos\theta}{r}   \frac{\partial }{\partial \theta}
+\]
+Given the relationships in (\ref{eq:xy-rtheta}).
+
+In Cartesian coordinates,
+\[
+	{\bm u} = \left( v_{x}, v_{y}, v_{z} \right) =
+			  \left( \partial x  / \partial t, \partial y  / \partial t, \partial z / \partial t \right)
+\]
+In cylindrical polar coordinates,
+\[
+	{\bm U} = \left( v_{r}, v_{\theta}, v_{z} \right) =
+			  \left( \partial r  / \partial t, r \partial \theta  / \partial t, \partial z / \partial t \right)
+\]
+This allows us to compute the relationships between $\bm u$ and $\bm U$ (the $z$ direction remains unchanged)
+\[
+    v_{r} =  \frac{\partial r}{\partial t} = \frac{\partial r}{\partial x}\frac{\partial x}{\partial t} + \frac{\partial r}{\partial y} \frac{\partial y}{\partial t} = v_{x} \cos\theta + v_{y} \sin\theta
+\]
+\[
+    v_{\theta} = r \frac{\partial \theta}{\partial t} = r \left( \frac{\partial \theta}{\partial x}\frac{\partial x}{\partial t} +  \frac{\partial \theta}{\partial y} \frac{\partial y}{\partial t}\right) = - v_{x} \sin\theta + v_{y} \cos\theta
+\]
+
+Then substitute for $v_{x}, v_{y}, v_{z}$ and $\partial/\partial x, \partial/\partial y$ in the Cartesian continuity equation
+\[
+ \left(\cos\theta \frac{\partial }{\partial r} -
+       \frac{\sin\theta}{r}   \frac{\partial }{\partial \theta}\right)
+ 								\left( \cos\theta v_{r} - \sin\theta v_{\theta} \right) +
+ \left( \sin\theta \frac{\partial }{\partial r} +
+        \frac{\cos\theta}{r}   \frac{\partial }{\partial \theta} \right)
+                                 \left( \sin\theta v_{r} + \cos\theta v_{\theta} \right) +
+ \frac{\partial v_{z}}{\partial z}
+\]
+and gather terms together (simple trig identities !!) to give
+\[
+   \nabla\cdot{\bm U} = \frac{\partial v_{r}}{\partial r} + \frac{v_{r}}{r} +
+               \frac{1}{r}\frac{\partial v_{\theta}}{\partial \theta} +
+ \frac{\partial v_{z}}{\partial z}
+\]
+which is easily rearranged to the required form
+
+\textit{This is not the only way to look at this question, but it is relentless and reliable. }
+\end{questionnumber}
+
+\end{answer2}
+
+% ===================================================
+
+\cleardoublepage
+
+\chapter{Steady Inviscid Flows}
+
+\section{Bernoulli's equation}
+For steady inviscid flow under external forces which have a potential
+$\Omega $ such that ${{\bf F}}$=-$\nabla \Omega $ the Euler equation
+reduces to
+\[
+\left( {{{\bf u}}. \nabla } \right){{\bf
+u}}=-\frac{1}{\rho }\nabla p-\nabla \Omega \quad ,
+\]
+and for incompressible fluids
+\[
+\left( {{{\bf u}}. \nabla } \right){{\bf
+u}}+\frac{1}{\rho }\nabla (p+\rho \Omega )={{\bf
+0}}\quad .
+\]
+We may regard $p + \rho \Omega $ as a more general \textbf{dynamic
+pressure}; but for the particular case of gravitation potential, $\Omega  =
+gz$, and ${{\bf F}}=-\nabla \Omega
+=-(0,0,g)=-g{{\bf k}}$.
+
+We note that
+\begin{align*}
+{{\bf u}}. ({{\bf u}}. \nabla ){{\bf
+u}} & =u({{\bf u}}. \nabla )u+v({{\bf
+u}}. \nabla )v+w({{\bf u}}. \nabla )w
+\\\
+&
+={{\bf u}}. \nabla \textstyle{1 \over
+2}(u^2+v^2+w^2)
+\\
+&
+=({{\bf u}}. \nabla )\textstyle{1 \over 2}{{\bf u}}^2
+\end{align*}
+using the fact that $\textbf{u}.  \nabla $ is a scalar differential
+operator. Hence,
+\[
+{{\bf u}}. \left[ {\left( {{{\bf u}}. \nabla }
+\right){{\bf u}}+\frac{1}{\rho }\nabla \left( {p+\rho
+\Omega } \right)} \right]={{\bf u}}. \nabla \left(
+{{1 \over 2}{{\bf u}}^2+\frac{p}{\rho }+\Omega
+} \right)=0\quad ,
+\]
+and it follows that $(\textstyle{1 \over 2}{{\bf u}}^2+p /
+\rho +\Omega )$ is constant along each streamline (as \textbf{u}$.
+\nabla $ is the derivative in the direction \textbf{u}, and hence
+proportional to the rate of change in the direction \textbf{u} of
+streamlines).
+
+Thus for steady, incompressible, inviscid flow, Bernoulli's equation states
+\begin{equation}
+{1 \over 2}{{\bf u}}^2+\frac{p}{\rho
+}+\Omega \quad = \hbox{constant on a streamline},
+\end{equation}
+although the constant will generally be different on each different
+streamline.
+
+Typically, $\Omega$ might represent the gravitational potential $gz$,
+or, in a rotating reference frame, $\Omega = gz - \omega^{2}r^{2}/2 $
+
+\begin{examplebox}
+In a `static' fluid in a rotating reference frame,
+verify that this definition of $\Omega$ predicts that the free surface take the form of a parabola
+\end{examplebox}
+
+\section{Applications of Bernoulli's equation}
+\subsection{Draining a reservoir through a small hole}
+
+\begin{wrapfigure}{r}{2.5in}
+\centerline{\includegraphics[width=2.5in]{Section31.pdf}}
+\label{fig2.1}
+\caption{ Flow from a draining tank  }
+\end{wrapfigure}
+
+If the draining opening is of much smaller cross-section than the reservoir,
+the water surface in the tank will fall very slowly and the flow may be
+regarded as approximately steady. We may take the outflow speed $u_{A}$ as
+approximately uniform across the jet and the pressure $p_{A}$ uniform across
+the jet and equal to the atmospheric pressure $p_{0}$ outside the jet (for,
+if this were not so, there would be a difference in pressure across the
+surface of the jet, and this would accelerate the jet surface radially,
+which is not observed, although the jet is accelerated downwards by its
+weight). Hence, on the streamline $AB$,
+\[
+{1 \over 2}u_A^2 +\frac{p_0 }{\rho }=\textstyle{1
+\over 2}u_B ^2+\frac{p_0 }{\rho }+gh\quad ,
+\]
+and as $u_{B} \ll u_{A }$ then $u_A =\sqrt {2gh} $ .
+
+This is known as Toricelli's theorem. Note that the outflow speed is that of
+free fall from $B$ under gravity; this clearly neglects any viscous
+dissipation of energy.
+
+\subsection{Bluff body in a stream; Pitot tube}
+\begin{wrapfigure}{r}{3in}
+\centerline{\includegraphics[width=2.5in]{Section32.pdf}}
+\caption{ Flow around an obstruction }
+\label{fig2.2}
+\end{wrapfigure}
+
+Suppose that a stream has uniform speed $U_{0}$ and pressure $p_{0}$ far
+from any obstacle, and that it then flows round a bluff body. The flow must
+be slowed down in front of the body and there must be one \textbf{dividing
+streamline} separating fluid which follows past one side of the body or the
+other. This dividing streamline must end on the body at a \textbf{stagnation
+point} at which the velocity is zero and the pressure
+\[
+p=p_0 +{1 \over 2}\rho U_0^2 .
+\]
+
+\begin{wrapfigure}{r}{3in}
+\centerline{\includegraphics[width=2.5in]{Section33.pdf}}
+\caption{ Pressure measurement with Pitot tube }
+\label{fig3.3}
+\end{wrapfigure}
+
+This provides the basis for the Pitot tube in which a pressure measurement
+is used to obtain the free stream velocity $U_{0}$. The pressure
+$p=p_0 +\textstyle{1 \over 2}\rho U_0^2 $ is the
+\textbf{total} or \textbf{Pitot pressure} (also known as the \textbf{total
+head}) of the free stream, and differs from the static pressure $p_{0}$ by
+the dynamic pressure $\textstyle{1 \over 2}\rho U_0^2 $. The Pitot tube
+consists of a tube directed into the stream with a small central hole
+connected to a \textbf{manometer} for measuring pressure difference $p -
+p_{0}$ . At equilibrium there is no flow through the tube, and hence the
+left hand pressure on the manometer is the total pressure $p_0
++\textstyle{1 \over 2}\rho U_0^2 $. The static pressure $p_{0}$ can
+be obtained from a \textbf{static tube} which is normal to the flow.
+
+\divider
+\pagebreak
+
+\section{Exercises}
+
+\begin{questionstar}
+	Prove the vector identity
+	\[
+	\nabla \left( {{{\bf a}}. {{\bf b}}} \right)=\left( {{{\bf
+	b}}. \nabla } \right){{\bf a}}+\left( {{{\bf a}}. \nabla }
+	\right){{\bf b}}+{{\bf b}}\times \left( {\nabla \times {{\bf
+	a}}} \right)+{{\bf a}}\times \left( {\nabla \times {{\bf b}}}
+	\right).
+	\]
+	Hence show that
+	\[
+		\left( {{{\bf u}}. \nabla } \right){{\bf u}}=\nabla \left(
+		{\textstyle{\frac12}{{\bf u}}^2} \right)-{{\bf u}}\times \left(
+		{\nabla \times {{\bf u}}} \right)=\nabla \left( {\textstyle{\frac12}{{\bf u}}^2} \right)-
+		{{\bf u}}\times {\bm\omega},
+	\]
+	where $ {\bm\omega}=\nabla \times {{\bf u}}$ is known as the \textbf{vorticity}.
+	\label{qn:identity1}
+\end{questionstar}
+
+\begin{questionstar}
+	A uniform straight open rectangular channel carries a water flow of mean
+	speed $U$ and depth $h$. The channel has a constriction, which reduces its width
+	by half and it is observed that the depth of water in the constriction is
+	only $\textstyle{\frac12}h$. By applying Bernoulli's theorem to a surface
+	streamline find $U$ in terms of $g$ and $h$.
+	\label{qn:bernoullichannel}
+\end{questionstar}
+
+\begin{questionstar}
+	Explain why there is an increase in pressure on the side of a building
+	facing the wind.
+	\label{qn:buildingpressure}
+\end{questionstar}
+
+\begin{question}
+	Calculate the curl and divergence of the Cartesian velocity
+	\[
+	{{\bf u}}=\left[ {z-\frac{2x}{r},2y-3z-\frac{2y}{r},x-3y-\frac{2z}{r}}
+	\right],
+	\]
+	where $r = |(x,y,z)|$. Is  this flow incompressible or irrotational?
+	\label{qn:curldivergence}
+\end{question}
+
+
+\begin{question}
+	%\begin{figure}
+	{\includegraphics[width=3in]{Section34.pdf}}
+	%\caption{ Test your intuition with this exercise }
+	%\label{fig3.4}
+	%\end{figure}
+
+	Hold two sheets of paper at $A$ and $B$ with a finger between the two at top
+	and bottom, and blow between the sheets as illustrated in the diagram.
+	The trailing edges of the sheets will not move apart as you might have anticipated, but
+	together. Explain this in terms of Bernoulli's equation, assuming the flow
+	to be steady.
+	\label{qn:blow}
+\end{question}
+
+\begin{questionstar}
+	Using Bernoulli's equation (often referred to as Bernoulli's theorem):
+	\begin{enumerate}
+		\item show that air from a balloon at excess pressure $p_{1}$ above
+		atmospheric will emerge with approximate speed $\sqrt {2p_1 /\rho } $;
+		%
+		\item find the depth of water in the steady state in which a vessel, with a
+		waste pipe of length 0.01 m and cross-sectional area $2\times
+		10^{-5}\hbox{m}^2$ protruding vertically below its base, is filled at the
+		constant rate $3\times 10^{-5}\hbox{m}^3\hbox{s}^{-1}$.
+	\end{enumerate}
+	\label{qn:balloon}
+\end{questionstar}
+
+\begin{questionstar}
+	A vertical round post stands in a river, and it is observed that the
+	water level at the upstream face of the post is slightly higher than the
+	level at some distance to either side. Explain why this is so, and find the
+	increase in the height in terms of the surface stream speed $U$ and
+	acceleration of gravity $g$. Estimate the increase in height for a stream with
+	undisturbed surface speed 1 ms$^{-1}$
+	\label{qn:submergedpost}
+\end{questionstar}
+
+
+
+%% Solutions to Exercises
+
+\begin{answer3}
+
+\newpage
+
+\section{Solutions to Selected Exercises}
+
+\begin{questionnumber}{\ref{qn:identity1}}
+Start with term ${\bm b}\times(\nabla \times {\bm a})$
+\begin{multline*}
+   {\bm b}\times(\nabla \times {\bm a}) =
+    \varepsilon_{ijk} b_{j} \varepsilon_{klm} \frac{\partial a_{m}}{\partial x_{l}} =
+    \varepsilon_{kij} \varepsilon_{klm} b_{j} \frac{\partial a_{m}}{\partial x_{l}} = \\
+    (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}) b_{j}
+    			\frac{\partial a_{m}}{\partial x_{l}} =
+	 b_{j} \frac{\partial a_{j}}{\partial x_{i}}	 - b_{j} \frac{\partial a_{i}}{\partial x_{j}} \mbox{\hspace*{2cm}}
+\end{multline*}
+Thus
+\[
+   {\bm b}\times(\nabla \times {\bm a}) + {\bm a}\times(\nabla \times {\bm b}) =
+ b_{j} \frac{\partial a_{j}}{\partial x_{i}}	+ a_{j} \frac{\partial b_{j}}{\partial x_{i}}
+ - b_{j} \frac{\partial a_{i}}{\partial x_{j}} - a_{j} \frac{\partial b_{i}}{\partial x_{j}}
+\]
+The first two terms combine by observing they are equivalent to $\nabla ({\bm a} \cdot {\bm b})$, the second and third terms are $({\bm b} \cdot \nabla) {\bm a}$ and  $({\bm a} \cdot \nabla) {\bm b}$ respectively ... and so we are done !
+
+To prove the second identity, let ${\bm a} = {\bm b} = {\bm u}$
+\[
+   2\, {\bm u} \times {\bm \omega} = \nabla |{\bm u}|^{2} - 2\, {\bm u} \cdot \nabla {\bm u}
+\]
+after trivial rearrangement, we're done !
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:bernoullichannel}}
+We are dealing with a steady flow, so the volume flux is the same for any cross section. Thus
+$u_{1}h_{1}w_{1} = u_{2}h_{2}w_{2}$ where point $1$ is outside the constriction, and point $2$
+is within the constriction; $u_{2} = 4 u_{1}$.
+
+Apply Bernoulli's theorem to a streamline at the surface where $p=p_{0}$ everywhere.
+\[
+  u_{1}^{2} / 2 + gh_{1} = u_{2}^{2} / 2 + gh_{2};
+\]
+\[
+    u_{1}^{2} / 2 + gh_{1} = 16 u_{1}^{2} / 2 + gh_{1} / 2;
+\]
+\[
+	u_{1} = \sqrt{gh_{1} / 15}
+\]
+
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:buildingpressure}}
+There is a stagnation point on the upstream side of a blunt-nosed object which,
+from Bernoulli's equation, means that the pressure increases significantly (depending on the
+free-stream velocity).
+
+In the question, we are obviously assuming flow of a real fluid around a blunt obstruction. In the perfectly inviscid case, there is also a similar stagnation point around the back and the pressure is high there too. If the boundary layer separates, then there is a net drag on the body caused by the asymmetry in the pressure; high on the upstream side, not as high downstream.
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:curldivergence}}
+Note that $dr/dx = x/r$ and so forth ...
+\[
+	\nabla \cdot  {\bm u} = 2-\frac{4}{r};\;\;\; \mbox{\rm (NOT incompressible)}
+\]
+\[
+    \nabla \times {\bm u} = 0  ;\;\;\; \mbox{\rm (IS irrotational)}
+\]
+\end{questionnumber}
+
+
+%\begin{question}
+%	Hold two sheets of paper at $A$ and $B$ with a finger between the two at top
+%	and bottom, and blow between the sheets as illustrated in Figure \ref{fig3.4}.
+%	The trailing edges of the sheets will not move apart as you might have anticipated, but
+%	together. Explain this in terms of Bernoulli's equation, assuming the flow
+%	to be steady.
+%\end{question}
+
+
+
+
+\begin{questionnumber}{\ref{qn:balloon}}
+Bernoulli's theorm states
+\[
+   \frac{1}{2}u^{2} + \frac{p}{\rho} + \Omega = \text{constant}
+\]
+along a streamline.
+
+Ignoring body forces, let $p=p_{0} + \Delta p$ inside the balloon, $p_{0}$ outside,
+assume $u$ small inside the balloon. As the flow exits the balloon:
+\[
+   \frac{1}{2}u^{2} + \frac{p_{0}}{\rho} = \frac{p_{0}+\Delta p}{\rho}
+\]
+Hence
+\[
+   u = \sqrt{ \frac{2\Delta p}{\rho} }
+\]
+
+Tank of fluid emptying through a narrow pipe at the base, filled at a constant rate from
+the top. At the top surface, $u \approx 0; p=p_{0}$, and at the outlet of the waste pipe,
+$u = U; p=p_{0}$. The potential energy term is $\Omega = gz$
+Let the unknown height of the water above the plug-hole be $H$.
+
+\[
+	\frac{1}{2}U^{2} + p_{0} = g(H+0.01) + p_{0};\;\;\;  H = \frac{U^{2}}{2g} - 0.01
+\]
+
+The exit velocity is such that the volume flux into / out of the tank are in balance, i.e.
+\[
+	U = \frac{1}{A_{\text{exit}}}\frac{dV}{dt} = 1.5 ms^{-1}; \;\;\; \text{and so } H \approx 10.5cm
+\]
+\end{questionnumber}
+
+
+%\begin{question}
+%A vertical round post stands in a river, and it is observed that the
+%water level at the upstream face of the post is slightly higher than the
+%level at some distance to either side. Explain why this is so, and find the
+%increase in the height in terms of the surface stream speed $U$ and
+%acceleration of gravity $g$. Estimate the increase in height for a stream with
+%undisturbed surface speed 1 ms$^{-1}$
+%\end{question}
+
+
+
+
+\end{answer3}
+
+
+%%
+%% =======================================================
+%%
+
+
+\chapter{Vortex Motion}
+
+\begin{wrapfigure}{r}{1.8in}
+\flushright{\includegraphics[width=1.5in]{DSC_4103.jpg}}
+\label{fig9a}
+%% \caption{ Cylindrical polar coordinates }
+\end{wrapfigure}
+
+\textbf{Vortex}:\textit{noun} ( pl. vortexes or vortices )
+
+A mass of whirling fluid or air esp. a whirlpool or whirlwind; cyclone, gyre,
+maelstrom, eddy, swirl, spiral; \textit{figurative} something regarded as a whirling mass: \textit{the vortex of existence}.
+
+\section{The vorticity field}
+
+
+The vector ${\bm{\omega}} =\nabla \times {{\bf u}}$ is twice the local angular
+velocity in the flow, and ${\bm \omega}$ is termed the
+\textbf{vorticity} of the flow (from Latin for a whirlpool).
+
+Vortex lines are everywhere in the direction of the vorticity field (c.f.
+streamlines); bundles of vortex lines make up \textbf{vortex tubes}; and
+thin vortex tubes, such that their constituent vortex lines are
+approximately parallel to the tube axis are \textbf{vortex filaments} (see
+below).
+
+The vorticity field is \textbf{solenoidal},  i.e.
+\[ \nabla . {\bm{\omega}} = 0,\]
+since
+\begin{align*}
+\nabla . {\bm{\omega}}
+& =\nabla . \left( {\nabla \times {{\bf u}}}
+\right) \\
+& =\frac{\partial }{\partial x}\left( {\frac{\partial w}{\partial
+y}-\frac{\partial v}{\partial z}} \right)+\frac{\partial }{\partial y}\left(
+{\frac{\partial u}{\partial z}-\frac{\partial w}{\partial x}}
+\right)+\frac{\partial }{\partial z}\left( {\frac{\partial v}{\partial
+x}-\frac{\partial u}{\partial y}} \right) \\
+& = 0.
+\end{align*}
+
+From the divergence theorem, for any volume $V$ with boundary surface $S$,
+\[
+\int_S {{\bm{\omega}}. {{\bf n}}dS} =\int_V {\nabla . {\bm{\omega}} dV}
+=0,
+\]
+and there is zero net flux of vorticity (or vortex tubes) out of any volume:
+hence there can be no sources of vorticity in the interior of a fluid.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=4in]{Section42.pdf}}
+\caption{ }
+\label{fig3.2}
+\end{figure}
+
+Consider a length $P_{1}P_{2}$ of vortex tube. From the divergence
+theorem
+\[
+\int_S {{\bm{\omega}}. {{\bf n}}dS} =\int_V {\nabla . {\bm{\omega}} dV}
+=0.
+\]
+We can divide the surface of the length $P_{1} P_{2}$ into cross-sections
+and the tube wall, $S = S_{1} + S_{2} + S_{{wall}}$, then
+\[
+\int_S {{\bm{\omega}}. {{\bf n}}dS} =\int_{S_1 } {{\bm{\omega}}. {\rm
+{\bf n}}dS} +\int_{S_2 } {{\bm{\omega}}. {{\bf n}}dS}
++\int_{S_{wall} } {{\bm{\omega}}. {{\bf n}}dS} =0
+\]
+However, the contribution from the wall (where ${\bm{\omega}}\bot
+\textbf{n}$) is zero, and hence
+\[
+\int_{S_1 } {{\bm{\omega}}. {{\bf n}}dS} =\int_{S_2 } {{\bm{\omega}}.
+\left( {-{{\bf n}}} \right)dS}
+\]
+where the positive sense for normals is that of increasing distance along
+the tube from the origin. Hence $\int_{S} {{\bm\omega}. {{\bf
+n}}dS} $ measured over a cross-section of the vortex tube with \textbf{n}
+taken in the same sense is constant, and defined as the \textbf{strength of
+the vortex tube}.
+
+In a \textbf{thin} vortex tube, we have approximately:
+\[
+\int_S {{\bm{\omega}}. {{\bf n}}dS} \approx \left( {{\bm{\omega}}. {{\bf
+n}}} \right)\int_S {dS} =\omega S,
+\]
+and $\omega \times \hbox{area}$ = constant along the tube (a property of all
+solenoidal fields), where $\omega = | {\bm{\omega}}|$.
+
+
+\begin{examplebox}
+Show that $(\textstyle{1 \over 2}{{\bf u}}^2+p/ \rho +\Omega
+)$ is constant along a vortex line for steady, incompressible, inviscid flow
+under conservative external forces.
+
+\begin{examplesolution4}
+	As before ${{\bf u}}. \nabla {{\bf u}}+\frac{1}{\rho
+	}\nabla (p+\rho \Omega )={{\bf 0}}$,
+
+	where $\left( {{{\bf u}}. \nabla } \right){{\bf u}}=\nabla
+	\left( {\textstyle{1 \over 2}{{\bf u}}^2} \right)-{{\bf u}}\times
+	\left( {\nabla \times {{\bf u}}} \right)=\nabla \left( {\textstyle{1
+	\over 2}{{\bf u}}^2} \right)-{{\bf u}}\times w$ . (See Exercise
+	3.1.)
+
+	Hence ${{\bf u}}\times w=\nabla \left( {\textstyle{1 \over 2}{\rm
+	{\bf u}}^2+\frac{p}{\rho }+\Omega } \right)$
+
+	Taking \textbf{u }$.  \quad {{\bf u}}. \left( {{{\bf u}}\times
+	w} \right)=0={{\bf u}}. \nabla \left( {\textstyle{1 \over 2}{\rm
+	{\bf u}}^2+\frac{p}{\rho }+\Omega } \right)$ (4.1)
+
+	Taking \textbf{$\omega $ }$.  \quad w. \left( {{{\bf u}}\times w}
+	\right)={{\bf 0}}=w. \nabla \left( {\textstyle{1 \over 2}{\rm
+	{\bf u}}^2+\frac{p}{\rho }+\Omega } \right)$. (4.2)
+
+	From (4.1) $(\textstyle{1 \over 2}{{\bf u}}^2+p \mathord{\left/
+	{\vphantom {p \rho }} \right. } \rho +\Omega
+	)$ = constant along a streamline, and from (4.2) $(\textstyle{1 \over
+	2}{{\bf u}}^2+p \mathord{\left/ {\vphantom {p \rho }} \right.
+	} \rho +\Omega )$ = constant along a vortex
+	line. Thus we have a Bernoulli equation for vortex lines as well as for
+	streamlines.
+
+	If \textbf{$\omega $ }= \textbf{0} everywhere, then $\nabla (\textstyle{1
+	\over 2}{{\bf u}}^2+p \mathord{\left/ {\vphantom {p \rho }} \right.
+	} \rho +\Omega )={{\bf 0}}$ at every
+	point in the fluid. Consequently, $(\textstyle{1 \over 2}{{\bf
+	u}}^2+p \mathord{\left/ {\vphantom {p \rho }} \right.
+	} \rho +\Omega )$ is a constant throughout
+	the entire fluid.
+\end{examplesolution4}
+\end{examplebox}
+
+
+\section{Circulation}
+\label{subsec:circulation}
+
+From Stokes' theorem
+\[
+\int_S {\left( {\nabla \times {{\bf u}}} \right)} . {{\bf
+n}}dS=\oint\limits_C {{{\bf u}}. {{\bf dx}}} ,
+\]
+where \textbf{n} is the unit normal to $S$, with the orientation of $C$ and the
+direction of \textbf{n} being given by the right hand rule. Hence the line
+integral of the velocity field in any circuit $C$ that passes once round a
+vortex tube is equal to the total vorticity cutting any cap $S$ on $C$, and is
+therefore equal to the strength of the vortex tube. We measure the strength
+of a vortex tube by calculating $\oint\limits_C {{{\bf u}}. {\rm
+{\bf dx}}} $ around \textbf{any circuit } $C$ enclosing the tube once only. The
+quantity
+\[ \Gamma =\oint\limits_C {{{\bf u}}. {{\bf dx}}} \]
+ is termed the \textbf{circulation}. Vorticity may be regarded as
+\textbf{circulation per unit area}, and the component in any direction of
+${\bm \omega}$ is
+\[
+\mathop {\lim }\limits_{S\to 0} \frac{1}{S}\oint\limits_C {{{\bf
+u}}. {{\bf dx}}}
+\]
+where $C$ is a loop of area $S$ perpendicular to the direction specified.
+
+\section{The Helmholtz equation for vorticity}
+\label{subsec:mylabel1}
+From Euler's equation for an incompressible fluid in a conservative force
+field
+\[
+\frac{\partial {{\bf u}}}{\partial t}+{{\bf u}}. \nabla {\rm
+{\bf u}}=-\frac{1}{\rho }\nabla p-\nabla \Omega
+\]
+or
+\[ \frac{\partial {{\bf u}}}{\partial t}+\nabla \left( {{1
+\over 2}{{\bf u}}^2} \right)-{{\bf u}}\times
+{\bm\omega} =-\frac{1}{\rho }\nabla p-\nabla \Omega ; \]
+taking the curl,
+\[ \nabla \times \left( {\frac{\partial {{\bf
+u}}}{\partial t}} \right)+\nabla \times \nabla \left( {{1 \over
+2}{{\bf u}}^2} \right)-\nabla \times \left( {{{\bf u}}\times {\bm\omega}}
+\right)=-\nabla \times \nabla \left( {\frac{p}{\rho }+\Omega }
+\right). \]
+But $\nabla \times \nabla \chi =0$ for all $\chi $,
+and
+\[\nabla \times \left( {{{\bf u}}\times {\bm \omega}} \right)={{\bf
+u}}\left( {\nabla . {\bm \omega}} \right)-{\bm \omega}\left( {\nabla . {{\bf u}}}
+\right)+\left( {{\bm \omega}. \nabla } \right){{\bf u}}-\left( {{{\bf
+u}}. \nabla } \right){\bm \omega}=\left( {{\bm \omega}. \nabla } \right){{\bf
+u}}-\left( {{{\bf u}}. \nabla } \right){\bm \omega} \]
+as ${\bm \omega}$ is always solenoidal and \textbf{u} is solenoidal in
+an incompressible fluid. Hence we obtain
+\[
+\frac{D{\bm \omega}}{Dt}=\frac{\partial {\bm \omega}}{\partial t}+\left( {{{\bf u}}.
+\nabla } \right){\bm \omega}=\left( {{\bm \omega}. \nabla } \right){{\bf u}},
+\]
+which is the \textbf{Helmholtz vorticity equation}.
+
+
+
+\subsection{Physical significance of $\left( {{\bm\omega}. \nabla } \right){\rm
+{\bf u}}$}
+
+\begin{wrapfigure}{r}{3in}
+\centerline{\includegraphics[width=3in]{Section43.pdf}}
+\caption{ }
+\label{fig4.3}
+\end{wrapfigure}
+
+We can understand the significance of the term $\left( {{\bm\omega}. \nabla }
+\right){{\bf u}}$ in the Helmholtz equation by recalling that $\nabla $
+is a directional derivative and $({\bm\omega}.  \nabla )$ is
+proportional to the derivative in the direction of ${\bm\omega}$ along
+the vortex line:
+\[
+\frac{D{\bm\omega}}{Dt}=\left( {{\bm\omega}. \nabla } \right){{\bf u}}=\omega \hat
+{{\bm\omega}}. \nabla {{\bf u}}=\omega \frac{\partial {{\bf u}}}{\partial
+s},
+\]
+where $\delta {\bf s}$ is the length of an element of vortex tube. We now resolve
+$\textbf{u}$ into components \textbf{u}$_{\omega }$ parallel to ${\bm\omega}$
+ and \textbf{u}$_{\bot }$ at right angles to
+${\bm\omega}$ and hence to $\delta \textbf{s}$. Then
+\begin{align*}
+ \frac{\delta s}{\omega }\frac{Dw}{Dt} &=\frac{\partial }{\partial
+s}\left( {{{\bf u}}_\omega +{{\bf u}}_\bot } \right)\delta s  \\
+ & =\frac{\partial {{\bf u}}_\omega }{\partial
+s}\delta s+\frac{\partial {{\bf u}}_\bot }{\partial s}\delta s \\
+& =\left[ {{{\bf u}}_\omega \left( {{{\bf
+x}}+d{{\bf s}}} \right)-{{\bf u}}_\omega \left( {{\bf x}}
+\right)} \right]+\left[ {{{\bf u}}_\bot \left( {{{\bf x}}+d{{\bf
+s}}} \right)-{{\bf u}}_\bot \left( {{\bf x}} \right)} \right] \\
+\noalign{\medskip}
+& \qquad \qquad \quad{\bf (A)} \qquad \qquad \qquad \qquad \qquad {\bf (B)}
+ \end{align*}
+\begin{description}
+\item[(A)] Rate of stretching of an element: \textbf{stretching} along the length of the filament causes relative amplification of the vorticity field;
+\item[(B)] Rate of turning of an element: \textbf{turning} away from the line of the filament causes a reduction of the vorticity in that direction, but an increase in the new direction.
+It also can include the twisting of the element by the flow which directly changes the vorticity.
+%% Best check !!
+\end{description}
+
+\subsection{In the presence of viscosity}
+
+The addition of viscosity to the equation of motion gives the
+Navier-Stokes equation (\ref{eq:NavierStokes}) which is simply the Euler equation with the addition
+of $\nu \nabla^{2}{\bm{u}}$. Taking the curl of Navier-Stokes equation gives
+\[
+\frac{D{\bm \omega}}{Dt}=\left( {{\bm \omega}. \nabla } \right){{\bf u}} + \nabla \times \nu \nabla^{2} {\bm{u}} = \left( {{\bm \omega}. \nabla } \right){{\bf u}} + \nu \nabla^{2} {\bm{\omega}}
+\]
+(viscosity is constant in this form of the Navier-Stokes equation).
+
+Where the first term on the right hand side distorts a vortex tube,
+the second term represents diffusion of the vorticity.
+This is most clearly demonstrated by considering a 2d flow.
+
+In 2d, ${\bm u} . {\bm \omega} = 0$, because the vorticity vector is
+directed out of the plane containing the flow. Hence
+\[
+\frac{D{\omega}}{Dt}= \nu \nabla^{2} {{\omega}},
+\]
+a scalar diffusion equation for the magnitude of the vorticity.
+
+
+
+\section{Kelvin's Theorem}
+The ideas of vorticity and circulation are important because of the
+permanence of circulation under deformation of the flow due to pressure
+forces. We next look at the rate of change of circulation round a circuit
+moving with an incompressible, inviscid fluid:
+\begin{align*}
+ \frac{D}{Dt}\oint {{{\bf u}}. {{\bf dx}}} & =\oint
+{\frac{D}{Dt}\left( {{{\bf u}}. {{\bf dx}}} \right)} \\
+&  =\oint {\frac{D{{\bf u}}}{Dt}.
+{{\bf dx}}} +\oint {{{\bf u}}. \frac{D{{\bf
+dx}}}{Dt}} \\
+ \end{align*}
+ But $\oint {\frac{D{{\bf u}}}{Dt}. {{\bf dx}}} =\oint {-\nabla
+\left( {p/  {\rho +\Omega }} \right)} . {{\bf dx}}$
+and $\oint {{{\bf u}}. \frac{D{{\bf dx}}}{Dt}} =\oint
+{{{\bf u}}. {{\bf du}}} $ (see Example below).
+
+Hence
+\begin{align*}
+ \frac{D\Gamma }{Dt} & =-\oint {\nabla \left( {p/ {\rho +\Omega }}
+\right)} . {{\bf dx}}+\oint {{{\bf u}}. {{\bf du}}} \\
+&  =\oint {d\left( {{-p}  {\rho -\Omega +\textstyle{1 \over 2}{{\bf
+u}}^{{\bf 2}}}} \right)} \\
+ & =0 \\
+ \end{align*}
+as ${-p}/{\rho
+-\Omega +\textstyle{1 \over 2}{{\bf u}}^{{\bf 2}}}$ returns to its
+initial value after one circuit since it is a single valued function.
+
+
+\begin{examplebox}
+
+ \begin{wrapfigure}{r}{2.5in}
+ 	\centerline{\includegraphics[width=2.3in]{Section44.pdf}}
+ 	\caption{ }
+	\label{fig4.4}
+ \end{wrapfigure}
+
+Show, with the help of the diagram in Figure \ref{fig4.3} that $\oint {{\rm
+{\bf u}}. \frac{D{{\bf dx}}}{Dt}} =\oint {{{\bf u}}.
+{{\bf du}}} $.
+
+\begin{examplesolution4}
+	Suppose that the elementary vector $\overline {PQ} =\delta {{\bf x}}$ at
+	t is advected with the flow to$\overline {{P}'{Q}'} =\delta {{\bf
+	x}}\left( {t+\delta t} \right)$. Then
+
+	\textbf{$\delta $}$\delta {{\bf x}}\left( {t+\delta t} \right)\approx
+	-{{\bf u}}\left( {{\bf x}} \right)\delta t+\delta {{\bf
+	x}}\left( t \right)+{{\bf u}}\left( {{{\bf x}}+\delta {{\bf x}}}
+	\right)\delta t$
+
+	or $\delta {{\bf x}}\left( {t+\delta t} \right)-\delta {{\bf
+	x}}\left( t \right)\approx \left[ {{{\bf u}}\left( {{{\bf x}}+\delta
+	{{\bf x}}} \right)-{{\bf u}}\left( {{\bf x}} \right)}
+	\right]\delta t$.
+
+	Hence $\mathop {\lim }\limits_{\delta t\to 0} \frac{\delta {{\bf
+	x}}\left( {t+\delta t} \right)-\delta {{\bf x}}\left( t \right)}{\delta
+	t}=\mathop {\lim }\limits_{\delta s\to 0} \frac{{{\bf u}}\left( {{\rm
+	{\bf x}}+\delta {{\bf x}}} \right)-{{\bf u}}\left( {{\bf x}}
+	\right)}{\delta s}\delta s$,
+
+	from which it follows that $\frac{D}{Dt}\delta {{\bf x}}\approx
+	\frac{\partial {{\bf u}}}{\partial s}\delta s\approx \delta {{\bf
+	u}}$ in a fixed reference frame 0xyz, where $\left| {\delta {{\bf x}}}
+	\right|=\delta s$ and s is arc length along the path PQ. In the limit as
+	$\delta {{\bf x}}\to d{{\bf x}}$, $\delta {{\bf u}}\to d{\rm
+	{\bf u}}$, and $\frac{D}{Dt}d{{\bf x}}=d{{\bf u}}$ .
+\end{examplesolution4}
+
+\end{examplebox}
+
+\subsection{Helmholtz theorem: vortex lines move with the fluid}
+
+\begin{wrapfigure}{r}{2.in}
+\centerline{\includegraphics[width=2.in]{Section45.pdf}}
+\caption{ }
+\label{fig3.5}
+\end{wrapfigure}
+
+Consider a tube of particles $T$, which at the instant $t$ forms a vortex tube
+of strength $\kappa $. At that time the circulation round any circuit $C'$
+lying in the tube wall, but \textit{not} linking (i.e. embracing) the tube is zero,
+while that in an circuit $C$ linking the tube \textit{once} is $\kappa $. These
+circulations suffer no change moving with the fluid: hence the circulation
+in $C'$ remains zero and that in $C$ remains $\kappa $, i.e. the fluid
+comprising the vortex tube at $T$ continues to comprise a vortex tube (as the
+vorticity component normal to the tube wall --- measured in $C'$ --- is always
+zero), \textit{and} the strength of the vortex remains constant. A vortex line is the
+limiting case of a small vortex tube: hence vortex lines move with (are
+frozen into) inviscid fluids.
+
+\subsection{A flow which is initially irrotational remains irrotational}
+
+Circulation is advected with the fluid in inviscid flows, and vorticity is
+``circulation per unit area''. If initially $\Gamma = 0$ for all closed
+circuits in some region of flow, it must remain so for all subsequent times.
+Motion started from rest is initially irrotational (free from vorticity) and
+will therefore remain irrotational provided that it is inviscid.
+
+\begin{center}
+\textbf{The direction of the vorticity turns as the vortex line turns, and
+its magnitude increases as the vortex line is stretched.}
+\end{center}
+
+The circulation round a thin vortex tube remains the same; as it stretches
+the area of section decreases and
+\begin{center}
+\textbf{Circulation / Area = Vorticity}
+\end{center}
+increases in proportion to the stretch.
+
+\section{Rotational and irrotational flow}
+
+\begin{wrapfigure}{r}{2.5in}
+\centerline{\includegraphics[width=2.5in]{Section46.pdf}}
+\caption{ }
+\label{fig3.6}
+\end{wrapfigure}
+
+Flow in which the vorticity is everywhere zero ${\bm\omega} =\nabla \times {{\bf
+u}}$ is called \textbf{irrotational}. Other terms in use are \textbf{vortex
+free, ideal, and perfect}. Much of fluid dynamics used to be concerned with
+analysing irrotational flows and deciding where these give a good
+representation of real flows, and where they are quite wrong.
+
+\begin{examplebox}
+Consider a small circular element of fluid in solid body rotation with angular velocity $\Omega$. Using
+cylindrical polar coordinates, show that the circulation around the circular element
+is
+\[ \Gamma = 2\Omega \pi r^2, \]
+and that the vorticity is
+\[ \bm\omega = 2\Omega{\bf k}. \]
+
+% TODO - ?? Check against 2007 notes ... what is commented out there ?
+\begin{examplesolution4}
+	Consider a small circular element of fluid in solid body rotation. Using
+	cylindrical polar coordinates, the circulation around the circular element
+	is
+	\[ \Gamma =\oint {{{\bf u}}. d{{\bf x}}} =\int_0^{2\pi }
+	{v\left( {rd\theta } \right)=} \Omega r^2\int_0^{2\pi } {d\theta
+	=} 2\Omega \pi r^2
+	\]
+	% \[
+	% \Gamma =\oint_ {u. dr=} \int_0^{2\pi } {vrd\theta } =\Omega r^2\int_0^{2\pi }
+	% {d\theta =2\Omega } \pi r^2
+	% \]
+	Since the area of the element is $\pi $r$^{2}$, the vorticity is 2$\Omega $,
+	which is twice the angular velocity.
+\end{examplesolution4}
+\end{examplebox}
+
+
+
+% \textbf{Example}
+\begin{examplebox}
+Consider the shear flow \textbf{u} = ($\Lambda $z,0,0). Show that although the
+streamlines are straight and parallel to the $x$-axis, the flow is not
+irrotational.
+
+\begin{examplesolution4}
+	Although the
+	streamlines are straight and parallel to the x-axis, the flow is not
+	irrotational since $\nabla \times {{\bf u}}=\left( {0,\Lambda ,0}
+	\right)$.
+\end{examplesolution4}
+
+\end{examplebox}
+
+
+We have neglected \textbf{compressibility} and \textbf{viscosity}. It can be
+shown that the neglect of compressibility is not very serious even at
+moderately high speeds, but the effect of neglecting viscosity can be
+disastrous. Viscosity \textbf{diffuses} the vorticity (much as conductivity
+diffuses heat) and progressively blurs the results derived above, the errors
+increasing with time.
+
+There is no term in the Helmholtz equation ${D{\bm\omega}}/{Dt}=\left( {{\bm\omega}. \nabla
+} \right){{\bf u}}$ corresponding to the generation of vorticity (the
+term ${\bm\omega}. \nabla {{\bf u}}$ represents processing by stretching and
+turning of vorticity already present). It follows, therefore, that in
+homogeneous fluids all \textbf{vorticity must be generated at boundaries
+}(more on this later). In real (viscous) fluids, this vorticity is carried
+away from the boundary by diffusion and is then advected into the body of
+the flow. But in inviscid flow vorticity cannot leave the surface by
+diffusion, nor can it leave by advection with the fluid as no fluid
+particles can leave the surface. It is this inability of inviscid flows to
+model the diffusion/advection of vorticity generated at boundaries out into
+the body of the flow that causes most of the failures of the model.
+
+In inviscid flows we are left with a free slip velocity at the boundaries,
+which we may interpret as a thin vortex sheet wrapped around the boundary.
+
+\section{Vortex sheets}
+Consider a thin layer of thickness $\delta $ in which the vorticity is large
+and is directed along the layer (parallel to $0y$), as sketched. The vorticity
+is
+\[
+\eta =\frac{\partial u}{\partial z}-\frac{\partial w}{\partial x}\quad ,
+\]
+where $\partial u/\partial z$ is large (but not $\partial w/\partial x$,
+which would lead to very large $w$).
+
+\begin{wrapfigure}{r}{2.5in}
+\centerline{\includegraphics[width=2.5in]{Section47.pdf}}
+\caption{ }
+\label{fig3.7}
+\end{wrapfigure}
+
+We can suppose that within the vortex layer $u = u_{0}+\omega z$ changing
+from $u_{0}$ to $u_{0}+\omega \delta $ between $ z = 0$ and $\delta $,
+with mean vorticity
+\[
+\frac{\left( {u_0 +\omega \delta } \right)-u_0 }{\delta }=\omega
+\]
+This vortex layer provides a sort of roller action, though it is not of
+course rigid, and it also suffers high rate-of-strain.
+
+If we idealize this vortex layer by taking the limit $\delta \to  0$,
+$\omega  \to \infty $, with $\omega \delta $ remaining finite, we
+obtain a \textbf{vortex sheet}, which is manifest only through the free slip
+velocity. Such vortex sheets follow the contours of the boundary and clearly
+may be curved. They are infinitely thin sheets of vorticity with infinite
+magnitude across which there is finite difference in tangential velocity,
+$\omega \delta $.
+
+\section{Line vortices}
+We can represent approximately also strong thin vortex tubes (e.g.
+tornadoes, waterspouts, draining vortices) by \textbf{vortex lines} without
+thickness. The circulation in a circuit round the tube tends to a definite
+non-zero limit as the circuit area $S \to 0$. If the flow outside the
+vortex is irrotational then all circuits round the vortex have the same
+circulation (by Stokes' theorem), the strength $\kappa $ of the vortex being
+\[\oint {{{\bf u}}. {{\bf dx}}} \to \kappa \quad\hbox{as}\quad C \to  0 . \]
+As the flow outside the vortex is irrotational, the circulation is zero
+around any circuit that does not enclose the vortex.
+
+\begin{examplebox}
+Consider an isolated line vortex aligned with the $z$-axis. Show that a
+radially symmetric solution is
+\[
+u=0, \quad v = \frac{\kappa }{2\pi r},
+\]
+where $\kappa$ is the circulation around a circuit enclosing the $z$-axis.
+
+\begin{examplesolution4}
+	Consider an isolated line vortex aligned with the z-axis. In cylindrical
+	polar coordinates the vorticity is
+	\[
+	w=\nabla \times {{\bf u}}=\left( {0,0,\frac{1}{r}\left( {\frac{\partial
+	\left( {rv} \right)}{\partial r}-\frac{\partial u}{\partial \theta }}
+	\right)} \right)={{\bf 0}}
+	\]
+	if the flow is irrotational (except on r = 0). If follows that, ${\partial
+	\left( {rv} \right)} \mathord{\left/ {\vphantom {{\partial \left( {rv}
+	\right)} {\partial r}}} \right. } {\partial
+	r}={\partial u} \mathord{\left/ {\vphantom {{\partial u} {\partial \theta
+	}}} \right. } {\partial \theta }$, and hence,
+	\[
+	\frac{d\Gamma }{dr}=\frac{d}{dr}\int_0^{2\pi } {v\left( {rd\theta
+	} \right)} =\int_0^{2\pi } {\frac{\partial \left( {rv}
+	\right)}{\partial r}d\theta =} \int_0^{2\pi } {\frac{\partial
+	u}{\partial \theta }d\theta =} 0.
+	\]
+	As expected, the circulation in circular circuits around the z-axis is
+	constant and independent of the radius of the circuit. Take this circulation
+	to be $\kappa $. Then,
+	\[
+	\int_0^{2\pi } {rvd\theta } =\kappa .
+	\]
+	or $\int_0^{2\pi } {vd\theta } =\frac{\kappa }{r}$.
+
+	Seeking a solution with radial symmetry, v is independent of $\theta $ and
+	\[
+	v\int_0^{2\pi } {d\theta } =2\pi v=\frac{\kappa }{r},
+	\]
+	or $v=\frac{\kappa }{2\pi r}$.
+
+	As the line vortex is approached, the tangential velocity $\to \infty $
+	like (distance)$^{-1}$. Note particularly that the line vortex flow field is
+	one in which every element of fluid is ``rotating'' in a circular path about
+	the vortex but that the vorticity distribution is zero at all points of the
+	flow for which r $\ne $ 0. There is just one velocity distribution that
+	makes this possible -- that for which the velocity is entirely tangential
+	and decays as (distance)$^{-1}$.
+\end{examplesolution4}
+\end{examplebox}
+
+
+
+
+The effect of viscosity is to thicken vortex sheets and line vortices by
+diffusion; however, the effect of diffusion is often slow relative to that
+of advection by the flow, and as a result large regions of flow will often
+remain free from vorticity. Vortex sheets at surfaces diffuse to form
+\textbf{boundary layers} in contact with the surfaces; or if free they often
+break up into line vortices. Boundary layers on bluff bodies often
+\textit{separate} or break away from the body, forming a \textbf{wake} of rotational,
+retarded flow behind the body, and it is these wakes that are associated
+with the \textbf{drag} on the body. (More on separation later.)
+
+\section{Motion started from rest impulsively}
+Viscosity (which is really just distributed internal fluid friction) is
+responsible for retarding or damping forces which cannot begin to act until
+the motion has started; i.e. \textbf{take time to act}. Hence any flow will
+be \textbf{initially} irrotational everywhere except at actual boundaries.
+Within increasing time, vorticity will be diffused from boundaries and
+advected and diffused out into the flow.
+
+Motion started from rest by an \textbf{instantaneous impulse} must be
+irrotational. If we integrate the Euler equation over the time interval $(0,
+\delta t)$:
+\[
+\int_0^{\delta t} {\frac{D{{\bf u}}}{Dt}}
+dt=\int_0^{\delta t} {{\bf F}} dt-\int_0^{\delta t}
+{\frac{\nabla p}{\rho }} dt
+\]
+or
+\[\left[ {{\bf u}} \right]_0^\delta =\int_0^{\delta t} {\rm
+{\bf F}} dt-\frac{1}{\rho }\nabla \int_0^{\delta t} p dt. \]
+
+In the limit $\delta t \to  0$ for start-up by an instantaneous impulse,
+the impulse of the body force $\to  0$ (as the body force is unaffected by
+the impulsive nature of the start) and
+\[
+{{\bf u}}-{{\bf u}}_{{0}} =-\frac{1}{\rho }\nabla P,
+\]
+where the fluid responds instantaneously with the impulsive pressure field
+$P=\int_0^{\delta t} {pdt} $, and the impulse on a fluid element is
+$-\nabla P$ per unit volume, producing a velocity from rest of
+\begin{equation}
+{{\bf u}}=-\frac{1}{\rho }\nabla P.
+\label{eq:impulsive-pressure-gradient-flow}
+\end{equation}
+This is irrotational as $\nabla \times {{\bf u}}=-\frac{1}{\rho }\nabla
+\times \nabla P={{0}}$.
+
+\section{Generation of circulation at boundaries}
+
+Consider now how circulation (or vorticity) is generated. An infinite plate
+moves to the right with speed $U$. Consider the circulation around a small
+circuit $ABCD$ centred about the point $O$ on the surface of the plate, where
+${\overline {BC} } / {\overline {AB} }\ll 1$. The
+circulation is
+\begin{align*}
+ \int_{ABCDA} {{{\bf u}}. {{\bf dx}}}
+ & =\int_{{A}'A} {w\ dz+} \int_{AB} {\left( {u-U} \right)dx+}
+\int_{B{B}'} {wdz} \\
+ & =\int_{{-\delta x} / 2}^{{\delta x}/ 2} {\left( {u-U}
+\right)dx} \\
+ & =\left( {u-U} \right)\delta x \\
+ \end{align*}
+
+\begin{wrapfigure}{r}{3in}
+\centerline{\includegraphics[width=3in]{Section48.pdf}}
+\caption{ }
+\label{fig2.8}
+\end{wrapfigure}
+
+Hence, the circulation \textbf{per unit length} (in the $x$ direction) is $L =
+\left( {u-U} \right)$. Had the boundary been positioned on top of the fluid
+instead of below, we would have found the circulation per unit length to be
+$-\left( {u-U} \right)$.
+
+Taking the material derivative of this expression and using the $x$-component
+of the Navier-Stokes equation gives,
+\begin{equation}
+\frac{DL}{Dt}=-\frac{1}{\rho }\frac{\partial p}{\partial x}+\nu \nabla
+^2u-\frac{dU}{dt},
+\end{equation}
+at the lower boundary. We see that the generation of circulation per unit
+length (and hence vorticity) at a boundary is due solely to the tangential
+pressure gradient and the acceleration of the boundary. The viscous
+diffusion simply redistributes the vorticity.
+
+\divider
+\pagebreak
+
+\section{Exercises}
+
+\begin{questionstar}
+	Consider the shear flow $\textbf{u} = (\Lambda z, 0, 0)$. Choose any initially
+	rectangular or circular contour and calculate its position at arbitrary time $t$.
+
+	Calculate the circulation at $t=0$ and at subsequent times.
+
+	Show that the circulation per unit area is $\Lambda $ and is conserved following the flow.
+	\label{qn:shearflowcirc}
+\end{questionstar}
+
+\begin{questionstar}
+
+ Assume that a tornado can be approximated as a line vortex in which the
+velocity decays as (distance)$^{-1}$. Suppose that the tangential wind is 20
+ms$^{-1}$ at a radius of 2 km. What is the circulation? What is the wind
+speed at a radius of 500 m?
+
+
+\label{qn:tornado}
+\end{questionstar}
+
+
+\begin{questionstar}
+	Does fluid with velocity
+	\[
+		{{\bf u}}=\left[ {z-\frac{2x}{r},2y-3z-\frac{2y}{r},x-3y-\frac{2z}{r}} \right]
+	\]
+	possess vorticity ?
+
+	( Here, $\textbf{u} = (u,v,w)$ is the velocity in the
+	Cartesian frame, $\textbf{r} = (x,y,z)$ and $r^{2} = x^{2} +y^{2} +
+	z^{2}$)
+
+	What is the circulation in the circle $x^{2} + y^{2} = 9, z = 0$?
+
+	Is this flow incompressible?
+\end{questionstar}
+
+\begin{question}
+	Given a velocity field $\textbf{u} = (xy, 0, 0)$,  calculate the vorticity.
+
+	Now calculate the circulation around the rectangular circuit $(1,1,0)$, $(-1,1,0)$,
+	$(-1,-1,0)$, $(1,-1,0)$.
+
+	Is the flow irrotational? Why?
+\end{question}
+
+\begin{questionstar}
+	Consider the closed circuit $C(t)$ which at $t=0$ is given by
+	\[
+		{\bf x} = (a\cos s, a\sin s, 0 ), \quad 0 \le s \le 2\pi,
+	\]
+	and is advected by the velocity
+	\[
+		{\bf u} = (\alpha y, 0, 0).
+	\]
+	Determine the position of $C$ in terms of the initial label $s$ and show that the circulation
+	\[
+		\Gamma = \oint_{C(t)} {\bf u}.{\bf dx} = \int_0^{2\pi} {\bf u}.\frac{\partial {\bf x}}{\partial s} ds,
+	\]
+	is conserved.
+\label{qn:advectedcontour}
+\end{questionstar}
+
+
+\begin{questionstar}
+	Prove that for two-dimensional motion in cylindrical polar coordinates given
+    by ${\bf u} = (u,v,0)$, the vorticity is:
+\[{\bm \omega} = \left( 0,0, \frac{1}{r} \left(  \frac{\partial}{\partial r} (rv) - \frac{\partial u}{\partial \theta}\right) \right) \]
+\label{qn:cylindricalvorticity}
+
+
+\end{questionstar}
+
+\begin{question}
+	Inviscid fluid occupies the region $x \ge 0$, $y \ge 0$ bounded by two rigid
+	boundaries $x=0$, $y=0$. Its motion results wholly from the presence of a line vortex,
+	which itself moves according to the Helmholtz vortex theorem. Show that the condition of
+	zero transverse velocity on the boundaries can be satisfied by introducing vortices of
+	strength $-\kappa$ at $(-x,y)$ and $(x,-y)$ and a vortex of strength $\kappa$ at $(-x,-y)
+	$. Determine the velocity due to these ``image vortices" on the original vortex and show
+	that the path taken by the vortex is
+	\[ \frac{1}{x^2} + \frac{1}{y^2} = \hbox{const}. \]
+\label{qn:vortexmirror}
+
+
+\end{question}
+
+
+
+
+%% =========================================
+
+\begin{answer4}
+
+\newpage
+
+\section{Solutions to Selected Exercises}
+
+
+\begin{questionnumber}{\ref{qn:shearflowcirc}}
+
+\[
+\frac{d{\bm x}}{dt} = (\Lambda z, 0, 0);\;\;\; {\bm x} = (x_{0} + \Lambda x_{0}t, y_{0}, z_{0})
+\]
+
+CIRCLE --- Consider an initially circular contour ($s$ increasing in clockwise circuit) $\bm x_{0} = (x_{0},z_{0}) = (R \cos\theta, -R\sin\theta)$, at time $t>0$ this becomes:
+\[
+  {\bm x}(t) = R ( -\Lambda t \sin\theta + \cos\theta, -\sin\theta )
+\]
+Circulation, $\Gamma$ is given by
+\[
+\Gamma(t) = \oint {\bm u}\cdot d{\bm x} = \int_{0}^{2\pi} {\bm u}\cdot \frac{d{\bm x}}{d\theta} d\theta =
+      \int_{0}^{2\pi} (-\Lambda R \sin\theta, 0) \cdot R( -\Lambda t \cos\theta - \sin\theta, -\sin\theta) d\theta
+\]
+\[
+\Gamma(t) =
+      \int_{0}^{2\pi} \left(
+      		\Lambda^{2} R^{2} t\sin\theta \cos\theta + \Lambda R^{2} \sin^{2}\theta
+        			\right) d\theta
+	      = \pi \Lambda R^{2}
+ \]
+Since $\int_{0}^{2\pi} \sin\theta\cos\theta d\theta =0;\; \int_{0}^{2\pi} \sin^{2}\theta d\theta = \pi$
+
+Circulation is unchanged with time.
+
+The area is conserved since $\nabla \cdot u = 0$ and the flow is 2D !
+
+Hence the circulation per unit area (vorticity) is also conserved and has the value $\Lambda$.
+Verify by computing ${\bm \omega} = \nabla \times {\bm u}$.
+
+RECTANGLE --- consider a rectangular contour bounding the region $0 \le x_{0} \le 1;\;\; 0 \le z_{0} \le 1 $. The distance parameterization along the contour is
+\[
+	{\bm x}_{0} =
+		\begin{cases}
+		   (0,s)   & 0 \le s \le 1 \\
+		   (s-1,1) & 1 \le s \le 2 \\
+		   (1,3-s) & 2 \le s \le 3 \\
+		   (4-s,0) & 3 \le s \le 4 \\
+		\end{cases}
+\]
+
+Circulation is therefore given by
+\[
+    \Gamma = \oint_{s=0}^{4} {\bm u}\cdot \frac{d{\bm x}}{ds} ds
+\]
+only the segment between $s=1$ and $s=2$ contributes to the integral, giving a circulation of $\Lambda$ at
+the initial time (and vorticity $\Lambda$ given an area of 1). At later times, the flow is such that the initially square contour becomes a parallelogram, and the symmetry then ensures that the angled sides have equal and opposite contributions to the circulation integral ... the circulation / vorticity are therefore constant through time as
+expected.
+
+Here is a good demonstration of the vorticity in a shear flow using a
+vorticity meter which is similar in principle to the one in the old-style
+movies, though somewhat different in detail:
+\url{http://www.youtube.com/watch?v=T75BbWE-i3I}
+
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:tornado}}
+
+	A line vortex has (tangential) velocity field ${u_{\theta}} = \kappa / 2\pi r$
+
+	Thus, if the velocity is $20ms^{-1}$ at $2000m$ from the tornado,
+	the circulation must be $2\pi r |u|$ or $2.5\times 10^{5} m^{2}s^{-1}$
+
+	At $500m$, the velocity is $80ms^{-1}$
+
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:advectedcontour}}
+Position at time $t$ is given by
+\[
+	{\bm x} = ( a\cos s + \alpha t a \sin s, a \sin s, 0 )
+\]
+Note, since the flow velocity is horizontal and independent of time,
+this can be written without integrating from $t=0$ to $t$,
+\[
+	\Gamma = \int_0^{2\pi} {\bf u}.\frac{\partial {\bf x}}{\partial s} ds =
+	\int_{0}^{2\pi} (\alpha a \sin s, 0, 0 ) \cdot
+	          ( - a \sin s + \alpha a t \cos s, a \cos s, 0 ) ds
+\]
+\[
+     \Gamma = \int_0^{2\pi} \alpha a^{2} \left( -\sin^{2}s +
+     		\alpha t \sin s \cos s \right) ds = -\pi \alpha a^{2}
+\]
+which does not change over time.
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:cylindricalvorticity}}
+  We have the following relationships:
+\begin{equation}
+	x = r \cos\theta; \;\; y = r \sin\theta; \;\; z \;\; \text{unchanged}
+\label{eq:xy-rtheta}
+\end{equation}
+or
+\[
+    r = ( x^{2} + y^{2} )^{{1/2}}; \;\;  \theta = \arctan (y/x)
+\]
+\[
+    \frac{\partial}{\partial x} = \frac{\partial r}{\partial x}\frac{\partial }{\partial r} +
+                                  \frac{\partial \theta}{\partial x}\frac{\partial }{\partial \theta} =
+                                  \cos\theta \frac{\partial }{\partial r} -
+                                  \frac{\sin\theta}{r}   \frac{\partial }{\partial \theta}
+\]
+\[
+    \frac{\partial}{\partial y} = \frac{\partial r}{\partial y}\frac{\partial }{\partial r} +
+                                  \frac{\partial \theta}{\partial y}\frac{\partial }{\partial \theta} =
+                                  \sin\theta \frac{\partial }{\partial r} +
+                                  \frac{\cos\theta}{r}   \frac{\partial }{\partial \theta}
+\]
+In Cartesian coordinates,
+\[
+	{\bm u} = \left( v_{x}, v_{y}, v_{z} \right) =
+			  \left( \partial x  / \partial t, \partial y  / \partial t, \partial z / \partial t \right)
+\]
+In cylindrical polar coordinates,
+\[
+	{\bm U} = \left( v_{r}, v_{\theta}, v_{z} \right) =
+			  \left( \partial r  / \partial t, r \partial \theta  / \partial t, \partial z / \partial t \right)
+\]
+This allows us to compute the relationships between $\bm u$ and $\bm U$ (the $z$ direction remains unchanged between Cartesian coordinates and cylindrical polar coordinates)
+\[
+    v_{r} =  \frac{\partial r}{\partial t} = \frac{\partial r}{\partial x}\frac{\partial x}{\partial t} + \frac{\partial r}{\partial y} \frac{\partial y}{\partial t} = v_{x} \cos\theta + v_{y} \sin\theta
+\]
+\[
+    v_{\theta} = r \frac{\partial \theta}{\partial t} = r \left( \frac{\partial \theta}{\partial x}\frac{\partial x}{\partial t} +  \frac{\partial \theta}{\partial y} \frac{\partial y}{\partial t}\right) = - v_{x} \sin\theta + v_{y} \cos\theta
+\]
+
+For a 2D flow, the vorticity in Cartesian coordinates is out of the plane of the flow:
+\[
+	{\bm \omega} = \left( \frac{d v_{y}}{dx} - \frac{d v_{x}}{dy} \right) \hat{\bm k} = \eta \hat{\bm k}
+\]
+
+Using the relationships above,
+\[
+	\eta = \left(  \cos\theta \frac{\partial }{\partial r} -
+                   \frac{\sin\theta}{r}   \frac{\partial }{\partial \theta}  \right)
+           ( \sin\theta v_{r} + \cos\theta v_{\theta} ) -
+           \left(  \sin\theta \frac{\partial }{\partial r} +
+                   \frac{\cos\theta}{r}   \frac{\partial }{\partial \theta}  \right)
+           ( \cos\theta v_{r} - \sin\theta v_{\theta} )
+\]
+\[
+	\eta = \frac{\partial v_{\theta}}{\partial r} + \frac{v_{\theta}}{r} -
+		\frac{1}{r}\frac{\partial v_{r}}{\partial \theta} =
+		\frac{1}{r}\frac{\partial}{\partial r}(r u_{\theta}) +
+		\frac{1}{r}\frac{\partial v_{r}}{\partial \theta}
+\]
+
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:vortexmirror}}
+\begin{wrapfigure}{r}{2.5in}
+\includegraphics[width=2.5in]{VortexReflection.pdf}
+\end{wrapfigure}
+
+First consider a vortex at $(x_{0}>0,y_{0}>0)$ adjacent to a single, solid wall at $x=0$.
+
+The velocity field associated with the vortex itself is
+\[
+	(u,v) = \frac{\kappa}{2\pi r_{1}}(-\sin\theta_{1}, \cos\theta_{1})
+\]
+where
+\[
+r_{1} = \sqrt{ (x-x_{0})^{2} + (y-y_{0})^{2}}
+\]
+and
+\[
+\theta_{1} = \arctan\left( (y-y_{0}) / ( x - x_{0}) \right)
+\]
+
+On the solid boundary, we need to satisfy $u=0$ which is equivalent to specifying
+an additional velocity which exactly cancels $u$ on the wall. (Note that this is
+a free-slip boundary, $v\ne 0$)
+\[
+	(u,v) = \frac{\kappa}{2\pi r_{1}}(-\sin\theta_{1}, \cos\theta_{1}) -
+            \frac{\kappa}{2\pi r_{2}}(-\sin\theta_{2}, \cos\theta_{2})
+\]
+where
+\[
+r_{2} = \sqrt{ (x+x_{0})^{2} + (y-y_{0})^{2}}
+\]
+and
+\[
+\theta_{1} = \arctan\left( (y-y_{0}) / ( x + x_{0}) \right)
+\]
+This is a vortex of opposite circulation centred in the mirror position across the
+solid boundary. As the vortex lies outside the boundary it does not introduce additional
+vorticity to the domain of the solution (remember, the flow away from the vortex itself
+is irrotational).
+
+It is also important that we have reduced our problem to a linear system of equations in this particular case, and a superposition of solutions is quite acceptable.
+
+If we now add a second wall along $y=0$, the resulting image vortices are pictured
+in the diagram, and the flow solution is
+\begin{multline*}
+		(u,v) = \frac{\kappa}{2\pi r_{1}}(-\sin\theta_{1}, \cos\theta_{1}) -
+                \frac{\kappa}{2\pi r_{2}}(-\sin\theta_{2}, \cos\theta_{2}) -\\
+                \frac{\kappa}{2\pi r_{3}}(-\sin\theta_{3}, \cos\theta_{3}) +
+                \frac{\kappa}{2\pi r_{4}}(-\sin\theta_{4}, \cos\theta_{4}) \mbox{\hspace{2.1cm}}
+\end{multline*}
+where $r_{3,4}$ and $\theta_{{3,4}}$ are defined in a similar way to the previous case.
+
+To compute the motion of the vortex, consider Helmholtz's theorem which tells us
+that the vorticity is transported with the flow.
+
+Note also that the vortex does not transport itself (when away from a boundary) since the
+flow around the vortex is zero at the vortex.
+
+The velocity sensed by the vortex is therefore entirely due to the image vortices (or
+alternatively, by existence of forces applied on the boundary by the flow). The positions
+of the other vortices are such that the distances and directions of the induced flow
+have a great deal of symmetry; the solution looks like this:
+\[
+	(u,v) = -\frac{\kappa}{2\pi 2x}(0,1) +  \frac{\kappa}{2\pi 2y}(1,0) +
+	        \frac{\kappa}{2\pi 2r} (-sin\theta, cos\theta)
+\]
+where $x,y,r,\theta$ are the current position of the vortex in the usual coordinates (which
+have the original at the intersection of the walls in this case).
+\[
+	(u,v) = \frac{\kappa}{4\pi}\left(\frac{1}{y} - \frac{y}{r^{2}},
+		-\frac{1}{x} + \frac{x}{r^{2}} \right) =
+		\frac{1}{\pi r^{2}} \left( \frac{x^{2}}{y}, -\frac{y^{2}}{x} \right)
+\]
+
+Streamlines therefore satisfy
+\[
+	\frac{dy}{dx} = -\frac{y^{3}}{x^{3}}
+\]
+which, it is easy to show, implies
+\[
+	\frac{1}{x^{2}} + \frac{1}{y^{2}} = \text{constant.}
+\]
+
+\end{questionnumber}
+
+\end{answer4}
+
+
+%% =============================================
+
+
+
+\chapter{One Dimensional Viscous Flows}
+A viscous flow is one in which the fluid immediately above some level exerts
+a stress on the fluid below it and visa versa. An inviscid fluid
+is one in which this stress has no tangential component.
+
+Newtonian fluids are those for which the shear stress $\tau $ is
+proportional to the velocity gradient, i.e.,
+\[
+\tau =\mu \frac{du}{dz},
+\]
+where $\mu $ is the coefficient of viscosity. The kinematic viscosity is
+$\nu =\mu /\rho $.
+
+Roughly speaking, viscosity is more important close to the boundary than in
+the overlying fluid because it is close to the boundary that the velocity
+gradients are largest. In general the velocity gradients are largest near
+the boundary because the fluid must satisfy a no slip boundary condition.
+
+We examine now a class of viscous flow for which exact solutions can be
+found.
+
+\section{One-dimensional flows}
+The central difficulty of solving the Navier-Stokes equations lies in the
+non-linear term ${{\bf u}}. \nabla {{\bf u}}$. However, in
+one-dimensional flows only a single component of velocity is non-zero, say
+${{\bf u}}=\left( {0,0,w} \right)$. Then from the continuity equation,
+\[
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial
+y}+\frac{\partial w}{\partial z}=0,
+\]
+whence $w$ is independent of $z$. It follows that
+\begin{align*}
+ {{\bf u}}. \nabla {{\bf u}}& =\left(
+{u\frac{\partial }{\partial x}+v\frac{\partial }{\partial
+y}+w\frac{\partial }{\partial z}} \right)(u,v,w) \\
+&  =\left( {0,0,w\frac{\partial w}{\partial
+z}} \right) \\
+& ={{\bf 0}} \\
+ \end{align*}
+and in this case many of the problems of solution disappear.
+
+\section{Steady plane Couette flow}
+Consider a steady $(\partial /\partial t = 0)$ viscous flow confined
+between two rigid plates, one at $z = 0$ and the other at $z = h$. Let the lower
+boundary $z = 0$ be fixed; while driving the upper boundary $z = h$ in its own
+plane with velocity $(U,0,0)$. Suppose that the flow independent of the $y$
+coordinate ($\partial /\partial y = 0$ and $v = 0$). Assume that all
+$x$-positions are identical so that there can be no change in the $x$-direction
+($\partial /\partial x = 0$). The solution to this problem is called
+\textit{Couette} flow and is one of the classical problems in fluid dynamics.
+
+From continuity
+\[\frac{\partial u}{\partial x}+\frac{\partial
+v}{\partial y}+\frac{\partial w}{\partial z}=0, \]
+giving
+\[\frac{\partial w}{\partial z}=0.\]
+Hence $w$ is independent of $z$ as well as $x$, $y$ and $t$. Since $w = 0$ on the bottom
+boundary, it must vanish everywhere. Consequently ${{\bf u}}=\left[
+{u\left( z \right),0,0} \right]$.
+
+The Navier-Stokes equations reduce to
+\[
+0=-\frac{1}{\rho }\frac{\partial p}{\partial x}+\nu
+\frac{d^2u}{dz^2},\quad 0=-\frac{1}{\rho }\frac{\partial
+p}{\partial y},\quad 0=-\frac{1}{\rho }\frac{\partial
+p}{\partial z},
+\]
+where $p$, the dynamic pressure, is independent of $x$, $y$ and $z$ (although there
+is, of course, a hydrostatic pressure satisfying ${\partial p} /{\partial z}=-\rho g$. It follows that
+\[
+\frac{d^2u}{dz^2}=0,
+\]
+from which $u=Az+B$.
+
+But at $z=0,u=0\Rightarrow
+B=0$ and at $z=h,u=U\Rightarrow
+A=U/h$.
+Hence
+\[ u=U\frac{z}{h}. \]
+
+The velocity profile is linear and the vorticity is therefore constant
+throughout the fluid. The vorticity is generated as the upper boundary is
+set in motion and subsequently diffuses across the channel.
+
+The shearing stress is $\tau =\mu \left( {{du} /{dz}}
+\right)=\mu U / h$. This result implies that in steady motion
+the tangential stress exerted \textit{by} the upper plate is transmitted across the
+channel without change in value to the lower plate (c.f. fluid transmission).
+
+\section{Steady plane Poiseuille flow}
+Steady plane Poiseuille flow is driven between parallel fixed walls by an
+applied pressure gradient, and was studied initially in connection with
+blood flow. At the boundaries $\textbf{u} = \textbf{0}$ at $z = 0$ and $z = h$. As
+in Couette flow the velocity field is assumed to be independent of $x$ and $y$,
+which from continuity and the lower boundary condition implies that $w = 0$.
+Consequently, ${{\bf u}}=\left[ {u\left( z \right),0,0} \right]$.
+However, if the flow is driven left to right there must be a corresponding
+drop in (dynamic) pressure (i.e. $\partial p/\partial x <0$).
+
+The Navier-Stokes equations reduce exactly as for Couette flow to
+\[
+0=-\frac{1}{\rho }\frac{\partial p}{\partial x}+\nu
+\frac{d^2u}{dz^2},\quad 0=-\frac{1}{\rho }\frac{\partial
+p}{\partial y},\quad 0=-\frac{1}{\rho }\frac{\partial
+p}{\partial z}
+\]
+Thus, $p$ is independent of $t$, $y$ and $z$ so that $p = p(x)$, whence
+\[
+\frac{d^2u}{dz^2}=\frac{1}{\rho \nu }\frac{dp}{dx}.
+\]
+But ${d^2u} /  {dz^2}$ is a function of $z$ only, and ${dp} / {dx}$ a function of $x$ only. Consequently, the only possibility is that both
+are equal to a constant, $-\gamma $ (say). Thus
+\[
+\frac{d^2u}{dz^2}=-\frac{\gamma }{\mu },
+\]
+from which
+\[ u=-\frac{\gamma }{2\mu }z^2+Az+B, \]
+where
+\[ 0=-\frac{\gamma }{2\mu }. 0+A.
+0+B \quad \Rightarrow \quad B=0, \]
+and
+\[ 0=-\frac{\gamma }{2\mu
+}h^2+Ah \quad \Rightarrow \quad A=\frac{\gamma h}{2\mu }. \]
+Therefore,
+\[ u=\frac{\gamma }{2\mu }z(h-z), \]
+which defines a quadratic profile.
+
+The shearing stress $\tau ={\gamma (h-2z)} / 2$
+is zero at the centre plane of the channel and takes its maximum values at
+the wall. In this case shearing stress is transmitted out to both walls,
+acting forwards along each (in this sign convention), and
+serving to transmit the pressure gradient force out to the walls,
+allowing steady flow (without acceleration).
+
+The vorticity is $\eta ={\gamma (h-2z)}  / {\left( {2\mu } \right)}$. Physically, positive
+(negative) vorticity is continuously generated at the lower (upper) boundary
+and diffuses upward (downward). These positive and negative vorticities
+mutually annihilate at $z = 0$.
+
+\section{The Hele-Shaw cell}
+
+???
+
+\divider
+\pagebreak
+
+\section{Exercises}
+
+
+\begin{questionstar}
+	Mixed Couette--Poiseuille flow is driven in a layer of uniform
+	incompressible fluid between two parallel plates at $z = 0$ and $z = h$ by
+	moving the upper plate steadily in its own plane in the $x$-direction with
+	velocity $U$ and applying an \textit{opposing} pressure gradient ${dp} /  {dx}=\gamma >0$.
+
+	Find the velocity profile in the flow and the volume flux and
+	find the pressure gradient required to produce zero net volume flux per unit $y$-width.
+\label{qn:mixed-couette-poiseuille}
+\end{questionstar}
+
+\begin{question}
+	Consider the time dependent Couette problem. A viscous fluid at rest is
+	confined between two rigid plates, one at $z = 0$ and the other at $z = h$. The
+	lower boundary is fixed, but at $t = 0$ the upper boundary is impulsively set
+	in motion in its own plane with velocity $(U,0,0)$.
+
+	Calculate the velocity and vorticity profiles as a function of time.
+\end{question}
+
+\begin{questionstar}
+	Find the velocity field for a steady viscous flow through an axisymmetric pipe of radius $a$
+	under a constant applied   pressure gradient (i.e. Poiseuille flow in cylindrical polar coordinates).
+
+	In cylindrical coordinates for axi-symmetric problems:
+	\[ \nabla^2 f  = \frac{1}{r} \frac{\partial}{\partial r}
+	             \left( r\frac{\partial f}{\partial r}\right) + \frac{\partial^2 f}{\partial z^2}. \]
+\label{qn:steady-cyl-poiseuille-flow}
+\end{questionstar}
+
+\begin{question}
+	Show that in the (slab symmetric) version of the Poiseuille flow problem,
+	negative/positive vorticity is being continuously generated at the upper/lower boundary.
+	Consider the time dependent problem where the flow is impulsively accelerated by a uniform pressure gradient.
+
+	Show that the unsteady component of velocity satisfies the heat equation and
+	determine the initial condition for this equation.
+\label{qn:starting-couette-flow}
+\end{question}
+
+\begin{questionstar}
+	 An incompressible fluid occupies the space $0<z<\infty $ above a plane
+	rigid boundary $z = 0$, which oscillates in the $x$-direction with
+	velocity $U\cos \left( {\alpha t} \right)$. (Assume no applied pressure gradient.)
+
+	Show the velocity field has the form ${\rm
+	{\bf u}}=\left[ {u\left( {z,t} \right),0,0} \right]$ and satisfies
+	\[ \frac{\partial u}{\partial t}=\nu \frac{\partial ^2u}{\partial z^2}. \]
+
+	 Seek a solution of the form $u=Re\left\{ {f\left( z \right)e^{i\alpha t}}
+	\right\}$, where $Re\left\{ \bullet \right\}$ means ``the real part of''.
+
+	Show that \[ u(z,t)=Ue^{-kz}\cos \left( {kz-\alpha t} \right), \]
+	 where $k=\sqrt{\alpha / {2\nu }} $.
+\label{qn:oscillating-half-plane}
+\end{questionstar}
+
+\begin{question}
+
+%% Acheson pp238
+
+In a thin-film of fluid confined between two rigid (impermeable, no-slip)
+boundaries narrowly separated by a distance $h$, as shown here,
+
+\begin{center}
+	\includegraphics[width=0.6\linewidth]{Hele-Shaw-Cell.pdf}
+\end{center}
+
+the Navier-Stokes equation of motion can be approximated by assuming that $ h \ll L$,
+where L is a typical horizontal lengthscale of the flow.
+
+Show that the incompressibility condition implies that $W$, the typical
+vertical velocity of the flow is significantly smaller than $U$.
+
+\textit{Hint: show that}
+\begin{equation*}
+	W \sim U \frac{h}{L}
+\end{equation*}
+\Mark{1}
+
+Show that
+\begin{equation*}
+	\eta \nabla^2 \mathbf{u} \sim \eta \frac{\partial^2 \mathbf{u}}{\partial z^2}
+\end{equation*}
+\Mark{1}
+
+By estimating the magnitude of individual terms, show that
+\begin{equation*}
+	(\mathbf{u}\cdot\nabla) \mathbf{u} \ll \eta \frac{\partial^2 \mathbf{u}}{\partial z^2}
+\end{equation*}
+provided the following condition is met:
+\begin{equation*}
+	\frac{UL}{\eta}\frac{h^2}{L} \ll 1
+\end{equation*}
+\Mark{2}
+
+Now show that the steady Navier-Stokes equation, ignoring
+buoyancy forces, reduces to equations
+for $u$ and $v$ which can be integrated exactly:
+\begin{equation*}
+	\frac{\partial p}{\partial x} = \eta \frac{\partial^2 u}{\partial z^2}; \;\;\;\;
+	\frac{\partial p}{\partial y} = \eta \frac{\partial^2 v}{\partial z^2}; \;\;\;\;
+	\frac{\partial p}{\partial z} \sim 0
+\end{equation*}
+\Mark{2}
+
+Write down $u$, $v$ subject to the no-slip upper and lower boundary conditions and
+demonstrate they always describe an irrotational flow.
+\Mark{4}
+
+(This is the theoretical basis of the Hele-Shaw Cell, an experimental setup which
+recreates 2D, incompressible, irrotational flow).
+
+
+\end{question}
+
+
+
+\begin{answer5}
+\newpage
+\section{Solutions to Selected Exercises}
+
+\begin{questionnumber}{\ref{qn:steady-cyl-poiseuille-flow}}
+	First we assume the form of the solution (analogous with the 2D Cartesian case) is such that the flow has no dependence on $\theta$
+	\[
+		U = \left( u(r), 0, w(r) \right)
+	\]
+	In the Cartesian case, the flow is one dimensional due to continuity. Let us first examine
+	continuity for this case:
+	\[
+		\frac{1}{r}\frac{\partial }{\partial r} (r u(r)) + \frac{\partial w}{\partial z} = 0
+	\]
+	This also implies $u(r) = 0$ given $w$ is a function only of $r$.
+
+	Momentum balances in $r$ and $\theta$ directions give
+	\[
+		\frac{\partial p}{\partial r} = \frac{\partial p}{\partial \theta} = 0
+	\]
+
+	Momentum balance in $z$, and assuming uniform body forces (which only contribute to a hydrostatic pressure gradient) gives
+	\[
+		-\frac{1}{\rho}\frac{\partial p}{\partial z} +
+		\frac{\nu}{r} \frac{d}{dr}\left(r\frac{dw}{dr}\right) = 0
+	\]
+	Since $p$ is independent of $r$ and $w$ is independent of $z$, the two
+	terms must each be equal to a constant, i.e.
+	\[
+		\frac{\partial p}{\partial z} = -\gamma
+	\]
+	\[
+		\frac{1}{r} \frac{d}{dr}\left(r\frac{dw}{dr}\right) = -\frac{\gamma}{\mu}
+	\]
+	$w=0$ at $r=a$, $w\ne 0$ but finite at $r=0$. Solution has the form:
+	\[
+		w = -\frac{\gamma r^{2}}{4\mu} + A \ln r + B
+	\]
+	$A=0$ is required for finite value at $r=0$, $B = \gamma a^{2} / 4\mu$
+	satisfies boundary condition at $r=a$
+	\[
+		w = \frac{\gamma r^{2}}{4\mu} \left( 1-\frac{r^{2}}{a^{2}} \right)
+	\]
+
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:starting-couette-flow}}
+Poiseuille flow in 2D (not axisymmetric) satisfies
+\[
+u = \frac{\gamma z}{2\mu} (h-z) \;\;\; \text{for} \;\; \gamma > 0
+\]
+The vorticity is
+\[
+{\bm \omega} = \eta \hat{\bm \jmath}, \;\;\; \text{where} \;\;
+               \eta = \frac{du}{dz} = \frac{\gamma}{2\mu}(h-2z)
+\]
+which has values
+\[
+	\eta = \begin{cases}
+ 		\;\;\; \dfrac{\gamma h}{2\mu} & z = 0 \\[2ex]
+ 		-\dfrac{\gamma h}{2\mu} & z = h
+		   \end{cases}
+\]
+Hence the boundaries are (equal / opposite) sources of vorticity.
+
+In the unsteady problem, let ${\bm u} = (u(z,t), 0, w )$. Since $u$ has no dependence upon $x$, the incompressibility constraint gives $\partial w / \partial z = 0$ and, since $w$ is zero on the boundaries, $w=0$ everywhere.
+
+Momentum balance in the $z$ direction gives
+\[
+	\frac{\partial p}{\partial z} = \rho g; \;\;\; p = \rho g z + p_{0}(x)
+\]
+Momentum balance in the $x$ direction gives
+\[
+	\frac{\partial u}{\partial t} = -\frac{1}{\rho} \frac{dp_{0}}{dx} +
+		                       \nu \frac{\partial^{2}u}{\partial z^{2}}
+\]
+Now, since $u$ is independent of $x$, $dp_{0}/dx = \text{constant}$.
+
+This is the same equation as heat diffusion where the diffusivity parameter replaced by
+viscosity and a source term from the pressure gradient, and
+with the initial condition being that the fluid moves uniformly with
+a velocity computed from (\ref{eq:impulsive-pressure-gradient-flow})
+everywhere except on the boundary which satisfies $u(r=a,t)=0$.
+\end{questionnumber}
+
+\end{answer5}
+
+
+
+\begin{answer5}
+		We approximate $\partial u / \partial x \sim U/L$, $\partial v / \partial y \sim U/L$,
+		and $\partial w / \partial z \sim W/h$ since the velocity must be zero at the boundaries,
+		$w$ must change over the length $h$.
+
+		Incompressibility tells us that, in general, all terms are comparable and therefore
+		$U/L \sim W/h$, implying that $W \sim Uh/L$. (Alternatively, the terms in U might happen to cancel
+		each other and W must necessarily be small).
+		\Mark{1}
+
+		All velocity gradients in $z$ go from the maximum value in the middle of the layer to zero at the
+		boundaries and hence all versical gradients are large compared to horizontal ones.
+		Hence
+		\begin{equation*}
+			\nabla^2 \approx \frac{\partial^2}{\partial z^2}
+		\end{equation*}
+		\Mark{1}
+
+		Since $W\sim Uh/L$,
+		\begin{equation*}
+			(\mathbf{u}\cdot\nabla) \mathbf{u} =
+			\left( u_k \frac{\partial u}{\partial x_k},
+				   u_k \frac{\partial v}{\partial x_k},
+                    u_k \frac{\partial w}{\partial x_k} \right) =
+                    \left( \frac{U^2}{L}+\frac{U^2}{L}+ \frac{W U}{h},
+					\ldots ,
+                     \frac{UW}{L}+\frac{UW}{L}+ \frac{W^2}{h}
+                     \right)
+		\end{equation*}
+
+		\begin{equation*}
+			(\mathbf{u}\cdot\nabla) \mathbf{u} \sim
+                    \frac{U^2}{L} \left( 1, 1, h/L \right)
+		\end{equation*}
+
+		We can estimate for the viscosity term that:
+		\begin{equation*}
+			\eta \frac{\partial^2 \mathbf{u}}{\partial z^2}
+			\sim \left( \eta \frac{U}{h^2}, \eta \frac{U}{h^2}, \frac{W}{h^2} \right)
+			\sim \frac{\eta U}{h^2} \left( 1, 1, h/L \right)
+		\end{equation*}
+
+		Since these are equivalent in each component, and only differ in their scale,
+		we immediately recover the fact that inertial terms can be neglected as long as
+		\begin{equation*}
+			\frac{UL}{\eta}\frac{h^2}{L} \ll 1
+		\end{equation*}
+
+		Navier-Stokes:
+		\begin{equation*}
+			\rho\frac{\partial \mathbf{u}}{\partial t} + \rho (\mathbf{u}.\nabla)\mathbf{u} = -\nabla p + \rho g + \eta \nabla^2 u
+		\end{equation*}
+		Steady state means the first term can be neglected, we have shown the second term is small,
+		the $\rho g$ is the buoyancy term which we have been told to ignore. We showed that the
+		viscous term simplifies to give these equations exactly.
+		\Mark{1}
+
+		Since $\partial^2 w/\partial z^2 \sim (h/L) \partial^2 u/\partial z^2 $, (above)
+		this is a much smaller term and can be ignored.
+
+		\Mark{1}
+
+		Since $p$ is not a function of $z$, we can integrate (twice) the equations for $u,v$
+		\Mark{1}
+		\begin{equation*}
+			u=\frac{1}{2\eta}\frac{\partial p}{\partial x} z^2 + Az + B
+			v=\frac{1}{2\eta}\frac{\partial p}{\partial y} z^2 + Cz + D
+		\end{equation*}
+		\Mark{1}
+
+		Boundary conditions $u=v=0$ at $z=0$ and $z=h$ give
+
+		\begin{equation*}
+			u = \frac{1}{2\eta}\frac{\partial p}{\partial x} z(h-z);
+			v = \frac{1}{2\eta}\frac{\partial p}{\partial y} z(h-z);
+		\end{equation*}
+		\Mark{1}
+
+		Since $w\sim 0$, $\mathbf{\omega} = (0,0,\Omega)$,
+		\begin{equation*}
+			\Omega = \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y} =
+			    -\frac{1}{2\eta}z(h-z) \left( \frac{\partial^2 p}{\partial x \partial y} -
+			    \frac{\partial^2 p}{\partial y \partial x}  \right) = 0
+		\end{equation*}
+		\Mark{1}
+
+
+\end{answer5}
+
+
+
+
+\cleardoublepage
+\chapter{Boundary Layers in Nonrotating Fluids}
+%%
+The Navier-Stokes' equation is the statement of Newton's second law of
+motion for a viscous fluid. It reads
+\begin{equation}
+\label{eq1a}
+\frac{D{{\bf u}}}{Dt}=-\frac{1}{\rho }\nabla p+\nu \nabla ^2{{\bf
+u}}.
+\end{equation}
+The quantity $\nu $ is called the \textbf{kinematic viscosity}. For air,
+$\nu $ = 1.5 $\times $ 10$^{-5}$ m$^{2}$s$^{-1}$; for water $\nu $ = 1.0
+$\times $ 10$^{-6}$ m$^{2}$s$^{-1}$.
+
+The relative importance of viscous effects is characterized by the Reynolds
+number $Re$, a nondimensional number defined by
+\[
+Re=\frac{UL}{\nu },
+\]
+where $U$ and $L$ are typical velocity and length scales respectively. The
+Reynold's number is a measure of the ratio of the acceleration term to the
+viscous term in (\ref{eq1a}). For example, the diameter of a cricket ball
+is about 75 mm. If the balled is bowled at 100 km hr$^{-1}$ (= 28
+ms$^{-1})$, the Reynolds number is 1.4 $\times $ 10$^{5}$.
+
+For many flows of interest, $Re \gg 1$ and viscous effects are relatively
+unimportant. However, these effects are \textbf{always} important near
+boundaries, even if only in a thin ``boundary-layer" adjacent to the
+boundary.
+
+\section{Flow over a flat plate}
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=4in]{Section61.pdf}}
+\caption{ }
+\label{fig3.1}
+\end{figure}
+
+We consider the boundary layer on a flat plate at normal incidence to a
+uniform stream $U$ as shown.
+
+The Navier Stokes' equations for steady two-dimensional flow with typical
+scales written below each component are:
+\begin{align}
+& u\frac{\partial u}{\partial x}+w\frac{\partial u}{\partial
+z}=-\frac{1}{\rho }\frac{\partial p}{\partial x}+\nu
+\left( {\frac{\partial ^2u}{\partial x^2}+\frac{\partial
+^2u}{\partial z^2}} \right), \label{eq62} \\
+& \ \  \frac{U^2}{L}
+\quad
+\frac{UW}{H}
+\ \ \qquad
+\frac{\Delta p}{\rho L}
+\quad \qquad
+\nu \frac{U}{L^2}
+\quad
+\nu \frac{U}{H^2} \notag
+\end{align}
+\begin{align}
+& u\frac{\partial w}{\partial x}+w\frac{\partial w}{\partial
+z}=-\frac{1}{\rho }\frac{\partial p}{\partial z}+\nu
+\left( {\frac{\partial ^2w}{\partial x^2}+\frac{\partial
+^2w}{\partial z^2}} \right)\quad , \label{eq64} \\
+&\  \frac{UW}{L}
+\ \ \quad
+\frac{W^2}{H}
+\qquad
+\frac{\Delta p}{\rho H}
+\qquad \quad
+\nu \frac{W}{L^2}
+\quad
+\nu \frac{W}{H^2} \notag
+\end{align}
+and the continuity equation is
+\begin{align}
+& \frac{\partial u}{\partial x}+\frac{\partial w}{\partial
+z}=0. \label{eq66} \\
+& \ \frac{U}{L}
+\ \quad
+\frac{W}{H} \notag
+\end{align}
+From the continuity equation we conclude that since $\left| {{\partial u}
+/ {\partial x}} \right|=\left| {{\partial w}
+/ {\partial z}} \right|$, $W \sim UH/L$ and hence
+the two advection terms on the left hand sides of (\ref{eq62}) and (\ref{eq64}) are the
+same order of magnitude: $U^{2}/L$ in (\ref{eq62}) and $(U^{2}/L) (H/L)$ in
+(\ref{eq64}). Now, for a thin boundary layer, $H/L \ll 1$ so that the derivatives
+$\partial ^{2}/\partial x^{2 }$ in (\ref{eq62}) and (\ref{eq64}) can be neglected
+compared with $\partial ^{2}/\partial z^{2 }$. Then in (\ref{eq62}), assuming
+that the pressure gradient term is not larger than both inertial or friction
+terms\footnote{ Note that if this were not true, steady flow would not be
+possible as the large pressure gradient would accelerate the flow further.},
+we have
+\[
+\frac{U^2}{L}\sim \nu \frac{U}{H^2}\ge \frac{\Delta p}{\rho L}.
+\]
+The first two terms imply that $H \sim L\ Re^{-1/2}$. Alternatively, this
+expression implies that the boundary thickness increases downstream like
+$x^{1/2}$ [i.e., $H \sim L^{1/2} (\nu /U)^{1/2}$]. Now from (\ref{eq64}) we
+find that
+\begin{gather*}
+{\frac{\Delta p}{\rho H}} / {\frac{UW}{L}}\sim
+{\frac{\rho U^2}{\rho H}} /
+{\frac{U^2H}{L^2}}\sim \frac{L^2}{H^2}>>1 \\
+{\frac{\Delta p}{\rho H}} / {\frac{\nu
+W}{H^2}}\sim {\frac{\rho U^2}{\rho H}} /{\frac{\nu U}{HL}}\sim \frac{UL}{\nu }=Re>>1.
+\end{gather*}
+But if both the inertia terms and friction terms in (\ref{eq64}) are much less than
+the pressure gradient term, the equation must be accurately approximated by
+\[
+\frac{\partial p}{\partial z}=0.
+\]
+This implies that the perturbation pressure is constant across the boundary
+layer. It follows that the horizontal pressure gradient in the boundary
+layer is equal to that in free stream.
+
+Collecting these results together we find that an approximate form of the
+Navier-Stokes' equations for the boundary layer to be
+\begin{equation}
+\label{eq67a}
+u\frac{\partial u}{\partial x}+w\frac{\partial u}{\partial
+z}=U\frac{dU}{dx}+\nu \frac{\partial ^2u}{\partial z^2}\quad ,
+\end{equation}
+with
+\begin{equation}
+ \frac{\partial u}{\partial x}+\frac{\partial w}{\partial z}=0, \label{eq67b}
+\end{equation}
+and $U = U(x)$ being the (possible variable) free stream velocity above the
+boundary layer. Equations (\ref{eq67a}) and (\ref{eq67b}) are called the \textbf{boundary
+layer equations}.
+
+\section{Blasius' solution ($U$ = constant)}
+Equation (\ref{eq67a}) reduces to
+\begin{equation}
+\label{eq68}
+u\frac{\partial u}{\partial x}+w\frac{\partial u}{\partial z}=\nu
+\frac{\partial ^2u}{\partial z^2}\quad ,
+\end{equation}
+and we look for a solution satisfying the boundary conditions $u = 0$, $w = 0$
+at $z = 0$, $u \to  U$ as $z \to \infty $ and $u = U$ at $x = 0$. Equation (\ref{eq67b})
+suggests that we introduce a streamfunction $\psi $ such that
+\[ u=\frac{\partial \psi }{\partial z}, \quad w=-\frac{\partial \psi }{\partial
+x}, \]
+whereupon $\psi $ must satisfy the conditions $\psi $ = constant, $\partial
+\psi /\partial z = 0$ at $z = 0$, $\psi  \sim  Uz$ as $z \to \infty $
+and $\psi  = Uz$ at $x = 0$. It is easy to verify that a solution satisfying
+these conditions is
+\begin{equation}
+\label{eq69}
+\psi =\left( {2\nu Ux} \right)^{\textstyle{1 \over 2}}f\left( \chi \right),
+\end{equation}
+where
+\begin{equation}
+\label{eq610}
+\chi =\left( {U/ {2\nu x}} \right)^{\textstyle{1 \over 2}}z,
+\end{equation}
+and $f(\chi )$ satisfies the ordinary differential equation
+\begin{equation}
+\label{eq611}
+{f}'''+f{f}''=0,
+\end{equation}
+subject to the boundary conditions
+\begin{equation}
+f(0) = f'(0) = 0; \quad f'(\infty ) = 1 . \label{eq613} \end{equation}
+
+\begin{wrapfigure}{r}{3in}
+\centerline{\includegraphics[width=3in]{Section62.pdf}}
+\caption{ }
+\label{fig4.2}
+\end{wrapfigure}
+
+Here, a prime denotes differentiation with respect to $\chi $. It is easy to
+solve Eq. (\ref{eq611}) subject to (\ref{eq613}) numerically (see e.g. Rosenhead, 1966,
+\textit{Laminar Boundary Layers}, p. 222-224). The profile of $f'$ which characterizes the variation of $u$
+across the boundary layer thickness is proportional to $\chi $ and we might
+take $\chi  = 4$ as corresponding with the edge of the boundary layer. Then
+(\ref{eq610}) shows that the dimensional boundary thickness $\delta \left( x
+\right)=4(2\nu x/ U)^{\textstyle{1 \over 2}}$, i.e.,
+increases like the square root of the distance from the leading edge of the
+plate. We can understand the thickening of the boundary layers as due to the
+progressive retardation of more and more fluid as the fictional force acts
+over a progressively longer distance downstream.
+
+Note that the boundary layer is \textbf{rotational} since ${\bm\omega}
+= (0, \eta , 0)$, where $\eta ={\partial u} / {\partial
+z-}{\partial w}/{\partial x}$, or approximately just
+${\partial u}/ {\partial z}$.
+
+Often the boundary layer is relatively thin. Consider for example the
+boundary layer in an aeroplane wing. Assuming the wing to have a span of 3 m
+and that the aeroplane flies at 200 ms$^{-1}$, the boundary layer at the
+trailing edge of the wing (assuming the wing to be a flat plate) would have
+thickness of 4(2 $\times $ 1.5 $\times $ 10$^{-5 }\times $ 3/200)$^{1/2}$
+= 2.7 $\times $ 10$^{-3}$ m using the value $\nu $ = 1.5 $\times $ 10$^{-5}$
+m$^{2}$s$^{-1}$ for the viscosity of air. The calculation assumes that the
+boundary layer remains laminar; if it becomes turbulent, the random eddies
+in the turbulence have a much larger effect on the lateral momentum transfer
+than do random molecular motions, thereby increasing the effective value of
+$\nu $, possibly by an order of magnitude or more, and hence the boundary
+layer thickness.
+
+\divider
+\pagebreak
+
+\section{Exercises}
+
+\begin{questionstar} % Has solution
+	Define the Reynolds number and explain its physical significance.
+	Estimate the Reynolds number for a ball of radius 10 cm thrown in air at a speed of
+	15 ms$^{-1}$. What speed gives an equivalent Reynolds number in water.
+	The kinematic viscosity for air is 1.5$\times $10$^{-5}$ m$^{2}$s$^{-1}$
+	and for water is $10^{-6}$ m$^{2}$s$^{-1}$ .
+\label{qn:reynolds-number}
+\end{questionstar}
+
+
+\begin{question} % Has solution
+	Show that the boundary layers equations for $U_x=0$ are satisfied by the similarity solution
+		\[ \psi =\left( {2\nu Ux} \right)^{\frac{1}{2}}f\left( \chi \right),
+		 \quad \chi =\left( {U/ {2\nu x}} \right)^{\frac{1}{2}} z, \]
+	where
+		\begin{gather*} {f}'''+f{f}''=0, \\
+		f(0) = f'(0) = 0; \quad f'(\infty ) = 1 ,\end{gather*}
+	and
+		\[ u = \frac{\partial \psi}{\partial z}, \quad w = -\frac{\partial \psi}{\partial x}. \]
+\label{qn:blasius-solution}
+\end{question}
+
+
+\begin{answer6}
+\newpage
+\section{Solutions to Selected Exercises}
+
+
+\begin{questionnumber}{\ref{qn:reynolds-number}}
+	Reynolds number is defined by this ratio which contains some loosely defined
+	parameters
+	\[
+		\text{Re} = \frac{UL}{\nu}
+	\]
+	$U$ is the characteristic velocity of the fluid; $L$ is a characteristic
+	lengthscale, $\nu$ is the kinematic viscosity. Note that `characteristic' may
+	not be obvious by inspection, an observation of the fluid behaviour may
+	first be necessary.
+
+	Reynolds number is a measure of the relative importance of inertial `forces' to
+	viscous stresses in the Navier-Stokes equation.
+
+	Characteristic length scale for the ball is $L \approx 0.1m$, characteristic velocity $15ms^{-1}$
+	gives $\text{Re}~\approx~10^{5}$. The smaller kinematic viscosity of water gives
+	the equivalent Reynolds number at $1ms^{{-1}}$
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:blasius-solution}}
+
+\newcommand{\pd}[2]{\frac{\partial {#1} }{\partial {#2}}}
+\newcommand{\ppd}[2]{\frac{\partial^{2} {#1} }{\partial {#2}^{2}}}
+\newcommand{\pppd}[2]{\frac{\partial^{3} {#1} }{\partial {#2}^{3}}}
+\newcommand{\ppdd}[3]{\frac{\partial^{2} {#1} }{\partial {#2} \partial {#3}}}
+
+First write the boundary layer equations using the stream function ...
+\[
+	\pd{\psi}{z}\pd{^{2}\psi}{z\partial x} - \pd{\psi}{x}\pd{^{2}\psi}{z^{2}} =
+	\nu \pd{^{3}\psi}{z^{3}}
+\]
+%A more convenient notation which is commonly used with tensorial
+% index notation is
+%to write $\partial \phi/ \partial x_{i} \equiv \phi_{{,i}}$ and
+%  $\partial^{2} \phi/ \partial x_{i}^{2} \equiv \phi_{{,ii}}$ etc.
+%\[
+%   \psi_{,z} \psi_{,zx} - \psi_{,x} \psi_{,zz}
+%\]
+Boundary conditions give us
+\[
+	\pd{\psi}{z} = \pd{\psi}{x} = 0 \;\; \text{ on } \;\; z=0;\;\;\; \lim_{z \to \infty } \pd{\psi}{z} = U;\;\;\; \pd{\psi}{z} = U \text{ at } x=0
+\]
+Now let
+\[
+	\psi = (2\nu U x)^{{1/2}}f(\chi);\;\;\; \chi = (U/2\nu x)^{1/2}z
+\]
+Then
+\[
+	\pd{\psi}{z} = U \pd{f}{\chi};\;\;\; \text{and } \lim_{\chi \to \infty}
+	\pd{f}{\chi} = 1;\;\;\; \pd{f}{\chi} = 0\text{ on } \chi=0
+\]
+\[
+	\pd{\psi}{x} = \frac{1}{2x}\left( 2\nu Ux\right)^{{1/2}}f +
+	               \pd{\chi}{x} \left( 2\nu Ux\right)^{{1/2}} \pd{f}{\chi}
+\]
+\[
+	\pd{\psi}{x} = \frac{1}{2x}\left( 2\nu Ux\right)^{{1/2}}f -
+	               \frac{\chi}{2x} \left( 2\nu Ux\right)^{{1/2}} \pd{f}{\chi}
+\]
+we also have $\partial\psi/ \partial{x} = 0$ on $z=0$ implies $f=0$ on $\chi=0$ since $\partial f/ \partial \chi = 0$ on $\chi = 0$
+\[
+\ppd{\psi}{z} = \frac{U^{3/2}}{(2\nu x)^{1/2}} \ppd{f}{\chi}
+\]
+\[
+\pppd{\psi}{z} = \frac{U^{2}}{(2\nu x)} \pppd{f}{\chi}
+\]
+\[
+\ppdd{\psi}{z}{x} = -\frac{\chi}{2x} \ppd{f}{\chi}
+\]
+Substituting,
+\[
+	U\pd{f}{\chi}\left( -\frac{\chi}{2x} \ppd{f}{\chi} \right)
+	-\left[ \frac{1}{2x}\left( 2\nu Ux\right)^{{1/2}}f +
+	               \pd{\chi}{x} \left( 2\nu Ux\right)^{{1/2}}f \pd{f}{\chi}
+	\right] \frac{U^{3/2}}{(2\nu x)^{1/2}} \ppd{f}{\chi} =
+	\frac{U^{2}}{(2\nu x)} \pppd{f}{\chi}
+\]
+Given the boundary conditions etc. above,
+\[
+	-\frac{U^{2}}{2x} f \ppd{f}{\chi} = \frac{U^{2}}{2x} \pppd{f}{\chi}
+\]
+or
+\[
+	 \pppd{f}{\chi} + f \ppd{f}{\chi} = 0
+\]
+which is what the question is asking (in a shorthand form)
+\end{questionnumber}
+
+\end{answer6}
+
+
+
+%% ===================================================
+
+
+\chapter{Two Dimensional Flow Past a Cylinder}
+In two dimensions $(x, z)$, the Euler equations of motion are
+\begin{align}
+& \frac{\partial u}{\partial t}+u\frac{\partial u}{\partial
+x}+w\frac{\partial u}{\partial z}=-\frac{1}{\rho }\frac{\partial
+p}{\partial x}\quad , \label{eq71} \\
+& \frac{\partial w}{\partial t}+u\frac{\partial w}{\partial
+x}+w\frac{\partial w}{\partial z}=-\frac{1}{\rho }\frac{\partial
+p}{\partial z}\quad , \label{eq72}
+\end{align}
+and the continuity equation is
+\begin{equation}
+\label{eq73}
+\frac{\partial u}{\partial x}+\frac{\partial w}{\partial z}=0 .
+\end{equation}
+The vorticity ${\bm\omega}$ has only one non-zero component, the
+$y$-component, i.e., ${\bm\omega}= (0, \eta , 0)$, where
+\begin{equation}
+\label{eq74}
+\eta =\frac{\partial u}{\partial z}-\frac{\partial w}{\partial x}.
+\end{equation}
+Taking ($\partial /\partial z$)(\ref{eq71}) - ($\partial /\partial x$)(\ref{eq72}) and
+using the continuity equation we can show that
+\begin{equation}
+\label{eq75}
+\frac{D\eta }{Dt}=0.
+\end{equation}
+This equation states that fluid particles conserve their vorticity as they
+move around. This is a powerful and useful constraint. In some problems,
+$\eta  = 0$ for all particles. Such flows are called \textbf{irrotational}.
+
+\section{Flow past a cylinder without circulation}
+Consider, for example, the steady flow around a cylinder.  All fluid particles originate from far upstream ($x
+\to -\infty )$ where $u = 0$, $w = 0$,
+and therefore $\eta  = 0$. It follows that fluid particles have zero
+vorticity for all time.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=4in]{Section71.pdf}}
+\caption{ }
+\label{fig4.1}
+\end{figure}
+
+The inviscid flow problem can be solved as follows. Note that the continuity
+equation (\ref{eq73}) suggests that we introduce a \textbf{streamfunction} $\psi $,
+defined by the equations
+\begin{equation}
+u=\frac{\partial \psi }{\partial z}, \quad w=-\frac{\partial \psi }{\partial
+x}.
+\label{eq76}
+\end{equation}
+
+Then (\ref{eq75}) is automatically satisfied and it follows from (\ref{eq74}) that
+\begin{equation}
+\eta =\frac{\partial ^2\psi }{\partial x^2}+\frac{\partial ^2\psi
+}{\partial z^2}\quad .
+\end{equation}
+In the case of \textbf{irrotational flow}, $\eta $ = 0 and $\psi $ satisfies
+Laplace's equation
+\begin{equation}
+\label{eq77}
+\frac{\partial ^2\psi }{\partial x^2}+\frac{\partial ^2\psi }{\partial
+z^2}=0\quad .
+\end{equation}
+
+Appropriate boundary conditions are found using (7.6). For example, on a
+solid boundary, the normal velocity must be zero, i.e., $ \textbf{u} .
+\textbf{n} = 0$ on the boundary. If $ \textbf{n} = (n_{1}, 0, n_{3})$, it
+follows using (\ref{eq76}) that $n_1 {\partial \psi } /
+{\partial z-n_3 } / {\partial x}=0$, or
+$\textbf{n} \times  \nabla \psi $ = \textbf{0} on the boundary. We
+deduce that $\nabla \psi $ is in the direction of  $\textbf{n}$, whereupon
+$\psi $ is a constant on the boundary itself.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=4in]{Section72.pdf}}
+\caption{ }
+\label{fig5.2}
+\end{figure}
+
+Let us return to the example of uniform flow past a cylinder of radius $a$:
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=4in]{Section73.pdf}}
+\caption{ }
+\label{fig5.3}
+\end{figure}
+
+The problem is to solve (\ref{eq77}) in the region outside the cylinder (i.e. $ r
+> a$) subject to the boundary condition that
+\begin{equation}
+\label{eq78}
+{{\bf u}}=\left( {\frac{\partial \psi }{\partial z},0,-\frac{\partial
+\psi }{\partial x}} \right)\to \left( {U,0,0} \right)\quad\hbox{as}\quad r\to \infty
+\quad ,
+\end{equation}
+and
+\begin{equation} {{\bf u}}. {{\bf n}}=0\quad \hbox{on}\quad r=a, \label{eq710} \end{equation}
+where $r=\sqrt {x^2+z^2} $. For this problem it turns out to be easier to
+work in cylindrical polar coordinates centred on the cylinder. Since $x = r$
+$\cos \theta $ and $z = r \sin \theta $, we can show that $\partial
+r/\partial x = \cos\theta $, $\partial r/\partial z = \sin\theta $,
+$\partial \theta /\partial x = -(\sin \theta )/r$ and $\partial
+\theta /\partial z = (\cos \theta )/r$.
+Then
+\begin{align} \frac{\partial \psi }{\partial z}= & \frac{\partial \psi }{\partial
+r}\frac{\partial r}{\partial z}+\frac{\partial \psi }{\partial \theta
+}\frac{\partial \theta }{\partial z}, \notag \\
+= & \sin \theta \frac{\partial \psi
+}{\partial r}+\frac{\cos \theta }{r}\frac{\partial \psi }{\partial \theta }. \label{eq711} \end{align}
+Similarly,
+\begin{align} \frac{\partial \psi }{\partial x} & =\frac{\partial \psi }{\partial
+r}\frac{\partial r}{\partial x}+\frac{\partial \psi }{\partial \theta
+}\frac{\partial \theta }{\partial x}, \notag \\
+& =\cos \theta
+\frac{\partial \psi }{\partial r}-\frac{\sin \theta }{r}\frac{\partial \psi
+}{\partial \theta }. \label{eq712} \end{align}
+
+One can use (\ref{eq711}) and (\ref{eq712}) to transform (\ref{eq77}) to cylindrical polar
+coordinates giving,
+\begin{equation}
+\label{eq79}
+\frac{1}{r}\left[ {\frac{\partial }{\partial r}\left( {r\frac{\partial
+\psi }{\partial r}} \right)+\frac{1}{r}\frac{\partial ^2\psi
+}{\partial \theta ^2}} \right]=0\quad .
+\end{equation}
+The boundary condition on the cylinder expressed by (\ref{eq710}) requires that
+\[
+\cos \theta \frac{\partial \psi }{\partial z}-\sin \theta \frac{\partial
+\psi }{\partial x}=0
+\]
+at $r = a$ and for all $\theta $. Using (\ref{eq711}) and (\ref{eq712}), this reduces to
+\[ \frac{\partial \psi }{\partial \theta }=0 \quad \hbox{at}\quad  r = a. \label{eq714} \]
+This equation implies that $\psi $ is a constant on the cylinder; i.e. the
+surface of the cylinder must be a streamline. Note also that for large $r$,
+$u = \partial \psi /\partial z \sim  U$ and hence
+\begin{equation}
+\psi  \sim Uz =
+Ur \sin \theta . \label{eq715} \end{equation}
+
+The far field solution (\ref{eq715}) suggests seeking separable solutions to (\ref{eq79})
+of the form $\psi =f\left( r \right)\sin \theta $. Upon substituting this
+expression into (\ref{eq79}), we get
+\begin{equation}
+\label{eq716}
+r^2\frac{d^2f}{dr^2}+r\frac{df}{dr}-f=0.
+\end{equation}
+Equation (\ref{eq716}) is an Euler--Cauchy equation and can be solved by seeking
+solutions of the form $f=r^k$, whereupon we find that $ k = \pm  1$. Hence,
+\[
+f(r)=c_1 r+\frac{c_2 }{r}.
+\]
+Apply the boundary conditions (\ref{eq78}) and (\ref{eq710}) shows that $c_{1} = U$ and
+$c_{2} = -Ua^{2}$, and consequently
+\begin{equation}
+\label{eq717}
+\psi =U\left( {r-\frac{a^2}{r}} \right)\sin \theta .
+\end{equation}
+Note that $\psi  = 0$ on the cylinder. However, the solution for
+$\psi $ is unique only to within a constant value; if we add any constant to
+it, it will satisfy equation (\ref{eq77}) or (\ref{eq79}), but the velocity field would
+be unchanged.
+
+In cylindrical polar coordinates the radial and tangential components of
+velocity, $v_{r}$ and $v_{\theta }$, are related to the streamfunction by
+\[ v_r =\frac{1}{r}\frac{\partial \psi }{\partial \theta }\quad \hbox{and} \quad v_\theta
+=-\frac{\partial \psi }{\partial r}, \]
+Hence, from (\ref{eq11}),
+\[ v_r =Ur\left( {1-\frac{a^2}{r^2}} \right)\cos \theta \quad \hbox{and} \quad v_\theta
+=-U\left( {1+\frac{a^2}{r^2}} \right)\sin \theta . \]
+On the boundary of the cylinder ($r = a$) $v_{r} = 0$ and $v_{\theta } =
+-2U\sin \theta $.
+
+Recall that $v_{\theta }$ is positive when the flow is anticlockwise. For
+example, on the top of the cylinder ($\theta =\pi /2$) the tangential
+velocity is $v_{\theta } = -2U$, which is directed from left to right.
+
+It is important to note that we have obtained a solution without reference
+to the pressure field, but the pressure distribution determines the force
+field that drives the flow! We seem, therefore, to have by-passed Newton's
+second law, and have obviously avoided dealing with the nonlinear nature of
+the momentum equations (\ref{eq71}) and (\ref{eq72}). Looking back we will see that the
+trick was to use the vorticity equation, a derivative of the momentum
+equations. For a homogeneous fluid, the vorticity equation does not involve
+the pressure since $\nabla \times \nabla p \equiv $ 0. We infer from
+the vorticity constraint, (\ref{eq75}), that the flow must be irrotational
+everywhere and use this, together with the continuity constraint (which is
+automatically satisfied when we introduce the streamfunction) to infer the
+flow field. If desired, the pressure field can be determined, for example,
+by integrating (\ref{eq71}) and (\ref{eq72}), or by using Bernoulli's equation along
+streamlines.
+
+%\newpage
+\begin{wrapfigure}{r}{3in}
+\centerline{\includegraphics[width=3in]{Section74.pdf}}
+\caption{ }
+\label{fig5.4}
+\end{wrapfigure}
+
+Now the solution itself. The streamline corresponding with (\ref{eq717}) are
+sketched. Note that they are symmetrical around the cylinder. Applying
+Bernoulli's equation to the streamline around the cylinder we find that the
+pressure distribution is symmetrical also so that the total pressure force
+on the upstream side of the cylinder is exactly equal to the pressure on the
+downwind side. In other words, the net pressure force on the cylinder is
+zero! This result, which in fact is a general one for irrotational inviscid
+flow past a body of any shape, is known as \textbf{d'Alembert's Paradox}. It
+is not in accord with our experience as you know full well when you try to
+cycle against a strong wind. What then is wrong with the theory? Indeed,
+what does the flow round a cylinder look like in reality? The reasons for
+the breakdown of the theory help us to understand the limitations of
+inviscid flow theory in general and help us to see the circumstances under
+which it may be applied with confidence. First, let us return to the viscous
+theory.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=5in]{Section75.pdf}}
+\begin{center}
+\end{center}
+\caption{ Flow past a cylinder. (a) $Re < 1$. (b) $1< Re < 30$. (c) $40 < Re <
+4,000$. (d) $10^{3} < Re < 10^{5}$. (e) $Re > 10^{5}$.
+{\em (From Modern Fluid Dynamics. Volume 1: Incompressible Flow, N. Curle and H.J. Davies, 1967.)} }
+\label{fig4.5}
+\end{figure}
+
+
+
+\section{Flow past a cylinder with friction}
+The dynamics of the boundary layer plays a crucial role in flow past a
+circular cylinder. In particular it has important consequences for the solution downstream.
+The observed streamline pattern in this case at large Reynolds numbers is
+sketched in the figure below. The figure below shows how the flow past a
+cylinder changes with changing Reynolds number. Upstream of the cylinder the
+flow is similar to that predicted by the inviscid theory, except in a thin
+viscous boundary-layer adjacent to the cylinder. At points on the downstream
+side of the cylinder the flow separates and there is an unsteady turbulent
+wake behind it. For very small Reynolds number ($Re < 1$) viscosity is
+important, yet the flow is symmetrical and similar to the inviscid solution.
+As the Reynolds number increases ($1< Re < 30$) the flow behind the
+cylinder stretches out and two symmetrically-placed eddies form. For higher
+Reynolds number ($40 < Re < 4,000$), a time-dependent but ordered wake
+forms behind the cylinder (Karman vortex streets). This wake becomes
+turbulent as the Reynolds number increases further ($10^{3} < Re < 10^{5}$). At very large Reynolds number ($Re > 10^{5}$) the turbulent
+boundary layer reaches around the cylinder.
+
+The existence of the wake destroys the symmetry in the pressure field
+predicted by the inviscid theory and there is net pressure force or
+\textbf{form drag} acting on the cylinder. Viscous stresses at the boundary
+itself cause additional drag on the body. However, as the Reynolds number
+increases from below about $Re > 10^{5}$, the drag drops sharply (which is
+critical for swing bowling). This is because the boundary layer becomes
+turbulent ahead of the separation point - more on this later.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=3.5in]{Hawaii.jpg}}
+\bigskip
+\centerline{\includegraphics[width=3.5in]{island.jpg}}
+\caption{Examples of wakes in geophysical flows. Upper panel: a wake formed by airflow around Hawaii. Lower panel: a Karmen vortex street formed in the lee of volcanic island near Japan. {\em (From NASA.)} }
+\label{fig5.5}
+\end{figure}
+
+\section{Boundary Layer Separation}
+If the Reynolds number is large, then the boundary layer may remain very
+thin and behave essentially like a vortex sheet. In this case the flow above
+the boundary layer may be well approximated by inviscid flow. However, under
+some circumstances the boundary layer separates from the solid boundary, in
+which case the interior flow may be radically different from that predicted
+by inviscid theory. For example, this is what happens when irrotational
+fluid flows around a cylinder.
+
+We investigate now the circumstances under which a boundary layer separates
+from the surface. The problem is mathematically very complex, so we will
+confine ourselves to a qualitative discussion of the key physical
+principles.
+
+%\newpage
+
+\begin{wrapfigure}{r}{3in}
+\centerline{\includegraphics[width=3in]{Section76.pdf}}
+{\bigskip}
+\begin{center}
+{\small (From An Informal Introduction to Theoretical Fluid Mechanics, J. Lighthill, 1986.)}
+\end{center}
+\label{fig4.6}
+\caption{ }
+\end{wrapfigure}
+
+The figure to the right shows schematically the separation of a boundary layer around an
+elliptic cylinder at rest in an oncoming flow with velocity $U$. Assuming that
+the flow is irrotational outside the boundary layer, we can calculate the
+streamlines and velocity field using a method similar to that used in
+Section 7.1. The streamlines are shown in (a) and velocity just outside the
+boundary layer in shown in panel (b). Where the streamlines are compressed
+the stream speed is high and pressure is low (by Bernoulli's theorem). To
+the extent that the boundary layer can be treated as a vortex sheet, the
+strength ($\omega \delta )$ is largest where the velocity is largest.
+
+The flow accelerates, and the strength of the vortex sheet increases, along
+a streamline between points $A$ and $B$ (panel c). Consequently, vorticity is
+removed from $B$ faster than it is replaced from $A$. On the other hand
+vorticity of the \textbf{same sense} as the vortex sheet is generated at the
+boundary by the (negative) pressure gradient. In addition, the newly
+generated vorticity diffuses \textbf{slowly} away from the boundary. The
+relative importance of the tangential pressure gradient and diffusion to the
+circulation budget at the surface can be assessed by comparing $-\rho
+^{-1}{\partial p} / {\partial x}$ to $\nu {\partial ^2u}
+/ {\partial z^2}$.
+
+Between $C$ and $D$ a similar argument can be made with the necessary changes (panel d).
+Vorticity is
+advected to $D$ faster than it is advected away, but vorticity of the
+\textbf{opposite sign} to that in the vortex sheet is generated by the
+adverse (positive) pressure gradient between $C$ and $D$. Diffusion slowly
+transports the newly generated (negative) vorticity away from the surface
+into the boundary layer and transports (positive) boundary layer vorticity
+to the surface. Provided that negative vorticity is not generated too
+quickly by the boundary pressure gradient, diffusion will ensure that a
+reversed circulation does not develop at the solid surface.
+
+The flow is strongly retarded by the pressure gradient at $E$. Here the rate
+of diffusion is much smaller than the rate of generation by the pressure
+gradient, and circulation in the sense opposite to that in the boundary
+layer is generated. If the adverse pressure gradient is large enough the
+generation of negative vorticity may produce a local region wherein the
+vorticity changes sign. Consequently, the flow lifts off the surface (or
+\textbf{separates}) as shown in panel (e). Note that $\Delta p$ is \textbf{large} and
+positive at $E$; separation occurs only in regions of very strong adverse
+pressure gradient, and for this reason aircraft wings a highly tapered.
+
+As the Reynolds number increases beyond about $10^{5}$ flows often become
+turbulent. Turbulence acts to prevent boundary layer separation by
+increasing the mixing in the boundary layer, effectively increasing the
+value of $\nu $.
+
+\section{Inviscid flow past a cylinder with circulation}
+Consider, now the problem of a steady, inviscid, uniform flow $U$ past a
+cylinder of radius $a $ with circulation. We ignore the question of how the
+circulation was generated, which must involve the acceleration of the
+boundary relative to the interior flow and the subsequent diffusion of
+vorticity into the interior.
+
+The circulation is specified and we calculate the flow past the cylinder. As
+the problem is linear, the solution is just that for flow past a
+non-rotating cylinder and that for the line vortex,
+\begin{equation}
+\label{eq718}
+\psi =Ur\left( {1-\frac{a^2}{r^2}} \right)\sin \theta +\frac{\kappa }{2\pi
+}\ln r\quad .
+\end{equation}
+Consequently,
+\[ v_\theta =-U\left( {1+\frac{a^2}{r^2}} \right)\sin \theta
+-\frac{\kappa }{2\pi r}, \label{eq719} \]
+so that on the boundary of the cylinder ($r = a$),
+\begin{equation}
+v_\theta =-U\sin \theta
+-\frac{\kappa }{2\pi a}. \label{eq720} \end{equation}
+Equation (\ref{eq720}) shows two stagnation points occur on the surface of the
+cylinder when $B=\left| {\kappa / {\left( {4\pi Ua}
+\right)}} \right|<1$. These two points coalesce when $B = 1$. When $B > 1$,
+there are no stagnation points on the cylinder, although one occurs off the
+cylinder. The solution for various values of $B$ is shown below.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=4in]{Section77.pdf}}
+{\small (From Elementary Fluid Dynamics. D.J. Acheson, 1990.)}
+\caption{ }
+\label{fig4.7}
+\end{figure}
+
+As the surface of the cylinder is a streamline, Bernoulli's theorem requires
+that
+\[
+\frac{p}{\rho }+\frac{{{\bf u}}^2}{2}=\hbox{constant along } r=a.
+\]
+Therefore,
+\begin{align*}
+\frac{p}{\rho } & = \hbox{constant}-\frac{v_\theta ^2 }{2}, \\
+& =\hbox{constant} -\frac{1}{2}\left( {4U^2\sin ^2\theta +\frac{2U\kappa }{\pi
+a}+\frac{\kappa ^2}{4\pi ^2a^2}} \right), \\
+& =\hbox{constant} -2U^2\sin ^2\theta -\frac{U\kappa }{\pi a}\sin \theta .
+\end{align*}
+The pressure thrust (per unit length in the $y$ direction) on a small element
+of the cylinder is $-\left( {pa} \right)d\theta $, from which the vertical
+component is $-\left( {pa\sin \theta } \right)d\theta $.
+It follows that the vertical component of the net thrust on the cylinder is
+\begin{align*}
+\hbox{Lift} = & \int_0^{2\pi } \rho \left( {2U^2\sin ^2\theta +\frac{U\kappa }{\pi
+a}\sin \theta -\hbox{constant}} \right)a\sin \theta d\theta , \\
+& =\frac{\rho U\kappa }{\pi }\int_0^{2\pi } {\sin ^2\theta } d\theta  \\
+& =\rho U\kappa.
+\end{align*}
+
+This is an example of the celebrated \textbf{Kutta-Joukowski lift theorem}.
+A similar calculation shows that the force in the direction of the stream,
+the \textbf{drag}, is zero. If the flow is irrotational, there is no drag on
+the body as the drag depends on the formation of a wake. This is, of course,
+an unrealistic feature of the solution. On the other hand, the body
+experiences \textbf{lift}, which is a force normal to the stream. The
+magnitude of the lift is $\rho U\kappa $ and is independent of the shape
+of the body (although the circulation depends on its shape). Physically, the
+addition of a clockwise (irrotational) swirling stream to that produced by
+uniform flow past the cylinder increases the velocity on the top of the
+cylinder and reduces it on the bottom. Bernoulli's theorem requires the
+pressure to decrease where the velocity increases and the pressure to
+increase where the velocity decreases. Consequently, the pressure field
+ produces a net transverse force on the
+cylinder toward increasing $z$. Circulation is the mechanism by which aircraft
+wings (as well as many other objects including golf and cricket balls)
+produce \textit{lift}.
+
+The circulation is zero around an aerofoil prior to the take-off of an
+aircraft (panel a). As the aircraft accelerates during take-off the aerofoil
+generates circulation in a thin boundary layer, which is subsequently
+advected into a thin wake. The thin wake \textit{rolls up}, producing what is known as a
+\textbf{starting vortex}. (You can generate similar vortices on each side of
+a spoon by drawing along through the surface of a cup of coffee.) As the
+circulation is zero at the initial time, it remains zero for all time by
+Kelvin's theorem, provided we take a contour large enough to enclose both
+the aerofoil and the starting vortex (panel b). Consequently, there must be
+circulation around the aerofoil which is equal and opposite of that in the
+wake (panel c). The circulation generated around the aerofoil generated this
+way provides the lift.
+
+\begin{figure}
+\begin{center}
+\subfigure[]{\qquad \qquad \qquad \qquad\includegraphics[width=3in]{Section78.pdf}}
+\subfigure[]{\qquad \qquad \quad \includegraphics[width=4.25in]{Section79.pdf}}
+\subfigure[]{\includegraphics[width=4in]{Section710.pdf}\qquad \qquad }
+\end{center}
+\caption{ }
+\label{fig10}
+\end{figure}
+
+\divider
+\pagebreak
+
+\section{Exercises}
+\begin{questionstar}
+For a two-dimensional flow, ${\bm u}=(u,0,w)$, and all terms $\partial/ \partial y = 0$
+\begin{equation*}
+	u = \frac{\partial \psi}{\partial z}; \;\;\; w = -\frac{\partial \psi}{\partial x}
+\end{equation*}
+
+Show that
+
+\begin{enumerate}
+	\item $\left( {{{\bf u}}. \nabla } \right)\psi =0$, and hence the streamfunction is constant along a streamline.
+
+	\item ${{\bf u}}=-\nabla \times \left( {\psi {{\bf j}}}
+	\right)$.
+
+	\item In cylindrical polar coordinates the radial and tangential
+	components of velocity, $v_{r}$ and $v_{\theta }$, are related to the
+	streamfunction by:
+	\[ v_r =\frac{1}{r}\frac{\partial \psi }{\partial \theta } \quad\hbox{and}\quad v_\theta
+	=-\frac{\partial \psi }{\partial r}. \]
+	\end{enumerate}
+\label{qn:cylindrical-geometry}
+\end{questionstar}
+
+\begin{question}
+	\newcommand{\pd}[2]{\frac{\partial {#1} }{\partial {#2}}}
+	\newcommand{\ppd}[2]{\frac{\partial^{2} {#1} }{\partial {#2}^{2}}}
+	\newcommand{\pppd}[2]{\frac{\partial^{3} {#1} }{\partial {#2}^{3}}}
+	\newcommand{\ppdd}[3]{\frac{\partial^{2} {#1} }{\partial {#2} \partial {#3}}}
+
+	In rectangular Cartesian coordinates, the two-dimensional form of
+	Laplace's equation is
+	\[ \frac{\partial ^2\psi }{\partial
+	x^2}+\frac{\partial ^2\psi }{\partial y^2}=0.
+	\]
+	 Show that in cylindrical
+	polar coordinates Laplace's equation can be written
+	\[
+		\frac{1}{r}\left[ {\frac{\partial }{\partial x}\left( {r\frac{\partial
+		\psi }{\partial r}} \right)+\frac{1}{r}\frac{\partial ^2\psi
+		}{\partial \theta ^2}} \right]=0.
+	\]
+\label{qn:cylindrical-laplacian}
+\end{question}
+
+
+\begin{question}
+	 For uniform flow of speed $U$ with circulation $- \kappa$
+	 (i.e. rotation is clockwise for $\kappa$ positive) past a cylinder of radius $a$
+	 the streamfunction is
+	 \[ \psi = Ur \left( 1 - \frac{a^2}{r^2} \right)
+	 \sin \theta + \frac{\kappa}{2\pi} \ln r. \]
+	Show that the drag force on the cylinder is zero.
+\label{qn:cylinder-drag}
+
+
+\end{question}
+
+\begin{answer7}
+\newpage
+\section{Solutions to Selected Exercises}
+
+\begin{questionnumber}{\ref{qn:cylindrical-geometry}}
+	\begin{enumerate}
+	\item $u = \partial \psi / \partial z$ and $w = - \partial \psi / \partial x$, hence:
+	\[
+		({\bm u}\cdot \nabla)\psi = \left( \frac{\partial \psi}{\partial z}
+				\frac{\partial}{\partial x} - \frac{\partial \psi}{\partial x}
+				\frac{\partial}{\partial z} \right) \psi =
+				 \frac{\partial \psi}{\partial z} \frac{\partial \psi}{\partial x} -
+				 \frac{\partial \psi}{\partial x} \frac{\partial \psi}{\partial z} = 0
+	\]
+
+	\item
+	\[
+		-\nabla \times (\psi \hat{\bm \jmath}) =
+		\left|\begin{array}{ccc}\hat{\bm \imath} & \hat{\bm \jmath} & \hat{\bm k} \\
+		\frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+		0 & -\psi & 0
+		\end{array}\right| =
+		\left( \frac{\partial \psi}{\partial z}, 0 , -\frac{\partial \psi}{\partial x} \right)
+	\]
+
+	\item For once, let us not derive this by converting the Cartesian form
+	(though you can if you want). Instead we use the standard result that the curl in
+	 cylindrical polar coordinates is given by
+	\[
+		\nabla \times ({\bm F}) =
+		\left|\begin{array}{ccc}\frac{1}{r}\hat{\bm r} &
+		                                   \hat{\bm \theta} &
+		                        \frac{1}{r}\hat{\bm y} \\
+		\frac{\partial}{\partial r} & \frac{\partial}{\partial \theta} & \frac{\partial}{\partial y} \\
+		F_{r} & rF_{\theta} & F_{y}
+			\end{array}\right|
+	\]
+	Now let us calculate the curl of an out-of-plane stream function (note the coordinate notation is somewhat unusual)
+	\[
+		\nabla \times \left( {\psi {\hat{\bm y}}} \right) =
+		\left|\begin{array}{ccc}\frac{1}{r}\hat{\bm r} &
+		                                   \hat{\bm \theta} &
+		                        \frac{1}{r}\hat{\bm y} \\
+		\frac{\partial}{\partial r} & \frac{\partial}{\partial \theta} & \frac{\partial}{\partial y} \\
+		0 & 0 & \psi
+			\end{array}\right| =
+		\left( \frac{1}{r}\frac{\partial \psi}{\partial r}, -\frac{\partial \psi}{\partial \theta}, 0 \right)
+	\]
+	Note, I lost a negative sign here because I couldn't bear to write the coordinates as $(r,y,\theta)$ ...
+	\end{enumerate}
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:cylindrical-laplacian}}
+	\newcommand{\pd}[2]{\frac{\partial {#1} }{\partial {#2}}}
+	\newcommand{\ppd}[2]{\frac{\partial^{2} {#1} }{\partial {#2}^{2}}}
+	\newcommand{\pppd}[2]{\frac{\partial^{3} {#1} }{\partial {#2}^{3}}}
+	\newcommand{\ppdd}[3]{\frac{\partial^{2} {#1} }{\partial {#2} \partial {#3}}}
+
+	Either use
+	\[
+		\ppd{ }{x} = \left( \cos\theta \pd{ }{r} -
+				\frac{1}{r}\sin\theta \pd{ }{\theta} \right)^{2}
+	\]
+	\[
+		\ppd{ }{y} = \left( \sin\theta \pd{ }{r} +
+				\frac{1}{r}\cos\theta \pd{ }{\theta} \right)^{2}
+	\]
+	and work through to the result.
+	Or use the fact that $\nabla^{2}\phi = \nabla\cdot\nabla \phi$
+	and previously calculated results
+	\[
+		\nabla\phi = \hat{\bm r}\pd{\phi}{r} +
+		\hat{\bm \theta}\frac{1}{r}\pd{\phi}{\theta} + \hat{\bm z}\pd{\phi}{z}
+	\]
+	\[
+		\nabla\cdot {\bm v} = \frac{1}{r}\pd{(r v_{r})}{r} +
+							\frac{1}{r}\pd{ v_{\theta}}{\theta} + \pd{v_{z}}{z}
+	\]
+	which gives the same result.
+\end{questionnumber}
+
+\begin{questionnumber}{\ref{qn:cylinder-drag}}
+	The essence of this question is to compute the net pressure force on the cylinder
+	given the velocity solution. Consider the streamline which wraps the cylinder.
+	\[
+		u_{\theta} = U\left( 1+\frac{a^{2}}{r^{2}}\right) \sin\theta +
+		              \frac{\kappa}{2\pi r}; \;\;\;
+	    \left. u_{{\theta}}\right|_{r=a} = 2U\sin\theta +
+		              \frac{\kappa}{2\pi a}
+	\]
+	and $u_{r} = 0$ at $r=a$
+	The pressure along this streamline is given by Bernoulli's theorem,
+	based on the assumption that the far-field pressure is $p_{0}$ and
+	the fact that the far-field velocity is $U$.
+	\[
+		\frac{p}{\rho} + \frac{1}{2}|u_{\theta}|^{2} =
+		\frac{p_{0}}{\rho} + \frac{1}{2}|U|^{2}
+	\]
+	The right hand side is constant, and it is easy to see this will produce no
+	net contribution to the drag (or lift). To prove the desired result, we can
+	simply observe that the contributing pressure forces are
+	\[
+		p^{*} \sim |u_{\theta}|^{2}
+	\]
+	The drag force (per unit length of the cylinder) is given by
+	\[
+		{\cal D} = \int_{0}^{2\pi} p^{*} (-cos\theta) a d\theta \sim
+					\int_{0}^{2\pi} |u_{\theta}|^{2} (-cos\theta) a d\theta
+	\]
+	since the pressure is a stress normal to the surface, and we need to integrate
+	the (leftward directed) $x$ component to find the drag. We can work this out directly,
+	or we can appeal to symmetry.
+
+	Look at the form of the integral it is symmetric above and below the centreline, and antisymmetric
+	left-right. Therefore we break the integral like this.
+
+	\begin{multline*}
+		{\cal D} \sim
+	             \int_{0}^{2\pi} |u_{\theta}|^{2} (-cos\theta) a d\theta =
+		       2 \int_{0}^{ \pi} |u_{\theta}|^{2} (-cos\theta) a d\theta = \\
+		       -2 \int_{0}^{ \pi/2} |u_{\theta}|^{2} (cos\theta) a d\theta
+		       -2 \int_{\pi/2}^{\pi} |u_{\theta}|^{2} (cos\theta) a d\theta \hspace*{1cm}
+	\end{multline*}
+	In the final integral, substitute $\theta' = \pi - \theta$, $u_{\theta}(\pi-\theta) = u_{\theta}(\theta)$, giving
+	\[
+	   \int_{\pi/2}^{\pi} |u_{\theta}|^{2} (cos\theta) a d\theta =
+	   \int_{\pi/2}^{0} |  u_{\theta'}|^{2} (-cos\theta') a (-d\theta') =
+	   -   \int_{0}^{\pi/2} |u_{\theta}|^{2} (cos\theta) a d\theta
+	\]
+	So there is no net drag because the upstream and downstream contributions
+	are equal and opposite.
+
+\end{questionnumber}
+\end{answer7}
+
+\end{document}

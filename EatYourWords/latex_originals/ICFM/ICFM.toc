@@ -1,0 +1,64 @@
+\contentsline {chapter}{\numberline {1}Fluid Flow and Conservation of Mass}{1}
+\contentsline {section}{\numberline {1.1}Description of fluid flow}{1}
+\contentsline {section}{\numberline {1.2}Equations for streamlines}{2}
+\contentsline {section}{\numberline {1.3}Distinctive properties of fluids}{2}
+\contentsline {subsection}{\numberline {1.3.1}Compressibility}{2}
+\contentsline {subsection}{\numberline {1.3.2}Viscosity}{3}
+\contentsline {section}{\numberline {1.4}Incompressible flows}{3}
+\contentsline {section}{\numberline {1.5}Conservation of mass: the continuity equation}{4}
+\contentsline {section}{\numberline {1.6}Strain rate, Velocity gradients, and Vorticity}{4}
+\contentsline {section}{\numberline {1.7}Exercises}{6}
+\contentsline {chapter}{\numberline {2}Equation of Motion}{7}
+\contentsline {section}{\numberline {2.1}Newton's Second Law}{7}
+\contentsline {section}{\numberline {2.2}Rate-of-change moving with the fluid}{8}
+\contentsline {section}{\numberline {2.3}Internal forces in a fluid (see Acheson p. 203)}{9}
+\contentsline {section}{\numberline {2.4}Fluid and solids: pressure}{10}
+\contentsline {subsection}{\numberline {2.4.1}Isotropy of pressure}{10}
+\contentsline {subsection}{\numberline {2.4.2}Pressure gradient forces in a fluid in macroscopic equilibrium}{11}
+\contentsline {subsection}{\numberline {2.4.3}Equilibrium of a vertical element}{11}
+\contentsline {subsection}{\numberline {2.4.4}Liquids and gases}{12}
+\contentsline {subsection}{\numberline {2.4.5}Archimedes Principle}{12}
+\contentsline {section}{\numberline {2.5}Equation of Motion for an inviscid fluid}{12}
+\contentsline {section}{\numberline {2.6}Equations of motion in cylindrical polars}{14}
+\contentsline {section}{\numberline {2.7}Dynamic or perturbation pressure}{14}
+\contentsline {section}{\numberline {2.8}Incompressible viscous fluids}{15}
+\contentsline {section}{\numberline {2.9}Boundary conditions for fluid flow}{15}
+\contentsline {subsection}{\numberline {2.9.1}An alternative boundary condition}{16}
+\contentsline {section}{\numberline {2.10}Exercises}{17}
+\contentsline {chapter}{\numberline {3}Steady Inviscid Flows}{19}
+\contentsline {section}{\numberline {3.1}Bernoulli's equation}{19}
+\contentsline {section}{\numberline {3.2}Applications of Bernoulli's equation}{20}
+\contentsline {subsection}{\numberline {3.2.1}Draining a reservoir through a small hole}{20}
+\contentsline {subsection}{\numberline {3.2.2}Bluff body in a stream; Pitot tube}{20}
+\contentsline {section}{\numberline {3.3}Exercises}{21}
+\contentsline {chapter}{\numberline {4}Vortex Motion}{23}
+\contentsline {section}{\numberline {4.1}The vorticity field}{23}
+\contentsline {section}{\numberline {4.2}Circulation}{24}
+\contentsline {section}{\numberline {4.3}The Helmholtz equation for vorticity}{25}
+\contentsline {subsection}{\numberline {4.3.1}Physical significance of $\left ( {{\bm {\omega }}. \nabla } \right ){\rm {\bf u}}$}{25}
+\contentsline {subsection}{\numberline {4.3.2}In the presence of viscosity}{26}
+\contentsline {section}{\numberline {4.4}Kelvin's Theorem}{26}
+\contentsline {subsection}{\numberline {4.4.1}Helmholtz theorem: vortex lines move with the fluid}{27}
+\contentsline {subsection}{\numberline {4.4.2}A flow which is initially irrotational remains irrotational}{27}
+\contentsline {section}{\numberline {4.5}Rotational and irrotational flow}{27}
+\contentsline {section}{\numberline {4.6}Vortex sheets}{28}
+\contentsline {section}{\numberline {4.7}Line vortices}{29}
+\contentsline {section}{\numberline {4.8}Motion started from rest impulsively}{29}
+\contentsline {section}{\numberline {4.9}Generation of circulation at boundaries}{30}
+\contentsline {section}{\numberline {4.10}Exercises}{32}
+\contentsline {chapter}{\numberline {5}One Dimensional Viscous Flows}{34}
+\contentsline {section}{\numberline {5.1}One-dimensional flows}{34}
+\contentsline {section}{\numberline {5.2}Steady plane Couette flow}{35}
+\contentsline {section}{\numberline {5.3}Steady plane Poiseuille flow}{35}
+\contentsline {section}{\numberline {5.4}The Hele-Shaw cell}{36}
+\contentsline {section}{\numberline {5.5}Exercises}{37}
+\contentsline {chapter}{\numberline {6}Boundary Layers in Nonrotating Fluids}{40}
+\contentsline {section}{\numberline {6.1}Flow over a flat plate}{40}
+\contentsline {section}{\numberline {6.2}Blasius' solution ($U$ = constant)}{42}
+\contentsline {section}{\numberline {6.3}Exercises}{44}
+\contentsline {chapter}{\numberline {7}Two Dimensional Flow Past a Cylinder}{45}
+\contentsline {section}{\numberline {7.1}Flow past a cylinder without circulation}{45}
+\contentsline {section}{\numberline {7.2}Flow past a cylinder with friction}{48}
+\contentsline {section}{\numberline {7.3}Boundary Layer Separation}{49}
+\contentsline {section}{\numberline {7.4}Inviscid flow past a cylinder with circulation}{51}
+\contentsline {section}{\numberline {7.5}Exercises}{54}
