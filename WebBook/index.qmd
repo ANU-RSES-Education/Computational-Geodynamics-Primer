@@ -1,22 +1,76 @@
 ---
-title: EMSC e-Course template
-author: Prof Louis Moresi 
-date: 2024-03-17
-jupyter:
-  jupytext:
-    text_representation:
-      extension: .qmd
-      format_name: quarto
-      format_version: '1.0'
-      jupytext_version: 1.16.1
-  kernelspec:
-    display_name: Python 3 (ipykernel)
-    language: python
-    name: python3
+title: "Computational Geodynamics Primer"
+subtitle: "Understanding Earth's Dynamic Processes Through Mathematical Modeling and Computation"
+author: "Louis Moresi"
+date: today
 ---
 
-This is a template repository for Lecture notes that include a computational component. It builds a website from the notes and includes live-links to source code that will run on [binder](https://www.mybinder.org). This template is pre-configured for courses at Research School of Earth Sciences, but is freely available for adoption elsewhere.
+## Welcome
 
-I use the [Quarto](https://quarto.org/docs/books) publication system which converts simple markdown formatted documents to webpages, pdf and slides. Quarto is designed to develop reusable content and is based around [pandoc](https://pandoc.org): you should be able to quickly import and convert content to the quarto version of markdown (especially if you have been using jupyter-book or myst-md - the concepts are very similar).
+This book develops a quantitative understanding of the dynamic processes within the Earth and sister planets. These processes are largely driven by the internal heat of the planet escaping to the surface. Some of this heat is left over from planetary formation, while the rest originates from the decay of radioactive elements.
 
-To use this repository, you will need make a fork for yourself and replace this content with your own. You will also need set a few configuration options to match the course metadata. I'm going to explain how this works.
+Our approach combines:
+- **Mathematical descriptions** of Earth's physical processes
+- **Computational methods** to solve these equations numerically
+- **Physical insight** into why planets behave as they do
+
+```{figure} Images/Diagrams/EarthProcessesPlume.png
+---
+width: 100mm
+name: mantle-slice
+---
+A schematic of the Earth's interior showing the key processes that drive planetary dynamics
+```
+
+## Book Structure
+
+This book is organized into five main parts:
+
+### Part I: Mathematical Fundamentals
+The mathematical tools you need to understand geodynamics, including vector and tensor notation.
+
+### Part II: Fluid Dynamics
+The foundations of fluid mechanics and flow dynamics that govern mantle and planetary fluid motion.
+
+### Part III: Geodynamics
+Applications of fluid dynamics to planetary processes including mantle convection, plate tectonics, and lithospheric dynamics.
+
+### Part IV: Numerical Methods
+The computational techniques needed to solve the mathematical equations describing geodynamic processes.
+
+### Part V: Computational Exercises
+Practical examples and benchmarks demonstrating the concepts throughout the book.
+
+## Who This Book Is For
+
+This material is designed for advanced undergraduate or graduate students in:
+- Geophysics and geodynamics
+- Earth science
+- Physics with planetary science interests
+- Applied mathematics with Earth science applications
+
+You will need:
+- Basic knowledge of calculus and linear algebra
+- Familiarity with programming (preferably Python, but not essential)
+- Curiosity about how planets work!
+
+## How to Use This Book
+
+Each chapter combines:
+- **Conceptual explanations** of the physical and mathematical principles
+- **Mathematical derivations** where you'll see where equations come from
+- **Interactive code examples** that you can run directly in your browser
+- **Exercises** to test your understanding
+
+The interactive code examples use **Pyodide**, which runs Python directly in your browser via WebAssembly. You can modify the code and see results immediately without installing anything.
+
+## What You'll Learn
+
+By working through this book, you will understand:
+- How to formulate mathematical models of physical processes
+- How to solve these models computationally
+- How these models help us understand planetary evolution
+- How different planets can evolve along different paths
+- How to build and validate your own geodynamic models
+
+Let's get started with an introduction to what we mean by "modeling" in geodynamics.
