@@ -116,6 +116,10 @@ More complex material, requires significant rework due to multiple authors and L
 
 ---
 
+## Repository Status
+
+**EatYourWords/Geophysics/** is now a regular tracked directory (converted from nested git repository). All content, including the extensive diagram library, is now properly tracked and can be updated with migration progress.
+
 ## Integration Notes
 
 ### Priority Ordering
