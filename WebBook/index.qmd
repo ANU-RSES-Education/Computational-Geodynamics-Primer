@@ -14,13 +14,7 @@ Our approach combines:
 - **Computational methods** to solve these equations numerically
 - **Physical insight** into why planets behave as they do
 
-```{figure} Images/Diagrams/EarthProcessesPlume.png
----
-width: 100mm
-name: mantle-slice
----
-A schematic of the Earth's interior showing the key processes that drive planetary dynamics
-```
+![A schematic of the Earth's interior showing the key processes that drive planetary dynamics including mantle convection, plumes, and plate tectonics.](Images/Diagrams/EarthProcessesPlume.png){#fig-mantle-processes width=80%}
 
 ## Book Structure
 
