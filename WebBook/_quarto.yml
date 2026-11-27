@@ -39,7 +39,13 @@ book:
 
     - part: "**Part IV: Numerical Methods**"
       chapters:
-        - Part4-NumericalMethods/placeholder.qmd
+        # Stable file names: these URLs are cited from outside the book.
+        - Part4-NumericalMethods/index.qmd
+        - Part4-NumericalMethods/time-integration.qmd
+        - Part4-NumericalMethods/survey-of-methods.qmd
+        - Part4-NumericalMethods/fem-introduction.qmd
+        - Part4-NumericalMethods/fem-practice.qmd
+        - Part4-NumericalMethods/solvers.qmd
 
     - part: "**Part V: Computational Exercises**"
       chapters:
@@ -63,12 +69,7 @@ book:
         - DraftMaterial/ThermalConvection.qmd
         - DraftMaterial/MantleDynamics.qmd
         - DraftMaterial/LithosphericDynamics.qmd
-        # Numerical Methods
-        - DraftMaterial/NumericalMethods1.qmd
-        - DraftMaterial/NumericalMethods2.qmd
-        - DraftMaterial/NumericalMethods3.qmd
-        - DraftMaterial/NumericalMethods4.qmd
-        - DraftMaterial/NumericalMethods5.qmd
+        # (Numerical Methods promoted to Part IV)
 
     # References
     - part: "References"

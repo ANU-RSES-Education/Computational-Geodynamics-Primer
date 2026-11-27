@@ -1,4 +1,4 @@
-# Survey of numerical methods
+# Survey of numerical methods {#sec-survey-of-methods}
 
 {{< include ../_math-preamble.qmd >}}
 
@@ -12,8 +12,7 @@ $$
 \newcommand{\Emerald }[1]{\textcolor[rgb]{0.0,0.7,0.3}{ #1}}
 $$
 
-## Explicit versus implicit methods}
-
+## Explicit versus implicit methods
 The use of implicit solution methods is crucial when we come to the mantle flow problem (and to elasticity). It is a deceptively simple concept which we use to eliminate oscillatory errors and other problems associated with _stiff_ systems, and in other cases where we want to take large timesteps. Again, Numerical Recipes provides a good example of the way in which implicit methods avoid the shuffling timesteps which result when an otherwise unimportant component of the system blows up. To obtain an implicit solution, we express our updated timestep in terms of values of derivatives etc which are evaluated at that timestep. This may result in dependencies which mean large systems of simultaneous equations need to be solved.
 
 But our simple example can also be solved implicitly as follows
@@ -153,11 +152,11 @@ $$
 | -- | -- | -- | -- | -- | -- | -- | -- | -- |
 |            |  time  | i-2 | i-1 | i | i+1 | i+2 | i+3 | $\int \phi dx$ |
 |**Centred** | t=0                 | 1 | 1      | 1     | 0     | 0      | 0     | 3   |
-|            | t=\\(\delta x/2v\\) | 1 | 1      | 1.25  | 0.25  | 0      | 0     | 3.5 |
-|            | t=\\(\delta x/v \\) | 1 | 0.938  | 1.438 | 0.563 | 0.0625 | 0     | 4.0 |
+|            | t=$\delta x/2v$ | 1 | 1      | 1.25  | 0.25  | 0      | 0     | 3.5 |
+|            | t=$\delta x/v$ | 1 | 0.938  | 1.438 | 0.563 | 0.0625 | 0     | 4.0 |
 | **Upwind** | t=0                 | 1 | 1      | 1     | 0     | 0      | 0     | 3   |
-|            | t=\\(\delta x/2v\\) | 1 | 1      | 1     | 0.5   | 0      | 0     | 3.5 |
-|            | t=\\(\delta x/v \\) | 1 | 1      | 1     | 0.75  | 0.25   | 0     | 4.0 |
+|            | t=$\delta x/2v$ | 1 | 1      | 1     | 0.5   | 0      | 0     | 3.5 |
+|            | t=$\delta x/v$ | 1 | 1      | 1     | 0.75  | 0.25   | 0     | 4.0 |
 
 
 : Hand calculation of low order advection schemes {#tbl-hand-rolled-advection}

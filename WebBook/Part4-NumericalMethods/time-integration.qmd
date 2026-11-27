@@ -1,4 +1,4 @@
-# Numerical Modeling in Solid Earth Dynamics 
+# Numerical Modeling in Solid Earth Dynamics {#sec-time-integration}
 
 {{< include ../_math-preamble.qmd >}}
 
@@ -45,8 +45,7 @@ where $\theta_0$ is the amount of the radioactive material remaining. The same e
 
 We want to march forward in time from our starting point where $\theta = \theta_0$ to obtain the value of $\theta$ at later times. To do this, we need to approximate the original differential equation, and, in particular, the value of the time derivative at each time. There are a number of ways to do this.
 
-### A first order numerical approximation}
-
+### A first order numerical approximation
 Assume that the variation in $\theta(t)$ is linear, i.e.
 
 $$
@@ -121,7 +120,7 @@ Which we can solve to give this:
     \end{split}
 $$
 
-By substituting into \\( (@eq-dthdt2) \\), and then into the original differential equation \\( (@eq-ode_decay) \\) we obtain the following
+By substituting into @eq-dthdt2, and then into the original differential equation @eq-ode_decay we obtain the following
 
 $$
 \left. \frac{d\theta}{dt} \right|_{t=n\Delta t} = \beta + 2\gamma \Delta t =
@@ -192,7 +191,7 @@ The Runge Kutta method can be extended by repeating the estimates on smaller reg
 
 The simplest way to answer our earlier question is to code the methods and see. The following is a script which computes the first and second order expressions and the Runge-Kutta method, and compares with the "exact" solution (which is numerical as well, of course, but computed through series expansions and the like).
 
-```
+```python
 # Compare various ways to integrate the 
 # ODE for radioactive decay / Newton's law of cooling.
 # Assume decay constant of 1.0

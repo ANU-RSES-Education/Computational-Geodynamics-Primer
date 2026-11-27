@@ -1,4 +1,4 @@
-# Introduction to the Finite Element Method
+# Introduction to the Finite Element Method {#sec-fem-introduction}
 
 {{< include ../_math-preamble.qmd >}}
 
@@ -197,8 +197,7 @@ $$
 This is a clear demonstration that the standard form of the equations plus certain boundary conditions can be fully wrapped up in integral form and are exactly equivalent to the standard form.
 The major difficulty is in how we produce the correct functional in the first place, especially if we want to avoid first deriving the differential form of the equations and back-calculating as we done above.
             
-### Extension to Approximate Methods}   
-
+### Extension to Approximate Methods
 The problem above is simple enough that the integral or differential forms of the equations can be solved directly. In general, however, we anticipate dealing with problems where no closed form of solution exists. Under these circumstances approximate solutions are desirable. In particular, there is a class of approximation methods which use families of trial functions to obtain a best fit approximation to the solution. These naturally develop into finite element algorithms as we shall soon see.
 
 ### Formulation of a General Problem
