@@ -1,179 +1,135 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code in this repository.
 
-## Project Overview
+## Project
 
-The Computational Geodynamics Primer is an interactive textbook built with Quarto, featuring live Python execution via pyodide/WebAssembly. The book is designed to introduce computational methods for geodynamics.
+The *Computational Geodynamics Primer* is an open textbook on the physics of
+the Earth's interior and the numerical methods used to model it. It is written
+in MyST markdown and built with mystmd, following the Underworld Technical
+Notes (`underworld-technical-notes`, same toolchain and house styles).
 
-**Built from EMSC-QuartoBook-Course template** - This repository syncs infrastructure updates from the template while protecting course-specific content.
+The current iteration is a demonstration of the intended book: a few strong
+chapters (numerics/finite elements first), placeholders elsewhere.
 
-## Source Material
+## Commands
 
-The repository contains legacy content in `EatYourWords/` that is being migrated into the main book:
+Everything runs through pixi, so tool versions are pinned and nothing global is
+needed. Never call a globally installed `myst`, `typst` or `python` instead.
 
-### EatYourWords/Geophysics/
-- **Origin**: Single-author Jupyter Book material (consistent writing style)
-- **Structure**: 4 parts covering:
-  - Part0: Introduction
-  - Part1: Fluid Dynamics (Continuum Mechanics, Navier-Stokes, Mantle Dynamics, Thermal Convection, Lithospheric Dynamics)
-  - Part2: Python (numpy, scipy, matplotlib, cartopy, stripy - extensive tutorials)
-  - Part3: Numerical Methods (5 chapters)
-- **Format**: Markdown (.md) files, ready for conversion to .qmd
-- **Status**: Ready to migrate, minimal restyling needed
-
-### EatYourWords/latex_originals/ICFM/
-- **Origin**: Incompressible Fluid Mechanics - multi-author LaTeX material
-- **Format**: LaTeX source files (ICFM.tex)
-- **Status**: Needs more extensive restyling due to multiple authors
-- **Note**: Mine for useful content but expect significant rework
-
-### EatYourWords/latex_originals/ShortCourse/
-- **Status**: IGNORE - artifact from previous migration attempt
-
-## Development Workflow
-
-### Fast Iterative Development (Recommended)
 ```bash
-quarto preview WebBook
+pixi install          # once
+pixi run start        # live preview at http://localhost:3000
+pixi run build        # static site in WebBook/_build/html
+pixi run figures      # rebuild every figure from Images/Diagrams/src/
 ```
-- Auto-rebuilds only changed files
-- Live reload in browser
-- Pyodide examples work correctly
-- Use this for all content development
 
-### Full Build (For Embedded Content)
+New tools go into `pixi.toml` (with a version range) and `pixi.lock` is
+committed with them.
+
+mystmd (`pixi.toml`) and the book theme (`site.template` in `WebBook/myst.yml`)
+are pinned together, as in UWTN: upgrade both at once.
+
+## Layout
+
+```
+WebBook/
+  myst.yml                  table of contents, maths macros, site options
+  static/primer.css         site styling (adapted from UWTN's uwtn.css)
+  index.md                  landing page
+  Part1-Fundamentals/       Part I    (placeholder)
+  Part2-FluidDynamics/      Part II
+  Part3-Geodynamics/        Part III  (placeholder; tectonics + convection planned)
+  Part4-NumericalMethods/   Part IV   numerics and finite elements
+  Part5-Computational/      Part V    benchmarks
+  DraftMaterial/            migrated drafts waiting to be placed
+  Images/Diagrams/          figures; sources in Images/Diagrams/src/
+  GoverningDocuments/       writing, markup and accessibility guides (not built)
+EatYourWords/               legacy source material (read-only; see below)
+jupyterlite/                JupyterLite site (separate workflow)
+```
+
+## URLs come from file names
+
+MyST publishes `Part4-NumericalMethods/fem-introduction.md` at
+`/fem-introduction`: the directory is ignored. Consequences:
+
+- File names must be unique across the book.
+- Part IV pages (`numerical-methods`, `time-integration`, `survey-of-methods`,
+  `fem-introduction`, `fem-practice`, `solvers`) are cited from outside the
+  book. Do not rename them.
+- A new page is invisible until it is added to `toc` in `WebBook/myst.yml`.
+
+## Writing MyST
+
+- Figures: `:::{figure} ../Images/Diagrams/name.svg` with `:label: fig-name`,
+  `:alt:` text, and the caption as the body.
+- Equations to be referenced: a `` ```{math} `` block with `:label: eq-name`.
+  Unlabelled display maths uses `$$ … $$`.
+- Cross-references: `[](#fig-name)`, `[](#eq-name)`, `[](#tbl-name)`; section
+  targets are `(sec-name)=` on the line above the heading.
+- Citations: `@key` or `[@key]`, keys in `WebBook/references.bib` or
+  `geodynamics-references.bib`.
+- Admonitions: `:::{note} Title`; add `:class: dropdown` to collapse (used for
+  worked solutions).
+- Maths is rendered by KaTeX. Macros (`\uv`, `\DIV`, `\GRAD`, `\curly`, …) are
+  defined once in `WebBook/myst.yml`; do not define them per page. KaTeX has no
+  `eqnarray`, `\intertext` or `\textcolor[rgb]`: use `aligned`/`array`,
+  `\text{…}` and named colours.
+
+## Figures
+
+Figures follow the Underworld line-diagram house style (underworld3:
+`docs/developer/guides/uw-line-diagrams.md`). Tokens are in
+`WebBook/Images/Diagrams/src/primerfig.typ`; use them rather than restyling.
+
+- Line weight and dash carry the meaning, so every figure must read in
+  grayscale; colour is secondary and each colour has a physical role.
+- Draw the condition, no caption text inside the figure, direct labels rather
+  than legends, design at final width (90 mm single, 183 mm double column).
+- Schematics: Typst + CeTZ in `src/<name>/<name>.typ` →
+  `pixi run figures` writes `<name>.svg` and a 300 dpi PNG.
+- Sources are committed beside their outputs.
+
+## Writing
+
+Louis rewrites all prose; drafts should get the structure and the technical
+content right so he can edit locally without restructuring. Follow
+`WebBook/GoverningDocuments/WritingStyleGuide.md` and the voice rules in UWTN's
+`CONTRIBUTING.md` ("How the notes read"): start from the question, "we" for
+shared reasoning, describe objects literally, no rhetorical contrasts or
+announcing phrases, stop when the question is answered. The UWTN phrase
+checker runs on any file, given a path relative to the current directory:
+
 ```bash
-quarto render WebBook
-python serve-book.py
-```
-- Required when testing embedded reveal.js slides
-- Required when iframe content uses relative paths
-- Preview mode doesn't resolve all relative paths correctly
-
-### Using Pixi (Package Manager)
-```bash
-pixi install              # Install dependencies
-pixi run quarto render    # Run quarto via pixi
+pixi run python -I ~/+Underworld/underworld-technical-notes/scripts/check_style.py WebBook/Part4-NumericalMethods/fem-introduction.md
 ```
 
-## Architecture
+## Source material and copyright
 
-### Book Structure (`WebBook/_quarto.yml`)
-- **Format**: `live-html` with pyodide integration
-- **Theme**: Cosmo base + custom SCSS (`assets/theme.scss`) + CSS (`assets/styles.css`)
-- **Execute**: `enabled: false` - pyodide handles interactive code
-- **Output**: `_build/book/` (not committed)
+Use only material already in this repository unless Louis grants an exception
+for a specific source. Documents elsewhere are often co-authored.
 
-### Content Organization
-- `WebBook/*.qmd` - Main book chapters
-- `WebBook/LectureSlides/` - Embedded reveal.js presentations
-- `WebBook/Notebooks/` - Jupyter notebooks and interactive examples
-- `WebBook/Images/` - Course-specific images
-- `WebBook/Diagrams/` - Imported from EatYourWords (when migrated)
-- `WebBook/assets/` - Theme files, logos, styling
+- `EatYourWords/Geophysics/` — Louis's single-author Jupyter Book; the origin of
+  most drafts. Migration status in `EatYourWords/MIGRATION_STATUS.md`.
+- `EatYourWords/latex_originals/ICFM/` — multi-author Monash fluid mechanics
+  notes, substantially rewritten by Louis. Usable, but text must be redrafted
+  and every figure redrawn. Overlap analysis in `ICFM-Review.md`.
+- Granted exceptions: the Mohr-circle derivation in Louis's EMSC3002 lecture
+  notes (his text only; embedded third-party figures excluded); `.svg` files in
+  EMSC3002 are © Romain Beucher, CC BY 4.0, usable with credit.
 
-### Template Synchronization System
-The repository uses `.templatesyncignore` to protect content during template syncs:
+## Git and deployment
 
-**Protected (course-specific)**:
-- `WebBook/_quarto.yml` - Book configuration
-- `WebBook/*.qmd` - All content files
-- `WebBook/LectureSlides/**` - Slides
-- `WebBook/Notebooks/**` - Interactive content
-- `WebBook/Images/**` - Images
-- `README.md` - Course documentation
+- Work on branches and open pull requests; ask before pushing to `main`.
+- `.github/workflows/publish.yml` builds with pixi and deploys
+  `WebBook/_build/html` to `gh-pages/book`, i.e.
+  https://anu-rses-education.github.io/Computational-Geodynamics-Primer/book/
+  (`keep_files` leaves the JupyterLite site on the same branch in place).
+- The repository no longer syncs from the EMSC-QuartoBook-Course template.
 
-**Synced (infrastructure)**:
-- `WebBook/assets/theme.scss` - Base theme
-- `WebBook/assets/styles.css` - Additional styling
-- `.github/workflows/` - CI/CD
-- `update-template.sh` - Update script
-- `pixi.toml`, `pixi.lock` - Dependencies
-- `serve-book.py` - Preview server
+## Planning
 
-### Update Template Script
-```bash
-./update-template.sh
-```
-Checks for:
-1. Quarto extension updates
-2. Python package updates via pixi
-3. Template repository changes
-4. JupyterLite rebuild needs
-
-## Code Execution Model
-
-**Pyodide (Browser-based Python)**:
-- Runs Python directly in the browser via WebAssembly
-- No server required for code execution
-- Available packages listed in `_quarto.yml` under `pyodide.packages`
-- Use `{pyodide}` code blocks for interactive execution
-- Use `{python}` code blocks for display-only
-
-**Binder Integration**:
-- Available for complex analyses requiring full Python environment
-- Configuration in `.binder/` directory
-
-**JupyterLite**:
-- Full Jupyter environment in browser
-- Configuration in `jupyterlite/` directory
-- Rebuilds via `update-template.sh` when content changes
-
-## Migrating Legacy Content
-
-When importing from `EatYourWords/Geophysics/`:
-
-1. **Create holding area**: Add a "Draft Material" part to `_quarto.yml` to avoid dominating the book structure
-2. **Markdown → QMD**: Rename `.md` → `.qmd` (Quarto markdown is backward compatible)
-3. **Copy to WebBook**: Place in subdirectory like `WebBook/DraftMaterial/`
-4. **Handle diagrams**: Copy referenced diagrams from `EatYourWords/Geophysics/Diagrams/` to `WebBook/Images/`
-5. **Update image paths**: Adjust relative paths in content
-6. **Test pyodide**: Verify any Python code blocks work with browser-based execution
-7. **Reorganize later**: Once full book structure is defined, redistribute content appropriately
-
-Example _quarto.yml structure for draft content:
-```yaml
-- part: "**Draft Material** (Being reorganized)"
-  chapters:
-    - DraftMaterial/FluidDynamics.qmd
-    - DraftMaterial/NumericalMethods.qmd
-```
-
-## Deployment
-
-- **GitHub Actions**: Automatic build and deploy on push to main
-- **Output**: GitHub Pages at `https://ANU-RSES-Education.github.io/Computational-Geodynamics-Primer/book`
-- **Workflow**: `.github/workflows/` (synced from template)
-
-## Python Code Blocks
-
-**Interactive (executable in browser)**:
-```markdown
-\`\`\`{pyodide}
-import numpy as np
-print(np.arange(10))
-\`\`\`
-```
-
-**Display only**:
-```markdown
-\`\`\`{python}
-# This code is shown but not executed
-\`\`\`
-```
-
-## Theme Customization
-
-- **Colors**: ANU gold `#C58812` for links, navbar background
-- **Navbar**: Gold background, white text, ANU logo (PNG)
-- **Sidebar**: Docked style, light background, earthquake image logo
-- **Typography**: Cosmo theme base with custom adjustments in `theme.scss`
-
-## Common Pitfalls
-
-1. **Preview mode breaks embedded slides**: Use full render + serve-book.py instead
-2. **Image paths**: Relative to the `.qmd` file, not the project root
-3. **Pyodide limitations**: Not all Python packages available - check `_quarto.yml` pyodide.packages
-4. **Template sync conflicts**: Content files are protected by `.templatesyncignore`, but verify after syncs
-5. **Execute: false**: This is intentional - pyodide handles execution, not Quarto's knitr/jupyter engines
+Planning notes for this project live in Louis's Box planning folder
+(`Planning/textbook.md`). At the end of a working session, summarise what was
+done, what is blocked, and suggested next steps.

@@ -9,9 +9,7 @@ project:
   authors:
     - name: Louis Moresi
   github: https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer
-  license:
-    content: CC-BY-4.0
-    code: MIT
+  license: CC0-1.0   # matches LICENSE at the repository root
   bibliography:
     - references.bib
     - geodynamics-references.bib

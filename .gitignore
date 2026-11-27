@@ -1,21 +1,8 @@
-/.quarto/
 **/.ipynb_checkpoints
 
 .DS_Store
 
 _build
-
-WebBook/_book/
-WebLectures/_slides/
-
-**/.quarto/
-WebBook/.quarto/_freeze/*
-WebBook/.quarto/*
-
-WebSlides/.quarto/*
-
-# Quarto temporary processing files
-*.quarto_ipynb
 
 # pixi environments
 .pixi
