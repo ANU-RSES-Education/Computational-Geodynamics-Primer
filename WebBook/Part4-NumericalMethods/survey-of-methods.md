@@ -1,16 +1,7 @@
-# Survey of numerical methods {#sec-survey-of-methods}
+(sec-survey-of-methods)=
+# Survey of numerical methods
 
-{{< include ../_math-preamble.qmd >}}
 
-$$
-\newcommand{\dGamma}{\mathbf{d}\boldsymbol{\Gamma}}
-\newcommand{\erfc}{\mbox{\rm erfc}}
-\newcommand{\curly}{\sf }
-\newcommand{\Red     }[1]{\textcolor[rgb]{0.7,0.0,0.0}{ #1}} 
-\newcommand{\Green   }[1]{\textcolor[rgb]{0.0,0.7,0.0}{ #1}} 
-\newcommand{\Blue    }[1]{\textcolor[rgb]{0.0,0.0,0.7}{ #1}} 
-\newcommand{\Emerald }[1]{\textcolor[rgb]{0.0,0.7,0.3}{ #1}}
-$$
 
 ## Explicit versus implicit methods
 The use of implicit solution methods is crucial when we come to the mantle flow problem (and to elasticity). It is a deceptively simple concept which we use to eliminate oscillatory errors and other problems associated with _stiff_ systems, and in other cases where we want to take large timesteps. Again, Numerical Recipes provides a good example of the way in which implicit methods avoid the shuffling timesteps which result when an otherwise unimportant component of the system blows up. To obtain an implicit solution, we express our updated timestep in terms of values of derivatives etc which are evaluated at that timestep. This may result in dependencies which mean large systems of simultaneous equations need to be solved.
@@ -53,6 +44,8 @@ $$
     \end{split}
 $$ 
 
+:::{table} Results of the two implicit schemes derived above for the numerical integration of the decay equation
+:label: tbl-decay
 |    t   | $^1\theta_i$ | $^2\theta_i$ | Exact  |
 | ------ | ------------ | ------------ | ------ |
 |    0.0 | 1.0000       | 1.0000       | 1.0000 |
@@ -61,8 +54,7 @@ $$
 |    0.3 | 0.7513       | 0.7406       | 0.7408 |
 |    0.4 | 0.6830       | 0.6701       | 0.6703 |
 |    0.5 | 0.6209       | 0.6063       | 0.6063 |
-
-: Results of the two implicit schemes derived above for the numerical integration of the decay equation {#tbl-decay}
+:::
 
 The first order scheme is of approximately the same accuracy as the explicit scheme, not surprisingly, but the mid-point implicit method has very impressive results considering that there is very little extra work involved in deriving the formulation. Can this strategy stabilize the quadratic expansion which
 proved to be so unstable in explicit form ? 
@@ -96,7 +88,10 @@ We have learned a number of things --- in particular
 
 Advection is a fundamental concept in fluid mechanics, get it makes the lives of fluid dynamicists much more difficult. It can be particularly problematic in numerical modeling. This is worth having in mind when we discuss different numerical methods because in application to solid Earth dynamics, advection will be a major issue with any method we choose.
 
-![Advection pure and simple --- with no diffusion, fluid motion winds up initially local regions into long, convoluted tendrils](../Images/Diagrams/advect_mix.png){#fig-advection}
+:::{figure} ../Images/Diagrams/advect_mix.png
+:label: fig-advection
+Advection pure and simple --- with no diffusion, fluid motion winds up initially local regions into long, convoluted tendrils
+:::
 
 
 As we discussed previously in dealing with approximate analytic solutions, the solution to all our advection woes is to deal with a coordinate system locked to the fluid. Unfortunately, while this approach works well in some situations -- predominantly solid mechanics and engineering applications where total deformation is generally no more than a few percent strain -- in fluids, the local coordinate system becomes quite hard to track. In the [figure above](#fig-advection) , a small, square region of fluid has been tagged and is followed during the deformation induced by a simple convection roll. It is clear that a coordinate system based on initially orthogonal sets of axes rapidly becomes unrecognizably distorted.
@@ -107,7 +102,10 @@ If the dye can diffuse then, the finer scales of the tendrils will in fact be mi
 
 ### Numerical Example in 1D
 
-![Setup for a first attempt at a numerical advection scheme on a fixed discretization. After two timesteps, the sharp front has become smoothed despite introducing no genuine diffusion](../Images/Diagrams/eul_adv.png){#fig-advection2}
+:::{figure} ../Images/Diagrams/eul_adv.png
+:label: fig-advection2
+Setup for a first attempt at a numerical advection scheme on a fixed discretization. After two timesteps, the sharp front has become smoothed despite introducing no genuine diffusion
+:::
 
 
 Let us follow our usual strategy an solve the simplest imaginable advection equation:
@@ -116,14 +114,14 @@ $$
 \frac{\partial \phi}{\partial t} = -v \frac{\partial \phi}{\partial x}
 $$
 
-in which $v$ is a constant velocity. Obviously we need to introduce some notation as a warm-up for solving the problem. We break up the spatial domain into a series of points separated by $\delta x$ [as shown](#eul_adv1) and, as we did in the earlier examples, break up time into a discrete set separated by $\delta t$.
+in which $v$ is a constant velocity. Obviously we need to introduce some notation as a warm-up for solving the problem. We break up the spatial domain into a series of points separated by $\delta x$ [as shown](#fig-advection2) and, as we did in the earlier examples, break up time into a discrete set separated by $\delta t$.
 The values of $\phi$ at various times and places are denoted by
 
 $$
 \begin{align}
-    &&  &_{i-1}\phi_{n-1}   &&_{i}\phi_{n-1}    && _{i+1}\phi_{n-1} && \nonumber \\
+    &&  &_{i-1}\phi_{n-1}   &&_{i}\phi_{n-1}    && _{i+1}\phi_{n-1} &&  \\
     &&  &_{i-1}\phi_{n}         &&_{i}\phi_{n}      && _{i+1}\phi_{n}  &&\\
-    &&  &_{i-1}\phi_{n+1}   &&_{i}\phi_{n+1}    && _{i+1}\phi_{n+1} &&\nonumber 
+    &&  &_{i-1}\phi_{n+1}   &&_{i}\phi_{n+1}    && _{i+1}\phi_{n+1} && 
 \end{align}
 $$
 
@@ -148,6 +146,8 @@ $$
 {_{i}\phi}_{n+1} = \frac{1}{4}\left(  {_{i+1}\phi}_n - {_{i-1}\phi}_n \right)
 $$
 
+:::{table} Hand calculation of low order advection schemes
+:label: tbl-hand-rolled-advection
 |    |    |  location| | |    |    |    |    | 
 | -- | -- | -- | -- | -- | -- | -- | -- | -- |
 |            |  time  | i-2 | i-1 | i | i+1 | i+2 | i+3 | $\int \phi dx$ |
@@ -157,9 +157,7 @@ $$
 | **Upwind** | t=0                 | 1 | 1      | 1     | 0     | 0      | 0     | 3   |
 |            | t=$\delta x/2v$ | 1 | 1      | 1     | 0.5   | 0      | 0     | 3.5 |
 |            | t=$\delta x/v$ | 1 | 1      | 1     | 0.75  | 0.25   | 0     | 4.0 |
-
-
-: Hand calculation of low order advection schemes {#tbl-hand-rolled-advection}
+:::
 
 We compute the first few timesteps for a step function in $\phi$ initially on the location $x_i$ as shown in the diagram. These are written out in the first section of the [Table](#tbl-hand-rolled-advection). There are some oddities immediately visible from the table entries. The step has a large overshoot to the left, and its influence gradually propogates in the upstream direction. However, it does preserve the integral value of $\phi$ on the domain (allowing for the fact that the step is advancing into the domain).
 
@@ -207,7 +205,11 @@ As we have already seen, some methods work well for particular problem and other
 
 Obviously there is not room to do justice to any particular method --- or (god forbid) make some other method seem better than finite elements (though for some things this is obviously true).
 
-![The same patch of domain as each method represents it. (a) Finite differences store point values at the nodes; the derivative at the centre node uses the five-point stencil (dark nodes). (b) Finite elements interpolate between nodes with basis functions; the basis function of the dark node is non-zero only on the six triangles that share it (shaded). (c) Finite volumes store the average over a control volume (dashed) and balance the fluxes through its faces (arrows). (d) Particle-in-cell methods carry material properties on particles (dots) that move with the flow (arrows) through a fixed background grid.](../Images/Diagrams/methods-compared.svg){#fig-methods-compared fig-alt="Four square grids side by side. The first highlights a cross-shaped five-node stencil. The second is triangulated and shades the hexagonal patch of six triangles around one node. The third outlines a dashed square around one node with four arrows pointing out through its faces. The fourth shows scattered dots inside the grid cells, three of them with short arrows."}
+:::{figure} ../Images/Diagrams/methods-compared.svg
+:label: fig-methods-compared
+:alt: Four square grids side by side. The first highlights a cross-shaped five-node stencil. The second is triangulated and shades the hexagonal patch of six triangles around one node. The third outlines a dashed square around one node with four arrows pointing out through its faces. The fourth shows scattered dots inside the grid cells, three of them with short arrows.
+The same patch of domain as each method represents it. (a) Finite differences store point values at the nodes; the derivative at the centre node uses the five-point stencil (dark nodes). (b) Finite elements interpolate between nodes with basis functions; the basis function of the dark node is non-zero only on the six triangles that share it (shaded). (c) Finite volumes store the average over a control volume (dashed) and balance the fluxes through its faces (arrows). (d) Particle-in-cell methods carry material properties on particles (dots) that move with the flow (arrows) through a fixed background grid.
+:::
 
 ### Finite Differences
 

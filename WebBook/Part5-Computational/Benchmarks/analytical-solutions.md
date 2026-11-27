@@ -1,9 +1,8 @@
 # Benchmark Problems: Analytical Solutions for Viscous Flows
 
-{{< include ../../_math-preamble.qmd >}}
 
-:::{.callout-warning collapse="true"}
-## 🚧 Under Review
+:::{warning} Under Review
+:class: dropdown
 
 This entire chapter is newly added content adapted from ICFM Chapter 5 (One-Dimensional Viscous Flows). The analytical solutions are well-established in fluid mechanics, but their presentation here needs review for appropriate geodynamic context and computational implementation guidance.
 
@@ -40,8 +39,7 @@ This chapter presents a collection of analytical solutions for viscous flows, fo
 - **Pipe flow**: Axisymmetric geometry, applicable to cylindrical conduits
 - **Oscillating boundaries**: Time-dependent flows with diffusion
 
-:::{.callout-note}
-## Material adapted from MTH3360 Fluid Mechanics
+:::{note} Material adapted from MTH3360 Fluid Mechanics
 
 The problems in this chapter are adapted from the *MTH3360 Incompressible Fluid Mechanics* course materials (Monash University, 2010-2013). These classical fluid mechanics problems provide excellent benchmarks for computational geodynamics codes.
 :::
@@ -80,7 +78,11 @@ Consider steady viscous flow between two parallel rigid plates:
 - Flow independent of $x$ and $y$ directions
 - No applied pressure gradient
 
-![Couette flow: Linear velocity profile between moving plates](../../Images/Diagrams/couette-flow.png){#fig-couette width=450px}
+:::{figure} ../../Images/Diagrams/couette-flow.png
+:label: fig-couette
+:width: 450px
+Couette flow: Linear velocity profile between moving plates
+:::
 
 ### Solution
 
@@ -108,9 +110,10 @@ Applying boundary conditions:
 - At $z = h$: $u = U \Rightarrow A = U/h$
 
 **Analytical Solution:**
-$$
+```{math}
+:label: eq-couette-solution
 u(z) = U\frac{z}{h}
-$$ {#eq-couette-solution}
+```
 
 ### Physical Interpretation
 
@@ -137,7 +140,11 @@ Steady viscous flow driven by a pressure gradient between two parallel fixed pla
 - Applied pressure gradient: $dp/dx < 0$ (pressure decreases in flow direction)
 - Flow independent of $x$ and $y$ positions
 
-![Poiseuille flow: Parabolic velocity profile in pressure-driven channel flow](../../Images/Diagrams/poiseuille-flow.png){#fig-poiseuille width=450px}
+:::{figure} ../../Images/Diagrams/poiseuille-flow.png
+:label: fig-poiseuille
+:width: 450px
+Poiseuille flow: Parabolic velocity profile in pressure-driven channel flow
+:::
 
 ### Solution
 
@@ -170,9 +177,10 @@ Applying boundary conditions:
 - At $z = h$: $u = 0 \Rightarrow A = \gamma h/(2\mu)$
 
 **Analytical Solution:**
-$$
+```{math}
+:label: eq-poiseuille-solution
 u(z) = \frac{\gamma}{2\mu}z(h - z)
-$$ {#eq-poiseuille-solution}
+```
 
 ### Physical Interpretation
 
@@ -200,7 +208,11 @@ Steady viscous flow through a cylindrical pipe of radius $a$ under a constant ap
 - Axisymmetric flow: no dependence on $\theta$
 - Applied pressure gradient: $dp/dz = -\gamma$
 
-![Pipe flow: Parabolic velocity profile in a circular pipe](../../Images/Diagrams/pipe-flow.png){#fig-pipe-flow width=350px}
+:::{figure} ../../Images/Diagrams/pipe-flow.png
+:label: fig-pipe-flow
+:width: 350px
+Pipe flow: Parabolic velocity profile in a circular pipe
+:::
 
 ### Solution
 
@@ -221,9 +233,6 @@ $$
 Since $p = p(z)$ only and $w = w(r)$ only:
 $$
 \frac{dp}{dz} = -\gamma \quad \text{(constant)}
-$$
-
-$$
 \frac{1}{r}\frac{d}{dr}\left(r\frac{dw}{dr}\right) = -\frac{\gamma}{\mu}
 $$
 
@@ -237,9 +246,10 @@ Boundary conditions:
 - $w(a) = 0$: $B = \gamma a^2/(4\mu)$
 
 **Analytical Solution:**
-$$
+```{math}
+:label: eq-pipe-flow-solution
 w(r) = \frac{\gamma a^2}{4\mu}\left(1 - \frac{r^2}{a^2}\right)
-$$ {#eq-pipe-flow-solution}
+```
 
 ### Physical Interpretation
 
@@ -278,11 +288,12 @@ $$
 with boundary conditions $u(0) = 0$ and $u(h) = U$.
 
 **Analytical Solution:**
-$$
+```{math}
+:label: eq-mixed-flow-solution
 u(z) = \frac{\gamma}{2\mu}z(h - z) + U\frac{z}{h}
-$$ {#eq-mixed-flow-solution}
+```
 
-This is simply the superposition of Poiseuille flow @eq-poiseuille-solution and Couette flow @eq-couette-solution.
+This is simply the superposition of Poiseuille flow [](#eq-poiseuille-solution) and Couette flow [](#eq-couette-solution).
 
 ### Zero Net Flux Condition
 
@@ -305,18 +316,20 @@ The negative value indicates the pressure gradient opposes the plate motion.
 An incompressible fluid occupies the half-space $z > 0$ above a rigid boundary at $z = 0$ that oscillates with velocity $U\cos(\alpha t)$.
 
 The velocity field $\uv = (u(z,t), 0, 0)$ satisfies:
-$$
+```{math}
+:label: eq-diffusion-equation
 \frac{\partial u}{\partial t} = \nu\frac{\partial^2 u}{\partial z^2}
-$$ {#eq-diffusion-equation}
+```
 
 This is the heat/diffusion equation with kinematic viscosity $\nu$ playing the role of thermal diffusivity.
 
 Seeking a solution of the form $u = \text{Re}\{f(z)e^{i\alpha t}\}$ and requiring $u \to 0$ as $z \to \infty$:
 
 **Analytical Solution:**
-$$
+```{math}
+:label: eq-oscillating-plate-solution
 u(z,t) = Ue^{-kz}\cos(kz - \alpha t)
-$$ {#eq-oscillating-plate-solution}
+```
 
 where $k = \sqrt{\alpha/(2\nu)}$ is the inverse penetration depth.
 
@@ -331,11 +344,11 @@ This solution demonstrates **viscous diffusion** of momentum from the oscillatin
 
 ## Exercises
 
-:::{.callout-note}
-Exercises marked with ⭐ have worked solutions provided.
+:::{note}
+Exercises with solutions available are marked with {sup}`★`
 :::
 
-### Exercise 1: Mixed Couette-Poiseuille Flow ⭐
+### Exercise 1: Mixed Couette-Poiseuille Flow {sup}`★`
 
 Mixed Couette-Poiseuille flow is driven by moving the upper plate at $z = h$ with velocity $U$ and applying an **opposing** pressure gradient $dp/dx = \gamma > 0$ (opposing means the pressure gradient acts against the plate motion).
 
@@ -347,14 +360,14 @@ c) Determine the pressure gradient required to produce zero net volume flux
 
 A viscous fluid at rest is confined between two rigid plates at $z = 0$ and $z = h$. The lower boundary is fixed, but at $t = 0$ the upper boundary is **impulsively** set in motion with velocity $(U, 0, 0)$.
 
-a) Show that the velocity field satisfies the diffusion equation @eq-diffusion-equation
+a) Show that the velocity field satisfies the diffusion equation [](#eq-diffusion-equation)
 b) Calculate the velocity profile as a function of time
 c) Determine the vorticity distribution as a function of time
 d) Sketch the velocity profile at several times and show convergence to the steady Couette solution
 
 **Hint**: Use separation of variables with $u(z,t) = \sum_n A_n \sin(n\pi z/h)e^{-\lambda_n t}$
 
-### Exercise 3: Cylindrical Pipe Flow ⭐
+### Exercise 3: Cylindrical Pipe Flow {sup}`★`
 
 Derive the solution for steady viscous flow through an axisymmetric pipe of radius $a$ under a constant applied pressure gradient (Hagen-Poiseuille flow).
 
@@ -369,7 +382,7 @@ $$
 \nabla^2 f = \frac{1}{r}\frac{\partial}{\partial r}\left(r\frac{\partial f}{\partial r}\right) + \frac{\partial^2 f}{\partial z^2}
 $$
 
-### Exercise 4: Vorticity Generation in Poiseuille Flow ⭐
+### Exercise 4: Vorticity Generation in Poiseuille Flow {sup}`★`
 
 Consider the plane Poiseuille flow problem.
 
@@ -402,8 +415,7 @@ f) Explain why the Hele-Shaw cell is used to model potential flow experimentally
 
 ## Computational Exercises
 
-:::{.callout-tip}
-## Python Implementation
+:::{tip} Python Implementation
 
 The following exercises ask you to implement numerical solutions and compare them to the analytical results. This is essential practice for validating computational methods.
 :::
@@ -414,7 +426,7 @@ Write a Python program to solve the Couette flow problem numerically using finit
 
 a) Discretize the domain $[0, h]$ with $N$ grid points
 b) Implement the steady-state solver using the discrete Laplacian
-c) Compare your numerical solution to the analytical solution @eq-couette-solution
+c) Compare your numerical solution to the analytical solution [](#eq-couette-solution)
 d) Plot the error as a function of grid resolution
 e) Verify that the error decreases as $\Delta z^2$ (second-order convergence)
 
@@ -423,7 +435,7 @@ e) Verify that the error decreases as $\Delta z^2$ (second-order convergence)
 Repeat Computational Exercise 1 for Poiseuille flow:
 
 a) Implement the steady-state solver
-b) Compare to the analytical solution @eq-poiseuille-solution
+b) Compare to the analytical solution [](#eq-poiseuille-solution)
 c) Calculate the volume flux numerically and compare to the analytical value
 d) Test convergence with grid refinement
 
@@ -443,14 +455,14 @@ Implement the axisymmetric pipe flow solution:
 
 a) Set up the problem in cylindrical coordinates
 b) Handle the singularity at $r = 0$ properly
-c) Compare to the analytical solution @eq-pipe-flow-solution
+c) Compare to the analytical solution [](#eq-pipe-flow-solution)
 d) Calculate volume flux and verify against analytical result
 e) Explore convergence properties with grid refinement
 
 ## Solutions to Selected Exercises
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 1: Mixed Couette-Poiseuille Flow
+:::{tip} Solution to Exercise 1: Mixed Couette-Poiseuille Flow
+:class: dropdown
 
 **(a) Velocity profile:**
 
@@ -486,17 +498,14 @@ $$
 Setting $Q = 0$:
 $$
 \frac{Uh}{2} = \frac{\gamma h^3}{12\mu}
-$$
-
-$$
 \gamma = \frac{6\mu U}{h^2}
 $$
 
 This is the pressure gradient magnitude required to exactly oppose the plate-driven flow.
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 3: Cylindrical Pipe Flow
+:::{tip} Solution to Exercise 3: Cylindrical Pipe Flow
+:class: dropdown
 
 **(a) Continuity:**
 
@@ -522,9 +531,6 @@ $$
 Since $p = p(z)$ and $u_z = u_z(r)$:
 $$
 \frac{dp}{dz} = -\gamma \quad \text{(constant)}
-$$
-
-$$
 \frac{1}{r}\frac{d}{dr}\left(r\frac{du_z}{dr}\right) = -\frac{\gamma}{\mu}
 $$
 
@@ -549,9 +555,6 @@ $$
 
 $$
 Q = \int_0^a u_z \cdot 2\pi r \, dr = 2\pi\frac{\gamma a^2}{4\mu}\int_0^a \left(1 - \frac{r^2}{a^2}\right)r \, dr
-$$
-
-$$
 Q = \frac{\pi\gamma a^2}{2\mu}\left[\frac{r^2}{2} - \frac{r^4}{4a^2}\right]_0^a = \frac{\pi\gamma a^4}{8\mu}
 $$
 
@@ -564,12 +567,12 @@ $$
 The average velocity is exactly half the maximum velocity for parabolic pipe flow.
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 4: Vorticity in Poiseuille Flow
+:::{tip} Solution to Exercise 4: Vorticity in Poiseuille Flow
+:class: dropdown
 
 **(a) Vorticity distribution:**
 
-For plane Poiseuille flow @eq-poiseuille-solution:
+For plane Poiseuille flow [](#eq-poiseuille-solution):
 $$
 u = \frac{\gamma z}{2\mu}(h - z)
 $$

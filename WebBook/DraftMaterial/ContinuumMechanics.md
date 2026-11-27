@@ -1,12 +1,15 @@
 # Conservation Laws
 
-{{< include ../_math-preamble.qmd >}}
 
 We start by deriving the equations of motion, energy balance and so on
 through a conservation principle. This will give a useful insight into
 the different forms of the equations which we will later encounter.
 
-![An arbitrary volume, $\Omega$ of material has a surface $\Gamma$](../Images/Diagrams/vol_elt.jpg){#fig-volume-element width=50%}
+:::{figure} ../Images/Diagrams/vol_elt.jpg
+:label: fig-volume-element
+:width: 50%
+An arbitrary volume, $\Omega$ of material has a surface $\Gamma$
+:::
 
 A general conservation law does not distinguish the quantity which is
 being conserved -- it is a mathematical identity. Consider a quantity
@@ -25,12 +28,13 @@ might represent diffusion of $\phi$). The rate of change of $\phi$ is
 given by combining the contribution due to the source term, the
 stationary flux term, and the effect of motion of the fluid.
 
-$$
+```{math}
+:label: eq-cons1
 \frac{d}{dt} \int_{\Omega} \rho \phi d\Omega =
             - \int_{\Gamma} \mathbf{F} \cdot \mathbf{d}\boldsymbol{\Gamma}
             + \int_{\Omega} \rho H d\Omega
             - \int _{\Gamma} \rho \phi \mathbf{v} \cdot \mathbf{d}\boldsymbol{\Gamma}
-$$ {#eq-cons1}
+```
 
 where the final term is the change due to the fluid carrying $\phi$
 through the volume. Fluxes are positive outward (by our definition of
@@ -57,7 +61,7 @@ $$
 $$
 
 and then rewrite the general conservation equation
-@eq-cons1 as 
+[](#eq-cons1) as 
 
 $$
 \int_{\Omega} \left[ \frac{d \rho \phi}{dt} + 
@@ -70,11 +74,12 @@ no matter what shape we draw for the volume $\Omega$ and so
 the integral can only be zero for arbitrary $\Omega$ if the
 enclosed term is zero everywhere, i.e. 
 
-$$
+```{math}
+:label: eq-cons2
 \frac{d \rho \phi}{dt} + 
             \nabla \cdot (\mathbf{F} + \rho \phi \mathbf{v}) 
             -\rho H =0
-$$ {#eq-cons2}
+```
 
 This is the general conservation rule for any property $\phi$ of a
 moving fluid. We now consider several quantities and develop specific
@@ -87,12 +92,13 @@ In this case $\phi=1$ because
 $$\int_\Omega \rho d\Omega \rightarrow \mbox{mass}$$
 
 Of course, we also know that we cant diffuse or create mass which means $\mathbf{F} = H = 0$ and
-equation @eq-cons2 simplifies to give
+equation [](#eq-cons2) simplifies to give
 
-$$
+```{math}
+:label: eq-maxxcons
 \Red{\frac{\partial \rho}{\partial t} + 
                 \nabla \cdot \rho \mathbf{v} = 0}
-$$ {#eq-maxxcons}
+```
 
 ## Conservation of (heat) energy
 
@@ -100,7 +106,7 @@ The thermal energy / unit mass is $C_p T$ and the conductive heat flux
 $\mathbf{F}$ is given by $\mathbf{F} = -k \nabla T$, ($k$ is the
 thermal conductivity). 
 
-Then the general conservation equation @eq-cons2 reduces to this
+Then the general conservation equation [](#eq-cons2) reduces to this
 
 $$\frac{\partial (\rho C_p T)}{\partial t} +
              \nabla \cdot \left(-k \nabla T + 
@@ -120,10 +126,11 @@ conservation and we know immediately that this is zero.
 If the heat capacity, $C_p$ and thermal conductivity, $k$ are constants,
 then the conservation equation becomes
 
-$$
+```{math}
+:label: eq-energycons
 \Red{ \left( \frac{\partial T}{\partial t} + \mathbf{v} \cdot \nabla T \right)=
                         \kappa \nabla^2 T + \frac{H}{C_p} }
-$$ {#eq-energycons}
+```
 where $\kappa$ is the thermal diffusivity, $\kappa = k/\rho C_p$.
 
 It probably did not go unnoticed that we assumed $\rho$ to be constant to get to 
@@ -158,15 +165,16 @@ Conservation of momentum
 ------------------------
 
 Momentum is a vector quantity, so the form of
-@eq-cons1 is different. The source term in the momentum equation represents
+[](#eq-cons1) is different. The source term in the momentum equation represents
 a body force, and the surface flux term represents a stress.
 
-$$
+```{math}
+:label: eq-momcons1
 \frac{d}{dt}\int_{\Omega} \rho \mathbf{v} d\Omega = 
             -   \int_{\Omega} \rho g \hat{\mathbf{z}} d\Omega  
             +   \int_{\Gamma} \boldsymbol{\sigma} \cdot \mathbf{d}\boldsymbol{\Gamma}-
                 \int_{\Gamma} \rho \mathbf{v} (\mathbf{v} \cdot \mathbf{d}\boldsymbol{\Gamma})
-$$ {#eq-momcons1}
+```
 Gravity provides a body force acting in the vertical direction,
 $\hat{\mathbf{z}}$. We have introduced the stress tensor,
 $\boldsymbol{\sigma}$; the force / unit area exerted on an arbitrarily
@@ -177,24 +185,26 @@ $$f_i = \sigma_{ij} n_j$$
 The application of Gauss' theorem, and the equality holds for any
 choice of the volume gives this result:
 
-$$
+```{math}
+:label: eq-momcons2
 \frac{\partial}{\partial t}(\rho \mathbf{v}) 
             +\rho g \hat{\mathbf{z}} - \nabla \cdot \sigma + \nabla \cdot (\rho \mathbf{v} \mathbf{v}) = 0
-$$ {#eq-momcons2}
+```
 
 Vector notation allows us to keep a number of equations written as one
 single equation. However, at this point, keeping the equations in vector
 notation makes the situation more confusing. What does that last term on the 
-left hand side of @eq-momcons2 mean ? It is clearer if we use the 
+left hand side of [](#eq-momcons2) mean ? It is clearer if we use the 
 index notation instead
 
-Equation @eq-momcons2 is equivalent to this:
+Equation [](#eq-momcons2) is equivalent to this:
 
-$$
+```{math}
+:label: eq-momindx
 \Green{ \frac{\partial \rho v_i}{\partial t}} + \rho g \delta_{i3} - 
             \frac{\partial \sigma_{ij}}{\partial x_j} +
-            \textcolor[rgb]{0.0,0.0,0.7}{ \frac{\partial(\rho v_i v_j)}{\partial x_j}} = 0
-$$ {#eq-momindx}
+            \textcolor{mediumblue}{ \frac{\partial(\rho v_i v_j)}{\partial x_j}} = 0
+```
 
 where that peculiar final term on the left hand side is unambiguous. Repeated indeces in
 each term are implicitly summed. $\delta_{ij}$ is the kronecker
@@ -217,11 +227,12 @@ The term in square brackets is, in fact, a restatement of the
 conservation of mass derived above and must vanish. The remaining terms
 can now be written out in vector notation as
 
-$$
+```{math}
+:label: eq-momcons3
 \Red{   \rho \left( \frac{\partial \mathbf{v}}{\partial t}
                             + (\mathbf{v} \cdot \nabla) \mathbf{v} \right) =
                          \nabla \cdot \boldsymbol{\sigma} - g\rho\hat{\mathbf{z}}      }
-$$ {#eq-momcons3}
+```
 
 Note: The $\mathbf{v} \cdot \nabla$ notation we introduced earlier is
 now an operator on a vector.  Written out it looks like this: 

@@ -6,7 +6,6 @@ platforms = ["osx-arm64"]
 version = "0.1.0"
 
 [dependencies]
-quarto = ">=1.6.42,<2"
 jupyterlite = ">=0.5.1,<0.6"
 jupyterlite-pyodide-kernel = ">=0.5.2,<0.6"
 ipython = ">=9.4.0,<10"
@@ -18,6 +17,10 @@ pyyaml = ">=6.0.2,<7"
 typst = "0.13.*"
 matplotlib = ">=3.9"
 numpy = ">=2"
+mystmd = "==1.10.1"
+nodejs = ">=20"
 
 [tasks]
 figures = "python -I WebBook/Images/Diagrams/src/build_figures.py"
+start = { cmd = "myst start", cwd = "WebBook" }
+build = { cmd = "myst build --html", cwd = "WebBook" }

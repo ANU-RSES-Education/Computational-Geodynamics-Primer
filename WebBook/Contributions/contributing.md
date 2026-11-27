@@ -53,7 +53,7 @@ We are actively seeking contributions in the following areas:
 
 ## Style Guide
 
-Please see the [Style Guide](style-guide.qmd) for formatting conventions and best practices.
+Please see the [Style Guide](style-guide.md) for formatting conventions and best practices.
 
 ## How to Contribute
 

@@ -1,9 +1,8 @@
 # Steady Inviscid Flows
 
-{{< include ../_math-preamble.qmd >}}
 
-:::{.callout-warning collapse="true"}
-## 🚧 Under Review
+:::{warning} Under Review
+:class: dropdown
 
 This entire chapter is newly added content adapted from ICFM Chapter 3 (Steady Inviscid Flows). While inviscid flow theory is foundational to fluid mechanics, its direct relevance to highly viscous geodynamic flows needs further justification and integration with subsequent chapters on viscous flows.
 
@@ -35,8 +34,7 @@ Inviscid flow theory provides fundamental insights into fluid motion by examinin
 4. **Large-Scale Circulation**: Core dynamics and atmospheric flows can be approximated as inviscid away from boundaries
 5. **Mathematical Foundation**: Potential flow theory is a cornerstone of analytical fluid mechanics
 
-:::{.callout-note}
-## Material adapted from MTH3360 Fluid Mechanics
+:::{note} Material adapted from MTH3360 Fluid Mechanics
 
 This chapter is adapted from *MTH3360 Incompressible Fluid Mechanics* course materials (Monash University, 2010-2013), modified to emphasize connections to geodynamics.
 :::
@@ -74,15 +72,16 @@ $$
 Since $\uv \cdot \GRAD$ is the derivative in the direction $\uv$ (tangent to streamlines), it follows that:
 
 **Bernoulli's Equation:**
-$$
+```{math}
+:label: eq-bernoulli
 \frac{1}{2}|\uv|^2 + \frac{p}{\rho} + \Omega = \text{constant along each streamline}
-$$ {#eq-bernoulli}
+```
 
 although the constant will generally be different on different streamlines.
 
 ### Physical Interpretation
 
-Bernoulli's equation @eq-bernoulli represents energy conservation along a streamline:
+Bernoulli's equation [](#eq-bernoulli) represents energy conservation along a streamline:
 
 - $\frac{1}{2}|\uv|^2$ = kinetic energy per unit mass
 - $\frac{p}{\rho}$ = pressure work per unit mass
@@ -104,8 +103,7 @@ $$
 
 where $\omega$ is the rotation rate and $r$ is the distance from the rotation axis.
 
-:::{.callout-tip}
-## Example: Rotating Fluid Surface
+:::{tip} Example: Rotating Fluid Surface
 
 In a 'static' fluid in a rotating reference frame, verify that $\Omega = gz - \omega^2 r^2/2$ predicts that the free surface takes the form of a parabola.
 
@@ -126,7 +124,11 @@ This is indeed a parabola opening upward. This is observed in rotating buckets o
 
 ### Torricelli's Theorem: Draining a Reservoir
 
-![Flow from a draining tank through a small orifice](../Images/Diagrams/draining-tank.png){#fig-torricelli width=350px}
+:::{figure} ../Images/Diagrams/draining-tank.png
+:label: fig-torricelli
+:width: 350px
+Flow from a draining tank through a small orifice
+:::
 
 Consider a large reservoir with a small drainage hole at the bottom. If the opening is much smaller than the reservoir cross-section, the water surface falls very slowly and the flow may be regarded as approximately steady.
 
@@ -147,9 +149,10 @@ $$
 Since $u_B \ll u_A$:
 
 **Torricelli's Theorem:**
-$$
+```{math}
+:label: eq-torricelli
 u_A = \sqrt{2gh}
-$$ {#eq-torricelli}
+```
 
 The outflow speed is that of free fall from height $h$ under gravity. This neglects viscous dissipation of energy.
 
@@ -169,7 +172,11 @@ This provides a rough estimate for effusive eruption velocities (actual values m
 
 ### Stagnation Pressure and the Pitot Tube
 
-![Flow around a bluff body showing the stagnation point](../Images/Diagrams/stagnation-point.png){#fig-stagnation width=400px}
+:::{figure} ../Images/Diagrams/stagnation-point.png
+:label: fig-stagnation
+:width: 400px
+Flow around a bluff body showing the stagnation point
+:::
 
 Suppose a stream has uniform speed $U_0$ and pressure $p_0$ far from an obstacle. As it flows around a bluff body, the flow must slow down in front, creating a **dividing streamline** that separates fluid passing on either side. This streamline ends at a **stagnation point** where the velocity is zero.
 
@@ -179,15 +186,20 @@ $$
 $$
 
 **Stagnation Pressure:**
-$$
+```{math}
+:label: eq-stagnation-pressure
 p_{\text{stag}} = p_0 + \frac{1}{2}\rho U_0^2
-$$ {#eq-stagnation-pressure}
+```
 
 The pressure $p_{\text{stag}}$ is the **total** or **Pitot pressure** (also called the **total head**), differing from the static pressure $p_0$ by the **dynamic pressure** $\frac{1}{2}\rho U_0^2$.
 
 ### The Pitot Tube
 
-![Pitot tube for measuring flow velocity via pressure measurement](../Images/Diagrams/pitot-tube.png){#fig-pitot width=400px}
+:::{figure} ../Images/Diagrams/pitot-tube.png
+:label: fig-pitot
+:width: 400px
+Pitot tube for measuring flow velocity via pressure measurement
+:::
 
 A Pitot tube consists of a tube directed into the stream with a small central hole connected to a manometer. At equilibrium, there is no flow through the tube, so the measured pressure is the total pressure:
 $$
@@ -215,9 +227,10 @@ This is negligible compared to lithostatic pressure (~GPa), confirming that dyna
 A useful vector identity relates the advective acceleration to vorticity:
 
 **Vector Identity:**
-$$
+```{math}
+:label: eq-vorticity-identity
 (\uv \cdot \GRAD)\uv = \GRAD\left(\frac{1}{2}|\uv|^2\right) - \uv \times \boldsymbol{\omega}
-$$ {#eq-vorticity-identity}
+```
 
 where $\boldsymbol{\omega} = \CURL \uv$ is the **vorticity**.
 
@@ -238,27 +251,29 @@ $$
 $$
 
 From vector calculus, any irrotational vector field can be expressed as the gradient of a scalar **velocity potential** $\phi$:
-$$
+```{math}
+:label: eq-velocity-potential
 \uv = \GRAD \phi
-$$ {#eq-velocity-potential}
+```
 
 ### Incompressible Irrotational Flow
 
-For incompressible flow, $\DIV \uv = 0$. Substituting @eq-velocity-potential:
+For incompressible flow, $\DIV \uv = 0$. Substituting [](#eq-velocity-potential):
 $$
 \DIV (\GRAD \phi) = \nabla^2 \phi = 0
 $$
 
 **Laplace's Equation:**
-$$
+```{math}
+:label: eq-laplace
 \nabla^2 \phi = 0
-$$ {#eq-laplace}
+```
 
 This is the governing equation for incompressible, irrotational (potential) flow. Laplace's equation is linear and has extensive mathematical theory, making potential flows analytically tractable.
 
 ### Bernoulli's Equation for Irrotational Flow
 
-For irrotational flow, @eq-vorticity-identity gives:
+For irrotational flow, [](#eq-vorticity-identity) gives:
 $$
 (\uv \cdot \GRAD)\uv = \GRAD\left(\frac{1}{2}|\uv|^2\right)
 $$
@@ -276,18 +291,20 @@ $$
 Integrating:
 
 **Unsteady Bernoulli's Equation (irrotational):**
-$$
+```{math}
+:label: eq-unsteady-bernoulli
 \frac{\partial \phi}{\partial t} + \frac{1}{2}|\GRAD \phi|^2 + \frac{p}{\rho} + \Omega = f(t)
-$$ {#eq-unsteady-bernoulli}
+```
 
 where $f(t)$ is an arbitrary function of time (can be absorbed into $\phi$ by redefining the potential).
 
 For **steady** irrotational flow:
-$$
+```{math}
+:label: eq-steady-irrotational-bernoulli
 \frac{1}{2}|\uv|^2 + \frac{p}{\rho} + \Omega = \text{constant everywhere}
-$$ {#eq-steady-irrotational-bernoulli}
+```
 
-Unlike the general case @eq-bernoulli, Bernoulli's constant is the **same on all streamlines** for irrotational flow.
+Unlike the general case [](#eq-bernoulli), Bernoulli's constant is the **same on all streamlines** for irrotational flow.
 
 ### Geodynamic Relevance of Potential Flow
 
@@ -301,9 +318,10 @@ While the mantle is highly viscous and far from inviscid, potential flow concept
 ## Stream Function (2D Flows)
 
 For two-dimensional incompressible flow in the $x$-$y$ plane, we can define a **stream function** $\psi(x,y)$ such that:
-$$
+```{math}
+:label: eq-stream-function
 u = \frac{\partial \psi}{\partial y}, \quad v = -\frac{\partial \psi}{\partial x}
-$$ {#eq-stream-function}
+```
 
 This automatically satisfies incompressibility:
 $$
@@ -350,11 +368,11 @@ Superposition of these elementary solutions can model complex flows around obsta
 
 ## Exercises
 
-:::{.callout-note}
-Exercises marked with ⭐ have worked solutions provided.
+:::{note}
+Exercises with solutions available are marked with {sup}`★`
 :::
 
-### Exercise 1: Vector Identity ⭐
+### Exercise 1: Vector Identity {sup}`★`
 
 Prove the vector identity:
 $$
@@ -368,13 +386,13 @@ $$
 
 where $\boldsymbol{\omega} = \CURL \uv$ is the vorticity.
 
-### Exercise 2: Channel Flow with Constriction ⭐
+### Exercise 2: Channel Flow with Constriction {sup}`★`
 
 A uniform straight open rectangular channel carries water flow of mean speed $U$ and depth $h$. The channel has a constriction that reduces its width by half, and it is observed that the depth of water in the constriction is only $h/2$.
 
 By applying Bernoulli's theorem to a surface streamline, find $U$ in terms of $g$ and $h$.
 
-### Exercise 3: Pressure on Buildings ⭐
+### Exercise 3: Pressure on Buildings {sup}`★`
 
 Explain why there is an increase in pressure on the side of a building facing the wind. Estimate the force per unit area on a building face when the wind speed is 100 km/hr.
 
@@ -389,13 +407,13 @@ $$
 
 where $r = \sqrt{x^2 + y^2 + z^2}$. Is this flow incompressible or irrotational?
 
-### Exercise 5: Bernoulli Paradox ⭐
+### Exercise 5: Bernoulli Paradox {sup}`★`
 
 Hold two sheets of paper parallel to each other with a small gap between them. Blow air between the sheets. Contrary to intuition, the sheets move **together** rather than apart.
 
 Explain this phenomenon using Bernoulli's equation, assuming steady flow.
 
-### Exercise 6: Balloon Deflation ⭐
+### Exercise 6: Balloon Deflation {sup}`★`
 
 Using Bernoulli's equation:
 
@@ -403,7 +421,7 @@ a) Show that air from a balloon at excess pressure $p_1$ above atmospheric will 
 
 b) Find the depth of water in steady state in a vessel that is filled at constant rate $3 \times 10^{-5}$ m³/s and has a waste pipe of length 0.01 m and cross-sectional area $2 \times 10^{-5}$ m² protruding vertically below its base
 
-### Exercise 7: Post in River ⭐
+### Exercise 7: Post in River {sup}`★`
 
 A vertical round post stands in a river, and it is observed that the water level at the upstream face of the post is slightly higher than the level at some distance to either side.
 
@@ -445,8 +463,8 @@ c) Discuss limitations of the inviscid approximation for magma (typical viscosit
 
 ## Solutions to Selected Exercises
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 1: Vector Identity
+:::{tip} Solution to Exercise 1: Vector Identity
+:class: dropdown
 
 Start with the term $\mathbf{b} \times (\CURL \mathbf{a})$ in index notation:
 $$
@@ -485,8 +503,8 @@ $$
 $$
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 2: Channel Constriction
+:::{tip} Solution to Exercise 2: Channel Constriction
+:class: dropdown
 
 **Conservation of mass** (volume flux):
 
@@ -504,17 +522,8 @@ $$
 **Bernoulli's equation** along surface streamline ($p = p_0$ everywhere):
 $$
 \frac{u_1^2}{2} + gh_1 = \frac{u_2^2}{2} + gh_2
-$$
-
-$$
 \frac{U^2}{2} + gh = \frac{(4U)^2}{2} + g\frac{h}{2}
-$$
-
-$$
 \frac{U^2}{2} + gh = 8U^2 + \frac{gh}{2}
-$$
-
-$$
 \frac{gh}{2} = \frac{15U^2}{2}
 $$
 
@@ -524,8 +533,8 @@ U = \sqrt{\frac{gh}{15}}
 $$
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 3: Building Pressure
+:::{tip} Solution to Exercise 3: Building Pressure
+:class: dropdown
 
 There is a **stagnation point** on the upstream side of the building where the wind velocity goes to zero. From Bernoulli's equation:
 $$
@@ -548,8 +557,8 @@ F = \Delta p \times A = 464 \times 100 = 46.4 \text{ kN}
 $$
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 5: Bernoulli Paradox
+:::{tip} Solution to Exercise 5: Bernoulli Paradox
+:class: dropdown
 
 When you blow air between the two sheets, the velocity of air increases in the gap (channeling effect).
 
@@ -565,9 +574,6 @@ $$
 Therefore:
 $$
 \frac{1}{2}\rho v^2 + p_{\text{gap}} \approx p_0
-$$
-
-$$
 p_{\text{gap}} < p_0
 $$
 
@@ -579,8 +585,8 @@ This is the same principle behind:
 - Spinning balls curving (Magnus effect)
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 6: Balloon and Tank
+:::{tip} Solution to Exercise 6: Balloon and Tank
+:class: dropdown
 
 **(a) Balloon deflation:**
 
@@ -591,9 +597,6 @@ Outside (at exit): $p = p_0$, $u = U$ (exit velocity)
 Bernoulli's equation (ignoring gravity for a small balloon):
 $$
 \frac{0^2}{2} + \frac{p_0 + \Delta p}{\rho} = \frac{U^2}{2} + \frac{p_0}{\rho}
-$$
-
-$$
 U = \sqrt{\frac{2\Delta p}{\rho}}
 $$
 
@@ -606,18 +609,12 @@ At waste pipe exit: $u = U$, $p = p_0$, elevation = $-L = -0.01$ m
 Bernoulli's equation:
 $$
 0 + \frac{p_0}{\rho} + gH = \frac{U^2}{2} + \frac{p_0}{\rho} + g(-L)
-$$
-
-$$
 H = \frac{U^2}{2g} - L
 $$
 
 Volume conservation (steady state):
 $$
 U \cdot A_{\text{pipe}} = Q_{\text{in}}
-$$
-
-$$
 U = \frac{3 \times 10^{-5}}{2 \times 10^{-5}} = 1.5 \text{ m/s}
 $$
 
@@ -627,8 +624,8 @@ H = \frac{(1.5)^2}{2 \times 10} - 0.01 = 0.1125 - 0.01 = 0.1025 \text{ m} \appro
 $$
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 7: Post in River
+:::{tip} Solution to Exercise 7: Post in River
+:class: dropdown
 
 **(a) Explanation:**
 
@@ -650,9 +647,6 @@ Since pressure varies hydrostatically near the surface: $p_{\text{stag}} = p_0 +
 Substituting:
 $$
 \frac{U^2}{2} + p_0 + \rho g h_0 = p_0 + \rho g \Delta h + \rho g h_0 + \rho g \Delta h
-$$
-
-$$
 \frac{U^2}{2} = 2\rho g \Delta h
 $$
 

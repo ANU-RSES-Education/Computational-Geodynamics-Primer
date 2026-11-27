@@ -1,6 +1,5 @@
 # Applications of Stokes Flow
 
-{{< include ../_math-preamble.qmd >}}
 
 A number of related solutions exist to problems such as unstable layering
 breaking down, buckling of viscous layers and rebound of topography when
@@ -8,7 +7,11 @@ surface loading changes.
 
 ## Rayleigh-Taylor Instability & Diapirism
 
-![Salt diapirs result when a buried layer of salt(a,b) becomes convectively unstable and rises through the overlying sediment layers (c,d). The idealized geometry for the Rayleigh-Taylor instability problem is outlined in the lower diagram.](../Images/Diagrams/diapirs.png){#fig-rayleigh-taylor width=450px}
+:::{figure} ../Images/Diagrams/diapirs.png
+:label: fig-rayleigh-taylor
+:width: 450px
+Salt diapirs result when a buried layer of salt(a,b) becomes convectively unstable and rises through the overlying sediment layers (c,d). The idealized geometry for the Rayleigh-Taylor instability problem is outlined in the lower diagram.
+:::
 
 Diapirism is the buoyant upwelling of rock which is lighter than its
 surroundings. This can include mantle plumes and other purely thermal
@@ -27,7 +30,7 @@ two rock types, the critical Rayleigh number argument does not apply --
 this situation is always unstable, but instabilities can only grow at a
 reasonable rate once the salt has become weak.
 
-The geometry is outlined above in @fig-rayleigh-taylor. We
+The geometry is outlined above in [](#fig-rayleigh-taylor). We
 suppose initially that the surface is slightly perturbed with a form of
 
 $$
@@ -65,9 +68,10 @@ $$
 
 where $A$ is an arbitrary constant. Subtituting gives us an equation for $m$
 
-$$
+```{math}
+:label: eq-diapaux
 m^4 - 2 k^2 m^2 + k^4 = (m^2 - k^2)^2 = 0
-$$ {#eq-diapaux}
+```
 
 or
 
@@ -77,7 +81,7 @@ $$
 
 Because we have degenerate eigenvalues (i.e. of the four possible
 solutions to the auxilliary equation
-@eq-diapaux,
+[](#eq-diapaux),
 two pairs are equal) we need to extend the
 form of the solution to
 
@@ -88,14 +92,15 @@ $$
 to give the general
 form of the solution in this situation to be
 
-$$
+```{math}
+:label: eq-biharmsoln2
 \begin{aligned}
             \psi &= \sin kx \left( A e^{-ky} + B y e^{-ky} + C e^{ky} + D y e^{ky} \right)
 \\
         \mathrm{or, equivalently}
             \psi &= \sin kx \left( A_1 \cosh ky + B_1 \sinh ky + C_1 y \cosh ky + D_1 y \sinh ky  \right)
 \end{aligned}
-$$ {#eq-biharmsoln2}
+```
 
 This equation applies in each of the layers separately. We therefore
 need to find two sets of constants $\{A_1,B_1,C_1,D_1\}$ and
@@ -133,7 +138,7 @@ will also be continuous (i.e.
 $\partial v_2 / \partial x = \partial v_1 / \partial x$).
 
 The expressions for velocity in terms of the solution
-@eq-biharmsoln2 are
+[](#eq-biharmsoln2) are
 
 $$
 \begin{aligned}
@@ -148,7 +153,8 @@ From here to the solution requires much tedious rearrangement, and the
 usual argument based on the arbitrary choice of wavenumber $k$ but we
 finally arrive at
 
-$$
+```{math}
+:label: eq-raytays1
 \begin{gathered}
             \psi_1 = A_1 \sin kx \cosh ky + \\
                             A_1 \sin kx \left[
@@ -158,7 +164,7 @@ $$
                                         \frac{1}{\sinh bk \cosh bk} \right) \right] \times \\
                             \left[ \frac{1}{\sinh bk \cosh bk} - \frac{1}{(b^2k^2} \tanh bk \right] ^{-1}
 \end{gathered}
-$$ {#eq-raytays1}
+```
 
 The stream function for the lower layer is
 found by replacing $y$ with $-y$ in this equation. This is already a
@@ -176,14 +182,18 @@ $$
 \frac{\partial w}{\partial t} = \left. v \right|_{y=0}
 $$
 
-![The restoring force for a stable layering is proportional to the excess density when a fluid element is displaced across the boundary.](../Images/Diagrams/diapir2.png){#fig-rayleigh-taylor-2 width=450px}
+:::{figure} ../Images/Diagrams/diapir2.png
+:label: fig-rayleigh-taylor-2
+:width: 450px
+The restoring force for a stable layering is proportional to the excess density when a fluid element is displaced across the boundary.
+:::
 
 Consider what happens when the fluid above the interface is lighter than
 the fluid below -- this situation is stable so we expect the layering to
 be preserved, and if the interface is disturbed the disturbance to
 decay. This implies that there must be a restoring force acting on an
 element of fluid which is somehow displaced across the boundary at $y=0$
-(@fig-rayleigh-taylor-2).
+([](#fig-rayleigh-taylor-2)).
 
 This restoring force is due to the density difference between the
 displaced material and the layer in which it finds itself. The
@@ -199,7 +209,7 @@ be expressed as a normal stress difference (assumed to apply, once
 again, at the boundary). The viscous component of the normal stress
 turns out to be zero -- proven by evaluating $\partial v / \partial y$
 at $y=0$ using the expression for $\phi$ in equation
-@eq-raytays1. Thus the restoring stress is purely pressure
+[](#eq-raytays1). Thus the restoring stress is purely pressure
 
 $$
 \left. P_2 \right|_{y=0} = g w (\rho_2 - \rho_1)
@@ -268,7 +278,11 @@ the boundary conditions different.
 
 ## Post-Glacial Rebound
 
-![The relaxation of the Earth's surface after removal of an ice load.](../Images/Diagrams/postglac.png){#fig-post-glacial width=450px}
+:::{figure} ../Images/Diagrams/postglac.png
+:label: fig-post-glacial
+:width: 450px
+The relaxation of the Earth's surface after removal of an ice load.
+:::
 
 In the postglacial rebound problem, consider a viscous half space with
 an imposed topography at $t=0$. The ice load is removed at $t=0$ and the
@@ -301,7 +315,11 @@ application of the identical theory.
 
 ## Folding of Layered (Viscous) Medium
 
-![Instability in a thin, viscous layer compressed from both ends.](../Images/Diagrams/fold.png){#fig-folding width=450px}
+:::{figure} ../Images/Diagrams/fold.png
+:label: fig-folding
+:width: 450px
+Instability in a thin, viscous layer compressed from both ends.
+:::
 
 If a thin viscous layer is compressed from one end then it may develop
 buckling instabilities in which velocities grow perpendicular to the
@@ -335,10 +353,14 @@ simulation.
 
 ## Gravity Currents
 
-![A gravity current is the spreading of a dense fluid under its own weight across a horizontal surface (or a buoyant fluid under a surface). Open the fridge door and the cold air falls out as a gravity current.](../Images/Diagrams/gravcurr.png){#fig-gravity-current width=450px}
+:::{figure} ../Images/Diagrams/gravcurr.png
+:label: fig-gravity-current
+:width: 450px
+A gravity current is the spreading of a dense fluid under its own weight across a horizontal surface (or a buoyant fluid under a surface). Open the fridge door and the cold air falls out as a gravity current.
+:::
 
 Gravity currents can occur when a viscous fluid flows under its own
-weight as shown in @fig-gravity-current.
+weight as shown in [](#fig-gravity-current).
 
 We assume that the fluid has constant viscosity, $\eta$ and that the
 length of the current is considerably greater than its height. The fluid

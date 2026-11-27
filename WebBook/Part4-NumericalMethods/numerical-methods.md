@@ -1,6 +1,6 @@
-# Numerical Methods {#sec-numerical-methods}
+(sec-numerical-methods)=
+# Numerical Methods
 
-{{< include ../_math-preamble.qmd >}}
 
 The equations of the earlier parts can be solved exactly only for simple
 geometries and material properties. To study the Earth we need approximate
@@ -10,20 +10,20 @@ element method as the main thread.
 
 The chapters build on each other:
 
-- [Time integration](time-integration.qmd) uses the decay equation to introduce
+- [Time integration](time-integration.md) uses the decay equation to introduce
   discretisation, truncation error and stability, and writes the first code.
-- [Survey of numerical methods](survey-of-methods.qmd) compares explicit and
+- [Survey of numerical methods](survey-of-methods.md) compares explicit and
   implicit schemes, shows why advection is difficult on a fixed grid, and
   places finite differences, finite elements, finite volumes, spectral and
   particle methods side by side.
-- [Introduction to the finite element method](fem-introduction.qmd) starts from
+- [Introduction to the finite element method](fem-introduction.md) starts from
   variational principles and arrives at a matrix problem.
-- [Practical finite elements](fem-practice.qmd) derives weak forms for heat
+- [Practical finite elements](fem-practice.md) derives weak forms for heat
   conduction and Stokes flow, then introduces shape functions, element
   matrices and numerical integration.
-- [Methods for solving numerical problems](solvers.qmd) covers iterative solvers,
+- [Methods for solving numerical problems](solvers.md) covers iterative solvers,
   multigrid and the mixed velocity–pressure formulation.
 
 If you already have a short overview of finite elements and want the detail,
-start with @sec-fem-introduction and refer back to the survey for the
+start with [](#sec-fem-introduction) and refer back to the survey for the
 comparison with other methods.

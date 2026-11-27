@@ -15,7 +15,6 @@ This guide provides conventions for writing and formatting content for the Compu
 We have defined global macros in `_math-preamble.qmd`. Include this at the top of each chapter:
 
 ```markdown
-{{< include ../_math-preamble.qmd >}}
 ```
 
 Available macros include:
@@ -35,13 +34,13 @@ Use display equations with labels for important results:
 ```markdown
 $$
 \DIV \sigma + \rho \mathbf{g} = 0
-$$ {#eq-stokes-momentum}
+$$ (eq-stokes-momentum)
 ```
 
-Reference equations using `@eq-label`:
+Reference equations using `[](#eq-label)`:
 
 ```markdown
-The momentum equation @eq-stokes-momentum shows...
+The momentum equation [](#eq-stokes-momentum) shows...
 ```
 
 ### Multi-line Equations
@@ -62,13 +61,17 @@ $$
 Use Markdown image syntax with labels:
 
 ```markdown
-![Caption describing the figure](../Images/Diagrams/filename.png){#fig-label width=450px}
+:::{figure} ../Images/Diagrams/filename.png
+:label: fig-label
+:width: 450px
+Caption describing the figure
+:::
 ```
 
-Reference figures using `@fig-label`:
+Reference figures using `[](#fig-label)`:
 
 ```markdown
-As shown in @fig-convection-cells, the...
+As shown in [](#fig-convection-cells), the...
 ```
 
 ## Citations
@@ -134,35 +137,35 @@ Use hierarchical headings:
 
 Link to other chapters:
 ```markdown
-See [Conservation Laws](../DraftMaterial/ContinuumMechanics.qmd) for details.
+See [Conservation Laws](../DraftMaterial/ContinuumMechanics.md) for details.
 ```
 
 ### Equations in Other Files
 
-When referencing equations from other chapters, use `@eq-label`. Note that cross-file references may generate warnings during single-file rendering.
+When referencing equations from other chapters, use `[](#eq-label)`. Note that cross-file references may generate warnings during single-file rendering.
 
 ## Callout Blocks
 
 Use callout blocks to highlight important information:
 
 ```markdown
-:::{.callout-note}
+:::{note}
 This is a note.
 :::
 
-:::{.callout-tip}
+:::{tip}
 This is a helpful tip.
 :::
 
-:::{.callout-warning}
+:::{warning}
 This is a warning about potential issues.
 :::
 
-:::{.callout-important}
+:::{important}
 This is important information.
 :::
 
-:::{.callout-caution}
+:::{caution}
 Exercise caution in this situation.
 :::
 ```
@@ -170,8 +173,8 @@ Exercise caution in this situation.
 Add `collapse="true"` to make them collapsible:
 
 ```markdown
-:::{.callout-note collapse="true"}
-## Click to expand
+:::{note} Click to expand
+:class: dropdown
 Hidden content here...
 :::
 ```
@@ -195,4 +198,4 @@ Hidden content here...
 
 ## Examples
 
-See the [Example: Using Citations and Math](example-citations.qmd) chapter for a working demonstration of these conventions.
+See the [Example: Using Citations and Math](example-citations.md) chapter for a working demonstration of these conventions.

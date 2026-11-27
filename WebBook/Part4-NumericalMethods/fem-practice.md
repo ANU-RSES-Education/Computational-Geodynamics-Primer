@@ -1,16 +1,7 @@
-# Practical Finite Elements {#sec-fem-practice}
+(sec-fem-practice)=
+# Practical Finite Elements
 
-{{< include ../_math-preamble.qmd >}}
 
-$$
-\newcommand{\dGamma}{\mathbf{d}\boldsymbol{\Gamma}}
-\newcommand{\erfc}{\mbox{\rm erfc}}
-\newcommand{\curly}{\sf }
-\newcommand{\Red     }[1]{\textcolor[rgb]{0.7,0.0,0.0}{ #1}} 
-\newcommand{\Green   }[1]{\textcolor[rgb]{0.0,0.7,0.0}{ #1}} 
-\newcommand{\Blue    }[1]{\textcolor[rgb]{0.0,0.0,0.7}{ #1}} 
-\newcommand{\Emerald }[1]{\textcolor[rgb]{0.0,0.7,0.3}{ #1}}
-$$
 
 ## Weak Forms of Real Equations
 
@@ -69,9 +60,10 @@ $$
 to obtain an abstract form which can be used for all the finite element
 formulations we derive here
 
-$$
+```{math}
+:label: eq-FEabst
 a(w,u) = (w,{\curly f})  + w(0){\curly h}
-$$ {#eq-FEabst}
+```
 
 Note, that the partial differentiation step produces a symmetric operator from the
 non symmetric initial form. This approach also works in 2D as follows.  
@@ -171,7 +163,7 @@ $$
 
 which includes an extra basis function to allow the boundary condition ($u(1)={\curly g}$) to be satisfied.
 
-Substituting into (@eq-FEabst) gives 
+Substituting into ([](#eq-FEabst)) gives 
 
 $$
 a\left( \sum_{A=1}^n c_A N_A , \sum_{B=1}^n d_B N_B \right) = 
@@ -193,23 +185,25 @@ $$
 
 As we have done many times before, we appeal to the argument that the particular choice of variation must be totally arbitrary: this equation must hold no matter what $w^h \in {\curly S}^h$ we choose, and hence no matter what the combination of $c_A$ may be. This then means that $G_A$ must be identically zero independent of $c_A$, i.e.
 
-$$
+```{math}
+:label: eq-gal2
 \sum_{B=1}^n a(N_A,N_B)d_B =  (N_A,{\curly f} ) 
      - N_A(0){\curly h} +
       a(N_A,A_{n+1}) {\curly g}
-$$ {#eq-gal2}
+```
 
 As in the standard variational method, we have eliminated all references to the actual variation and left unknowns which only related to the physical variables (i.e. the coefficients of the expansion for $u$).
 
 If we simply write
-$$
+```{math}
+:label: eq-FEstdform
 \begin{split}
         K_{AB} &= a(N_A,N_B)\\
         F_A &= (N_A,{\curly f}) + N_A(0)h - a(N_A,N_n+1){\curly g}
     \end{split}
-$$ {#eq-FEstdform}
+```
 
-then we have a matrix formulation immediately since (@eq-gal2) now becomes
+then we have a matrix formulation immediately since ([](#eq-gal2)) now becomes
 
 $$
 \sum_{B=1}^n  K_{AB} d_B = F_A  \;\;\;\;\;\; A=1,2,3,\ldots
@@ -229,32 +223,40 @@ The same argument can be applied to higher dimensions, and to problems with diff
 
 For example, in the constant viscosity Stokes' flow problem, we now have
 
-$$
+```{math}
+:label: eq-festokes
 \left. K_{AB}\right|_{ij}  =    \int_\Omega
                     \left(  \frac{\partial N_A}{\partial x_j} +  \frac{\partial N_A}{\partial x_i}  \right) \eta
                     \left(  \frac{\partial N_B}{\partial x_j} +  \frac{\partial N_B}{\partial x_i} \right) d \Omega
-$$ {#eq-festokes}
+```
 
 ## Discretization & Shape Functions
     
 Although we have now nominally made our problem finite by expressing everything in terms of Galerkin basis functions, we have yet to decide what those functions ought to be. Whatever our choice, it should make the problem easy to compute numerically.  
 
-![Splitting an arbitrary domain into patches is trivial in an integral formulation. Additionally, the irregular shape of the individual subdomains is easy to handle with standard changes of variables (Jacobians)](../Images/Diagrams/domain.png){#fig-domain-decomp}
+:::{figure} ../Images/Diagrams/domain.png
+:label: fig-domain-decomp
+Splitting an arbitrary domain into patches is trivial in an integral formulation. Additionally, the irregular shape of the individual subdomains is easy to handle with standard changes of variables (Jacobians)
+:::
 
 
 The choice of basis functions is very broad but we narrow it down by tying it very closely to the way we choose to split up the domain of our problem. With an integral method, the domain decomposition is simple since
 
-$$
+```{math}
+:label: eq-decomp
 \int_\Omega d\Omega = \int_{\Omega_1} d {\Omega_1} + 
             \int_{\Omega_2} d {\Omega_2} + \int_{\Omega_3} d {\Omega_3} + \ldots
-$$ {#eq-decomp}
+```
 
 which means that the decomposition [shown above](#fig-domain-decomp) is as accurate as the representation of the boundary allows.  
 
 The functions which interpolate the node points at the corners of  subdomains are a suitable set for use as an approximate basis as we require for the Galerkin formulation. This is easy to see if we consider a one dimensional problem.
   
 
-![Representing a piecewise linear function as a sum of pointy functions localized at the nodes.](../Images/Diagrams/linedisc.png){#fig-discretisation-1d}
+:::{figure} ../Images/Diagrams/linedisc.png
+:label: fig-discretisation-1d
+Representing a piecewise linear function as a sum of pointy functions localized at the nodes.
+:::
 
 
 In the one dimensional case, the choice of subdomains is limited to breaking up the line into a number of segments, though not necessarily of equal length. If the approximation to the continuum field, $u$ is made by linear interpolation to give $u^h$, then $u^h$ can also be expressed as a sum on the [local triangular functions $N_A$](#fig-discretisation-1d)
@@ -270,7 +272,10 @@ This is an exact representation of the interpolation provided the $N_A$ takes th
 ### Naming of Things and What They are Like
 The interpolation functions are known as shape functions. The subdomains are known as elements. The elements correspond to the individual springs of our discrete example. The shape functions are pure interpolation functions of the required order within the element and can be differentiated the appropriate number of times. This means that the order of interpolation must match the order of derivatives in the FE operator. Crossing the element boundaries, the shape functions have discontinuous derivatives (as do the piecewise interpolations). Continuous derivative functions are possible (e.g. splines) but add significant complexity. Shape functions in 2D and 3D can be formed from the product of 1D shape functions in each direction. 
 
-![Extension of simple shape function concept (a) to higher order functions and  (b) to higher dimensions](../Images/Diagrams/shapefn.png){#fig-shape-functions}
+:::{figure} ../Images/Diagrams/shapefn.png
+:label: fig-shape-functions
+Extension of simple shape function concept (a) to higher order functions and  (b) to higher dimensions
+:::
 
 
 ### Element Matrices
@@ -287,7 +292,7 @@ The interpretation of the local problem is similar to that of the individual spr
 
 The real power of finite elements comes from its ability to handle remarkably distorted geometries with ease. (Obviously this only applies in two or more dimensions). This is possible because simple mappings can be derived to convert a distorted element into a regular one (square, cubic, regular-tetrahedral). This takes the form of a change of variables which can be done {\em fully automatically} if we make minor restrictions on the choice of distortions we allow the elements to have. This restriction takes the form of ensuring that the mappings which transform the element shape can be described by the shape functions of the element. This means that only linear mappings can be applied to linear elements. If we wish to map a curved boundary exactly, then elements which have the appropriate order shape functions have to be used even if they are not needed for the representation of the differential operator. (e.g. quadratic elements for a circular boundary). This concept produces "isoparametric" elements.
 
-The mapping shown in []() is achieved by a change of variables 
+The mapping shown in [](#fig-domain-decomp) is achieved by a change of variables 
 
 $$
 \int  \int_{\Omega^e} \phi dx dy = \int  \int_{\rm square} \phi {\curly j} d \xi d \eta
@@ -359,7 +364,7 @@ $$
 
 This allows us to define a matrix $\mathbf{B_A}$ which comes directly from the operators contained in the constitutive law.
 
-Compare this with equation ( @eq-FEstdform) and, the more concrete example (@eq-festokes) and we see that the stiffness matrix coefficients can be obtained from
+Compare this with equation ( [](#eq-FEstdform)) and, the more concrete example ([](#eq-festokes)) and we see that the stiffness matrix coefficients can be obtained from
 
 $$
 K_{AB} = a(N_A,N_B) = \int_{\Omega} \mathbf{B}_A^T \mathbf{D} \mathbf{B}_B d\Omega
@@ -387,14 +392,11 @@ which corresponds to specifying a value for one of the velocities in the problem
 
 $$
 0 = {\cal G}({\bf d}) = {\bf 1}_Q^T{\bf d} - {\curly g}
-$$
-
-$$
-\begin{eqnarray*}
+\begin{array}{lcl}
 {\bf 1}^T_Q = \left\langle 0 \ldots 0  \right. & 1 & \left. 0 \ldots 0 \right\rangle \\
  & \uparrow & \! \\  
- & \text{  Q'th column} & \nonumber
-\end{eqnarray*}
+ & \text{  Q'th column} & 
+\end{array}
 $$
 
 Then finding the stationary value for the following function is equivalent to solving the constrained problem:
@@ -415,23 +417,17 @@ Substituting for $\cal H$ gives:
 $$
 0 = \left. \frac{d}{d\varepsilon} \left[ {\cal F}({\bf d}+\varepsilon{\bf c} )+
      (m+\varepsilon l){\cal G}({\bf d}+\varepsilon{\bf c} )\right] \right|_{\varepsilon=0}
-$$
-
-$$
 0= {\bf c}^T({\bf Kd -F) }+l {\cal G}({\bf d}) + m{\bf 1}_Q^T {\bf c}
-$$
-
-$$
 0= {\bf c}^T({\bf Kd} + m{\bf 1}_Q {\bf -f}) + l ({\bf 1}_Q^T {\bf d} -\mbox{\curly g})
 $$
 
 Since  $\bf c$ and $l$ are strictly  arbitrary,
 
 $$
-\begin{eqnarray}
-{\bf Kd }+m{\bf 1}_Q &=& {\bf f}\\ \nonumber
-{\bf 1}_Q^T {\bf d} & = & {\curly g} \nonumber
-\end{eqnarray}
+\begin{array}{lcl}
+{\bf Kd }+m{\bf 1}_Q &=& {\bf f}\\ 
+{\bf 1}_Q^T {\bf d} & = & {\curly g} 
+\end{array}
 $$
 
 Equivalently
@@ -439,9 +435,9 @@ Equivalently
 $$
 \left[ \begin{array}{cc} {\bf K} & {\bf 1}_Q \\
             {\bf 1}_Q^T & 0 \end{array} \right]
-\left\{ \begin{array}{c} {\bf d} \\ \nonumber 
+\left\{ \begin{array}{c} {\bf d} \\  
              m \end{array} \right\} =
-\left\{\begin{array}{c} {\bf f} \\ \nonumber
+\left\{\begin{array}{c} {\bf f} \\ 
              {\curly g} \end{array} \right\}
 $$
 
@@ -464,9 +460,6 @@ and consider the extremal values for $\cal J$ which are defined by the following
 $$
 0 = \left. \frac{d}{d\varepsilon} \left( {\cal F}({\bf d}+\varepsilon {\bf c} )+
     \frac{k}{2} \left[ {\cal G} ({\bf d} + \varepsilon{\bf c}) \right]^2 \right) \right| _{\varepsilon = 0}
-$$
-
-$$
 {\bf c}^T({\bf Kd - f}) + k {\bf G}({\bf d}) {\bf 1}_Q^T {\bf c}
 $$
 

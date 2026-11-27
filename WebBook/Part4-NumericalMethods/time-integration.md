@@ -1,16 +1,7 @@
-# Numerical Modeling in Solid Earth Dynamics {#sec-time-integration}
+(sec-time-integration)=
+# Numerical Modeling in Solid Earth Dynamics
 
-{{< include ../_math-preamble.qmd >}}
 
-$$
-\newcommand{\dGamma}{\mathbf{d}\boldsymbol{\Gamma}}
-\newcommand{\erfc}{\mbox{\rm erfc}}
-\newcommand{\curly}{\sf }
-\newcommand{\Red     }[1]{\textcolor[rgb]{0.7,0.0,0.0}{ #1}} 
-\newcommand{\Green   }[1]{\textcolor[rgb]{0.0,0.7,0.0}{ #1}} 
-\newcommand{\Blue    }[1]{\textcolor[rgb]{0.0,0.0,0.7}{ #1}} 
-\newcommand{\Emerald }[1]{\textcolor[rgb]{0.0,0.7,0.3}{ #1}}
-$$
 
 ## Introductory Remarks
 
@@ -26,9 +17,10 @@ This part of the course contains some really hard material. This is deliberate b
 
 We start with the numerical solution of a very simple differential equation. In fact we choose something simple enough that we already know the answer. 
 
-$$
+```{math}
+:label: eq-ode_decay
 \frac{d\theta}{dt} = - k \theta
-$$ {#eq-ode_decay} 
+```
 
 This is the equation which governs radioactive decay, in which case $\theta$ is the amount of the radioactive isotope remaining and $d\theta /  dt$ is the activity that we can measure. $k$ is closely related to the half life.
 
@@ -40,7 +32,10 @@ $$
 
 where $\theta_0$ is the amount of the radioactive material remaining. The same equation also describes the cooling of, say, a cup of coffee. In this case we interpret $\theta$ as the excess temperature (above room temperature).
 
-![Marching through time in small increments](../Images/Diagrams/theta_t.png){#fig-time-discretisation}
+:::{figure} ../Images/Diagrams/theta_t.png
+:label: fig-time-discretisation
+Marching through time in small increments
+:::
 
 
 We want to march forward in time from our starting point where $\theta = \theta_0$ to obtain the value of $\theta$ at later times. To do this, we need to approximate the original differential equation, and, in particular, the value of the time derivative at each time. There are a number of ways to do this.
@@ -67,7 +62,7 @@ $$
     \end{split}
 $$
 
-This is a first order difference expression for the derivative which we substitute into the original differential equation (@eq-ode_decay) at the current timestep
+This is a first order difference expression for the derivative which we substitute into the original differential equation ([](#eq-ode_decay)) at the current timestep
 
 $$
 \frac{\theta_{n+1} - \theta_n}{\Delta t} = - k \theta_n
@@ -97,9 +92,10 @@ $$
 
 The local time coordinate is $t' = t - (n-1)\Delta t$, and when we differentiate
 
-$$
+```{math}
+:label: eq-dthdt2
 \frac{d \theta}{dt} = \beta + 2 \gamma t'
-$$ {#eq-dthdt2} 
+```
 
 To solve for $\beta$ and $\gamma$ we fit the curve through
 the sample points:
@@ -120,7 +116,7 @@ Which we can solve to give this:
     \end{split}
 $$
 
-By substituting into @eq-dthdt2, and then into the original differential equation @eq-ode_decay we obtain the following
+By substituting into [](#eq-dthdt2), and then into the original differential equation [](#eq-ode_decay) we obtain the following
 
 $$
 \left. \frac{d\theta}{dt} \right|_{t=n\Delta t} = \beta + 2\gamma \Delta t =
@@ -136,6 +132,8 @@ $$
 
 How well do these two methods perform, and what difference does the choice of $\Delta t$ make on the accuracy ?
 
+:::{table} Results of the numerical simulation of the decay equation. $^1\theta_H$ is from the first order expansion of $\theta(t)$, at a timestep of $\Delta t=0.2$, and $^2\theta_H$ is the second order expansion at $\Delta t=0.2$; other calculations are at $\Delta t = 0.1$. $^1\theta_h$ is the linear expansion,  $^2\theta_h$ results from the quadratic expansion of $\theta(t)$. The actual solution is also shown.
+:label: tbl-two-schemes
 |   t   | $^1\theta_H$ | $^1\theta_h$ | $^2\theta_H$  | $^2\theta_h$   | Exact    |
 | ----- |--------------| ------------ | --------------| -------------- | ---------|
 |   0.0 |   1.0000     | 1.0000       | 1.0000        | 1.0000         | 1.0000   |
@@ -149,14 +147,16 @@ How well do these two methods perform, and what difference does the choice of $\
 |   0.8 |   0.4096     | 0.4305       | 0.4688        | 0.4543         | 0.4483   |
 |   0.9 |   ---        | 0.3874       | ---           | 0.4001         | 0.4066   |
 |   1.0 |   0.3277     | 0.3487       | 0.3405        | 0.3743         | 0.3679   |
-
-: Results of the numerical simulation of the decay equation. $^1\theta_H$ is from the first order expansion of $\theta(t)$, at a timestep of $\Delta t=0.2$, and $^2\theta_H$ is the second order expansion at $\Delta t=0.2$; other calculations are at $\Delta t = 0.1$. $^1\theta_h$ is the linear expansion,  $^2\theta_h$ results from the quadratic expansion of $\theta(t)$. The actual solution is also shown. {#tbl-two-schemes}
+:::
 
 The results are more accurate when a smaller timestep is used although it requires more computation to achieve the greater accuracy. Higher order expansion also increases the accuracy and may be more efficient in terms of the number of computations required for a given level of accuracy. Note, however, that the supposedly better quadratic expansion produces an error which oscillates as time increases. Does this error grow ? Does this make second order expansions useless ?
 
 ### Second Order Runge-Kutta
 
-![ different way to derive a second order method](../Images/Diagrams/theta_rk2.png){#fig-rk2}
+:::{figure} ../Images/Diagrams/theta_rk2.png
+:label: fig-rk2
+ different way to derive a second order method
+:::
 
 
 The Runge-Kutta approach to higher order integration methods is [illustrated in the figure](#fig-rk2). The idea is to estimate the gradient $d \theta / d t$ at the half way point between two timestep values.  This is done in two stages. Initially a first order estimate, $\hat{\theta}$ is made for the value of the function $\theta$ at $t=t+\Delta t /2$ in the future. This value is then subsituted into the differential equation to obtain the estimate for the gradient at this time. The revised gradient is then used to update the original $\theta(t)$ by an entire timestep.

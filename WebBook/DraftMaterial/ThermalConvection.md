@@ -1,6 +1,5 @@
 # Thermal Convection
 
-{{< include ../_math-preamble.qmd >}}
 
 Thermal convection describes the a process in which a fluid organizes
 itself into a structured flow pattern on a macroscopic scale to
@@ -32,7 +31,7 @@ the otherwise non-linear equations by dropping the small, high order
 non-linear terms.
 
 We solve the incompressible flow equations (stream function form,
-@eq-biharm)
+[](#eq-biharm))
 and energy conservation equation in stream function form:
 
 $$
@@ -65,7 +64,7 @@ $$
 
 is dominated by the $\partial \psi / \partial x_1$ since all others are
 the product of small terms. (Since we also know that $\psi \sim \theta$
-from equation (@eq-biharm)). Therefore the energy conservation equation
+from equation ([](#eq-biharm))). Therefore the energy conservation equation
 becomes
 
 $$
@@ -100,14 +99,19 @@ So that we can now separate variables.
 $\sigma$ is unknown, however, if $\sigma < 0$ then the perturbations
 will decay, whereas if $\sigma > 0$ they will grow.
 
-![Critical Rayleigh Number determination. A plot of growth rates for harmonic perturbations as a function of wavenumber for different ${\rm Ra}$. The critical value occurs when the maximum of the curve just touches the horizontal axis at zero.](../Images/Diagrams/crit_ra.png){#fig-critical-ra width=450px}
+:::{figure} ../Images/Diagrams/crit_ra.png
+:label: fig-critical-ra
+:width: 450px
+Critical Rayleigh Number determination. A plot of growth rates for harmonic perturbations as a function of wavenumber for different ${\rm Ra}$. The critical value occurs when the maximum of the curve just touches the horizontal axis at zero.
+:::
 
 Substituting for the perturbations into the biharmonic equation and the
 linearized energy conservation equation gives
 
-$$
+```{math}
+:label: eq-psitheta1
 \left(\frac{d^2}{d{x_2}^2} -k^2 \right)^2 \Psi = -{\rm Ra} k \Theta
-$$ {#eq-psitheta1}
+```
                 
 and
 
@@ -117,17 +121,18 @@ $$
 
 Here we have shown and used the fact that
 
-$$
+```{math}
+:label: eq-psitheta2
 \nabla^2 \equiv \left(\frac{\partial^2}{\partial {x_2}^2} -k^2 \right)
-$$ {#eq-psitheta2} 
+```
                 
 when a function is expanded in
 the form $\phi(x,z) = \Phi(z).\sin kx$ -- more generally, this is the
 fourier transform of the Laplacian operator.
 
 Eliminating $\Psi$ between
-(@eq-psitheta1) and
-(@eq-psitheta2) gives
+([](#eq-psitheta1)) and
+([](#eq-psitheta2)) gives
 
 $$
 \sigma \left(\frac{d^2}{d {x_2}^2 } - k^2 \right)^2 -{\rm Ra} k^2 \Theta = 
@@ -201,7 +206,11 @@ cylindrical plumes depending on a number of things including the
 Rayleigh number. For the time being we consider only the sheet like
 downwellings since that allows us to continue working in 2D.
 
-![Boundary Layer Theory in its simplest form](../Images/Diagrams/blt.png){#fig-boundary-layer-theory-1 width=450px}
+:::{figure} ../Images/Diagrams/blt.png
+:label: fig-boundary-layer-theory-1
+:width: 450px
+Boundary Layer Theory in its simplest form
+:::
 
 Boundary layer analysis is a highly sophisticated field, and is used in
 a broad range of situations where differences in scales between
@@ -211,7 +220,7 @@ obstacle).
 
 Here we first make a wild stab at an approximate theory describing the
 heat flow from a layer with a given Rayleigh number. The convective flow
-is shown in Figure [1](#fig:blt1){reference-type="ref"
+is shown in Figure [1](#fig-boundary-layer-theory-1){reference-type="ref"
 reference="fig:blt1"} together with our rough sketch of what actually
 happens.
 
@@ -280,7 +289,11 @@ boundary layer does not become more or less stable with increasing
 Rayleigh number (this is not universal -- for internal heating the
 boundary layer becomes less stable at higher Rayleigh number).
 
-![Boundary Layer Theory which accounts for the thickness variations along the boundary layer as it matures.](../Images/Diagrams/blt2.png){#fig-boundary-layer-theory-2 width=450px}
+:::{figure} ../Images/Diagrams/blt2.png
+:label: fig-boundary-layer-theory-2
+:width: 450px
+Boundary Layer Theory which accounts for the thickness variations along the boundary layer as it matures.
+:::
 
 Another wrinkle can be added to the boundary layer theory by trying to
 account for the variation in the boundary layer thickness as it moves
@@ -312,9 +325,10 @@ $$
 which is a dimensionless temperature,
 into the standard diffusion equation to obtain
 
-$$
+```{math}
+:label: eq-difftheta
 \frac{\partial \theta(x_2,t)}{\partial t} = \kappa \frac{\partial ^2 \theta(x_2,t)}{\partial {x_2}^2}
-$$ {#eq-difftheta}
+```
 
 The boundary conditions on $\theta$ are simple: 
 
@@ -326,7 +340,11 @@ $$
             \end{aligned}
 $$
 
-![Cooling half-space calculation](../Images/Diagrams/CoolingHalfSpaceSolutions1.png){#fig-cooling-half-space width=450px}
+:::{figure} ../Images/Diagrams/CoolingHalfSpaceSolutions1.png
+:label: fig-cooling-half-space
+:width: 450px
+Cooling half-space calculation
+:::
 
 In place of $t,x_2$, we use the similarity transformation,
 
@@ -345,11 +363,12 @@ $$
 $$ 
         
 to transform
-(@eq-difftheta) into
+([](#eq-difftheta)) into
 
-$$
+```{math}
+:label: eq-diffode
 -\eta \frac{d \theta}{d\eta} = \frac{1}{2} \frac{d^2 \theta}{d \eta^2}
-$$ {#eq-diffode}
+```
 
 Boundary conditions transform to give 
 
@@ -361,12 +380,12 @@ $$
 $$
 
 Write $\phi = d\theta / d\eta$ (for convenience only) to rewrite
-(@eq-diffode) as 
+([](#eq-diffode)) as 
 
 $$
 \begin{aligned}
                 -\eta \phi &= \frac{1}{2} \frac{d \phi}{d \eta}     \\
-            \intertext{or}
+            & \text{or} \\
                 -\eta d\eta &= \frac{1}{2} \frac{d\phi}{\phi}   
             \end{aligned}
 $$
@@ -376,7 +395,7 @@ This is a standard integral with solution
 $$
 \begin{aligned}
                 & -\eta^2 = \log_e \phi -\log_e c_1 \\
-            \intertext{such that}
+            & \text{such that} \\
                 & \phi = c_1 \exp(-\eta^2) = \frac{d\theta}{d\eta}
             \end{aligned}
 $$
@@ -592,8 +611,8 @@ convection problems.
 
 ## Exercises
 
-:::{.callout-warning collapse="true"}
-## 🚧 Under Review
+:::{warning} Under Review
+:class: dropdown
 
 This exercises section is newly added and tailored to thermal convection theory. The exercises focus on key concepts from the chapter but need expansion with additional problems on linear stability analysis and numerical methods.
 
@@ -604,11 +623,11 @@ This exercises section is newly added and tailored to thermal convection theory.
 - Need to add: exercises on linear stability theory, perturbation analysis, experimental validation
 :::
 
-:::{.callout-note}
-Exercises marked with ⭐ have worked solutions provided. Additional exercises will be added as the chapter develops.
+:::{note}
+Exercises with solutions available are marked with {sup}`★`. Additional exercises will be added as the chapter develops.
 :::
 
-### Exercise 1: Critical Rayleigh Number ⭐
+### Exercise 1: Critical Rayleigh Number {sup}`★`
 
 For thermal convection in a layer heated from below:
 
@@ -626,7 +645,7 @@ b) Explain why $Nu = 1$ for pure conduction
 
 c) For mantle convection with $Ra \sim 10^7$, estimate the Nusselt number using the scaling $Nu \sim Ra^\beta$. What value of $\beta$ is appropriate?
 
-### Exercise 3: Thermal Boundary Layer Thickness ⭐
+### Exercise 3: Thermal Boundary Layer Thickness {sup}`★`
 
 Using boundary layer theory:
 
@@ -664,8 +683,8 @@ c) Calculate the adiabatic temperature gradient for Earth's mantle and compare t
 
 ## Solutions to Selected Exercises
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 1: Critical Rayleigh Number
+:::{tip} Solution to Exercise 1: Critical Rayleigh Number
+:class: dropdown
 
 **(a) Physical explanation:**
 
@@ -692,8 +711,8 @@ $$
 Each wavelength has its own critical value. The global $Ra_c$ is the minimum over all wavelengths. Typically, the most unstable mode has wavelength $\lambda \sim 2h$ (aspect ratio ~ 1), which physical intuition: cells that are too wide or too narrow are less efficient at heat transport.
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 3: Thermal Boundary Layer
+:::{tip} Solution to Exercise 3: Thermal Boundary Layer
+:class: dropdown
 
 **(a) Boundary layer scaling:**
 

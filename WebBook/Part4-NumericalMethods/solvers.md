@@ -1,16 +1,7 @@
-# Methods for Solving Numerical Problems {#sec-solvers}
+(sec-solvers)=
+# Methods for Solving Numerical Problems
 
-{{< include ../_math-preamble.qmd >}}
 
-$$
-\newcommand{\dGamma}{\mathbf{d}\boldsymbol{\Gamma}}
-\newcommand{\erfc}{\mbox{\rm erfc}}
-\newcommand{\curly}{\sf }
-\newcommand{\Red     }[1]{\textcolor[rgb]{0.7,0.0,0.0}{ #1}} 
-\newcommand{\Green   }[1]{\textcolor[rgb]{0.0,0.7,0.0}{ #1}} 
-\newcommand{\Blue    }[1]{\textcolor[rgb]{0.0,0.0,0.7}{ #1}} 
-\newcommand{\Emerald }[1]{\textcolor[rgb]{0.0,0.7,0.3}{ #1}}
-$$
 
 ## Solving the matrix problem
 
@@ -44,8 +35,7 @@ A trivial modification to the Jacobi iteration is to use updated information on 
 
 A more sophisticated iterative procedure for obtaining solutions to linear systems is the conjugate gradient method. This is a development of the method of steepest descent with better convergence properties. The `search directions' along which the solution is improved are denoted by $\mathbf{s}$ and do not coincide with the residual vectors. In the following algorithm an inner product is denoted by $(\cdot,\cdot)$.
 
-::: {.callout-note appearance="simple"}
-## Conjugate Gradient Algorithm
+:::{note} Conjugate Gradient Algorithm
 
 1.  $\quad$ $k=0; \mathbf{u}_0 = {\bf 0}; \mathbf{r}_0 = \mathbf{f}$  
 2.  $\quad$ while $(\mathbf{r}_k \not= {\bf 0})$ 
@@ -84,8 +74,7 @@ $$
 The preconditioning matrix $\bf M$ is defined by ${\bf M} = {\bf C}^2$, and  the preconditioned
 conjugate gradient algorithm is then:
 
-::: {.callout-note appearance="simple"}
-## Preconditioned Conjugate Gradient Algorithm
+:::{note} Preconditioned Conjugate Gradient Algorithm
 
 1.  $\quad$  $ k = 0; \mathbf{u}_0 = {\bf 0}; \mathbf{r}_0 = \mathbf{f}$  
 2.  $\quad$  while $(\mathbf{r}_k \not= {\bf 0})$  
@@ -108,7 +97,10 @@ The choice of $\bf M$ has a dramatic effect on the rate of convergence of the me
 
 ### Multigrid
 
-![Multigrid: (a) Error reduction during simple two level V cycle, (b) Shape functions on different grid scales, (c) V cycle on four grids, (d) W cycle on four grids, (e) Schematic of Full Multigrid V cycles](../Images/Diagrams/mg.png){#fig-multigrid-diagram}
+:::{figure} ../Images/Diagrams/mg.png
+:label: fig-multigrid-diagram
+Multigrid: (a) Error reduction during simple two level V cycle, (b) Shape functions on different grid scales, (c) V cycle on four grids, (d) W cycle on four grids, (e) Schematic of Full Multigrid V cycles
+:::
 
 
 The multigrid method works by formulating the finite element problem on a number of different scales - usually a set of grids which are nested one within the other sharing common nodes.  The solution progresses on all of the grids at the same time with each grid eliminating errors at a different scale. The effect is to propogate information very rapidly between different nodes in the grid which would otherwise be prevented by the local support of the element shape functions. In fact, by a single traverse from fine to coarse grid and back, all nodes in the mesh can be directly connected to every other -- allowing nodes which are physically coupled but remote in the mesh to communicate directly during each iteration cycle.
@@ -146,8 +138,7 @@ $$
 
 The power of the algorithm is in a recursive application. The coarse grid correction is also calculated through the use of a still-coarser grid and so on, until the problem is so small that an exact solution can be obtained very rapidly. One very simple, but instructive, algorithm for hierarchical residual reduction is the sawtooth cycle (the same logical layout as the [multigrid V cycle](#fig-multigrid-diagram)).
 
-::: {.callout-note appearance="simple"}
-## Multigrid Algorithm
+:::{note} Multigrid Algorithm
 
 1.  $\quad$   Obtain approximate solution, ${\bf d}_h$ at highest level $h$ 
 2.  $\quad$   Calculate residual: ${\bf r}_h = {\bf f}_h - {\bf K}_h {\bf d}_h$ 
@@ -177,15 +168,16 @@ One of the major problems in multigrid is knowing how best to represent material
 
 The fact that the mixed method does not provide a positive definite matrix is a potentially serious difficulty. It can be avoided by the following rearrangement which forms the Schur complement of the original system.Multiplying out the mixed method equations gives the conservation equations for momentum and mass
 
-$$
+```{math}
+:label: eq-stokes
 {\bf Kd} + {\bf G}^T{\bf p} = {\bf f}
-$$ {#eq-stokes}
+```
 
 $$
 {\bf Gd} = {\bf 0}
 $$
 
-Multiply equation @eq-stokes throughout by ${\bf G}{\bf K}^{-1}$
+Multiply equation [](#eq-stokes) throughout by ${\bf G}{\bf K}^{-1}$
 to give
 
 $$
@@ -194,8 +186,7 @@ $$
 
 where the first term is zero due to the incompressibility condition. Then the equation system is in the form $\hat{\bf K}{\bf p} = \hat{\bf f}$, where $\hat{\bf K}$ is  now positive definite, and so a conjugate gradient method can be used:
 
-::: {.callout-note appearance="simple"}
-## Conjugate Gradient, Schur Complement
+:::{note} Conjugate Gradient, Schur Complement
 
 1.  $\quad$ $\Red{ k = 0; {\bf p}_0 = {\bf 0}; {\bf r}_0 = \hat{\bf f}}$  
  2.  $\quad$ while $({\bf r}_k \not= {\bf 0})$  
@@ -218,8 +209,7 @@ However, it is not possible to obtain $\hat{\bf K}$ or $\hat{\bf f}$ directly be
 are only interested in the *effect* of the operation of the matrix on a given vector. The modification of the algorithm
 looks like this:
 
-::: {.callout-note appearance="simple"}
-## Conjugate Gradient Algorithm (No Matrix Construction)
+:::{note} Conjugate Gradient Algorithm (No Matrix Construction)
 
 1.   $\quad$ $\Green{{\bf r}_0 = {\bf G K}^{-1} {\bf f}}$: 
  1.   $\quad$ $\Green{\mathrm{solve:} \;\; {\bf K d} = {\bf f} \;\; \mathrm{for} \;\; \bf d}$

@@ -1,6 +1,5 @@
 # Non-dimensional equations & dimensionless numbers
 
-{{< include ../_math-preamble.qmd >}}
 
 Before too long it would be a good idea to get a feeling for the flavour
 of these equations which continual rearrangements will not do --- it is
@@ -42,7 +41,11 @@ lab tank), time according to the characteristic time for diffusion of
 heat over that distnace, and temperature by maximum temperature difference
 we observe at the start.
 
-![Consider the fluid motions in a layer of arbitrary depth, $d$. The fluid is assumed to have constant properties such as viscosity, thermal expansivity, thermal diffusivity. Small fluctuations in density due to temperature driven flow. Additional heat is carried (advected) by the flow from the hot boundary to the cool one whenever the fluid is moving.](../Images/Diagrams/layer.png){#fig-layer width=450px}
+:::{figure} ../Images/Diagrams/layer.png
+:label: fig-layer
+:width: 450px
+Consider the fluid motions in a layer of arbitrary depth, $d$. The fluid is assumed to have constant properties such as viscosity, thermal expansivity, thermal diffusivity. Small fluctuations in density due to temperature driven flow. Additional heat is carried (advected) by the flow from the hot boundary to the cool one whenever the fluid is moving.
+:::
 
 Various scalings result, with the new variables indicated using a prime
 ($'$).
@@ -60,9 +63,9 @@ $$
 where $\nabla p_0 = - g \rho_0$
 
 Substituting for all the existing terms in the Navier-Stokes equation
-(@eq-navstokes) using the equation of state for thermally
+([](#eq-navstokes)) using the equation of state for thermally
 induced variation in density
-(@eq-state)
+([](#eq-state))
 gives:
 
 $$
@@ -85,7 +88,7 @@ $$
 \begin{aligned}
     \frac{\rho \kappa}{\eta} \frac{D\mathbf{v}'}{Dt'}  & =
                      \acute{\nabla}^2  \mathbf{v}'  -  \acute{\nabla} p' +
-                     \frac{g \rho_0 \alpha \Delta T d^3}{\kappa \eta} T' \hat{\mathbf{z}} \nonumber \\
+                     \frac{g \rho_0 \alpha \Delta T d^3}{\kappa \eta} T' \hat{\mathbf{z}}  \\
             \textrm{or}  \;\;\;
      \frac{1}{{\rm Pr}} \frac{D\mathbf{v}'}{Dt'} & =
                     \acute{\nabla}^2  \mathbf{v}'  -  \acute{\nabla} p' + {\rm Ra} T' \hat{\mathbf{z}}
@@ -146,10 +149,11 @@ work with the stream-function -- a scalar quantity which defines the
 flow everywhere.
 The stream function is the scalar quantity,$\psi$, which satisfies
 
-$$
+```{math}
+:label: eq-strmfn
 v_1 = -\frac{\partial \psi}{\partial x_2} \mbox{\hspace{1cm}}
                         v_2 = \frac{\partial \psi}{\partial x_1}
-$$ {#eq-strmfn}
+```
 
 so that, automatically,
 
@@ -171,14 +175,14 @@ tells us that $\psi$ does not change due to advection -- in other words,
 contours of constant $\psi$ are streamlines of the fluid.
 
 Provided we limit ourselves to the xy plane, it is possible to think of
-equation (@eq-strmfn) as
+equation ([](#eq-strmfn)) as
 
 $$
 \mathbf{v} = \nabla \times (\psi \hat{\mathbf{k}})
 $$
 
 This form can be used to write down the 2D axisymetric version of
-equation (@eq-strmfn)
+equation ([](#eq-strmfn))
 
 $$
 \begin{aligned}
@@ -237,17 +241,19 @@ $\nabla \times \nabla P = 0 \mbox{\hspace{0.5cm}} \forall P$.
 
 In the context of highly viscous fluids in 2D, the vorticity equation is
 
-$$
+```{math}
+:label: eq-vorteqn
 \nabla ^2 \omega = - Ra \frac{\partial T}{\partial x_1}
-$$ {#eq-vorteqn}
+```
 
 and, by considering the curl of
 $(-\partial \psi / \partial x_2, \partial \psi / \partial x_1, 0)$ the
 stream function can be written
 
-$$
+```{math}
+:label: eq-psivort
 \nabla ^2 \psi = \omega
-$$ {#eq-psivort}
+```
 
 This form is useful from a computational point of view because it is
 relatively easy to solve the Laplacian, and the code can be reused for
@@ -267,12 +273,13 @@ $$
 The latter form being the representation in Cartesian coordinates.
 
 Using this form, it is easy to show that equations
-(@eq-vorteqn) and
-(@eq-psivort) can be combined to give
+([](#eq-vorteqn)) and
+([](#eq-psivort)) can be combined to give
 
-$$
+```{math}
+:label: eq-biharm
 \nabla^4 \psi = -{\rm Ra} \frac{\partial T}{\partial x_1}
-$$ {#eq-biharm}
+```
 
 ## Poloidal/Toroidal velocity decomposition
 
@@ -288,29 +295,32 @@ $$
 $$
 
 Then for an incompressible flow, since $\nabla \cdot \mathbf{u} = 0$,
-$$
+```{math}
+:label: eq-curlA
 \mathbf{u} = \nabla \times \mathbf{A}
-$$ {#eq-curlA}
+```
 
 Now suppose there is some direction ($\hat{\mathbf{z}}$) which we expect
 to be physically favoured in the solutions, we can rewrite
-@eq-curlA as
+[](#eq-curlA) as
 
-$$
-\mathbf{u} = \textcolor[rgb]{0.7,0.0,0.0}{\nabla \times(\Psi \hat{\mathbf{z}})} +
-                 \textcolor[rgb]{0.0,0.0,0.7}{ \nabla \times\nabla \times(\Phi \hat{\mathbf{z}})}
-$$ {#eq-poltor}
+```{math}
+:label: eq-poltor
+\mathbf{u} = \textcolor{firebrick}{\nabla \times(\Psi \hat{\mathbf{z}})} +
+                 \textcolor{mediumblue}{ \nabla \times\nabla \times(\Phi \hat{\mathbf{z}})}
+```
 
 Where the first term on the right is the
 [Toroidal]{style="color: 0.7,0.0,0.0"} part of the flow, and the second
 term is the [ Poloidal]{style="color: 0.0,0.0,0.7"} part. Why is this
 useful ? Let's substitute
-(@eq-poltor) into the Stokes' equation for a constant
+([](#eq-poltor)) into the Stokes' equation for a constant
 viscosity fluid
 
-$$
+```{math}
+:label: eq-cvstokes
 \eta \nabla^2 \mathbf{u} - \nabla p = g \rho \hat{\mathbf{z}}
-$$ {#eq-cvstokes}
+```
 
 where $\hat{\mathbf{z}}$ is the vertical unit
 vector (defined by the direction of gravity) and is clearly the one
@@ -320,9 +330,6 @@ $\hat{\mathbf{z}}$ direction, and using the following results:
 $$
 \hat{\mathbf{z}} \cdot \nabla \times \nabla^2 \mathbf{u} =
         - \nabla^2 \nabla_h^2\Psi
-$$
-
-$$
 \hat{\mathbf{z}} \cdot \nabla \times \nabla \times \nabla^2 \mathbf{u} =
           \nabla^2 \nabla^2 \nabla_h^2\Phi
 $$
@@ -337,7 +344,7 @@ is a gradient operator limited to the plane perpendicular to the special
 direction, $\hat{\mathbf{z}}$.
 
 If we first take the curl of
-(@eq-cvstokes), and look at the $\hat{\mathbf{z}}$ direction,
+([](#eq-cvstokes)), and look at the $\hat{\mathbf{z}}$ direction,
 
 $$
 \hat{\mathbf{z}} \cdot \eta \nabla \times \nabla^2 \mathbf{u} =
@@ -370,8 +377,8 @@ assuming the radial direction (of gravity) to be special.
 
 ## Exercises
 
-:::{.callout-warning collapse="true"}
-## 🚧 Under Review
+:::{warning} Under Review
+:class: dropdown
 
 This exercises section is newly added as a placeholder for future content. These exercises are currently conceptual prompts that need to be developed with detailed problem statements, worked examples, and solutions.
 
@@ -382,7 +389,7 @@ This exercises section is newly added as a placeholder for future content. These
 - Additional exercises should be added covering: dimensional analysis, scaling laws, corner flow details
 :::
 
-:::{.callout-note}
+:::{note}
 Exercises marked with ⭐ have worked solutions provided. Additional exercises will be added as the chapter develops.
 :::
 
@@ -410,7 +417,7 @@ c) Thermal boundary layer at the CMB (use appropriate length scale)
 
 Compare your results and discuss the implications for convection vigor.
 
-### Exercise 4: Stream Function Properties ⭐
+### Exercise 4: Stream Function Properties {sup}`★`
 
 For 2D incompressible flow, the stream function $\psi$ is defined such that:
 $$
@@ -437,8 +444,8 @@ d) How does the solution change with the dip angle of the subducting slab?
 
 ## Solutions to Selected Exercises
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 4: Stream Function Properties
+:::{tip} Solution to Exercise 4: Stream Function Properties
+:class: dropdown
 
 **(a) Incompressibility:**
 

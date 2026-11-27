@@ -31,7 +31,6 @@ For fluid dynamics fundamentals, classic texts include @batchelor1967 and @aches
 
 ## Mathematics with Proper Rendering
 
-{{< include ../_math-preamble.qmd >}}
 
 ### Inline Math
 
@@ -53,14 +52,14 @@ The Stokes equation for incompressible flow is $\DIV \sigma = \rho \mathbf{g}$ w
 ````markdown
 $$
 \DIV \sigma + \rho \mathbf{g} = 0
-$$ {#eq-stokes-momentum}
+$$ (eq-stokes-momentum)
 
 $$
 \DIV \uv = 0
-$$ {#eq-incompressible}
+$$ (eq-incompressible)
 
-We can reference equations: The momentum equation @eq-stokes-momentum
-combined with incompressibility @eq-incompressible forms the basis of
+We can reference equations: The momentum equation [](#eq-stokes-momentum)
+combined with incompressibility [](#eq-incompressible) forms the basis of
 mantle convection modeling.
 ````
 
@@ -68,13 +67,13 @@ mantle convection modeling.
 
 $$
 \DIV \sigma + \rho \mathbf{g} = 0
-$$ {#eq-stokes-momentum}
+$$ (eq-stokes-momentum)
 
 $$
 \DIV \uv = 0
-$$ {#eq-incompressible}
+$$ (eq-incompressible)
 
-We can reference equations: The momentum equation @eq-stokes-momentum combined with incompressibility @eq-incompressible forms the basis of mantle convection modeling.
+We can reference equations: The momentum equation [](#eq-stokes-momentum) combined with incompressibility [](#eq-incompressible) forms the basis of mantle convection modeling.
 
 ### Multi-line Equations
 
@@ -87,7 +86,7 @@ $$
 \DIV \uv &= 0 \\
 \rho &= \rho_0(1 - \alpha T)
 \end{aligned}
-$$ {#eq-thermal-system}
+$$ (eq-thermal-system)
 ````
 
 #### Rendered Output
@@ -98,9 +97,9 @@ $$
 \DIV \uv &= 0 \\
 \rho &= \rho_0(1 - \alpha T)
 \end{aligned}
-$$ {#eq-thermal-system}
+$$ (eq-thermal-system)
 
-The thermal convection system @eq-thermal-system couples temperature and velocity.
+The thermal convection system [](#eq-thermal-system) couples temperature and velocity.
 
 ## Colored Math (for emphasis)
 
@@ -131,14 +130,18 @@ $$
 assumed to have constant properties such as viscosity, thermal expansivity,
 thermal diffusivity.](../Images/Diagrams/layer.png){#fig-layer-example width=350px}
 
-As shown in @fig-layer-example, the layer has depth $d$.
+As shown in [](#fig-layer-example), the layer has depth $d$.
 ```
 
 ### Rendered Output
 
-![Consider the fluid motions in a layer of arbitrary depth, $d$. The fluid is assumed to have constant properties such as viscosity, thermal expansivity, thermal diffusivity.](../Images/Diagrams/layer.png){#fig-layer-example width=350px}
+:::{figure} ../Images/Diagrams/layer.png
+:label: fig-layer-example
+:width: 350px
+Consider the fluid motions in a layer of arbitrary depth, $d$. The fluid is assumed to have constant properties such as viscosity, thermal expansivity, thermal diffusivity.
+:::
 
-As shown in @fig-layer-example, the layer has depth $d$.
+As shown in [](#fig-layer-example), the layer has depth $d$.
 
 ## Code Blocks
 
@@ -215,7 +218,6 @@ plt.show()
 At the top of your file, include the math preamble:
 
 ```markdown
-{{< include ../_math-preamble.qmd >}}
 ```
 
 Then use the defined macros:
@@ -245,14 +247,12 @@ Callout blocks are useful for highlighting important information, tips, warnings
 ### Source Markup
 
 ````markdown
-:::{.callout-note}
-## Note Title (optional)
+:::{note} Note Title (optional)
 
 This is a note callout. Use it for general information that readers should be aware of.
 :::
 
-:::{.callout-tip}
-## Tip: Numerical Stability
+:::{tip} Tip: Numerical Stability
 
 When implementing finite difference schemes, always check the CFL condition:
 $$
@@ -260,22 +260,19 @@ $$
 $$
 :::
 
-:::{.callout-warning}
-## Warning
+:::{warning} Warning
 
 The Boussinesq approximation breaks down when density variations exceed
 approximately 10% of the reference density.
 :::
 
-:::{.callout-important}
-## Important: Sign Conventions
+:::{important} Important: Sign Conventions
 
 In this book, we use the convention that tensile stress is positive and
 compressive stress is negative.
 :::
 
-:::{.callout-caution}
-## Caution: Computational Cost
+:::{caution} Caution: Computational Cost
 
 Three-dimensional calculations can be extremely expensive. A grid with
 $100^3$ points requires solving systems with ~1 million unknowns.
@@ -284,14 +281,12 @@ $100^3$ points requires solving systems with ~1 million unknowns.
 
 ### Rendered Output
 
-:::{.callout-note}
-## Note Title (optional)
+:::{note} Note Title (optional)
 
 This is a note callout. Use it for general information that readers should be aware of.
 :::
 
-:::{.callout-tip}
-## Tip: Numerical Stability
+:::{tip} Tip: Numerical Stability
 
 When implementing finite difference schemes, always check the CFL condition:
 $$
@@ -299,20 +294,17 @@ $$
 $$
 :::
 
-:::{.callout-warning}
-## Warning
+:::{warning} Warning
 
 The Boussinesq approximation breaks down when density variations exceed approximately 10% of the reference density.
 :::
 
-:::{.callout-important}
-## Important: Sign Conventions
+:::{important} Important: Sign Conventions
 
 In this book, we use the convention that tensile stress is positive and compressive stress is negative.
 :::
 
-:::{.callout-caution}
-## Caution: Computational Cost
+:::{caution} Caution: Computational Cost
 
 Three-dimensional calculations can be extremely expensive. A grid with $100^3$ points requires solving systems with ~1 million unknowns.
 :::
@@ -324,8 +316,8 @@ You can make callouts collapsible (closed by default):
 #### Source Markup
 
 ````markdown
-:::{.callout-note collapse="true"}
-## Derivation Details (click to expand)
+:::{note} Derivation Details (click to expand)
+:class: dropdown
 
 Here's the detailed derivation that advanced readers might want to see,
 but beginners can skip:
@@ -337,8 +329,8 @@ Starting from the continuity equation...
 
 #### Rendered Output
 
-:::{.callout-note collapse="true"}
-## Derivation Details (click to expand)
+:::{note} Derivation Details (click to expand)
+:class: dropdown
 
 Here's the detailed derivation that advanced readers might want to see, but beginners can skip:
 

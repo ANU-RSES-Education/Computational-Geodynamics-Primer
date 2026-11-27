@@ -2,9 +2,8 @@
 
 # Navier-Stokes Equation
 
-{{< include ../_math-preamble.qmd >}}
 
-In the previous section ({doc}`./ContinuumMechanics`), we looked a very general way use conservation principles to construct equations describing how sources, fluxes and material transport of varous quantities balance one another through time. This approach can also be used to generate conservation equations for additional physical variables
+In the previous section ([](ContinuumMechanics.md)), we looked a very general way use conservation principles to construct equations describing how sources, fluxes and material transport of varous quantities balance one another through time. This approach can also be used to generate conservation equations for additional physical variables
 (for example, angular momentum, electric current). 
 
 One thing is still missing, though, and that is how we express the flux term for a quantity in terms of gradients in the quantity itself. We did this without any comment in the conservation of heat energy because we used Fourier's law  $\mathbf{F} = -k \nabla T$ to express the heat flux as a linear function of the temperature gradient. This is an empirical relationship that contains a physical constant that we are not able to derive from first principles.
@@ -37,7 +36,7 @@ $$
                             \eta \frac{\partial^2 v_j}{\partial x_i \partial x_j} -
                                 \frac{\partial p}{\partial x_i}\\
                 & = \eta \nabla^2 \mathbf{v} +
-                             \eta \textcolor[rgb]{0.0,0.7,0.0}{ \nabla (\nabla \cdot \mathbf{v})} - \nabla p       
+                             \eta \textcolor{green}{ \nabla (\nabla \cdot \mathbf{v})} - \nabla p       
 \end{split}
 $$
 
@@ -100,9 +99,10 @@ in the gravitational body forces.
 In the case of density variations due to temperature, the equation of
 state is this:
 
-$$
+```{math}
+:label: eq-boussinesq-state
 \rho = \rho_0 \left(1 - \alpha ( T-T_0 )\right)
-$$ {#eq-boussinesq-state}
+```
 where $\rho_0$ is the density at a reference temperature $T_0$. $\alpha$
 is the coefficient of thermal expansion. $\alpha$ is generally *much* smaller
 than one which justifies making the approximation in the first place.
@@ -147,7 +147,7 @@ accurate solution methods.
 One way to side-step  
 the complexity of advection is to consider an
 elemental volume of space which *moves with the fluid*. The surface flux
-term from equation @eq-cons1  vanishes at once if there is no
+term from equation [](#eq-cons1)  vanishes at once if there is no
 motion of material in or out of the boundary. In reality, we 
 are just sweeping the problem under the rug -- it doesn't actually
 go away altogether -- but it can be useful to do this
@@ -250,8 +250,8 @@ York, 1982.
 
 ## Exercises
 
-:::{.callout-warning collapse="true"}
-## 🚧 Under Review
+:::{warning} Under Review
+:class: dropdown
 
 This exercises section was newly added and adapted from MTH3360 Fluid Mechanics course materials. The exercises have been modified to include geodynamic applications and use the book's notation conventions, but may need further refinement for pedagogical flow and difficulty progression.
 
@@ -263,11 +263,11 @@ This exercises section was newly added and adapted from MTH3360 Fluid Mechanics 
 - Modified examples to use geodynamic contexts where appropriate
 :::
 
-:::{.callout-note}
-Exercises marked with ⭐ have worked solutions provided.
+:::{note}
+Exercises with solutions available are marked with {sup}`★`
 :::
 
-### Exercise 1: Material Derivative ⭐
+### Exercise 1: Material Derivative {sup}`★`
 
 Under what condition is the advective rate-of-change equal to the total rate-of-change? In other words, when does:
 $$
@@ -276,7 +276,7 @@ $$
 
 Explain the physical meaning of this condition.
 
-### Exercise 2: Isothermal Atmosphere ⭐
+### Exercise 2: Isothermal Atmosphere {sup}`★`
 
 Show that, in hydrostatic equilibrium, the pressure and density in an isothermal (constant temperature) atmosphere vary with height according to:
 $$
@@ -287,7 +287,7 @@ where $H_s = RT/g$, $R = 287$ J K$^{-1}$ kg$^{-1}$ is the specific gas constant,
 
 Show that for realistic values of $T$ in the troposphere, the e-folding height scale $H_s$ is on the order of 8 km.
 
-### Exercise 3: Vector Differential Operators ⭐
+### Exercise 3: Vector Differential Operators {sup}`★`
 
 The vector differential operator del (nabla) is defined as:
 $$
@@ -302,7 +302,7 @@ Express in full Cartesian form the quantities:
 
 Identify and explain the physical meaning of each operator.
 
-### Exercise 4: Material Derivative and Pollutant Transport ⭐
+### Exercise 4: Material Derivative and Pollutant Transport {sup}`★`
 
 Consider a homogeneous, incompressible fluid with velocity $\uv = (\alpha x, -\alpha y, 0)$ where $\alpha$ is constant. The concentration of a pollutant in the fluid is:
 $$
@@ -332,13 +332,13 @@ Clarify the meaning of the final term using index notation.
 
 Is the velocity field $\uv = (\cos x, xz^2, z\sin x)$ kinematically admissible for an incompressible fluid? Justify your answer.
 
-### Exercise 7: Pressure Field in Inviscid Flow ⭐
+### Exercise 7: Pressure Field in Inviscid Flow {sup}`★`
 
 Find the pressure field in the inviscid, incompressible flow with velocity field $\uv = (kx, -ky, 0)$, where $k$ is a constant. Assume the flow is steady and the only body force is gravity.
 
 **Hint**: Use the Euler equation (Navier-Stokes without viscosity).
 
-### Exercise 8: Cylindrical Polar Coordinates ⭐
+### Exercise 8: Cylindrical Polar Coordinates {sup}`★`
 
 Show that the continuity equation in cylindrical polar coordinates $(r, \theta, z)$ is:
 $$
@@ -375,8 +375,8 @@ Comment on whether inertial effects are important in each case.
 
 ## Solutions to Selected Exercises
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 1: Material Derivative
+:::{tip} Solution to Exercise 1: Material Derivative
+:class: dropdown
 
 The material derivative is:
 $$
@@ -391,8 +391,8 @@ $$
 **Physical meaning**: This occurs when the flow is **steady** (time-independent at fixed points in space). In steady flow, all changes experienced by a fluid parcel are due to its motion through spatially varying fields, not due to temporal changes at fixed locations.
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 2: Isothermal Atmosphere
+:::{tip} Solution to Exercise 2: Isothermal Atmosphere
+:class: dropdown
 
 In hydrostatic equilibrium: $\frac{dp}{dz} = -\rho g$
 
@@ -425,8 +425,8 @@ $$
 This is indeed on the order of 8 km.
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 3: Vector Differential Operators
+:::{tip} Solution to Exercise 3: Vector Differential Operators
+:class: dropdown
 
 **Divergence** (scalar):
 $$
@@ -461,8 +461,8 @@ Index notation: $\partial^2/\partial x_k \partial x_k$
 Physical meaning: Measure of how much a field differs from its average over neighboring points.
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 4: Pollutant Transport
+:::{tip} Solution to Exercise 4: Pollutant Transport
+:class: dropdown
 
 Given: $\uv = (\alpha x, -\alpha y, 0)$ and $c = c_0 + \gamma t + \beta x^2 y e^{-\alpha t}$
 
@@ -519,8 +519,8 @@ Initial concentration: $c(0) = c_0 + \beta(1)^2(1)e^0 = c_0 + \beta$
 Final concentration: $c(1) = c_0 + \beta + \gamma$
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 7: Pressure in Inviscid Flow
+:::{tip} Solution to Exercise 7: Pressure in Inviscid Flow
+:class: dropdown
 
 Given: $\uv = (kx, -ky, 0)$ (steady, inviscid, incompressible)
 
@@ -532,9 +532,6 @@ $$
 Calculate the advective acceleration:
 $$
 (\uv \cdot \GRAD)\uv = \left(kx\frac{\partial}{\partial x} - ky\frac{\partial}{\partial y}\right)(kx, -ky, 0)
-$$
-
-$$
 = (k^2 x, k^2 y, 0) = \GRAD\left(\frac{k^2x^2}{2} + \frac{k^2y^2}{2}\right)
 $$
 
@@ -556,8 +553,8 @@ $$
 where $p_0$ is the pressure at the origin.
 :::
 
-:::{.callout-tip collapse="true"}
-## Solution to Exercise 8: Cylindrical Continuity Equation
+:::{tip} Solution to Exercise 8: Cylindrical Continuity Equation
+:class: dropdown
 
 Transform from Cartesian $(x, y, z)$ to cylindrical $(r, \theta, z)$:
 $$
@@ -572,9 +569,6 @@ $$
 Using the chain rule:
 $$
 \frac{\partial}{\partial x} = \cos\theta\frac{\partial}{\partial r} - \frac{\sin\theta}{r}\frac{\partial}{\partial \theta}
-$$
-
-$$
 \frac{\partial}{\partial y} = \sin\theta\frac{\partial}{\partial r} + \frac{\cos\theta}{r}\frac{\partial}{\partial \theta}
 $$
 

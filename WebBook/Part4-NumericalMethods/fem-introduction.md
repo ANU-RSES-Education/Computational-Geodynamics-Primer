@@ -1,16 +1,7 @@
-# Introduction to the Finite Element Method {#sec-fem-introduction}
+(sec-fem-introduction)=
+# Introduction to the Finite Element Method
 
-{{< include ../_math-preamble.qmd >}}
 
-$$
-\newcommand{\dGamma}{\mathbf{d}\boldsymbol{\Gamma}}
-\newcommand{\erfc}{\mbox{\rm erfc}}
-\newcommand{\curly}{\sf }
-\newcommand{\Red     }[1]{\textcolor[rgb]{0.7,0.0,0.0}{ #1}} 
-\newcommand{\Green   }[1]{\textcolor[rgb]{0.0,0.7,0.0}{ #1}} 
-\newcommand{\Blue    }[1]{\textcolor[rgb]{0.0,0.0,0.7}{ #1}} 
-\newcommand{\Emerald }[1]{\textcolor[rgb]{0.0,0.7,0.3}{ #1}}
-$$
 
 ## Prelude to Finite Elements: The Variational Calculus
 
@@ -32,7 +23,10 @@ In words, the procedure goes like this: of all possible curves between the two p
         \end{center}
 \end{figure} -->
 
-![What curve gives the shortest distance between two points in a plane ?  And how can we prove it !](../Images/Diagrams/varn_strt.png){#fig-variational}
+:::{figure} ../Images/Diagrams/varn_strt.png
+:label: fig-variational
+What curve gives the shortest distance between two points in a plane ?  And how can we prove it !
+:::
 
 
 We decide, arbitrarily, that we will make $x$ the independent variable and find a curve $y(x)$ which satisfies the minimum distance requirement.
@@ -156,7 +150,10 @@ See Klaus-Jürgen Bathe's book for a more complete outline of this approach to F
         \end{center}
     \end{figure} -->
 
-![A Slab of Material Subjected to an sudden onset of heating at $Q$ on one side at time $t=0$](../Images/Diagrams/heatcond.png){#fig-heated-bar}
+:::{figure} ../Images/Diagrams/heatcond.png
+:label: fig-heated-bar
+A Slab of Material Subjected to an sudden onset of heating at $Q$ on one side at time $t=0$
+:::
 
 
 The functional governing the temperature in the [block of material](#fig-heated-bar) is
@@ -231,7 +228,10 @@ $$
 
 $\Omega$ is the domain of the operator and $u$ and $v$ are any functions which satisfy the boundary conditions.  
 
-![A rod subject to end load --- Young's modulus, $E$, density, $\rho$, cross sectional area, $A$](../Images/Diagrams/rodpull.png){#fig-elastic-rod}
+:::{figure} ../Images/Diagrams/rodpull.png
+:label: fig-elastic-rod
+A rod subject to end load --- Young's modulus, $E$, density, $\rho$, cross sectional area, $A$
+:::
 
 
 Consider the 1D example of a bar subject to a steady end load. The response is the solution to 
@@ -252,11 +252,11 @@ $$
 We therefore identify
 
 $$
-\begin{eqnarray*}
+\begin{array}{lcl}
      {\cal{L}}= -EA\frac{\partial^2 u}{\partial x^2} & \phi = u & f = 0 \\
      & B_1 = 1 ; q_1 = 0 & \\
      & B_2 =  EA\frac{\partial }{\partial x}; q_2 = R & 
- \end{eqnarray*}
+ \end{array}
 $$
 
 To check symmetry and positive definiteness of the operator we consider $R=0$ since the operator properties are independent of the actual load. Integrating by parts gives
@@ -315,11 +315,12 @@ The Ritz method does not operate on the residual of the strong problem, but mini
     
 The Galerkin method can be extended to include a term which minimizes the violation of natural boundary conditions, and thus permits the use of a wider range of trial functions
 
-$$
+```{math}
+:label: eq-galerk1
 \int_\Omega N_i R d\Omega  + \int_\Gamma N_i R_B d\Gamma = 0     \;\;\; i = 1,2,\ldots
-$$ {#eq-galerk1}     
+```
 
-However, it does not now necessarily produce a symmetric matrix even for a symmetric operator. However, if the equation (@eq-galerk1 ) is integrated once by parts, it yields a symmetric form and also reduces the order of derivatives inside the integral. This means that the trial functions need be of lower order, and it makes the Galerkin formulation equivalent to the Ritz formulation.
+However, it does not now necessarily produce a symmetric matrix even for a symmetric operator. However, if the equation ([](#eq-galerk1) ) is integrated once by parts, it yields a symmetric form and also reduces the order of derivatives inside the integral. This means that the trial functions need be of lower order, and it makes the Galerkin formulation equivalent to the Ritz formulation.
 
 Weighted residual formulations have one advantage: they can be used whether or not there exists a functional corresponding to the particular problem.  As a result is used this method is used extensively in constructing finite element methods.
 
@@ -330,7 +331,10 @@ One of the dominant features of the Finite Element literature is that it is fill
 Thus, before getting deeply involved in the arcane lore of Finite Elements, We give one example of a genuinely discrete system and show how it generates a matrix problem quite naturally.
     
 
-![(a) A system of three carts interconnected by springs of different stiffnesses and in turn connected to an end wall. (b) The element equilibrium diagram for the spring $k_2$](../Images/Diagrams/carts.png){#fig-mine-carts}
+:::{figure} ../Images/Diagrams/carts.png
+:label: fig-mine-carts
+(a) A system of three carts interconnected by springs of different stiffnesses and in turn connected to an end wall. (b) The element equilibrium diagram for the spring $k_2$
+:::
 
 
     
@@ -359,13 +363,14 @@ $$
  
 The equilibrium relations for the system as a whole are 
 
-$$
+```{math}
+:label: eq-globeq
 \begin{split}
     & {F_1}^{(1)} +             {F_1}^{(2)} +           {F_1}^{(3)} +           {F_1}^{(4)} = R_1 \\
     & {F_2}^{(2)} +             {F_2}^{(3)} +           {F_2}^{(5)} = R_2 \\
     & {F_3}^{(4)} +             {F_3}^{(5)} = R_3
 \end{split}
-$$ {#eq-globeq}
+```
 
 If we now write all five equilibrium relations in terms of all available degrees of freedom we obtain a form like this
 
@@ -383,7 +388,7 @@ $$
 
 in each case.
 
-Thus the global equilibrium requirement of @eq-globeq become
+Thus the global equilibrium requirement of [](#eq-globeq) become
 
 $$
 \mathbf{K}\mathbf{U} = \mathbf{R}
