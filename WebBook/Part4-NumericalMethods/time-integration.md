@@ -32,9 +32,10 @@ $$
 
 where $\theta_0$ is the amount of the radioactive material remaining. The same equation also describes the cooling of, say, a cup of coffee. In this case we interpret $\theta$ as the excess temperature (above room temperature).
 
-:::{figure} ../Images/Diagrams/theta_t.png
+:::{figure} ../Images/Diagrams/time-marching.svg
 :label: fig-time-discretisation
-Marching through time in small increments
+:alt: A decaying curve of theta against time with dots at equally spaced times, labelled theta 0, theta 1, theta 2, and so on up to theta n and theta n plus 1; the spacing between two dots is marked Delta t.
+Marching through time in small increments. The solution is computed only at times separated by $\Delta t$, giving the sequence $\theta_0, \theta_1, \ldots, \theta_{n+1}$.
 :::
 
 
@@ -153,9 +154,10 @@ The results are more accurate when a smaller timestep is used although it requir
 
 ### Second Order Runge-Kutta
 
-:::{figure} ../Images/Diagrams/theta_rk2.png
+:::{figure} ../Images/Diagrams/time-rk2.svg
 :label: fig-rk2
- different way to derive a second order method
+:alt: The exact decay curve from theta of t. A dashed tangent runs from theta of t to an open circle theta hat at t plus Delta t over 2; a short segment through theta hat shows the slope there; a solid arrow with that slope runs from theta of t to the RK2 value at t plus Delta t, just above the exact value on the curve.
+A different way to derive a second order method. A first-order half step along the tangent (dashed) gives the estimate $\hat{\theta}$ at $t+\Delta t/2$; the gradient there (short segment) is used for the whole step from $\theta(t)$. The step is large, $k\Delta t = 0.8$, so the remaining error is visible.
 :::
 
 

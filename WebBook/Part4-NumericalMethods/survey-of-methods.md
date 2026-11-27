@@ -102,9 +102,10 @@ If the dye can diffuse then, the finer scales of the tendrils will in fact be mi
 
 ### Numerical Example in 1D
 
-:::{figure} ../Images/Diagrams/eul_adv.png
+:::{figure} ../Images/Diagrams/advection-upwind.svg
 :label: fig-advection2
-Setup for a first attempt at a numerical advection scheme on a fixed discretization. After two timesteps, the sharp front has become smoothed despite introducing no genuine diffusion
+:alt: Two rows of equally spaced nodes. Top, at t equals 0, a shaded profile phi equal to one up to node i and zero from node i plus 1, with a velocity arrow v. Bottom, at t equals delta x over v, the computed profile ramps down over three intervals, while a dashed step one node further downstream shows the exact solution.
+Setup for a first attempt at a numerical advection scheme on a fixed discretization. After two timesteps, the sharp front has become smoothed despite introducing no genuine diffusion. The lower profile uses the upwind values of [](#tbl-hand-rolled-advection); the dashed line is the exact solution, the original step moved one node downstream.
 :::
 
 
