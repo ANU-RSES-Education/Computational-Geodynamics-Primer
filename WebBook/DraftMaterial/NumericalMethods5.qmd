@@ -104,9 +104,8 @@ The choice of $\bf M$ has a dramatic effect on the rate of convergence of the me
 
 ### Multigrid
 
-!![Multigrid: (a) Error reduction during simple two level V cycle, (b) Shape functions on different grid scales, (c) V cycle on four grids, (d) W cycle on four grids, (e) Schematic of Full Multigrid V cycles](multigrid-diagram)
+![Multigrid: (a) Error reduction during simple two level V cycle, (b) Shape functions on different grid scales, (c) V cycle on four grids, (d) W cycle on four grids, (e) Schematic of Full Multigrid V cycles](../Images/Diagrams/mg.png){#fig-multigrid-diagram}
 
-[multigrid-diagram]: ./../Images/Diagrams/mg.png
 
 The multigrid method works by formulating the finite element problem on a number of different scales - usually a set of grids which are nested one within the other sharing common nodes.  The solution progresses on all of the grids at the same time with each grid eliminating errors at a different scale. The effect is to propogate information very rapidly between different nodes in the grid which would otherwise be prevented by the local support of the element shape functions. In fact, by a single traverse from fine to coarse grid and back, all nodes in the mesh can be directly connected to every other -- allowing nodes which are physically coupled but remote in the mesh to communicate directly during each iteration cycle.
 
@@ -141,7 +140,7 @@ $$
 \delta{\bf d}_h = {\bf I}_H^h \delta{\bf d}_H
 $$
 
-The power of the algorithm is in a recursive application. The coarse grid correction is also calculated through the use of a still-coarser grid and so on, until the problem is so small that an exact solution can be obtained very rapidly. One very simple, but instructive, algorithm for hierarchical residual reduction is the sawtooth cycle (the same logical layout as the [multigrid V cycle](#multigrid-diagram)).
+The power of the algorithm is in a recursive application. The coarse grid correction is also calculated through the use of a still-coarser grid and so on, until the problem is so small that an exact solution can be obtained very rapidly. One very simple, but instructive, algorithm for hierarchical residual reduction is the sawtooth cycle (the same logical layout as the [multigrid V cycle](#fig-multigrid-diagram)).
 
 ```{admonition} Multigrid Algorithm
   1.  $\quad$   Obtain approximate solution, ${\bf d}_h$ at highest level $h$ 

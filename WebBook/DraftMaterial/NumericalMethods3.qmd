@@ -32,9 +32,8 @@ In words, the procedure goes like this: of all possible curves between the two p
         \end{center}
 \end{figure} -->
 
-!![What curve gives the shortest distance between two points in a plane ?  And how can we prove it !](variational)
+![What curve gives the shortest distance between two points in a plane ?  And how can we prove it !](../Images/Diagrams/varn_strt.png){#fig-variational}
 
-[variational]: ./../Images/Diagrams/varn_strt.png
 
 We decide, arbitrarily, that we will make $x$ the independent variable and find a curve $y(x)$ which satisfies the minimum distance requirement.
 
@@ -157,11 +156,10 @@ See Klaus-Jürgen Bathe's book for a more complete outline of this approach to F
         \end{center}
     \end{figure} -->
 
-!![A Slab of Material Subjected to an sudden onset of heating at $Q$ on one side at time $t=0$](heated-bar)
+![A Slab of Material Subjected to an sudden onset of heating at $Q$ on one side at time $t=0$](../Images/Diagrams/heatcond.png){#fig-heated-bar}
 
-[heated-bar]: ./../Images/Diagrams/heatcond.png
 
-The functional governing the temperature in the [block of material](#heated-bar) is
+The functional governing the temperature in the [block of material](#fig-heated-bar) is
 
 $$
 \Pi = \int_0^L \frac{1}{2} k \left(\frac{\partial \theta}{\partial x} \right)^2 dx -  
@@ -234,9 +232,8 @@ $$
 
 $\Omega$ is the domain of the operator and $u$ and $v$ are any functions which satisfy the boundary conditions.  
 
-!![A rod subject to end load --- Young's modulus, $E$, density, $\rho$, cross sectional area, $A$](elastic-rod)
+![A rod subject to end load --- Young's modulus, $E$, density, $\rho$, cross sectional area, $A$](../Images/Diagrams/rodpull.png){#fig-elastic-rod}
 
-[elastic-rod]: ./../Images/Diagrams/rodpull.png
 
 Consider the 1D example of a bar subject to a steady end load. The response is the solution to 
 
@@ -334,12 +331,11 @@ One of the dominant features of the Finite Element literature is that it is fill
 Thus, before getting deeply involved in the arcane lore of Finite Elements, We give one example of a genuinely discrete system and show how it generates a matrix problem quite naturally.
     
 
-!![(a) A system of three carts interconnected by springs of different stiffnesses and in turn connected to an end wall. (b) The element equilibrium diagram for the spring $k_2$](mine-carts)
+![(a) A system of three carts interconnected by springs of different stiffnesses and in turn connected to an end wall. (b) The element equilibrium diagram for the spring $k_2$](../Images/Diagrams/carts.png){#fig-mine-carts}
 
-[mine-carts]: ./../Images/Diagrams/carts.png
 
     
-Consider the system illustrated in the [figure (a) above](#mine-carts) --- three freely rolling carts attached by springs. There are three loads applied $R_1,R_2,R_3$, one to each cart, and we wish to determine the equilibrium displacements $U_1,U_2,U_3$.  We can [illustrate graphically](#mine-carts) the equilibrium condition for one of the springs based on its internal degrees of freedom and effective external load. This equilibrium is:
+Consider the system illustrated in the [figure (a) above](#fig-mine-carts) --- three freely rolling carts attached by springs. There are three loads applied $R_1,R_2,R_3$, one to each cart, and we wish to determine the equilibrium displacements $U_1,U_2,U_3$.  We can [illustrate graphically](#fig-mine-carts) the equilibrium condition for one of the springs based on its internal degrees of freedom and effective external load. This equilibrium is:
 
 $$
 \begin{split}

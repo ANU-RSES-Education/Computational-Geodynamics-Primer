@@ -239,9 +239,8 @@ $$ {#eq-festokes}
     
 Although we have now nominally made our problem finite by expressing everything in terms of Galerkin basis functions, we have yet to decide what those functions ought to be. Whatever our choice, it should make the problem easy to compute numerically.  
 
-!![Splitting an arbitrary domain into patches is trivial in an integral formulation. Additionally, the irregular shape of the individual subdomains is easy to handle with standard changes of variables (Jacobians)](domain-decomp)
+![Splitting an arbitrary domain into patches is trivial in an integral formulation. Additionally, the irregular shape of the individual subdomains is easy to handle with standard changes of variables (Jacobians)](../Images/Diagrams/domain.png){#fig-domain-decomp}
 
-[domain-decomp]: ./../Images/Diagrams/domain.png
 
 The choice of basis functions is very broad but we narrow it down by tying it very closely to the way we choose to split up the domain of our problem. With an integral method, the domain decomposition is simple since
 
@@ -250,16 +249,15 @@ $$
             \int_{\Omega_2} d {\Omega_2} + \int_{\Omega_3} d {\Omega_3} + \ldots
 $$ {#eq-decomp}
 
-which means that the decomposition [shown above](#domain-decomp) is as accurate as the representation of the boundary allows.  
+which means that the decomposition [shown above](#fig-domain-decomp) is as accurate as the representation of the boundary allows.  
 
 The functions which interpolate the node points at the corners of  subdomains are a suitable set for use as an approximate basis as we require for the Galerkin formulation. This is easy to see if we consider a one dimensional problem.
   
 
-!![Representing a piecewise linear function as a sum of pointy functions localized at the nodes.](discretisation-1d)
+![Representing a piecewise linear function as a sum of pointy functions localized at the nodes.](../Images/Diagrams/linedisc.png){#fig-discretisation-1d}
 
-[discretisation-1d]: ./../Images/Diagrams/linedisc.png
 
-In the one dimensional case, the choice of subdomains is limited to breaking up the line into a number of segments, though not necessarily of equal length. If the approximation to the continuum field, $u$ is made by linear interpolation to give $u^h$, then $u^h$ can also be expressed as a sum on the [local triangular functions $N_A$](#discretisation-1d)
+In the one dimensional case, the choice of subdomains is limited to breaking up the line into a number of segments, though not necessarily of equal length. If the approximation to the continuum field, $u$ is made by linear interpolation to give $u^h$, then $u^h$ can also be expressed as a sum on the [local triangular functions $N_A$](#fig-discretisation-1d)
 
 $$
 u^h = \sum_{A} u(x_A) N_A(x)
@@ -267,19 +265,18 @@ $$
 
 This is an exact representation of the interpolation provided the $N_A$ takes the value one at node $A$ and zero at all other nodes, and varies in a linear manner in between.
 
- Note that the functions all take the same form apart from scaling. Also, because the basis functions are localized around a node and its neighbours, the direct interaction between a node and its immediate neighbours is non-zero but the interaction with more distant nodes is zero. This makes the stiffness matrix banded --- more importantly it is sparse and therefore the potentially enormous number of interactions (the square of the number of unknowns) is contained. This procedure can be extended to higher dimensions and to higher order interpolations as shown in ![the Figure below](#shape-functions)
+ Note that the functions all take the same form apart from scaling. Also, because the basis functions are localized around a node and its neighbours, the direct interaction between a node and its immediate neighbours is non-zero but the interaction with more distant nodes is zero. This makes the stiffness matrix banded --- more importantly it is sparse and therefore the potentially enormous number of interactions (the square of the number of unknowns) is contained. This procedure can be extended to higher dimensions and to higher order interpolations as shown in [the Figure below](#fig-shape-functions)
 
 ### Naming of Things and What They are Like}
 
 The interpolation functions are known as shape functions. The subdomains are known as elements. The elements correspond to the individual springs of our discrete example. The shape functions are pure interpolation functions of the required order within the element and can be differentiated the appropriate number of times. This means that the order of interpolation must match the order of derivatives in the FE operator. Crossing the element boundaries, the shape functions have discontinuous derivatives (as do the piecewise interpolations). Continuous derivative functions are possible (e.g. splines) but add significant complexity. Shape functions in 2D and 3D can be formed from the product of 1D shape functions in each direction. 
 
-!![Extension of simple shape function concept (a) to higher order functions and  (b) to higher dimensions](shape-functions) 
+![Extension of simple shape function concept (a) to higher order functions and  (b) to higher dimensions](../Images/Diagrams/shapefn.png){#fig-shape-functions}
 
-[shape-functions]:  ./../Images/Diagrams/shapefn.png
 
 ### Element Matrices
 
-The [domain decomposition illustrated above](#domain-decomp) produces a minature version of the matrix problem on the individual elements themselves. 
+The [domain decomposition illustrated above](#fig-domain-decomp) produces a minature version of the matrix problem on the individual elements themselves. 
 
 $$
 {k^e}_{ij} {d^e}_j = {f^e}_i

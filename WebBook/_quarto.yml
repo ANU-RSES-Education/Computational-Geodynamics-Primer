@@ -25,22 +25,17 @@ book:
 
     - part: "**Part III: Geodynamics**"
       chapters:
-        - section: "Introduction"
-          chapters:
-            - Part3-Geodynamics/placeholder.qmd
-
-        # Example of modular structure (to be populated)
-        - section: "Theme 1: Heat Transfer"
-          chapters:
-            - Part3-Geodynamics/placeholder.qmd  # Will become heat-fundamentals.qmd
-            # - Part3-Geodynamics/heat-analytical.qmd
-            # - Part3-Geodynamics/heat-applications.qmd
-
-        - section: "Theme 2: Mantle Convection"
-          chapters:
-            - Part3-Geodynamics/placeholder.qmd  # Will become convection-setup.qmd
-            # - Part3-Geodynamics/convection-simple.qmd
-            # - Part3-Geodynamics/convection-earth.qmd
+        # NB: Quarto books do not allow nested `section:` groups inside a part;
+        # a part's `chapters:` must be a flat list of files.
+        - Part3-Geodynamics/placeholder.qmd
+        # Theme 1: Heat Transfer
+        # - Part3-Geodynamics/heat-fundamentals.qmd
+        # - Part3-Geodynamics/heat-analytical.qmd
+        # - Part3-Geodynamics/heat-applications.qmd
+        # Theme 2: Mantle Convection
+        # - Part3-Geodynamics/convection-setup.qmd
+        # - Part3-Geodynamics/convection-simple.qmd
+        # - Part3-Geodynamics/convection-earth.qmd
 
     - part: "**Part IV: Numerical Methods**"
       chapters:
@@ -48,50 +43,32 @@ book:
 
     - part: "**Part V: Computational Exercises**"
       chapters:
-        - section: "Introduction"
-          chapters:
-            - Part5-Computational/placeholder.qmd
+        - Part5-Computational/placeholder.qmd
+        # Benchmarks & Tests
+        - Part5-Computational/Benchmarks/analytical-solutions.qmd
+        # - Part5-Computational/Benchmarks/numerical-convergence.qmd
+        # Python Notebooks
+        # - Part5-Computational/notebooks-heat.qmd
+        # - Part5-Computational/notebooks-flow.qmd
 
-        - section: "Benchmarks & Tests"
-          chapters:
-            - Part5-Computational/Benchmarks/analytical-solutions.qmd
-            # - Part5-Computational/Benchmarks/numerical-convergence.qmd
-
-        - section: "Python Notebooks"
-          chapters:
-            - Part5-Computational/placeholder.qmd  # Will link to notebook collection
-            # - Part5-Computational/notebooks-heat.qmd
-            # - Part5-Computational/notebooks-flow.qmd
-
-    # Draft material - Organized with sections for demonstration
+    # Draft material (being reorganised into the parts above)
     - part: "**Draft Material (Being Reorganized)**"
       chapters:
-        # Section 1: Fundamentals
-        - section: "Mathematical & Physical Foundations"
-          chapters:
-            - DraftMaterial/ContinuumMechanics.qmd
-
-        # Section 2: Fluid Dynamics
-        - section: "Fluid Dynamics Equations"
-          chapters:
-            - DraftMaterial/NavierStokes.qmd
-            - DraftMaterial/StokesFlowApplications.qmd
-
-        # Section 3: Geodynamic Processes
-        - section: "Geodynamic Applications"
-          chapters:
-            - DraftMaterial/ThermalConvection.qmd
-            - DraftMaterial/MantleDynamics.qmd
-            - DraftMaterial/LithosphericDynamics.qmd
-
-        # Section 4: Numerical Methods
-        - section: "Numerical Methods"
-          chapters:
-            - DraftMaterial/NumericalMethods1.qmd
-            - DraftMaterial/NumericalMethods2.qmd
-            - DraftMaterial/NumericalMethods3.qmd
-            - DraftMaterial/NumericalMethods4.qmd
-            - DraftMaterial/NumericalMethods5.qmd
+        # Mathematical & Physical Foundations
+        - DraftMaterial/ContinuumMechanics.qmd
+        # Fluid Dynamics Equations
+        - DraftMaterial/NavierStokes.qmd
+        - DraftMaterial/StokesFlowApplications.qmd
+        # Geodynamic Applications
+        - DraftMaterial/ThermalConvection.qmd
+        - DraftMaterial/MantleDynamics.qmd
+        - DraftMaterial/LithosphericDynamics.qmd
+        # Numerical Methods
+        - DraftMaterial/NumericalMethods1.qmd
+        - DraftMaterial/NumericalMethods2.qmd
+        - DraftMaterial/NumericalMethods3.qmd
+        - DraftMaterial/NumericalMethods4.qmd
+        - DraftMaterial/NumericalMethods5.qmd
 
     # References
     - part: "References"

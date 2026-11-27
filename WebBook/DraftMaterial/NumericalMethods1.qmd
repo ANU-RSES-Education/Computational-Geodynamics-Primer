@@ -40,9 +40,8 @@ $$
 
 where $\theta_0$ is the amount of the radioactive material remaining. The same equation also describes the cooling of, say, a cup of coffee. In this case we interpret $\theta$ as the excess temperature (above room temperature).
 
-!![Marching through time in small increments](time-discretisation)
+![Marching through time in small increments](../Images/Diagrams/theta_t.png){#fig-time-discretisation}
 
-[time-discretisation]: ./../Images/Diagrams/theta_t.png
 
 We want to march forward in time from our starting point where $\theta = \theta_0$ to obtain the value of $\theta$ at later times. To do this, we need to approximate the original differential equation, and, in particular, the value of the time derivative at each time. There are a number of ways to do this.
 
@@ -151,17 +150,17 @@ How well do these two methods perform, and what difference does the choice of $\
 |   0.8 |   0.4096     | 0.4305       | 0.4688        | 0.4543         | 0.4483   |
 |   0.9 |   ---        | 0.3874       | ---           | 0.4001         | 0.4066   |
 |   1.0 |   0.3277     | 0.3487       | 0.3405        | 0.3743         | 0.3679   |
-![Results of the numerical simulation of the decay equation. $^1\theta_H$ is from the first order expansion of $\theta(t)$, at a timestep of $\Delta t=0.2$, and $^2\theta_H$ is the second order expansion at $\Delta t=0.2$; other calculations are at $\Delta t = 0.1$. $^1\theta_h$ is the linear expansion,  $^2\theta_h$ results from the quadratic expansion of $\theta(t)$. The actual solution is also shown.](table-two-schemes)
+
+: Results of the numerical simulation of the decay equation. $^1\theta_H$ is from the first order expansion of $\theta(t)$, at a timestep of $\Delta t=0.2$, and $^2\theta_H$ is the second order expansion at $\Delta t=0.2$; other calculations are at $\Delta t = 0.1$. $^1\theta_h$ is the linear expansion,  $^2\theta_h$ results from the quadratic expansion of $\theta(t)$. The actual solution is also shown. {#tbl-two-schemes}
 
 The results are more accurate when a smaller timestep is used although it requires more computation to achieve the greater accuracy. Higher order expansion also increases the accuracy and may be more efficient in terms of the number of computations required for a given level of accuracy. Note, however, that the supposedly better quadratic expansion produces an error which oscillates as time increases. Does this error grow ? Does this make second order expansions useless ?
 
 ### Second Order Runge-Kutta
 
-!![ different way to derive a second order method](rk2)
+![ different way to derive a second order method](../Images/Diagrams/theta_rk2.png){#fig-rk2}
 
-[rk2]: ./../Images/Diagrams/theta_rk2-.png
 
-The Runge-Kutta approach to higher order integration methods is [illustrated in the figure](#rk2). The idea is to estimate the gradient $d \theta / d t$ at the half way point between two timestep values.  This is done in two stages. Initially a first order estimate, $\hat{\theta}$ is made for the value of the function $\theta$ at $t=t+\Delta t /2$ in the future. This value is then subsituted into the differential equation to obtain the estimate for the gradient at this time. The revised gradient is then used to update the original $\theta(t)$ by an entire timestep.
+The Runge-Kutta approach to higher order integration methods is [illustrated in the figure](#fig-rk2). The idea is to estimate the gradient $d \theta / d t$ at the half way point between two timestep values.  This is done in two stages. Initially a first order estimate, $\hat{\theta}$ is made for the value of the function $\theta$ at $t=t+\Delta t /2$ in the future. This value is then subsituted into the differential equation to obtain the estimate for the gradient at this time. The revised gradient is then used to update the original $\theta(t)$ by an entire timestep.
 
 The first order step is
 $$
