@@ -14,15 +14,14 @@ This document tracks which content from `EatYourWords/` has been migrated to the
 Ready to migrate with minimal restyling.
 
 ### Part 0: Introduction
-- ~~**Introduction.md**~~ → Migrated to `WebBook/intro.qmd` (Overview, What is a Model, Mathematical Background, Programming sections)
+- ~~**Introduction.md**~~ → Migrated to `WebBook/index.md` (Overview, What is a Model, Mathematical Background, Programming sections)
 
 ### Part 1: Fluid Dynamics
-- **ContinuumMechanics.md** `[PARTIAL]` → `WebBook/DraftMaterial/ContinuumMechanics.qmd`
-- **NavierStokes.md** `[PARTIAL]` → `WebBook/DraftMaterial/NavierStokes.qmd`
-- **MantleDynamics.md** `[PARTIAL]` → `WebBook/DraftMaterial/MantleDynamics.qmd`
-- **StokesFlowApplications.md** `[PARTIAL]` → `WebBook/DraftMaterial/StokesFlowApplications.qmd`
-- **ThermalConvection.md** `[PARTIAL]` → `WebBook/DraftMaterial/ThermalConvection.qmd`
-- **LithosphericDynamics.md** `[PARTIAL]` → `WebBook/DraftMaterial/LithosphericDynamics.qmd`
+- ~~**ContinuumMechanics.md**~~ → `WebBook/Part1-Fundamentals/conservation-laws.md`
+- ~~**NavierStokes.md**~~ → `WebBook/Part2-FluidDynamics/navier-stokes.md` (Navier–Stokes and Laplacian equations restored 2026-11-27; the Quarto migration had dropped them)
+- ~~**MantleDynamics.md**~~ → split into `WebBook/Part2-FluidDynamics/nondimensional-equations.md` and `stokes-flow-applications.md`
+- **ThermalConvection.md** `[PARTIAL]` → `WebBook/DraftMaterial/ThermalConvection.md` (basis for the Rayleigh–Bénard chapter in Part III)
+- **LithosphericDynamics.md** (empty stub) → `WebBook/DraftMaterial/LithosphericDynamics.md`
 
 ### Part 2: Python Tutorials
 
@@ -70,11 +69,11 @@ Ready to migrate with minimal restyling.
 - SphericalMeshing/0-Stripy.md
 
 ### Part 3: Numerical Methods
-- **NumericalMethods1.md** `[PARTIAL]` → `WebBook/DraftMaterial/NumericalMethods1.qmd`
-- **NumericalMethods2.md** `[PARTIAL]` → `WebBook/DraftMaterial/NumericalMethods2.qmd`
-- **NumericalMethods3.md** `[PARTIAL]` → `WebBook/DraftMaterial/NumericalMethods3.qmd`
-- **NumericalMethods4.md** `[PARTIAL]` → `WebBook/DraftMaterial/NumericalMethods4.qmd`
-- **NumericalMethods5.md** `[PARTIAL]` → `WebBook/DraftMaterial/NumericalMethods5.qmd`
+- ~~**NumericalMethods1.md**~~ → `WebBook/Part4-NumericalMethods/time-integration.md`
+- ~~**NumericalMethods2.md**~~ → `WebBook/Part4-NumericalMethods/survey-of-methods.md`
+- ~~**NumericalMethods3.md**~~ → `WebBook/Part4-NumericalMethods/fem-introduction.md`
+- ~~**NumericalMethods4.md**~~ → `WebBook/Part4-NumericalMethods/fem-practice.md`
+- ~~**NumericalMethods5.md**~~ → `WebBook/Part4-NumericalMethods/solvers.md`
 
 ---
 

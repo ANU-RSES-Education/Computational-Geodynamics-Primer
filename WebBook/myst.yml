@@ -1,0 +1,82 @@
+version: 1
+
+project:
+  id: computational-geodynamics-primer
+  title: Computational Geodynamics Primer
+  description: >-
+    An open textbook on the physics of the Earth's interior and the numerical
+    methods used to model it.
+  authors:
+    - name: Louis Moresi
+  github: https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer
+  license: CC0-1.0   # matches LICENSE at the repository root
+  bibliography:
+    - references.bib
+    - geodynamics-references.bib
+
+  # MyST takes a page's URL from its FILENAME, not its path: Part4-NumericalMethods/
+  # fem-introduction.md publishes at /fem-introduction. Pages in Part IV are cited
+  # from outside the book, so do not rename them.
+  toc:
+    - file: index.md
+    - file: Part1-Fundamentals/fundamentals.md
+      children:
+        - file: Part1-Fundamentals/conservation-laws.md
+    - file: Part2-FluidDynamics/fluid-dynamics.md
+      children:
+        - file: Part2-FluidDynamics/navier-stokes.md
+        - file: Part2-FluidDynamics/inviscid-flows.md
+        - file: Part2-FluidDynamics/nondimensional-equations.md
+        - file: Part2-FluidDynamics/stokes-flow-applications.md
+    - file: Part3-Geodynamics/geodynamics.md
+    - file: Part4-NumericalMethods/numerical-methods.md
+      children:
+        - file: Part4-NumericalMethods/time-integration.md
+        - file: Part4-NumericalMethods/survey-of-methods.md
+        - file: Part4-NumericalMethods/fem-introduction.md
+        - file: Part4-NumericalMethods/fem-practice.md
+        - file: Part4-NumericalMethods/solvers.md
+    - file: Part5-Computational/computational-exercises.md
+      children:
+        - file: Part5-Computational/Benchmarks/analytical-solutions.md
+    - title: Draft material (being reorganised)
+      children:
+        - file: DraftMaterial/ThermalConvection.md
+        - file: DraftMaterial/LithosphericDynamics.md
+
+  # One set of maths macros for the whole book (formerly _math-preamble.qmd,
+  # _macros.yml and a \newcommand block at the top of each numerics chapter).
+  math:
+    '\uv': '\mathbf{u}'
+    '\vv': '\mathbf{v}'
+    '\nhat': '\mathbf{\hat{n}}'
+    '\dGamma': '\mathbf{d}\boldsymbol{\Gamma}'
+    '\bm': '\boldsymbol{#1}'
+    '\DIV': '\nabla\cdot'
+    '\GRAD': '\nabla'
+    '\CURL': '\nabla\times'
+    '\erfc': '\operatorname{erfc}'
+    '\DDt': '\frac{D #1}{D t}'
+    '\ddt': '\frac{d #1}{d t}'
+    '\ppt': '\frac{\partial #1}{\partial t}'
+    '\ppx': '\frac{\partial #1}{\partial x}'
+    '\avg': '\langle #1 \rangle'
+    '\jump': '[\![ #1 ]\!]'
+    '\curly': '\sf'
+    '\Red': '\textcolor{firebrick}{#1}'
+    '\Green': '\textcolor{green}{#1}'
+    '\Blue': '\textcolor{mediumblue}{#1}'
+    '\Emerald': '\textcolor{teal}{#1}'
+
+site:
+  # Pinned, as in the Underworld Technical Notes: an unpinned theme broke their
+  # builds when a release outran mystmd. Upgrade mystmd (pixi.toml) and this
+  # pin together.
+  template: https://github.com/jupyter-book/myst-theme/releases/download/myst-to-react%401.4.1/book-theme.zip
+  title: Computational Geodynamics Primer
+  options:
+    logo: Images/ANU-logo.jpg
+    logo_text: Computational Geodynamics Primer
+    style: static/primer.css
+    hide_footer_links: true
+    numbered_references: true

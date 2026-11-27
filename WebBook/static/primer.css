@@ -1,0 +1,93 @@
+/* Computational Geodynamics Primer — site styling.
+ *
+ * Adapted from the Underworld Technical Notes stylesheet (static/uwtn.css in
+ * underworldcode.org): serif body, sans apparatus (captions, tables), one
+ * accent colour. The accent here is ANU gold rather than the UWTN blue.
+ * Anything merely decorative should be removed instead of elaborated.
+ */
+
+:root {
+  --primer-ink: #1f2a33;
+  --primer-muted: #5d6a74;
+  --primer-rule: #dfe3e6;
+  --primer-accent: #9a6a0c;        /* ANU gold #C58812, darkened for text contrast */
+  --primer-table-head: #1f2a33;
+  --primer-table-head-ink: #f2efe7;
+  --primer-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+                  "Times New Roman", serif;
+  --primer-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primer-ink: #e6e9ec;
+    --primer-muted: #9aa7b0;
+    --primer-rule: #2c353d;
+    --primer-accent: #e0a63c;
+    --primer-table-head: #2c353d;
+    --primer-table-head-ink: #f2efe7;
+  }
+}
+
+/* ---- article pages ----------------------------------------------------- */
+
+article.content p,
+article.content li,
+article.content blockquote {
+  font-family: var(--primer-serif);
+  font-size: 1.02rem;
+  line-height: 1.62;
+}
+
+article.content h1,
+article.content h2,
+article.content h3 {
+  font-family: var(--primer-serif);
+  letter-spacing: -0.005em;
+}
+
+article.content a { color: var(--primer-accent); }
+
+/* ---- tables: centred, sans, horizontal hairlines, filled header ---------- */
+
+article.content table {
+  margin: 1.4rem auto;
+  width: auto;
+  border-collapse: collapse;
+  font-family: var(--primer-sans);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+article.content th {
+  background: var(--primer-table-head);
+  color: var(--primer-table-head-ink);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.45rem 0.85rem;
+  border: none;
+}
+
+article.content td {
+  padding: 0.4rem 0.85rem;
+  border: none;
+  border-bottom: 1px solid var(--primer-rule);
+}
+
+/* ---- captions read as apparatus: sans, smaller, lighter ------------------ */
+
+article.content figcaption,
+article.content figcaption p {
+  font-family: var(--primer-sans);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--primer-muted);
+}
+
+/* House-style figures are drawn on white; keep them on white in dark mode. */
+article.content figure img[src$=".svg"] {
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 4px;
+}

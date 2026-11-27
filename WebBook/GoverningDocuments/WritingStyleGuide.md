@@ -121,7 +121,7 @@ Split into multiple modules when:
 ### Types of Exercises
 
 1. **Check Understanding**: Simple questions testing concept comprehension
-   - Placed within text as callout boxes
+   - Placed within text as admonitions
    - Answers can be conceptual
    - Example: "Why must the divergence of velocity be zero in an incompressible fluid?"
 
@@ -234,7 +234,7 @@ Interpret:      Physical meaning
 
 ### Researchers (Secondary Audience)
 - Provide citations to current literature
-- Include advanced topics in callouts or appendices
+- Include advanced topics in admonitions or appendices
 - Reference state-of-the-art methods
 - Suggest research directions
 
@@ -312,10 +312,10 @@ Interpret:      Physical meaning
 
 ### Signposting Difficulty
 
-Use callouts to indicate advanced material:
+Use collapsible admonitions to indicate advanced material:
 ```markdown
-:::{.callout-note collapse="true"}
-## Advanced Topic: Anelastic Formulation
+:::{note} Advanced Topic: Anelastic Formulation
+:class: dropdown
 [Optional advanced content here]
 :::
 ```

@@ -7,10 +7,10 @@ This document describes the navigation hierarchy for the Computational Geodynami
 The book currently uses a two-level hierarchy:
 
 ```yaml
-- part: "Part Name"
-  chapters:
-    - chapter1.qmd
-    - chapter2.qmd
+- title: "Part Name"
+  children:
+    - file: chapter1.md
+    - file: chapter2.md
 ```
 
 **Limitations:**
@@ -30,59 +30,46 @@ To support modular organization, implement a three-level hierarchy:
 ### Example Structure
 
 ```yaml
-- part: "Part III: Geodynamics"
-  chapters:
-    - Part3-Geodynamics/intro.qmd
+- title: "Part III: Geodynamics"
+  children:
+    - file: Part3-Geodynamics/intro.md
 
-    - section: "Theme 1: Heat Conduction"
-      chapters:
-        - Part3-Geodynamics/HeatConduction/fundamentals.qmd
-        - Part3-Geodynamics/HeatConduction/analytical-solutions.qmd
-        - Part3-Geodynamics/HeatConduction/applications.qmd
+    - title: "Theme 1: Heat Conduction"
+      children:
+        - file: Part3-Geodynamics/HeatConduction/fundamentals.md
+        - file: Part3-Geodynamics/HeatConduction/analytical-solutions.md
+        - file: Part3-Geodynamics/HeatConduction/applications.md
 
-    - section: "Theme 2: Mantle Convection"
-      chapters:
-        - Part3-Geodynamics/MantleConvection/physical-setup.qmd
-        - Part3-Geodynamics/MantleConvection/simple-convection.qmd
-        - Part3-Geodynamics/MantleConvection/earth-applications.qmd
+    - title: "Theme 2: Mantle Convection"
+      children:
+        - file: Part3-Geodynamics/MantleConvection/physical-setup.md
+        - file: Part3-Geodynamics/MantleConvection/simple-convection.md
+        - file: Part3-Geodynamics/MantleConvection/earth-applications.md
 
-    - section: "Theme 3: Stokes Flow"
-      chapters:
-        - Part3-Geodynamics/StokesFlow/derivation.qmd
-        - Part3-Geodynamics/StokesFlow/solution-methods.qmd
-        - Part3-Geodynamics/StokesFlow/applications.qmd
+    - title: "Theme 3: Stokes Flow"
+      children:
+        - file: Part3-Geodynamics/StokesFlow/derivation.md
+        - file: Part3-Geodynamics/StokesFlow/solution-methods.md
+        - file: Part3-Geodynamics/StokesFlow/applications.md
 ```
 
 ## Sidebar Configuration
 
-### Collapse Behavior
-
-Control how many levels are expanded by default:
-
-```yaml
-# In _quarto.yml under sidebar:
-sidebar:
-  style: "docked"
-  background: light
-  collapse-level: 2  # Show parts and sections, collapse modules
-```
-
-**Options:**
-- `collapse-level: 1` - Only parts visible, sections collapsed
-- `collapse-level: 2` - Parts and sections visible, modules collapsed (recommended)
-- `collapse-level: 3` - Everything expanded (use for shorter books only)
+The MyST book theme builds the sidebar from the `toc` in `WebBook/myst.yml`: entries with `children` become collapsible groups, and the group containing the current page opens automatically. There is no separate sidebar configuration and no collapse-level setting.
 
 ### Complete Configuration
 
 ```yaml
-book:
-  sidebar:
-    logo: assets/AuWorldEQ.jpg
-    style: "docked"
-    background: light
-    collapse-level: 2
-    search: true
-    pinned: true  # Keep sidebar visible
+project:
+  toc:
+    - file: index.md
+    - title: "Part III: Geodynamics"
+      children:
+        - file: Part3-Geodynamics/geodynamics.md
+site:
+  options:
+    logo: Images/ANU-logo.jpg
+    logo_text: Computational Geodynamics Primer
 ```
 
 ## Implementation Examples
@@ -92,35 +79,35 @@ book:
 For the first complete vertical strand (Background → Applications):
 
 ```yaml
-- part: "**Demonstration Strand: Heat Transfer**"
-  chapters:
+- title: "**Demonstration Strand: Heat Transfer**"
+  children:
     # Foundation modules
-    - section: "Background & Foundations"
-      chapters:
-        - FoundationStrand/background-mathematics.qmd
-        - FoundationStrand/background-geodynamics.qmd
-        - FoundationStrand/constants-reference.qmd
+    - title: "Background & Foundations"
+      children:
+        - file: FoundationStrand/background-mathematics.md
+        - file: FoundationStrand/background-geodynamics.md
+        - file: FoundationStrand/constants-reference.md
 
     # Theme 1: Heat Conduction
-    - section: "Theme 1: Heat Conduction"
-      chapters:
-        - FoundationStrand/HeatConduction/module1-fundamentals.qmd
-        - FoundationStrand/HeatConduction/module2-analytical.qmd
-        - FoundationStrand/HeatConduction/module3-applications.qmd
+    - title: "Theme 1: Heat Conduction"
+      children:
+        - file: FoundationStrand/HeatConduction/module1-fundamentals.md
+        - file: FoundationStrand/HeatConduction/module2-analytical.md
+        - file: FoundationStrand/HeatConduction/module3-applications.md
 
     # Theme 2: Mantle Convection
-    - section: "Theme 2: Mantle Convection"
-      chapters:
-        - FoundationStrand/MantleConvection/module1-setup.qmd
-        - FoundationStrand/MantleConvection/module2-simple.qmd
-        - FoundationStrand/MantleConvection/module3-earth.qmd
+    - title: "Theme 2: Mantle Convection"
+      children:
+        - file: FoundationStrand/MantleConvection/module1-setup.md
+        - file: FoundationStrand/MantleConvection/module2-simple.md
+        - file: FoundationStrand/MantleConvection/module3-earth.md
 
     # Theme 3: Stokes Flow
-    - section: "Theme 3: Stokes Equation"
-      chapters:
-        - FoundationStrand/StokesFlow/module1-derivation.qmd
-        - FoundationStrand/StokesFlow/module2-methods.qmd
-        - FoundationStrand/StokesFlow/module3-applications.qmd
+    - title: "Theme 3: Stokes Equation"
+      children:
+        - file: FoundationStrand/StokesFlow/module1-derivation.md
+        - file: FoundationStrand/StokesFlow/module2-methods.md
+        - file: FoundationStrand/StokesFlow/module3-applications.md
 ```
 
 ### Example 2: Traditional Part Organization
@@ -128,26 +115,26 @@ For the first complete vertical strand (Background → Applications):
 For complete parts with multiple topics:
 
 ```yaml
-- part: "**Part II: Fluid Dynamics**"
-  chapters:
-    - Part2-FluidDynamics/introduction.qmd
+- title: "**Part II: Fluid Dynamics**"
+  children:
+    - file: Part2-FluidDynamics/introduction.md
 
-    - section: "Inviscid Flow"
-      chapters:
-        - Part2-FluidDynamics/Inviscid/potential-flow.qmd
-        - Part2-FluidDynamics/Inviscid/bernoulli.qmd
-        - Part2-FluidDynamics/Inviscid/vorticity.qmd
+    - title: "Inviscid Flow"
+      children:
+        - file: Part2-FluidDynamics/Inviscid/potential-flow.md
+        - file: Part2-FluidDynamics/Inviscid/bernoulli.md
+        - file: Part2-FluidDynamics/Inviscid/vorticity.md
 
-    - section: "Viscous Flow"
-      chapters:
-        - Part2-FluidDynamics/Viscous/navier-stokes.qmd
-        - Part2-FluidDynamics/Viscous/boundary-layers.qmd
-        - Part2-FluidDynamics/Viscous/pipe-flow.qmd
+    - title: "Viscous Flow"
+      children:
+        - file: Part2-FluidDynamics/Viscous/navier-stokes.md
+        - file: Part2-FluidDynamics/Viscous/boundary-layers.md
+        - file: Part2-FluidDynamics/Viscous/pipe-flow.md
 
-    - section: "Advanced Topics"
-      chapters:
-        - Part2-FluidDynamics/Advanced/turbulence.qmd
-        - Part2-FluidDynamics/Advanced/multiphase.qmd
+    - title: "Advanced Topics"
+      children:
+        - file: Part2-FluidDynamics/Advanced/turbulence.md
+        - file: Part2-FluidDynamics/Advanced/multiphase.md
 ```
 
 ### Example 3: Computational Exercises
@@ -155,27 +142,27 @@ For complete parts with multiple topics:
 Organizing by skill level or topic:
 
 ```yaml
-- part: "**Part V: Computational Exercises**"
-  chapters:
-    - Part5-Computational/introduction.qmd
+- title: "**Part V: Computational Exercises**"
+  children:
+    - file: Part5-Computational/introduction.md
 
-    - section: "Basic Programming"
-      chapters:
-        - Part5-Computational/Basic/python-intro.qmd
-        - Part5-Computational/Basic/numpy-arrays.qmd
-        - Part5-Computational/Basic/visualization.qmd
+    - title: "Basic Programming"
+      children:
+        - file: Part5-Computational/Basic/python-intro.md
+        - file: Part5-Computational/Basic/numpy-arrays.md
+        - file: Part5-Computational/Basic/visualization.md
 
-    - section: "Numerical Methods"
-      chapters:
-        - Part5-Computational/Numerical/finite-difference.qmd
-        - Part5-Computational/Numerical/integration.qmd
-        - Part5-Computational/Numerical/linear-systems.qmd
+    - title: "Numerical Methods"
+      children:
+        - file: Part5-Computational/Numerical/finite-difference.md
+        - file: Part5-Computational/Numerical/integration.md
+        - file: Part5-Computational/Numerical/linear-systems.md
 
-    - section: "Applications"
-      chapters:
-        - Part5-Computational/Applications/cooling-models.qmd
-        - Part5-Computational/Applications/convection-sim.qmd
-        - Part5-Computational/Applications/benchmarks.qmd
+    - title: "Applications"
+      children:
+        - file: Part5-Computational/Applications/cooling-models.md
+        - file: Part5-Computational/Applications/convection-sim.md
+        - file: Part5-Computational/Applications/benchmarks.md
 ```
 
 ## Directory Structure
@@ -185,29 +172,29 @@ Organize files to match navigation structure:
 ```
 WebBook/
 ├── FoundationStrand/           # Demonstration vertical strand
-│   ├── background-mathematics.qmd
-│   ├── constants-reference.qmd
+│   ├── background-mathematics.md
+│   ├── constants-reference.md
 │   ├── HeatConduction/
-│   │   ├── module1-fundamentals.qmd
-│   │   ├── module2-analytical.qmd
-│   │   └── module3-applications.qmd
+│   │   ├── module1-fundamentals.md
+│   │   ├── module2-analytical.md
+│   │   └── module3-applications.md
 │   ├── MantleConvection/
-│   │   ├── module1-setup.qmd
-│   │   ├── module2-simple.qmd
-│   │   └── module3-earth.qmd
+│   │   ├── module1-setup.md
+│   │   ├── module2-simple.md
+│   │   └── module3-earth.md
 │   └── StokesFlow/
-│       ├── module1-derivation.qmd
-│       ├── module2-methods.qmd
-│       └── module3-applications.qmd
+│       ├── module1-derivation.md
+│       ├── module2-methods.md
+│       └── module3-applications.md
 │
 ├── Part2-FluidDynamics/
-│   ├── introduction.qmd
+│   ├── introduction.md
 │   ├── Inviscid/
-│   │   ├── potential-flow.qmd
-│   │   └── bernoulli.qmd
+│   │   ├── potential-flow.md
+│   │   └── bernoulli.md
 │   └── Viscous/
-│       ├── navier-stokes.qmd
-│       └── boundary-layers.qmd
+│       ├── navier-stokes.md
+│       └── boundary-layers.md
 │
 └── Notebooks/                  # Associated Jupyter notebooks
     ├── heat-conduction-1d.ipynb
@@ -221,20 +208,20 @@ WebBook/
 
 **Parts:** Use full descriptive names with "Part N:" prefix
 ```yaml
-- part: "**Part III: Geodynamics**"
+- title: "**Part III: Geodynamics**"
 ```
 
 **Sections:** Use concise thematic names, optionally numbered
 ```yaml
-- section: "Theme 1: Heat Conduction"
-- section: "Inviscid Flow"
-- section: "1. Mathematical Foundations"
+- title: "Theme 1: Heat Conduction"
+- title: "Inviscid Flow"
+- title: "1. Mathematical Foundations"
 ```
 
 **Modules/Chapters:** Use descriptive filenames, avoid numbers in files
 ```yaml
-- Part3-Geodynamics/HeatConduction/fundamentals.qmd  # Good
-- Part3-Geodynamics/HeatConduction/module1.qmd       # Avoid
+- file: Part3-Geodynamics/HeatConduction/fundamentals.md  # Good
+- file: Part3-Geodynamics/HeatConduction/module1.md       # Avoid
 ```
 
 ### Grouping Strategy
@@ -289,15 +276,15 @@ Test that users can:
 ### Phase 1: Create Foundation Strand Structure
 
 ```yaml
-- part: "**Demonstration Strand**"
-  chapters:
-    - section: "Foundations"
-      chapters:
-        - FoundationStrand/background-math.qmd
-        - FoundationStrand/constants.qmd
+- title: "**Demonstration Strand**"
+  children:
+    - title: "Foundations"
+      children:
+        - file: FoundationStrand/background-math.md
+        - file: FoundationStrand/constants.md
 
-    - section: "Theme 1: Heat Conduction"
-      chapters:
+    - title: "Theme 1: Heat Conduction"
+      children:
         # New modular content
 ```
 
@@ -307,24 +294,24 @@ Move from flat draft structure to themed sections:
 
 ```yaml
 # OLD (flat):
-- part: "Draft: Geodynamics"
-  chapters:
-    - DraftMaterial/ContinuumMechanics.qmd
-    - DraftMaterial/NavierStokes.qmd
-    - DraftMaterial/MantleDynamics.qmd
+- title: "Draft: Geodynamics"
+  children:
+    - file: DraftMaterial/ContinuumMechanics.md
+    - file: DraftMaterial/NavierStokes.md
+    - file: DraftMaterial/MantleDynamics.md
 
 # NEW (grouped):
-- part: "Part III: Geodynamics"
-  chapters:
-    - section: "Fundamentals"
-      chapters:
-        - Part3-Geodynamics/Fundamentals/continuum-mechanics.qmd
-        - Part3-Geodynamics/Fundamentals/conservation-laws.qmd
+- title: "Part III: Geodynamics"
+  children:
+    - title: "Fundamentals"
+      children:
+        - file: Part3-Geodynamics/Fundamentals/continuum-mechanics.md
+        - file: Part3-Geodynamics/Fundamentals/conservation-laws.md
 
-    - section: "Flow Equations"
-      chapters:
-        - Part3-Geodynamics/Flow/navier-stokes.qmd
-        - Part3-Geodynamics/Flow/stokes-approximation.qmd
+    - title: "Flow Equations"
+      children:
+        - file: Part3-Geodynamics/Flow/navier-stokes.md
+        - file: Part3-Geodynamics/Flow/stokes-approximation.md
 ```
 
 ### Phase 3: Expand Horizontally
@@ -332,10 +319,10 @@ Move from flat draft structure to themed sections:
 Add new themes using established structure:
 
 ```yaml
-- section: "Theme 4: Elastic Deformation"
-  chapters:
-    - Part3-Geodynamics/Elasticity/module1-fundamentals.qmd
-    - Part3-Geodynamics/Elasticity/module2-applications.qmd
+- title: "Theme 4: Elastic Deformation"
+  children:
+    - file: Part3-Geodynamics/Elasticity/module1-fundamentals.md
+    - file: Part3-Geodynamics/Elasticity/module2-applications.md
 ```
 
 ## Testing Navigation
@@ -355,12 +342,11 @@ Add new themes using established structure:
 ### Preview Commands
 
 ```bash
-# Quick preview
-quarto preview WebBook
+# Live preview
+pixi run start
 
-# Full render to test all navigation
-quarto render WebBook
-python serve-book.py
+# Full build: reports broken links and missing files
+pixi run build
 ```
 
 ## Advanced Options
@@ -378,59 +364,38 @@ Add custom CSS for section headings:
 }
 ```
 
-### Conditional Navigation
-
-Show/hide sections based on format:
-
-```yaml
-- section: "Interactive Exercises"
-  contents:
-    - when: "format == 'html'"
-      chapters:
-        - exercises/interactive1.qmd
-    - when: "format == 'pdf'"
-      chapters:
-        - exercises/printable1.qmd
-```
-
 ### Custom Icons
 
 Add icons to sections (requires custom HTML):
 
 ```yaml
-- section: "🔥 Theme 1: Heat Conduction"
-- section: "🌊 Theme 2: Mantle Convection"
-- section: "⚗️ Theme 3: Stokes Flow"
+- title: "🔥 Theme 1: Heat Conduction"
+- title: "🌊 Theme 2: Mantle Convection"
+- title: "⚗️ Theme 3: Stokes Flow"
 ```
 
-## Examples from Template
+## Minimal Example
 
-Minimal working example to test three-level navigation:
+Minimal `myst.yml` table of contents to test three-level navigation:
 
 ```yaml
-book:
-  title: "Test Book"
-  chapters:
-    - part: "Test Part"
-      chapters:
-        - index.qmd
-
-        - section: "Test Section"
-          chapters:
-            - chapter1.qmd
-            - chapter2.qmd
-            - chapter3.qmd
-
-  sidebar:
-    style: "docked"
-    collapse-level: 2
+project:
+  toc:
+    - file: index.md
+    - title: "Test Part"
+      children:
+        - title: "Test Section"
+          children:
+            - file: chapter1.md
+            - file: chapter2.md
+            - file: chapter3.md
 ```
 
 ## Summary
 
 **Key Recommendations:**
 1. Use three-level hierarchy: Parts → Sections → Modules
-2. Set `collapse-level: 2` for optimal UX
+2. Keep the `toc` nesting to parts → sections → modules so the sidebar stays readable
 3. Group 3-5 modules per section
 4. Use descriptive names at all levels
 5. Organize files to mirror navigation structure

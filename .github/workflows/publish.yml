@@ -1,5 +1,7 @@
-name: Quarto Publish Book and Slides
-# To github pages
+name: Publish book (MyST)
+# Builds WebBook/ with MyST and publishes it to gh-pages under /book, the URL
+# the Quarto build used. keep_files leaves the JupyterLite site (deployed by
+# jupyterlite.yml to the same branch) in place.
 
 on:
   workflow_dispatch:
@@ -7,40 +9,34 @@ on:
     branches:
       - main
 
+concurrency:
+  group: publish-book
+  cancel-in-progress: true
+
 jobs:
-  build-deploy-quarto:
+  build-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Add micromamba
-        uses: mamba-org/setup-micromamba@v1
+      # Same pinned toolchain as local builds (pixi.toml / pixi.lock).
+      - uses: prefix-dev/setup-pixi@v0.8.1
         with:
-          micromamba-version: "1.5.6-0" # any version from https://github.com/mamba-org/micromamba-releases
-          environment-file: .github/workflows/envs/renderer.yml
-          init-shell: bash
-          cache-environment: true
-          post-cleanup: "all"
+          cache: true
 
-      - name: Render docs with quarto
-        shell: bash -l {0}
-        run: |
-          quarto install tinytex
-          cd WebBook
-          quarto render
-          # cd ..
-          # cd WebSlides
-          # quarto render
+      # A project site is served under /<repo>/book, so MyST has to be told at
+      # build time or every root-relative asset 404s.
+      - name: Build
+        env:
+          BASE_URL: /${{ github.event.repository.name }}/book
+        run: pixi run build
 
-      ## Always deploy to version directory
-      - name: Deploy quarto book
+      - name: Deploy to gh-pages/book
         uses: peaceiris/actions-gh-pages@v4
-
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # destination_dir: book    # The dest dir is identified by branch
-          publish_dir: _build
+          publish_dir: WebBook/_build/html
+          destination_dir: book
           keep_files: true

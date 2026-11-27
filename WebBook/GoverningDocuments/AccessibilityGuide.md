@@ -45,36 +45,43 @@ For figures with multiple components or detailed information:
 
 1. **Provide detailed description in caption:**
 ```markdown
-![Overview of subduction zone geometry](subduction-diagram.png){#fig-subduction}
+:::{figure} subduction-diagram.png
+:label: fig-subduction
+:alt: Cross-section of a subduction zone: oceanic plate descending beneath a continental plate.
+Overview of subduction zone geometry
+:::
 
 **Figure Description:** Cross-section showing oceanic plate subducting beneath continental plate. Key features include: (1) oceanic trench at convergence, (2) subducting slab descending at ~45° angle, (3) volcanic arc on overriding plate, (4) back-arc basin, and (5) zone of intermediate-depth earthquakes along slab.
 ```
 
 2. **Use long descriptions for very complex figures:**
 ```markdown
-![Mantle convection simulation results](complex-simulation.png){#fig-simulation aria-describedby="sim-description"}
+:::{figure} complex-simulation.png
+:label: fig-simulation
+:alt: Four panels of a mantle convection simulation (full description follows the figure).
+Mantle convection simulation results
+:::
 
-<div id="sim-description">
-<details>
-<summary>Detailed Figure Description</summary>
+:::{note} Detailed figure description
+:class: dropdown
 This figure shows four panels of a mantle convection simulation...
 [Comprehensive description]
-</details>
-</div>
+:::
 ```
 
 ### Decorative Images
 
 For purely decorative images with no informational content:
 ```markdown
-![](decorative-banner.png){role="presentation"}
+![](decorative-banner.png)
 ```
+An empty alt text marks the image as decorative, so screen readers skip it.
 
 ## Mathematical Content
 
-### MathJax for Accessibility
+### KaTeX for Accessibility
 
-Quarto uses MathJax, which provides good accessibility support:
+MyST renders maths with KaTeX, which outputs MathML alongside the visual rendering:
 - Screen readers can read mathematical expressions
 - Users can zoom formulas without pixelation
 - Alternative representations available
@@ -91,9 +98,10 @@ $$
 
 ✅ Good:
 The heat equation describes how temperature $T$ changes with time $t$:
-$$
+```{math}
+:label: eq-heat
 \frac{\partial T}{\partial t} = \kappa \nabla^2 T
-$$ {#eq-heat}
+```
 where $\kappa$ is the thermal diffusivity and $\nabla^2$ is the Laplacian operator.
 ```
 
@@ -105,9 +113,10 @@ where $\kappa$ is the thermal diffusivity and $\nabla^2$ is the Laplacian operat
 **3. Provide alternative descriptions for complex equations:**
 ```markdown
 The momentum equation for Stokes flow is:
-$$
+```{math}
+:label: eq-stokes
 -\nabla p + \nabla \cdot (\eta \nabla \mathbf{u}) + \rho \mathbf{g} = 0
-$$ {#eq-stokes}
+```
 
 In words: the pressure gradient balances the viscous stress divergence and body forces.
 ```
@@ -116,7 +125,7 @@ In words: the pressure gradient balances the viscous stress divergence and body 
 
 ❌ **Never use images of equations** - they cannot be read by screen readers or searched
 
-✅ **Always use MathJax/LaTeX** - fully accessible and searchable
+✅ **Always use LaTeX maths markup** - fully accessible and searchable
 
 ## Document Structure
 
@@ -156,7 +165,12 @@ Use appropriate list types:
 
 **2. Add captions:**
 ```markdown
-: Physical parameters for Earth's mantle {#tbl-mantle-params}
+:::{table} Physical parameters for Earth's mantle
+:label: tbl-mantle-params
+| Parameter | Symbol | Value |
+|-----------|--------|-------|
+| Viscosity | η      | 10²¹  |
+:::
 ```
 
 **3. Keep tables simple:**
@@ -211,25 +225,20 @@ For text and important elements:
 ```markdown
 ❌ Bad: Click [here](url) for more information
 ❌ Bad: Read more at [this link](url)
-✅ Good: See the [Quarto accessibility documentation](url)
+✅ Good: See the [MyST documentation on figures](url)
 ✅ Good: Consult [Turcotte & Schubert (2014)](url) for details
 ```
 
 ### Skip Links
 
-Quarto automatically provides skip navigation links. Verify they work:
+The MyST book theme provides skip navigation links. Verify they work:
 - Tab to first element (should highlight skip link)
 - Press Enter (should skip to main content)
 
 ### Navigation Structure
 
 For multi-level navigation:
-```yaml
-# In _quarto.yml
-sidebar:
-  style: "docked"
-  collapse-level: 2  # Show 2 levels by default
-```
+The sidebar is generated from the `toc` in `WebBook/myst.yml`; keep its nesting shallow (parts, then chapters) so it stays navigable by keyboard.
 
 Users can navigate by:
 - Keyboard (Tab, Arrow keys, Enter)
@@ -245,7 +254,7 @@ Users can navigate by:
 1. **Add descriptive text before code:**
 ```python
 # Calculate temperature profile
-# This function implements equation @eq-heat
+# This function implements the heat equation (eq-heat)
 def temperature_profile(z, kappa, time):
     ...
 ```
@@ -281,7 +290,7 @@ For any interactive widgets:
 
 ### Code Blocks
 
-**1. Syntax highlighting:** Automatically provided by Quarto
+**1. Syntax highlighting:** Automatically provided by MyST
 **2. Line length:** Keep lines under 80 characters when possible
 **3. Comments:** Add explanatory comments liberally
 
@@ -333,12 +342,12 @@ In this module, we will:
 3. Apply the solution to lithospheric cooling
 ```
 
-### Callouts and Emphasis
+### Admonitions and Emphasis
 
-Use callout blocks to highlight important information:
+Use admonitions to highlight important information:
 
 ```markdown
-:::{.callout-important}
+:::{important}
 The Boussinesq approximation assumes density variations are small except in the gravity term.
 :::
 ```
@@ -482,7 +491,7 @@ Before publishing content, verify:
 ### Guidelines
 - **WCAG 2.1:** [W3C Web Content Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 - **Web AIM:** [WebAIM Articles](https://webaim.org/articles/)
-- **Quarto docs:** [Quarto Accessibility](https://quarto.org/docs/authoring/accessibility.html)
+- **MyST docs:** [MyST guide](https://mystmd.org/guide)
 
 ### Training
 - **W3C WAI tutorials:** [Web Accessibility Tutorials](https://www.w3.org/WAI/tutorials/)
