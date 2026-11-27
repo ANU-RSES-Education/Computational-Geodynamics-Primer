@@ -253,9 +253,10 @@ which means that the decomposition [shown above](#fig-domain-decomp) is as accur
 The functions which interpolate the node points at the corners of  subdomains are a suitable set for use as an approximate basis as we require for the Galerkin formulation. This is easy to see if we consider a one dimensional problem.
   
 
-:::{figure} ../Images/Diagrams/linedisc.png
+:::{figure} ../Images/Diagrams/fem-1d-basis.svg
 :label: fig-discretisation-1d
-Representing a piecewise linear function as a sum of pointy functions localized at the nodes.
+:alt: Three stacked panels on the same row of six nodes. (a) A smooth dashed curve and a solid piecewise-linear line that meets it at every node. (b) Triangles of different heights, one centred on each node, whose heights are the nodal values. (c) Two triangles of unit height centred on neighbouring nodes A and B, each falling to zero at the adjacent nodes.
+Representing a piecewise linear function as a sum of pointy functions localized at the nodes. (a) A field $u$ (dashed) and its linear interpolant $u^h$ through the nodal values. (b) $u^h$ is the sum of the basis functions, each scaled by its nodal value $u(x_A)$. (c) The basis function $N_A$ is one at node $A$, zero at every other node and linear in between, so it overlaps only its neighbours, such as $N_B$.
 :::
 
 
@@ -272,9 +273,10 @@ This is an exact representation of the interpolation provided the $N_A$ takes th
 ### Naming of Things and What They are Like
 The interpolation functions are known as shape functions. The subdomains are known as elements. The elements correspond to the individual springs of our discrete example. The shape functions are pure interpolation functions of the required order within the element and can be differentiated the appropriate number of times. This means that the order of interpolation must match the order of derivatives in the FE operator. Crossing the element boundaries, the shape functions have discontinuous derivatives (as do the piecewise interpolations). Continuous derivative functions are possible (e.g. splines) but add significant complexity. Shape functions in 2D and 3D can be formed from the product of 1D shape functions in each direction. 
 
-:::{figure} ../Images/Diagrams/shapefn.png
+:::{figure} ../Images/Diagrams/fem-shape-functions.svg
 :label: fig-shape-functions
-Extension of simple shape function concept (a) to higher order functions and  (b) to higher dimensions
+:alt: Left, a row of nodes with two curves: a solid curve rising to one at node A with small negative dips on either side, and a dashed arch over a single element peaking at its middle node C. Right, a grid seen in perspective with a tent-shaped surface rising to a peak of one above node A over the four cells around it.
+Extension of simple shape function concept (a) to higher order functions and (b) to higher dimensions. (a) With quadratic elements, the function of a corner node $A$ is one at $A$, zero at the other nodes of the two elements that share it, and negative in between; the function of a mid-element node $C$ is non-zero only inside its own element. (b) With bilinear quadrilaterals, the function of node $A$ rises to one above $A$ and falls to zero at the edges of the four cells that share it. Along every grid line it is linear, so the surface is ruled.
 :::
 
 
