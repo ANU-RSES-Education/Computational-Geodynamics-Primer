@@ -40,15 +40,15 @@ Covers how to write and organize content:
 - Choosing between text and code
 
 ### [MarkupStyleGuide.md](MarkupStyleGuide.md)
-**Technical formatting with Quarto markdown**
+**Technical formatting with MyST markdown**
 
-Technical details for formatting `.qmd` files:
+Technical details for formatting `.md` files:
 - File naming and organization
-- Mathematical notation (MathJax, macros)
+- Mathematical notation (KaTeX, macros)
 - Figure and image syntax
-- Code blocks (Python, pyodide, notebooks)
+- Code blocks (Python, notebooks)
 - Citations and bibliography
-- Callout blocks and cross-references
+- Admonitions and cross-references
 - Tables and lists
 
 **Use this when:**
@@ -63,7 +63,7 @@ Technical details for formatting `.qmd` files:
 
 Ensuring content is inclusive:
 - Alt text for images (requirements and examples)
-- Mathematical accessibility with MathJax
+- Mathematical accessibility with KaTeX
 - Document structure for screen readers
 - Color and contrast guidelines
 - Keyboard navigation
@@ -82,16 +82,16 @@ Ensuring content is inclusive:
 
 Implementing three-level navigation hierarchy:
 - Parts → Sections → Modules structure
-- Configuration in `_quarto.yml`
+- Configuration in `myst.yml` (`toc`)
 - Directory organization to match navigation
-- Collapse behavior and sidebar settings
+- Sidebar behaviour
 - Examples for different organizational approaches
 - Migration strategy for restructuring content
 
 **Use this when:**
 - Restructuring the book organization
 - Adding new sections or themes
-- Configuring `_quarto.yml`
+- Editing the `toc` in `myst.yml`
 - Planning directory structure
 - Testing navigation behavior
 
@@ -115,7 +115,7 @@ Plan-2025-2026.md
 | Formatting equations | MarkupStyleGuide | WritingStyleGuide (context) |
 | Adding images | AccessibilityGuide | MarkupStyleGuide (syntax) |
 | Restructuring parts | NavigationStructure | Plan-2025-2026 (strategy) |
-| Writing exercises | WritingStyleGuide | MarkupStyleGuide (callouts) |
+| Writing exercises | WritingStyleGuide | MarkupStyleGuide (admonitions) |
 | Setting up notebooks | WritingStyleGuide | MarkupStyleGuide (code blocks) |
 | Reviewing for accessibility | AccessibilityGuide | All (comprehensive check) |
 
@@ -142,7 +142,7 @@ Plan-2025-2026.md
 
 5. **Integrate** (NavigationStructure.md)
    - Place in appropriate section
-   - Update `_quarto.yml`
+   - Add the page to the `toc` in `myst.yml`
    - Test navigation
 
 ## Updating These Documents

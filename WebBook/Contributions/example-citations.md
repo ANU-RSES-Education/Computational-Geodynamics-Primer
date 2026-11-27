@@ -2,11 +2,11 @@
 
 This chapter demonstrates how to use citations and mathematics in the book, showing both the source markup and the rendered output.
 
-For complete documentation, see the [Quarto Documentation](https://quarto.org/docs/authoring/markdown-basics.html) and specifically:
+For complete documentation, see the [MyST guide](https://mystmd.org/guide) and specifically:
 
-- [Equations](https://quarto.org/docs/authoring/markdown-basics.html#equations)
-- [Citations](https://quarto.org/docs/authoring/citations.html)
-- [Cross-references](https://quarto.org/docs/authoring/cross-references.html)
+- [Equations](https://mystmd.org/guide/math)
+- [Citations](https://mystmd.org/guide/citations)
+- [Cross-references](https://mystmd.org/guide/cross-references)
 
 ## Citations
 
@@ -50,13 +50,15 @@ The Stokes equation for incompressible flow is $\DIV \sigma = \rho \mathbf{g}$ w
 #### Source Markup
 
 ````markdown
-$$
+```{math}
+:label: eq-stokes-momentum
 \DIV \sigma + \rho \mathbf{g} = 0
-$$ (eq-stokes-momentum)
+```
 
-$$
+```{math}
+:label: eq-incompressible
 \DIV \uv = 0
-$$ (eq-incompressible)
+```
 
 We can reference equations: The momentum equation [](#eq-stokes-momentum)
 combined with incompressibility [](#eq-incompressible) forms the basis of
@@ -65,13 +67,15 @@ mantle convection modeling.
 
 #### Rendered Output
 
-$$
+```{math}
+:label: eq-stokes-momentum
 \DIV \sigma + \rho \mathbf{g} = 0
-$$ (eq-stokes-momentum)
+```
 
-$$
+```{math}
+:label: eq-incompressible
 \DIV \uv = 0
-$$ (eq-incompressible)
+```
 
 We can reference equations: The momentum equation [](#eq-stokes-momentum) combined with incompressibility [](#eq-incompressible) forms the basis of mantle convection modeling.
 
@@ -80,24 +84,26 @@ We can reference equations: The momentum equation [](#eq-stokes-momentum) combin
 #### Source Markup
 
 ````markdown
-$$
+```{math}
+:label: eq-thermal-system
 \begin{aligned}
 \frac{\partial T}{\partial t} + \uv \cdot \GRAD T &= \kappa \nabla^2 T + H \\
 \DIV \uv &= 0 \\
 \rho &= \rho_0(1 - \alpha T)
 \end{aligned}
-$$ (eq-thermal-system)
+```
 ````
 
 #### Rendered Output
 
-$$
+```{math}
+:label: eq-thermal-system
 \begin{aligned}
 \frac{\partial T}{\partial t} + \uv \cdot \GRAD T &= \kappa \nabla^2 T + H \\
 \DIV \uv &= 0 \\
 \rho &= \rho_0(1 - \alpha T)
 \end{aligned}
-$$ (eq-thermal-system)
+```
 
 The thermal convection system [](#eq-thermal-system) couples temperature and velocity.
 
@@ -126,9 +132,14 @@ $$
 ### Source Markup
 
 ```markdown
-![Consider the fluid motions in a layer of arbitrary depth, $d$. The fluid is
+:::{figure} ../Images/Diagrams/layer.png
+:label: fig-layer-example
+:alt: A horizontal fluid layer of depth d between two boundaries.
+:width: 350px
+Consider the fluid motions in a layer of arbitrary depth, $d$. The fluid is
 assumed to have constant properties such as viscosity, thermal expansivity,
-thermal diffusivity.](../Images/Diagrams/layer.png){#fig-layer-example width=350px}
+thermal diffusivity.
+:::
 
 As shown in [](#fig-layer-example), the layer has depth $d$.
 ```
@@ -137,6 +148,7 @@ As shown in [](#fig-layer-example), the layer has depth $d$.
 
 :::{figure} ../Images/Diagrams/layer.png
 :label: fig-layer-example
+:alt: A horizontal fluid layer of depth d between two boundaries.
 :width: 350px
 Consider the fluid motions in a layer of arbitrary depth, $d$. The fluid is assumed to have constant properties such as viscosity, thermal expansivity, thermal diffusivity.
 :::
@@ -169,58 +181,15 @@ def rayleigh_number(rho, g, alpha, delta_T, d, kappa, eta):
     return (rho * g * alpha * delta_T * d**3) / (kappa * eta)
 ```
 
-### Interactive Python (using pyodide)
+### Interactive Python
 
-#### Source Markup
-
-````markdown
-```{{pyodide-python}}
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Calculate Rayleigh number for different viscosities
-eta_values = np.logspace(19, 23, 50)
-Ra = 3300 * 10 * 3e-5 * 3000 * (2900e3)**3 / (1e-6 * eta_values)
-
-plt.figure(figsize=(8, 5))
-plt.loglog(eta_values, Ra)
-plt.xlabel('Viscosity (Pa·s)')
-plt.ylabel('Rayleigh Number')
-plt.title('Mantle Rayleigh Number vs Viscosity')
-plt.grid(True, alpha=0.3)
-plt.show()
-```
-````
-
-#### Rendered Output
-
-```{pyodide-python}
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Calculate Rayleigh number for different viscosities
-eta_values = np.logspace(19, 23, 50)
-Ra = 3300 * 10 * 3e-5 * 3000 * (2900e3)**3 / (1e-6 * eta_values)
-
-plt.figure(figsize=(8, 5))
-plt.loglog(eta_values, Ra)
-plt.xlabel('Viscosity (Pa·s)')
-plt.ylabel('Rayleigh Number')
-plt.title('Mantle Rayleigh Number vs Viscosity')
-plt.grid(True, alpha=0.3)
-plt.show()
-```
+In-browser execution is not configured yet. MyST supports it through Thebe with JupyterLite or Binder; until then, runnable examples go in notebooks.
 
 ## Using Global Macros
 
 ### Source Markup
 
-At the top of your file, include the math preamble:
-
-```markdown
-```
-
-Then use the defined macros:
+The macros are defined once, under `math:` in `WebBook/myst.yml`; nothing needs to be included at the top of a file. Use them directly:
 
 ```markdown
 - Velocity: $\uv$ or $\vv$
@@ -232,7 +201,7 @@ Then use the defined macros:
 
 ### Rendered Output
 
-Available macros (already included at the top of this page):
+Rendered with the macros from `myst.yml`:
 
 - Velocity: $\uv$ or $\vv$
 - Divergence: $\DIV \uv = 0$
@@ -240,16 +209,16 @@ Available macros (already included at the top of this page):
 - Curl: $\CURL \mathbf{B}$
 - Colored text: $\Red{important}$, $\Blue{cold}$, $\Green{check}$
 
-## Callout Blocks
+## Admonitions
 
-Callout blocks are useful for highlighting important information, tips, warnings, and notes. See the [Quarto Callout Blocks documentation](https://quarto.org/docs/authoring/callouts.html) for more details.
+Admonitions are useful for highlighting important information, tips, warnings, and notes. See the [MyST admonitions documentation](https://mystmd.org/guide/admonitions). for more details.
 
 ### Source Markup
 
 ````markdown
 :::{note} Note Title (optional)
 
-This is a note callout. Use it for general information that readers should be aware of.
+This is a note admonition. Use it for general information that readers should be aware of.
 :::
 
 :::{tip} Tip: Numerical Stability
@@ -283,7 +252,7 @@ $100^3$ points requires solving systems with ~1 million unknowns.
 
 :::{note} Note Title (optional)
 
-This is a note callout. Use it for general information that readers should be aware of.
+This is a note admonition. Use it for general information that readers should be aware of.
 :::
 
 :::{tip} Tip: Numerical Stability
@@ -309,9 +278,9 @@ In this book, we use the convention that tensile stress is positive and compress
 Three-dimensional calculations can be extremely expensive. A grid with $100^3$ points requires solving systems with ~1 million unknowns.
 :::
 
-### Collapsible Callouts
+### Collapsible Admonitions
 
-You can make callouts collapsible (closed by default):
+Add `:class: dropdown` to make an admonition collapsible (closed by default):
 
 #### Source Markup
 
@@ -339,4 +308,4 @@ Starting from the continuity equation, we apply the divergence theorem and integ
 
 ## References
 
-The bibliography will appear at the end of the book automatically based on all cited works.
+Each page lists the works it cites at the end of the page, built automatically from the `.bib` files named in `myst.yml`.

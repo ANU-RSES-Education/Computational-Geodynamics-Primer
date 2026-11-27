@@ -60,7 +60,7 @@ Please see the [Style Guide](style-guide.md) for formatting conventions and best
 1. **Fork the repository** on GitHub
 2. **Create a new branch** for your contribution
 3. **Write your content** following the style guide
-4. **Test the build** locally using `quarto preview WebBook`
+4. **Test the build** locally using `pixi run start` (preview) and `pixi run build` (reports missing images and broken references)
 5. **Submit a pull request** with a clear description of your contribution
 
 ## Questions?

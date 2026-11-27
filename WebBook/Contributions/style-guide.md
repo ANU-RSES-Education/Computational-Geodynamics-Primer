@@ -5,19 +5,14 @@ This guide provides conventions for writing and formatting content for the Compu
 ## File Organization
 
 - Place chapter files in the appropriate subdirectory (e.g., `Part1-Fundamentals/`, `DraftMaterial/`)
-- Use descriptive, lowercase filenames with hyphens: `thermal-convection.qmd`
+- Use descriptive, lowercase filenames with hyphens: `thermal-convection.md`. File names must be unique across the book, because MyST builds each page's URL from its file name
 - Store images in `Images/Diagrams/` or `Images/Photos/`
 
 ## Mathematical Notation
 
 ### Global Macros
 
-We have defined global macros in `_math-preamble.qmd`. Include this at the top of each chapter:
-
-```markdown
-```
-
-Available macros include:
+Global macros are defined once, under `math:` in `WebBook/myst.yml`, and are available on every page. Nothing needs to be included at the top of a chapter. Available macros include:
 - `\uv` - velocity vector $\mathbf{u}$
 - `\vv` - velocity vector $\mathbf{v}$
 - `\DIV` - divergence operator $\nabla\cdot$
@@ -29,13 +24,14 @@ Available macros include:
 
 ### Equations
 
-Use display equations with labels for important results:
+Use labelled math blocks for important results:
 
-```markdown
-$$
+````markdown
+```{math}
+:label: eq-stokes-momentum
 \DIV \sigma + \rho \mathbf{g} = 0
-$$ (eq-stokes-momentum)
 ```
+````
 
 Reference equations using `[](#eq-label)`:
 
@@ -58,11 +54,12 @@ $$
 
 ## Figures
 
-Use Markdown image syntax with labels:
+Use the figure directive with a label and alt text:
 
 ```markdown
 :::{figure} ../Images/Diagrams/filename.png
 :label: fig-label
+:alt: What the figure shows, for screen readers
 :width: 450px
 Caption describing the figure
 :::
@@ -88,18 +85,9 @@ Multiple studies [@moresi1995; @tackley2008] have demonstrated...
 
 ### Python Code
 
-For executable Python code using pyodide:
+In-browser execution is not configured yet (MyST supports it through Thebe with JupyterLite or Binder). Put runnable examples in notebooks for now.
 
-````markdown
-```{pyodide-python}
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Your code here
-```
-````
-
-For non-executable code examples:
+For code examples:
 
 ````markdown
 ```python
@@ -115,7 +103,7 @@ def solve_stokes(mesh, viscosity):
 Use hierarchical headings:
 
 ```markdown
-# Chapter Title (automatically numbered)
+# Chapter Title
 
 ## Major Section
 
@@ -142,11 +130,11 @@ See [Conservation Laws](../DraftMaterial/ContinuumMechanics.md) for details.
 
 ### Equations in Other Files
 
-When referencing equations from other chapters, use `[](#eq-label)`. Note that cross-file references may generate warnings during single-file rendering.
+When referencing equations from other chapters, use `[](#eq-label)`; labels resolve across the whole book. The build reports any label it cannot find.
 
-## Callout Blocks
+## Admonitions
 
-Use callout blocks to highlight important information:
+Use admonitions to highlight important information:
 
 ```markdown
 :::{note}
@@ -170,7 +158,7 @@ Exercise caution in this situation.
 :::
 ```
 
-Add `collapse="true"` to make them collapsible:
+Add `:class: dropdown` to make them collapsible:
 
 ```markdown
 :::{note} Click to expand
