@@ -207,6 +207,8 @@ As we have already seen, some methods work well for particular problem and other
 
 Obviously there is not room to do justice to any particular method --- or (god forbid) make some other method seem better than finite elements (though for some things this is obviously true).
 
+![The same patch of domain as each method represents it. (a) Finite differences store point values at the nodes; the derivative at the centre node uses the five-point stencil (dark nodes). (b) Finite elements interpolate between nodes with basis functions; the basis function of the dark node is non-zero only on the six triangles that share it (shaded). (c) Finite volumes store the average over a control volume (dashed) and balance the fluxes through its faces (arrows). (d) Particle-in-cell methods carry material properties on particles (dots) that move with the flow (arrows) through a fixed background grid.](../Images/Diagrams/methods-compared.svg){#fig-methods-compared fig-alt="Four square grids side by side. The first highlights a cross-shaped five-node stencil. The second is triangulated and shades the hexagonal patch of six triangles around one node. The third outlines a dashed square around one node with four arrows pointing out through its faces. The fourth shows scattered dots inside the grid cells, three of them with short arrows."}
+
 ### Finite Differences
 
 We are already familiar with finite differences. The examples we went through in the introductory material use the finite difference philosophy to represent derivatives by differences. We used only primitive versions of finite differences but the methodology is similar: a regular mesh-based discretization of time and space with differential equations being represented as difference equations.
