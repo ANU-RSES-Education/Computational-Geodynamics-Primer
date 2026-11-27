@@ -234,9 +234,10 @@ For example, in the constant viscosity Stokes' flow problem, we now have
     
 Although we have now nominally made our problem finite by expressing everything in terms of Galerkin basis functions, we have yet to decide what those functions ought to be. Whatever our choice, it should make the problem easy to compute numerically.  
 
-:::{figure} ../Images/Diagrams/domain.png
+:::{figure} ../Images/Diagrams/fem-domain-mapping.svg
 :label: fig-domain-decomp
-Splitting an arbitrary domain into patches is trivial in an integral formulation. Additionally, the irregular shape of the individual subdomains is easy to handle with standard changes of variables (Jacobians)
+:alt: A rounded domain with a wavy boundary Gamma, divided into six four-sided elements whose straight edges meet the boundary only at their corners, leaving thin slivers between mesh and boundary. A small square with axes xi and eta at the upper right has a curved arrow labelled x of xi, eta pointing to one shaded element.
+Splitting an arbitrary domain into patches is trivial in an integral formulation. Additionally, the irregular shape of the individual subdomains is easy to handle with standard changes of variables (Jacobians). Here six elements $\Omega^1 \ldots \Omega^6$ with straight edges approximate a domain $\Omega$ with curved boundary $\Gamma$; each element is the image of a reference square in $(\xi, \eta)$ under a mapping $\mathbf{x}(\xi, \eta)$.
 :::
 
 
