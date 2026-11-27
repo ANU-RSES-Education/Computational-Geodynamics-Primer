@@ -125,7 +125,7 @@ Use hierarchical headings:
 
 Link to other chapters:
 ```markdown
-See [Conservation Laws](../DraftMaterial/ContinuumMechanics.md) for details.
+See [Conservation Laws](../Part1-Fundamentals/conservation-laws.md) for details.
 ```
 
 ### Equations in Other Files

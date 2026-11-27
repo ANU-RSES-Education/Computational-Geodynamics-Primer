@@ -259,7 +259,7 @@ The Boussinesq approximation is commonly used [@boussinesq1903].
 
 **Link to another chapter:**
 ```markdown
-See [Conservation Laws](../DraftMaterial/ContinuumMechanics.md) for details.
+See [Conservation Laws](../Part1-Fundamentals/conservation-laws.md) for details.
 ```
 
 **Link to specific section** (labelled as shown under Heading Hierarchy):

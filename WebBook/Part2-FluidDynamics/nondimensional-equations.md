@@ -65,7 +65,7 @@ where $\nabla p_0 = - g \rho_0$
 Substituting for all the existing terms in the Navier-Stokes equation
 ([](#eq-navstokes)) using the equation of state for thermally
 induced variation in density
-([](#eq-state))
+([](#eq-boussinesq-state))
 gives:
 
 $$

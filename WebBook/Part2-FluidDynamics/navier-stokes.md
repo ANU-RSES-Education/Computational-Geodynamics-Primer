@@ -3,7 +3,7 @@
 # Navier-Stokes Equation
 
 
-In the previous section ([](ContinuumMechanics.md)), we looked a very general way use conservation principles to construct equations describing how sources, fluxes and material transport of varous quantities balance one another through time. This approach can also be used to generate conservation equations for additional physical variables
+In the previous section ([](../Part1-Fundamentals/conservation-laws.md)), we looked a very general way use conservation principles to construct equations describing how sources, fluxes and material transport of varous quantities balance one another through time. This approach can also be used to generate conservation equations for additional physical variables
 (for example, angular momentum, electric current). 
 
 One thing is still missing, though, and that is how we express the flux term for a quantity in terms of gradients in the quantity itself. We did this without any comment in the conservation of heat energy because we used Fourier's law  $\mathbf{F} = -k \nabla T$ to express the heat flux as a linear function of the temperature gradient. This is an empirical relationship that contains a physical constant that we are not able to derive from first principles.
@@ -44,9 +44,26 @@ the second (green) term in this final form must vanish because of the
 incompressibility assumption, so the momentum conservation equation
 becomes
 
+```{math}
+:label: eq-navstokes
+\textcolor{firebrick}{\rho \left( \frac{\partial \mathbf{v}}{\partial t}
+    + (\mathbf{v} \cdot \nabla) \mathbf{v} \right) =
+    \eta \nabla^2 \mathbf{v} - \nabla p - g\rho\hat{\mathbf{z}}}
+```
+
 This is the Navier-Stokes equation. Once again some new notation has
 shown up uninvited. The Laplacian operator $\nabla^2$ is defined (in a
 scalar context) as 
+
+$$
+\begin{split}
+\nabla^2 \phi & = \nabla \cdot \nabla \phi \\
+              & = \frac{\partial^2 \phi}{\partial x^2} +
+                  \frac{\partial^2 \phi}{\partial y^2} +
+                  \frac{\partial^2 \phi}{\partial z^2}
+                  \mathrm{\hspace{1cm} (Cartesian)}
+\end{split}
+$$
 
 and in a vector context as
 

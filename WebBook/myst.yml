@@ -20,9 +20,14 @@ project:
   toc:
     - file: index.md
     - file: Part1-Fundamentals/fundamentals.md
+      children:
+        - file: Part1-Fundamentals/conservation-laws.md
     - file: Part2-FluidDynamics/fluid-dynamics.md
       children:
+        - file: Part2-FluidDynamics/navier-stokes.md
         - file: Part2-FluidDynamics/inviscid-flows.md
+        - file: Part2-FluidDynamics/nondimensional-equations.md
+        - file: Part2-FluidDynamics/stokes-flow-applications.md
     - file: Part3-Geodynamics/geodynamics.md
     - file: Part4-NumericalMethods/numerical-methods.md
       children:
@@ -36,11 +41,7 @@ project:
         - file: Part5-Computational/Benchmarks/analytical-solutions.md
     - title: Draft material (being reorganised)
       children:
-        - file: DraftMaterial/ContinuumMechanics.md
-        - file: DraftMaterial/NavierStokes.md
-        - file: DraftMaterial/StokesFlowApplications.md
         - file: DraftMaterial/ThermalConvection.md
-        - file: DraftMaterial/MantleDynamics.md
         - file: DraftMaterial/LithosphericDynamics.md
 
   # One set of maths macros for the whole book (formerly _math-preamble.qmd,
