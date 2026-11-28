@@ -79,17 +79,61 @@
   panel-label(xc, [(c) finite volumes])
 
   // ---- (d) particle-in-cell ---------------------------------------------
+  // Particles carry the material; each one contributes to the centre of the
+  // cell it sits in. Most cells hold one particle; the shaded cell holds
+  // several, straddling the interface between two materials (blue circles,
+  // green squares), and so receives a mixture.
   let xd = x0(3)
+  let (mi, mj) = (2, 2)                          // the cell with several particles
+  rect((xd + mi * h, mj * h), (xd + (mi + 1) * h, (mj + 1) * h), fill: emphasis-tint, stroke: none)
   grid-lines(xd)
-  nodes(xd, r: 0.35)
-  let pts = ((4.7, 6.2), (5.5, 2.5), (2.9, 14.1), (1.2, 13.8), (5.7, 19.8), (2.9, 18.8), (2.6, 27.7), (4.0, 28.3), (14.8, 5.6), (12.7, 6.7), (10.4, 10.1), (12.6, 9.4), (9.4, 20.1), (11.8, 22.3), (12.7, 28.1), (12.0, 26.6), (17.3, 2.3), (21.1, 2.3), (19.3, 9.2), (21.8, 10.1), (18.7, 22.1), (20.1, 21.9), (20.8, 29.4), (17.7, 28.2), (28.0, 6.1), (27.2, 4.5), (25.5, 11.4), (27.0, 10.0), (29.8, 19.3), (30.7, 20.5), (28.6, 28.8), (29.0, 26.0))
-  // a few particles carry a velocity arrow: material moves, the grid does not
-  for (k, v) in ((10, (4.0, 2.0)), (13, (4.0, -1.5)), (19, (3.0, 3.0))) {
-    let p = pts.at(k)
-    line((xd + p.at(0), p.at(1)), (xd + p.at(0) + v.at(0), p.at(1) + v.at(1)), ..a-velocity)
+  // material interface
+  let (ic, isl) = (12.6, 0.35)
+  let yint(x) = ic + isl * x
+  line((xd, yint(0)), (xd + W, yint(W)), stroke: (paint: ink, thickness: w-construct, dash: "dashed"))
+
+  let pts = ()
+  for i in range(n) {
+    for j in range(n) {
+      let cx = (i + 0.5) * h
+      let cy = (j + 0.5) * h
+      if (i, j) == (mi, mj) {
+        for (dxp, dyp) in ((-2.8, -3.0), (1.4, -2.9), (-2.4, 2.4), (2.6, 2.0), (0.4, 3.2)) {
+          pts.push(((i, j), (cx + dxp, cy + dyp)))
+        }
+      } else {
+        let a = (i * 2.3 + j * 1.7) * 1.9
+        pts.push(((i, j), (cx + 2.4 * calc.cos(a), cy + 2.4 * calc.sin(a))))
+      }
+    }
   }
-  for p in pts {
-    circle((xd + p.at(0), p.at(1)), radius: 0.75, fill: ink, stroke: none)
+  // keep every particle clearly on one side of the interface: a particle
+  // within 1.6 mm of it is mirrored through its cell centre (same cell)
+  let nn = calc.sqrt(1 + isl * isl)
+  let dist(q) = (q.at(1) - yint(q.at(0))) / nn
+  pts = pts.map(((cell, p)) => {
+    if calc.abs(dist(p)) >= 1.6 or cell == (mi, mj) { (cell, p) } else {
+      let c = ((cell.at(0) + 0.5) * h, (cell.at(1) + 0.5) * h)
+      (cell, (2 * c.at(0) - p.at(0), 2 * c.at(1) - p.at(1)))
+    }
+  })
+  // contributions to cell centres
+  for (cell, p) in pts {
+    let c = ((cell.at(0) + 0.5) * h, (cell.at(1) + 0.5) * h)
+    line((xd + p.at(0), p.at(1)), (xd + c.at(0), c.at(1)), stroke: s-construct)
+  }
+  for i in range(n) {
+    for j in range(n) {
+      circle((xd + (i + 0.5) * h, (j + 0.5) * h), radius: 0.8, fill: white, stroke: (paint: ink, thickness: 0.5pt))
+    }
+  }
+  for (cell, p) in pts {
+    let q = (xd + p.at(0), p.at(1))
+    if p.at(1) < yint(p.at(0)) {
+      circle(q, radius: 0.85, fill: material-a, stroke: none)
+    } else {
+      rect((q.at(0) - 0.8, q.at(1) - 0.8), (q.at(0) + 0.8, q.at(1) + 0.8), fill: material-b, stroke: none)
+    }
   }
   panel-label(xd, [(d) particle-in-cell])
 })

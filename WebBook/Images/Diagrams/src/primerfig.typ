@@ -20,6 +20,10 @@
 #let energy     = rgb("#6b3d8f")  // plum: heat / energy / flux
 #let fluid-tint = rgb("#eef3f6")
 #let solid-tint = rgb("#e4e0da")
+// Two materials (e.g. particles of different composition). The pair is close
+// in lightness, so always pair the colours with different marker shapes.
+#let material-a = rgb("#3a6ea5")  // blue
+#let material-b = rgb("#4f8f46")  // green
 // Neutral emphasis with no physical meaning (support regions, highlights).
 #let emphasis-tint = rgb("#1f2a33").transparentize(85%)
 
