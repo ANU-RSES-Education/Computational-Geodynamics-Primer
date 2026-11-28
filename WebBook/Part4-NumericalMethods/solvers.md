@@ -97,9 +97,10 @@ The choice of $\bf M$ has a dramatic effect on the rate of convergence of the me
 
 ### Multigrid
 
-:::{figure} ../Images/Diagrams/mg.png
+:::{figure} ../Images/Diagrams/multigrid.svg
 :label: fig-multigrid-diagram
-Multigrid: (a) Error reduction during simple two level V cycle, (b) Shape functions on different grid scales, (c) V cycle on four grids, (d) W cycle on four grids, (e) Schematic of Full Multigrid V cycles
+:alt: (a) Six stacked profiles of the error: a noisy curve; the same curve smoothed; its coarse-grid version; the coarse correction; then two nearly flat lines after correction and further smoothing. (b) A wide tent-shaped basis function on a coarse grid labelled H above a narrow one on a fine grid labelled h, joined by a dotted line through their shared node. (c) to (e) Zig-zag paths of dots between four levels labelled fine and coarse, for the V cycle, the W cycle and full multigrid.
+Multigrid: (a) Error reduction during simple two level V cycle, (b) Shape functions on different grid scales, (c) V cycle on four grids, (d) W cycle on four grids, (e) Schematic of Full Multigrid V cycles. In (a), computed for a 1-D Poisson problem and drawn on one scale, smoothing removes the oscillatory error but leaves the smooth part, which the coarse grid then removes. In (e) the heavier steps are interpolations to a new, finer level.
 :::
 
 
