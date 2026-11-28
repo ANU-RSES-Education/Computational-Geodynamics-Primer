@@ -8,11 +8,18 @@ author: "Louis Moresi"
 
 Our goal is to develop a quantitative understanding of the dynamic processes within the Earth and sister planets. These dynamic processes are largely driven by the internal heat of the planet escaping to the surface through whatever mechanisms are available. Some of the heat is left over from the original formation of the planet, and the rest originates in the decay of radioactive elements. In the Earth's early history and elsewhere in the solar system, tidal heating, chemical segregation, and impacts have all played a role in supplying the interior heat budget.
 
-:::{figure} Images/Diagrams/EarthProcessesPlume.png
+::::{figure}
 :label: fig-mantle-slice
-:width: 80%
-A schematic of the Earth's interior showing the key processes that drive planetary dynamics including mantle convection, plumes, and plate tectonics.
-:::
+```{image} Images/Diagrams/earth-processes.svg
+:alt: A wedge-shaped section of the Earth from the surface to the centre: inner core, outer core, a dotted D double-prime layer above the core-mantle boundary, the mantle with a dashed 660 km phase boundary, and a grey lithosphere at the surface. Oceanic lithosphere on the left bends down at a trench into a slab sinking beneath continental lithosphere on the right. A plume rises from D double-prime to a flattened head beneath the oceanic plate. Two circular arrows show convection in the mantle. The radius is marked 6370 km and the depth of the core 2900 km.
+:class: dark:hidden
+```
+```{image} Images/Diagrams/earth-processes-dark.svg
+:alt: A wedge-shaped section of the Earth from the surface to the centre: inner core, outer core, a dotted D double-prime layer above the core-mantle boundary, the mantle with a dashed 660 km phase boundary, and a grey lithosphere at the surface. Oceanic lithosphere on the left bends down at a trench into a slab sinking beneath continental lithosphere on the right. A plume rises from D double-prime to a flattened head beneath the oceanic plate. Two circular arrows show convection in the mantle. The radius is marked 6370 km and the depth of the core 2900 km.
+:class: hidden dark:block
+```
+A schematic of the Earth's interior showing the key processes that drive planetary dynamics including mantle convection, plumes, and plate tectonics. Radii are to scale except the lithosphere, which is drawn about two and a half times too thick.
+::::
 
 This is because the Earth's dynamics is completely dominated by **Plate Tectonics** — a unique manifestation of interior heat loss as far as we are aware. Understanding why plate tectonics is a possible outcome of a hot planet, and also why it is not the only possible outcome, is one of our key tasks. If we can understand how different dynamic modes are selected for planets of different size, composition, and heat budget, then we have a powerful way to predict the geological behaviour of extrasolar planets. Plate tectonics creates efficient cycling mechanisms which link the interior of the Earth with the Atmosphere and Oceans; it may prove essential for sustaining life.
 

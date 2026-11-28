@@ -129,12 +129,13 @@ html:not(.dark) figure.subcontainer:has(> img.dark\:block) { display: none; }
 
 /* House-style figures are drawn at print size (90 mm single column, 183 mm
  * double), which is small in a web column: 8 pt labels end up ~5 px tall.
- * Show them at 1.6 x natural size, never wider than the column (62.5% x 1.6
- * = 100%). SVG scales cleanly, so lines and text stay in proportion. */
+ * Show them at 1.6 x natural size, never wider than the column. (A
+ * percentage max-width is not scaled by zoom, so the cap is plain 100%.)
+ * SVG scales cleanly, so lines and text stay in proportion. */
 article.content figure img.dark\:hidden,
 article.content figure img.dark\:block {
   zoom: 1.6;
-  max-width: 62.5%;
+  max-width: 100%;
 }
 
 /* Figures that exist only in the light theme keep a white ground in dark mode. */
