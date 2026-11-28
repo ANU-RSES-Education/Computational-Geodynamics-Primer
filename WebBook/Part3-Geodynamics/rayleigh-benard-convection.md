@@ -464,9 +464,28 @@ state of the previous, lower Rayleigh number.
 The link opens the notebook in a browser with Underworld3 (release 3.2.0)
 already installed; nothing needs to be installed locally. The first launch
 can take a few minutes while Binder starts the container, and the notebook
-itself takes several minutes to run.
+itself takes about a quarter of an hour to run all three Rayleigh numbers.
 
-RESULTS_TABLE
+With its default settings (mesh cells $1/16$ of the layer depth) the notebook
+gives:
+
+:::{table} Steady Rayleigh–Bénard convection in a unit cell: Nusselt number and root-mean-square velocity from the notebook, with the benchmark values of @blankenbach1989.
+:label: tbl-rb-nusselt
+| $\mathrm{Ra}$ | $\mathrm{Nu}$ (notebook) | $\mathrm{Nu}$ (benchmark) | $v_{\mathrm{rms}}$ (notebook) | $v_{\mathrm{rms}}$ (benchmark) |
+|---|---|---|---|---|
+| $10^4$ | 4.88 | 4.884 | 42.7 | 42.87 |
+| $3 \times 10^4$ | 7.30 | | 89.1 | |
+| $10^5$ | 11.46 | 10.534 | 194.1 | 193.21 |
+:::
+
+At $\mathrm{Ra} = 10^4$ the notebook agrees with the benchmark to 0.1%. At
+$\mathrm{Ra} = 10^5$ the boundary layers are only a few cells thick and the
+Nusselt number comes out about 9% too high, which steepens the fitted
+exponent to 0.37. On a mesh with cells of $1/24$ the same run gives
+$\mathrm{Nu} = 10.38$, within 1.5% of the benchmark. The benchmark values
+themselves give an exponent of $\log(10.534/4.884)/\log 10 = 0.33$, as
+boundary-layer theory predicts.
+
 
 Two things are worth looking for in the output. The fitted exponent of
 $\mathrm{Nu}$ against $\mathrm{Ra}$ is close to the $1/3$ of the boundary-layer
