@@ -29,6 +29,8 @@ project:
         - file: Part2-FluidDynamics/nondimensional-equations.md
         - file: Part2-FluidDynamics/stokes-flow-applications.md
     - file: Part3-Geodynamics/geodynamics.md
+      children:
+        - file: Part3-Geodynamics/stress-and-faulting.md
     - file: Part4-NumericalMethods/numerical-methods.md
       children:
         - file: Part4-NumericalMethods/time-integration.md
