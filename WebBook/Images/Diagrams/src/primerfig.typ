@@ -102,3 +102,14 @@
   pos, anchor: anchor,
   box(fill: paper.transparentize(15%), inset: 1.5pt, radius: 1.5pt, text(8pt, fill: ink, body)),
 )
+
+// Error function (Abramowitz & Stegun 7.1.26, |error| < 1.5e-7), for figures
+// that plot half-space cooling profiles.
+#let erf(x) = {
+  let s = if x < 0 { -1 } else { 1 }
+  let z = calc.abs(x)
+  let t = 1 / (1 + 0.3275911 * z)
+  let y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * calc.exp(-z * z)
+  s * y
+}
+#let erfc(x) = 1 - erf(x)

@@ -101,11 +101,18 @@ So that we can now separate variables.
 $\sigma$ is unknown, however, if $\sigma < 0$ then the perturbations
 will decay, whereas if $\sigma > 0$ they will grow.
 
-:::{figure} ../Images/Diagrams/crit_ra.png
+::::{figure}
 :label: fig-critical-ra
-:width: 450px
-Critical Rayleigh Number determination. A plot of growth rates for harmonic perturbations as a function of wavenumber for different ${\rm Ra}$. The critical value occurs when the maximum of the curve just touches the horizontal axis at zero.
-:::
+```{image} ../Images/Diagrams/rb-growth-rate.svg
+:alt: Growth rate sigma against wavenumber k for Rayleigh numbers 100, 300, 1000 and 1400, each an arch that rises from minus pi squared at small k, peaks near k = 2.2 and falls at large k. A highlighted curve for Ra c = 657.5 just touches sigma = 0 at k c = pi over root 2.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/rb-growth-rate-dark.svg
+:alt: Growth rate sigma against wavenumber k for Rayleigh numbers 100, 300, 1000 and 1400, each an arch that rises from minus pi squared at small k, peaks near k = 2.2 and falls at large k. A highlighted curve for Ra c = 657.5 just touches sigma = 0 at k c = pi over root 2.
+:class: hidden dark:block
+```
+Critical Rayleigh Number determination. A plot of growth rates for harmonic perturbations as a function of wavenumber for different ${\rm Ra}$. The critical value occurs when the maximum of the curve just touches the horizontal axis at zero. Curves are $\sigma = k^2\mathrm{Ra}/(\pi^2+k^2)^2 - (\pi^2+k^2)$ for free-slip boundaries; the highlighted curve, $\mathrm{Ra}_c = 27\pi^4/4$, touches zero at $k_c = \pi/\sqrt{2}$.
+::::
 
 Substituting for the perturbations into the biharmonic equation and the
 linearized energy conservation equation gives
@@ -161,7 +168,7 @@ For a given wavenumber, what is the lowest value of $\rm Ra$ for which
 perturbations at that wavenumber will grow ?
 
 $$
-= \frac{(\pi^2 + k^2)^3}{k^2}
+{\rm Ra_0} = \frac{(\pi^2 + k^2)^3}{k^2}
 $$ 
 
 The absolute minimum value of
@@ -208,11 +215,18 @@ cylindrical plumes depending on a number of things including the
 Rayleigh number. For the time being we consider only the sheet like
 downwellings since that allows us to continue working in 2D.
 
-:::{figure} ../Images/Diagrams/blt.png
+::::{figure}
 :label: fig-boundary-layer-theory-1
-:width: 450px
-Boundary Layer Theory in its simplest form
-:::
+```{image} ../Images/Diagrams/rb-boundary-layers.svg
+:alt: A square cell of depth d with an isothermal interior at Delta T over 2 rotating with vorticity omega i, surrounded by a band of thickness delta. Arrows in the band circulate clockwise: up the left side, right along the top at temperature 0, down the right side and left along the base at temperature Delta T.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/rb-boundary-layers-dark.svg
+:alt: A square cell of depth d with an isothermal interior at Delta T over 2 rotating with vorticity omega i, surrounded by a band of thickness delta. Arrows in the band circulate clockwise: up the left side, right along the top at temperature 0, down the right side and left along the base at temperature Delta T.
+:class: hidden dark:block
+```
+Boundary Layer Theory in its simplest form The interior is isothermal at $\Delta T/2$ and rotates with vorticity $\omega_i$; heat enters and leaves through boundary layers of thickness $\delta$ in which the fluid moves at speed $v$.
+::::
 
 Boundary layer analysis is a highly sophisticated field, and is used in
 a broad range of situations where differences in scales between
@@ -291,11 +305,18 @@ boundary layer does not become more or less stable with increasing
 Rayleigh number (this is not universal -- for internal heating the
 boundary layer becomes less stable at higher Rayleigh number).
 
-:::{figure} ../Images/Diagrams/blt2.png
+::::{figure}
 :label: fig-boundary-layer-theory-2
-:width: 450px
-Boundary Layer Theory which accounts for the thickness variations along the boundary layer as it matures.
-:::
+```{image} ../Images/Diagrams/rb-thickening-layer.svg
+:alt: The top of a convection cell of width d. Fluid rises on the left, moves right along the cold top surface at speed v and sinks on the right. A shaded cold layer beneath the surface, bounded by four isotherms, thickens from zero at the left in proportion to the square root of x.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/rb-thickening-layer-dark.svg
+:alt: The top of a convection cell of width d. Fluid rises on the left, moves right along the cold top surface at speed v and sinks on the right. A shaded cold layer beneath the surface, bounded by four isotherms, thickens from zero at the left in proportion to the square root of x.
+:class: hidden dark:block
+```
+Boundary Layer Theory which accounts for the thickness variations along the boundary layer as it matures. Fluid leaves the upwelling at $\Delta T/2$ and cools from the surface as it travels; in a frame moving at $v$ the layer is a cooling half-space of age $x/v$, so its isotherms deepen as $\sqrt{x}$.
+::::
 
 Another wrinkle can be added to the boundary layer theory by trying to
 account for the variation in the boundary layer thickness as it moves
@@ -342,11 +363,18 @@ $$
             \end{aligned}
 $$
 
-:::{figure} ../Images/Diagrams/CoolingHalfSpaceSolutions1.png
+::::{figure}
 :label: fig-cooling-half-space
-:width: 450px
-Cooling half-space calculation
-:::
+```{image} ../Images/Diagrams/half-space-cooling.svg
+:alt: Temperature against depth for a half space cooled from its surface, at kappa t = 0.001, 0.01, 0.1 and 1. Each profile is zero at the surface and rises to one at depth; the cooled layer thickens with time.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/half-space-cooling-dark.svg
+:alt: Temperature against depth for a half space cooled from its surface, at kappa t = 0.001, 0.01, 0.1 and 1. Each profile is zero at the surface and rises to one at depth; the cooled layer thickens with time.
+:class: hidden dark:block
+```
+Cooling half-space calculation Profiles of $(T-T_s)/(T_0-T_s) = \mathrm{erf}\left(z/2\sqrt{\kappa t}\right)$ at four times; the depth of any isotherm grows as $\sqrt{\kappa t}$.
+::::
 
 In place of $t,x_2$, we use the similarity transformation,
 
