@@ -75,9 +75,11 @@ site:
   template: https://github.com/jupyter-book/myst-theme/releases/download/myst-to-react%401.4.1/book-theme.zip
   title: Computational Geodynamics Primer
   options:
-    # Transparent logo: black for light mode, white (reversed) for dark mode.
-    logo: Images/ANU-logo.png
-    logo_dark: Images/ANU-logo-dark.png
+    # Book logo (Images/Diagrams/src/primer-logo): a sphere with an icosahedral
+    # grid under the continents, in both figure themes, transparent ground.
+    logo: Images/Diagrams/primer-logo.png
+    logo_dark: Images/Diagrams/primer-logo-dark.png
+    favicon: Images/Diagrams/primer-logo.png
     logo_text: Computational Geodynamics Primer
     style: static/primer.css
     hide_footer_links: true
