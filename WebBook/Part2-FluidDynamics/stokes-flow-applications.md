@@ -7,9 +7,9 @@ surface loading changes.
 
 ## Rayleigh-Taylor Instability & Diapirism
 
-:::{figure} ../Images/Diagrams/diapirs.png
+:::{figure} ../Images/Diagrams/rayleigh-taylor.svg
 :label: fig-rayleigh-taylor
-:width: 450px
+:alt: Top row of four panels: a thin salt layer on a basement; the salt buried under sediment; the salt-sediment interface developing waves; two mushroom-shaped diapirs rising from a thinned salt layer. Below, a channel between rigid walls at y equals minus b and y equals b, fluid rho 1 above fluid rho 2, both of viscosity eta, separated by a wavy interface displaced w from the dashed line y equals 0; y points downward.
 Salt diapirs result when a buried layer of salt(a,b) becomes convectively unstable and rises through the overlying sediment layers (c,d). The idealized geometry for the Rayleigh-Taylor instability problem is outlined in the lower diagram.
 :::
 
@@ -182,10 +182,10 @@ $$
 \frac{\partial w}{\partial t} = \left. v \right|_{y=0}
 $$
 
-:::{figure} ../Images/Diagrams/diapir2.png
+:::{figure} ../Images/Diagrams/rt-restoring-force.svg
 :label: fig-rayleigh-taylor-2
-:width: 450px
-The restoring force for a stable layering is proportional to the excess density when a fluid element is displaced across the boundary.
+:alt: Lighter fluid rho 1 above denser fluid rho 2 with a wavy interface. A vertical column of width delta x is drawn where the interface is raised by w above the dashed line y equals 0; the part of the column between y equals 0 and the interface is hatched, and a force arrow F points down into it.
+The restoring force for a stable layering is proportional to the excess density when a fluid element is displaced across the boundary. Here the lighter fluid $\rho_1$ lies above the denser $\rho_2$; the hatched part of the column is denser fluid displaced above $y=0$.
 :::
 
 Consider what happens when the fluid above the interface is lighter than
@@ -278,9 +278,9 @@ the boundary conditions different.
 
 ## Post-Glacial Rebound
 
-:::{figure} ../Images/Diagrams/postglac.png
+:::{figure} ../Images/Diagrams/post-glacial-rebound.svg
 :label: fig-post-glacial
-:width: 450px
+:alt: Four cross-sections of a viscous half space, time increasing downward. In the first an ice block sits in a surface depression. In the next two the ice is gone, the depression is shallower, and curved arrows show flow beneath it moving back toward its centre. In the last the surface is almost flat.
 The relaxation of the Earth's surface after removal of an ice load.
 :::
 
@@ -315,9 +315,9 @@ application of the identical theory.
 
 ## Folding of Layered (Viscous) Medium
 
-:::{figure} ../Images/Diagrams/fold.png
+:::{figure} ../Images/Diagrams/viscous-folding.svg
 :label: fig-folding
-:width: 450px
+:alt: A wavy stiff layer of thickness h and viscosity eta 1 in weaker surrounding fluid of viscosity eta 0, pushed from both ends by arrows labelled P against end plates; the deflection of its centre line from a dashed straight line is marked w.
 Instability in a thin, viscous layer compressed from both ends.
 :::
 
@@ -353,10 +353,10 @@ simulation.
 
 ## Gravity Currents
 
-:::{figure} ../Images/Diagrams/gravcurr.png
+:::{figure} ../Images/Diagrams/gravity-current.svg
 :label: fig-gravity-current
-:width: 450px
-A gravity current is the spreading of a dense fluid under its own weight across a horizontal surface (or a buoyant fluid under a surface). Open the fridge door and the cold air falls out as a gravity current.
+:alt: Four nested profiles of a current spreading along a horizontal base: the earliest tall and narrow, the latest low and wide and shaded. At one point on the latest profile, horizontal arrows whose length grows with height show the velocity profile u of z.
+A gravity current is the spreading of a dense fluid under its own weight across a horizontal surface (or a buoyant fluid under a surface). Open the fridge door and the cold air falls out as a gravity current. The profiles are the constant-volume similarity solution at successive times: the current thins as $t^{-1/5}$ while its front advances as $t^{1/5}$. On the latest profile, the velocity $u(z)$ is zero at the base and has zero shear at the surface.
 :::
 
 Gravity currents can occur when a viscous fluid flows under its own

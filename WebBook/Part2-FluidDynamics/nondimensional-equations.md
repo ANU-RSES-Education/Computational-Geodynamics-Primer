@@ -41,9 +41,9 @@ lab tank), time according to the characteristic time for diffusion of
 heat over that distnace, and temperature by maximum temperature difference
 we observe at the start.
 
-:::{figure} ../Images/Diagrams/layer.png
+:::{figure} ../Images/Diagrams/convection-layer.svg
 :label: fig-layer
-:width: 450px
+:alt: A horizontal fluid layer of depth d, at temperature 0 on top and Delta T at the bottom, containing one oval circulation cell; two arrows labelled Q carry heat out through the top.
 Consider the fluid motions in a layer of arbitrary depth, $d$. The fluid is assumed to have constant properties such as viscosity, thermal expansivity, thermal diffusivity. Small fluctuations in density due to temperature driven flow. Additional heat is carried (advected) by the flow from the hot boundary to the cool one whenever the fluid is moving.
 :::
 
