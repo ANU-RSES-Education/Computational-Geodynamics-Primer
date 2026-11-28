@@ -53,7 +53,7 @@ def temperature(r, th):
     # surface plates
     rel = np.radians(th - TH_T)                             # > 0 on the subducting (left) side
     ridge = np.radians(TH_L - TH_T)
-    age_sub = AGE_SUB * np.clip(rel / ridge, 0, 1)          # zero at the ridge, AGE_SUB at the trench
+    age_sub = AGE_SUB * np.clip(1 - rel / ridge, 0, 1)      # zero at the ridge, AGE_SUB at the trench
     age = np.where(rel >= 0, age_sub, AGE_CONT)
     age = np.maximum(age, 2.0e-5)
     T_plate = T_i * erf(depth / (2 * np.sqrt(age)))
