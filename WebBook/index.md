@@ -1,7 +1,6 @@
 ---
 title: "Computational Geodynamics Primer"
 subtitle: "Understanding Earth's Dynamic Processes Through Mathematical Modeling and Computation"
-author: "Louis Moresi"
 ---
 
 ## Overview

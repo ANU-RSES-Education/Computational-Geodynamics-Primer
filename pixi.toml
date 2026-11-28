@@ -20,8 +20,10 @@ numpy = ">=2"
 mystmd = "==1.10.1"
 nodejs = ">=20"
 scipy = ">=1.13"
+jupytext = ">=1.16"
 
 [tasks]
 figures = "python -I WebBook/Images/Diagrams/src/build_figures.py"
 start = { cmd = "myst start", cwd = "WebBook" }
 build = { cmd = "myst build --html", cwd = "WebBook" }
+build-exam = { cmd = "python -I scripts/build_exam.py", cwd = "WebBook" }

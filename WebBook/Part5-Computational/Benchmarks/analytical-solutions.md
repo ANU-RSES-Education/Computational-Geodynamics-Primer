@@ -1,6 +1,5 @@
 # Benchmark Problems: Analytical Solutions for Viscous Flows
 
-
 :::{warning} Under Review
 :class: dropdown
 
@@ -363,10 +362,12 @@ where $k = \sqrt{\alpha/(2\nu)}$ is the inverse penetration depth.
 
 This solution demonstrates **viscous diffusion** of momentum from the oscillating boundary into the fluid.
 
+(sec-analytical-solutions-exercises)=
 ## Exercises
 
-:::{note}
-Exercises with solutions available are marked with {sup}`★`
+:::{note} Solutions
+:class: solutions-link
+Exercises marked {sup}`★` have worked solutions in [](#sol-analytical-solutions).
 :::
 
 ### Exercise 1: Mixed Couette-Poiseuille Flow {sup}`★`
@@ -479,159 +480,6 @@ b) Handle the singularity at $r = 0$ properly
 c) Compare to the analytical solution [](#eq-pipe-flow-solution)
 d) Calculate volume flux and verify against analytical result
 e) Explore convergence properties with grid refinement
-
-## Solutions to Selected Exercises
-
-:::{tip} Solution to Exercise 1: Mixed Couette-Poiseuille Flow
-:class: dropdown
-
-**(a) Velocity profile:**
-
-The governing equation is:
-$$
-\frac{d^2 u}{dz^2} = -\frac{\gamma}{\mu}
-$$
-
-Integrating twice:
-$$
-u = -\frac{\gamma}{2\mu}z^2 + Az + B
-$$
-
-Boundary conditions:
-- At $z = 0$: $u = 0 \Rightarrow B = 0$
-- At $z = h$: $u = U \Rightarrow A = U/h + \gamma h/(2\mu)$
-
-Therefore:
-$$
-u(z) = \frac{z}{h}\left(U + \frac{\gamma h^2}{2\mu}\right) - \frac{\gamma z^2}{2\mu}
-$$
-
-Since the pressure gradient **opposes** the plate motion ($\gamma > 0$), the term $-\gamma z^2/(2\mu)$ reduces the velocity.
-
-**(b) Volume flux:**
-
-$$
-Q = \int_0^h u \, dz = \frac{Uh}{2} + \frac{\gamma h^3}{12\mu} - \frac{\gamma h^3}{6\mu} = \frac{Uh}{2} - \frac{\gamma h^3}{12\mu}
-$$
-
-**(c) Zero flux condition:**
-
-Setting $Q = 0$:
-$$
-\frac{Uh}{2} = \frac{\gamma h^3}{12\mu}
-\gamma = \frac{6\mu U}{h^2}
-$$
-
-This is the pressure gradient magnitude required to exactly oppose the plate-driven flow.
-:::
-
-:::{tip} Solution to Exercise 3: Cylindrical Pipe Flow
-:class: dropdown
-
-**(a) Continuity:**
-
-In cylindrical coordinates:
-$$
-\frac{1}{r}\frac{\partial}{\partial r}(ru_r) + \frac{\partial u_z}{\partial z} = 0
-$$
-
-Since we assume $u_z = u_z(r)$ only (axisymmetric, fully-developed flow), $\partial u_z/\partial z = 0$, which gives:
-$$
-\frac{1}{r}\frac{d}{dr}(ru_r) = 0
-$$
-
-Integrating: $ru_r = \text{constant}$. Since $u_r$ must be finite at $r = 0$, the constant must be zero, so $u_r = 0$.
-
-**(b) Governing equation:**
-
-The $z$-component of the Navier-Stokes equation (steady, axisymmetric) is:
-$$
--\frac{1}{\rho}\frac{\partial p}{\partial z} + \frac{\nu}{r}\frac{d}{dr}\left(r\frac{du_z}{dr}\right) = 0
-$$
-
-Since $p = p(z)$ and $u_z = u_z(r)$:
-$$
-\frac{dp}{dz} = -\gamma \quad \text{(constant)}
-\frac{1}{r}\frac{d}{dr}\left(r\frac{du_z}{dr}\right) = -\frac{\gamma}{\mu}
-$$
-
-**(c) Solution:**
-
-Integrating once:
-$$
-r\frac{du_z}{dr} = -\frac{\gamma r^2}{2\mu} + C_1
-$$
-
-For finite velocity at $r = 0$: $C_1 = 0$. Integrating again:
-$$
-u_z = -\frac{\gamma r^2}{4\mu} + C_2
-$$
-
-Boundary condition $u_z(a) = 0$ gives $C_2 = \gamma a^2/(4\mu)$:
-$$
-u_z(r) = \frac{\gamma a^2}{4\mu}\left(1 - \frac{r^2}{a^2}\right)
-$$
-
-**(d) Volume flux:**
-
-$$
-Q = \int_0^a u_z \cdot 2\pi r \, dr = 2\pi\frac{\gamma a^2}{4\mu}\int_0^a \left(1 - \frac{r^2}{a^2}\right)r \, dr
-Q = \frac{\pi\gamma a^2}{2\mu}\left[\frac{r^2}{2} - \frac{r^4}{4a^2}\right]_0^a = \frac{\pi\gamma a^4}{8\mu}
-$$
-
-**(e) Velocity comparison:**
-
-- Maximum velocity: $u_{max} = \gamma a^2/(4\mu)$ at $r = 0$
-- Average velocity: $\bar{u} = Q/(\pi a^2) = \gamma a^2/(8\mu)$
-- Ratio: $\bar{u}/u_{max} = 1/2$
-
-The average velocity is exactly half the maximum velocity for parabolic pipe flow.
-:::
-
-:::{tip} Solution to Exercise 4: Vorticity in Poiseuille Flow
-:class: dropdown
-
-**(a) Vorticity distribution:**
-
-For plane Poiseuille flow [](#eq-poiseuille-solution):
-$$
-u = \frac{\gamma z}{2\mu}(h - z)
-$$
-
-The vorticity (for 2D flow in the $x$-$z$ plane) is:
-$$
-\omega = \frac{du}{dz} = \frac{\gamma}{2\mu}(h - 2z)
-$$
-
-At the boundaries:
-- At $z = 0$: $\omega = \gamma h/(2\mu) > 0$ (positive vorticity)
-- At $z = h$: $\omega = -\gamma h/(2\mu) < 0$ (negative vorticity)
-- At $z = h/2$: $\omega = 0$ (vorticity cancels)
-
-**(b) Mechanism:**
-
-Vorticity is generated at solid boundaries through the no-slip condition. The boundary continuously generates vorticity that diffuses into the interior. The rate of vorticity generation is proportional to the velocity gradient at the wall.
-
-**(c-d) Time-dependent problem:**
-
-For the impulsive start problem, let $\uv = (u(z,t), 0, 0)$. From continuity: $w = 0$.
-
-The $x$-momentum equation is:
-$$
-\frac{\partial u}{\partial t} = -\frac{1}{\rho}\frac{dp_0}{dx} + \nu\frac{\partial^2 u}{\partial z^2}
-$$
-
-Since $dp_0/dx = -\gamma$ (constant), this is:
-$$
-\frac{\partial u}{\partial t} = \frac{\gamma}{\rho} + \nu\frac{\partial^2 u}{\partial z^2}
-$$
-
-**(e) Initial condition:**
-
-At $t = 0$, the fluid is at rest: $u(z, 0) = 0$. The boundary conditions are $u(0,t) = u(h,t) = 0$ for all $t > 0$.
-
-The steady-state solution is the Poiseuille profile. The unsteady solution approaches this as $t \to \infty$.
-:::
 
 ## Summary
 

@@ -1,5 +1,5 @@
-# Thermal Convection
-
+(sec-rayleigh-benard)=
+# Rayleigh–Bénard Convection
 
 Thermal convection describes the a process in which a fluid organizes
 itself into a structured flow pattern on a macroscopic scale to
@@ -8,15 +8,17 @@ more commonly we refer to *natural convection* in which buoyancy due to
 a source of heat (and/or compositional variation) induces flow which
 transports and dissipates this anomalous buoyancy.
 
-The Earth's interior, on a geological timescale is a highly viscous
+The Earth's interior, on a geological timescale, is a highly viscous
 fluid which is heated from below by heat escaping from the core, and
-internally by the decay of radioactive elements. In this respect
-
-Description - what is involved \... 
-
-Goal is to understand finite
-amplitude convection with complicated rheology and realistic initial,
-boundary conditions.
+internally by the decay of radioactive elements. The simplest model that
+captures this is **Rayleigh–Bénard convection**: a layer of fluid between
+two horizontal boundaries, heated from below and cooled from above. It
+asks two questions that carry over directly to the mantle. When does the
+layer start to convect, and once it does, how much heat does it carry?
+The first is answered by the critical Rayleigh number, the second by
+boundary-layer theory, which predicts that the heat flow rises as the
+cube root of the Rayleigh number. We test that prediction with a
+numerical model in [](#sec-rb-numerical).
 
 ## Critical Rayleigh Number for a layer
 
@@ -440,6 +442,39 @@ $$
 \delta \propto \sqrt{\kappa x_1 / v}
 $$
 
+(sec-rb-numerical)=
+## Testing the scaling with Underworld3
+
+Boundary-layer theory made several crude approximations, so how well does
+$\mathrm{Nu} \sim \mathrm{Ra}^{1/3}$ actually hold? We can find out by
+solving the full equations numerically and measuring the heat flow.
+
+The notebook below runs a square cell of fluid, heated from below and
+cooled from above, with free-slip walls and constant viscosity, using
+Underworld3. It is the steady convection benchmark of
+@blankenbach1989, so its numbers can be checked against theirs. For each Rayleigh
+number it steps the coupled Stokes and advection–diffusion equations
+forward in time until the flow is steady, then measures the Nusselt number
+(the mean heat flux through the top surface divided by the conductive heat
+flux) and the root-mean-square velocity. Each run starts from the steady
+state of the previous, lower Rayleigh number.
+
+[![Launch the notebook on Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/underworldcode/uw3-binder-launcher/v3.2.0?urlpath=git-pull%3Frepo%3Dhttps%25253A%25252F%25252Fgithub.com%25252FANU-RSES-Education%25252FComputational-Geodynamics-Primer%26branch%3Dmain%26urlpath%3Dlab%25252Ftree%25252FComputational-Geodynamics-Primer%25252FWebBook%25252Fexamples%25252Frayleigh-benard%25252Frayleigh-benard-nusselt.ipynb)
+
+The link opens the notebook in a browser with Underworld3 (release 3.2.0)
+already installed; nothing needs to be installed locally. The first launch
+can take a few minutes while Binder starts the container, and the notebook
+itself takes several minutes to run.
+
+RESULTS_TABLE
+
+Two things are worth looking for in the output. The fitted exponent of
+$\mathrm{Nu}$ against $\mathrm{Ra}$ is close to the $1/3$ of the boundary-layer
+argument. And the temperature fields show why: as the Rayleigh number rises
+the interior of the cell becomes more nearly isothermal and the temperature
+change is confined to thinner boundary layers along the top and bottom and
+to the plumes at the sides.
+
 ## Internal Heating
 
 The definition of the Rayleigh number when the layer is significantly
@@ -608,7 +643,7 @@ is tiny (pure advection).
 Fluid flows with chemical v. thermal bouyancy are termed thermochemical
 convection problems.
 
-
+(sec-rayleigh-benard-convection-exercises)=
 ## Exercises
 
 :::{warning} Under Review
@@ -623,8 +658,9 @@ This exercises section is newly added and tailored to thermal convection theory.
 - Need to add: exercises on linear stability theory, perturbation analysis, experimental validation
 :::
 
-:::{note}
-Exercises with solutions available are marked with {sup}`★`. Additional exercises will be added as the chapter develops.
+:::{note} Solutions
+:class: solutions-link
+Exercises marked {sup}`★` have worked solutions in [](#sol-rayleigh-benard-convection).
 :::
 
 ### Exercise 1: Critical Rayleigh Number {sup}`★`
@@ -681,63 +717,3 @@ b) Derive the anelastic approximation starting from the full compressible equati
 
 c) Calculate the adiabatic temperature gradient for Earth's mantle and compare to the actual geotherm
 
-## Solutions to Selected Exercises
-
-:::{tip} Solution to Exercise 1: Critical Rayleigh Number
-:class: dropdown
-
-**(a) Physical explanation:**
-
-Convection requires that buoyancy forces overcome viscous resistance. At low Rayleigh numbers, viscous forces are too strong and any perturbation is damped. The critical $Ra_c$ represents the threshold where buoyancy and viscous forces balance.
-
-Below $Ra_c$: Conduction is stable (viscous damping dominates)
-Above $Ra_c$: Convection occurs (buoyancy dominates)
-
-**(b) Boundary condition dependence:**
-
-- **Free-slip boundaries**: $Ra_c \approx 657$ (easier to convect)
-- **No-slip boundaries**: $Ra_c \approx 1708$ (harder to convect)
-- **One free, one no-slip**: $Ra_c \approx 1101$ (intermediate)
-
-No-slip boundaries require higher $Ra$ because they impose additional constraints on the flow, increasing viscous dissipation.
-
-**(c) Wavelength dependence:**
-
-The Rayleigh number in linear stability analysis is wavelength-dependent:
-$$
-Ra(\lambda) = \frac{g\alpha \Delta T h^3}{\kappa \nu} \cdot f(\lambda/h)
-$$
-
-Each wavelength has its own critical value. The global $Ra_c$ is the minimum over all wavelengths. Typically, the most unstable mode has wavelength $\lambda \sim 2h$ (aspect ratio ~ 1), which physical intuition: cells that are too wide or too narrow are less efficient at heat transport.
-:::
-
-:::{tip} Solution to Exercise 3: Thermal Boundary Layer
-:class: dropdown
-
-**(a) Boundary layer scaling:**
-
-From boundary layer theory, heat balance gives:
-$$
-\delta \sim h \cdot Ra^{-1/3}
-$$
-
-This comes from balancing vertical advection with vertical diffusion in the thermal boundary layer.
-
-**(b) Mantle calculation:**
-
-With $Ra = 10^7$ and $h = 2900$ km:
-$$
-\delta \sim 2900 \text{ km} \times (10^7)^{-1/3} \sim 2900/215 \sim 13.5 \text{ km}
-$$
-
-**(c) Comparison with D" layer:**
-
-Seismic observations suggest the D" layer (thermal boundary layer at CMB) is $\sim$100-300 km thick. Our estimate is much thinner, suggesting:
-
-1. The D" layer may not be purely thermal (could include chemical layering)
-2. Local Rayleigh number near CMB might be lower than whole-mantle value
-3. Time-dependent effects and plumes complicate the simple boundary layer picture
-4. The scaling assumes steady state, but Earth's convection is time-dependent
-
-This discrepancy is an active research topic!
-:::

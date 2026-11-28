@@ -1,6 +1,5 @@
 # Non-dimensional equations & dimensionless numbers
 
-
 Before too long it would be a good idea to get a feeling for the flavour
 of these equations which continual rearrangements will not do --- it is
 necessary to examine some solutions.
@@ -381,7 +380,7 @@ $\hat{\mathbf{z}}$) couple the buoyancy to toroidal motion. This result
 is general in that it applies to the spherical geometry equally well
 assuming the radial direction (of gravity) to be special.
 
-
+(sec-nondimensional-equations-exercises)=
 ## Exercises
 
 :::{warning} Under Review
@@ -396,8 +395,9 @@ This exercises section is newly added as a placeholder for future content. These
 - Additional exercises should be added covering: dimensional analysis, scaling laws, corner flow details
 :::
 
-:::{note}
-Exercises marked with ⭐ have worked solutions provided. Additional exercises will be added as the chapter develops.
+:::{note} Solutions
+:class: solutions-link
+Exercises marked {sup}`★` have worked solutions in [](#sol-nondimensional-equations).
 :::
 
 ### Exercise 1: Non-dimensionalizing the Stokes Equation
@@ -449,45 +449,3 @@ c) Where is the maximum strain rate located?
 
 d) How does the solution change with the dip angle of the subducting slab?
 
-## Solutions to Selected Exercises
-
-:::{tip} Solution to Exercise 4: Stream Function Properties
-:class: dropdown
-
-**(a) Incompressibility:**
-
-The divergence of the velocity field is:
-$$
-\DIV \uv = \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} = \frac{\partial^2 \psi}{\partial x \partial y} - \frac{\partial^2 \psi}{\partial y \partial x} = 0
-$$
-
-The mixed partial derivatives are equal (Schwarz's theorem), so incompressibility is automatically satisfied.
-
-**(b) Streamlines:**
-
-A streamline is tangent to the velocity vector at every point:
-$$
-\frac{dy}{dx} = \frac{v}{u}
-$$
-
-Along a curve of constant $\psi$:
-$$
-d\psi = \frac{\partial \psi}{\partial x}dx + \frac{\partial \psi}{\partial y}dy = -v\,dx + u\,dy = 0
-$$
-
-Therefore: $\frac{dy}{dx} = \frac{v}{u}$, confirming that lines of constant $\psi$ are streamlines.
-
-**(c) Volume flux:**
-
-The volume flux through a curve from point A to point B is:
-$$
-Q = \int_A^B \uv \cdot \hat{\mathbf{n}} \, ds
-$$
-
-where $\hat{\mathbf{n}}$ is the normal to the curve. Using the stream function definition and Stokes' theorem, this equals:
-$$
-Q = \psi_B - \psi_A
-$$
-
-The volume flux between streamlines is simply the difference in their $\psi$ values.
-:::

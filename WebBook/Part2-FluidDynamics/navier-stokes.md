@@ -2,7 +2,6 @@
 
 # Navier-Stokes Equation
 
-
 In the previous section ([](../Part1-Fundamentals/conservation-laws.md)), we looked a very general way use conservation principles to construct equations describing how sources, fluxes and material transport of varous quantities balance one another through time. This approach can also be used to generate conservation equations for additional physical variables
 (for example, angular momentum, electric current). 
 
@@ -265,6 +264,7 @@ and Planets*. Cambridge University Press, UK, 2001.
 D.L. Turcotte and G. Schubert. *Geodynamics*. John Wiley and Sons, New
 York, 1982.
 
+(sec-navier-stokes-exercises)=
 ## Exercises
 
 :::{warning} Under Review
@@ -280,8 +280,9 @@ This exercises section was newly added and adapted from MTH3360 Fluid Mechanics 
 - Modified examples to use geodynamic contexts where appropriate
 :::
 
-:::{note}
-Exercises with solutions available are marked with {sup}`★`
+:::{note} Solutions
+:class: solutions-link
+Exercises marked {sup}`★` have worked solutions in [](#sol-navier-stokes).
 :::
 
 ### Exercise 1: Material Derivative {sup}`★`
@@ -390,207 +391,3 @@ c) Core convection: $U = 0.1$ mm/s, $L = 3000$ km, $\nu = 10^{-6}$ m$^2$/s
 
 Comment on whether inertial effects are important in each case.
 
-## Solutions to Selected Exercises
-
-:::{tip} Solution to Exercise 1: Material Derivative
-:class: dropdown
-
-The material derivative is:
-$$
-\frac{D\mathbf{f}}{Dt} = \frac{\partial \mathbf{f}}{\partial t} + (\uv \cdot \GRAD)\mathbf{f}
-$$
-
-For the advective term to equal the total derivative, we need:
-$$
-\frac{\partial \mathbf{f}}{\partial t} = 0
-$$
-
-**Physical meaning**: This occurs when the flow is **steady** (time-independent at fixed points in space). In steady flow, all changes experienced by a fluid parcel are due to its motion through spatially varying fields, not due to temporal changes at fixed locations.
-:::
-
-:::{tip} Solution to Exercise 2: Isothermal Atmosphere
-:class: dropdown
-
-In hydrostatic equilibrium: $\frac{dp}{dz} = -\rho g$
-
-For an ideal gas: $p = \rho RT$ where $T$ is constant.
-
-Therefore: $\rho = \frac{p}{RT}$
-
-Substituting into the hydrostatic equation:
-$$
-\frac{dp}{dz} = -\frac{pg}{RT} = -\frac{p}{H_s}
-$$
-
-where $H_s = RT/g$ is the scale height.
-
-Integrating:
-$$
-p(z) = p(0)\exp\left(-\frac{z}{H_s}\right)
-$$
-
-And from the equation of state:
-$$
-\rho(z) = \frac{p(z)}{RT} = \rho(0)\exp\left(-\frac{z}{H_s}\right)
-$$
-
-For the troposphere, take $T \approx 250$ K:
-$$
-H_s = \frac{287 \times 250}{9.81} \approx 7.3 \text{ km}
-$$
-
-This is indeed on the order of 8 km.
-:::
-
-:::{tip} Solution to Exercise 3: Vector Differential Operators
-:class: dropdown
-
-**Divergence** (scalar):
-$$
-\DIV \uv = \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z}
-$$
-Index notation: $\nabla_k u_k$ or $\partial u_k/\partial x_k$
-
-Physical meaning: Rate of volume expansion per unit volume.
-
-**Curl** (vector):
-$$
-\CURL \uv = \left(\frac{\partial w}{\partial y} - \frac{\partial v}{\partial z}, \frac{\partial u}{\partial z} - \frac{\partial w}{\partial x}, \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}\right)
-$$
-Index notation: $\varepsilon_{ijk}\partial u_k/\partial x_j$
-
-Physical meaning: Local rotation or vorticity of the fluid.
-
-**Directional derivative** (scalar operator):
-$$
-\uv \cdot \GRAD = u\frac{\partial}{\partial x} + v\frac{\partial}{\partial y} + w\frac{\partial}{\partial z}
-$$
-Index notation: $u_k \partial/\partial x_k$
-
-Physical meaning: Rate of change along the direction of velocity.
-
-**Laplacian** (scalar):
-$$
-\nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}
-$$
-Index notation: $\partial^2/\partial x_k \partial x_k$
-
-Physical meaning: Measure of how much a field differs from its average over neighboring points.
-:::
-
-:::{tip} Solution to Exercise 4: Pollutant Transport
-:class: dropdown
-
-Given: $\uv = (\alpha x, -\alpha y, 0)$ and $c = c_0 + \gamma t + \beta x^2 y e^{-\alpha t}$
-
-**(a) Eulerian rate of change** (at fixed point):
-$$
-\frac{\partial c}{\partial t} = \gamma - \alpha\beta x^2 y e^{-\alpha t}
-$$
-
-**(b) Lagrangian rate of change** (following parcels):
-$$
-\frac{Dc}{Dt} = \frac{\partial c}{\partial t} + \uv \cdot \GRAD c
-$$
-
-First calculate $\GRAD c$:
-$$
-\GRAD c = \left(2\beta xy e^{-\alpha t}, \beta x^2 e^{-\alpha t}, 0\right)
-$$
-
-Then:
-$$
-\begin{aligned}
-\uv \cdot \GRAD c &= \alpha x(2\beta xy e^{-\alpha t}) + (-\alpha y)(\beta x^2 e^{-\alpha t}) \\
-&= 2\alpha\beta x^2y e^{-\alpha t} - \alpha\beta x^2 y e^{-\alpha t} \\
-&= \alpha\beta x^2 y e^{-\alpha t}
-\end{aligned}
-$$
-
-Therefore:
-$$
-\frac{Dc}{Dt} = \gamma - \alpha\beta x^2 y e^{-\alpha t} + \alpha\beta x^2 y e^{-\alpha t} = \gamma
-$$
-
-The concentration increases at constant rate $\gamma$ following fluid parcels!
-
-**(c) Concentration at $t = 1$**:
-
-First find the particle path. The trajectory satisfies:
-$$
-\frac{dx}{dt} = \alpha x, \quad \frac{dy}{dt} = -\alpha y
-$$
-
-Solutions: $x(t) = x_0 e^{\alpha t}$, $y(t) = y_0 e^{-\alpha t}$
-
-Starting at $(x_0, y_0, 0) = (1, 1, 0)$ at $t = 0$:
-- At $t = 1$: $x(1) = e^\alpha$, $y(1) = e^{-\alpha}$
-
-Since $Dc/Dt = \gamma$:
-$$
-c(t) = c(0) + \int_0^t \gamma \, dt' = c(0) + \gamma t
-$$
-
-Initial concentration: $c(0) = c_0 + \beta(1)^2(1)e^0 = c_0 + \beta$
-
-Final concentration: $c(1) = c_0 + \beta + \gamma$
-:::
-
-:::{tip} Solution to Exercise 7: Pressure in Inviscid Flow
-:class: dropdown
-
-Given: $\uv = (kx, -ky, 0)$ (steady, inviscid, incompressible)
-
-Check incompressibility:
-$$
-\DIV \uv = k - k + 0 = 0 \quad \checkmark
-$$
-
-Calculate the advective acceleration:
-$$
-(\uv \cdot \GRAD)\uv = \left(kx\frac{\partial}{\partial x} - ky\frac{\partial}{\partial y}\right)(kx, -ky, 0)
-= (k^2 x, k^2 y, 0) = \GRAD\left(\frac{k^2x^2}{2} + \frac{k^2y^2}{2}\right)
-$$
-
-Euler equation (inviscid Navier-Stokes):
-$$
-(\uv \cdot \GRAD)\uv = -\frac{1}{\rho}\GRAD p - g\hat{\mathbf{k}}
-$$
-
-Therefore:
-$$
-\GRAD\left(\frac{k^2x^2}{2} + \frac{k^2y^2}{2}\right) = -\frac{1}{\rho}\GRAD p - \GRAD(gz)
-$$
-
-Integrating:
-$$
-p = p_0 - \rho\left(\frac{k^2x^2}{2} + \frac{k^2y^2}{2} + gz\right)
-$$
-
-where $p_0$ is the pressure at the origin.
-:::
-
-:::{tip} Solution to Exercise 8: Cylindrical Continuity Equation
-:class: dropdown
-
-Transform from Cartesian $(x, y, z)$ to cylindrical $(r, \theta, z)$:
-$$
-x = r\cos\theta, \quad y = r\sin\theta, \quad z = z
-$$
-
-Velocity transformation:
-$$
-u_r = u\cos\theta + v\sin\theta, \quad u_\theta = -u\sin\theta + v\cos\theta, \quad u_z = w
-$$
-
-Using the chain rule:
-$$
-\frac{\partial}{\partial x} = \cos\theta\frac{\partial}{\partial r} - \frac{\sin\theta}{r}\frac{\partial}{\partial \theta}
-\frac{\partial}{\partial y} = \sin\theta\frac{\partial}{\partial r} + \frac{\cos\theta}{r}\frac{\partial}{\partial \theta}
-$$
-
-Substitute into the Cartesian continuity equation $\partial u/\partial x + \partial v/\partial y + \partial w/\partial z = 0$ and use the velocity transformations. After simplification using trigonometric identities:
-$$
-\frac{1}{r}\frac{\partial(ru_r)}{\partial r} + \frac{1}{r}\frac{\partial u_\theta}{\partial \theta} + \frac{\partial u_z}{\partial z} = 0
-$$
-:::

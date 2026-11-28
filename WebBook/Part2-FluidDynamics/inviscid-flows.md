@@ -1,6 +1,5 @@
 # Steady Inviscid Flows
 
-
 :::{warning} Under Review
 :class: dropdown
 
@@ -387,10 +386,12 @@ This powerful formulation allows us to use complex analysis to solve flow proble
 
 Superposition of these elementary solutions can model complex flows around obstacles.
 
+(sec-inviscid-flows-exercises)=
 ## Exercises
 
-:::{note}
-Exercises with solutions available are marked with {sup}`★`
+:::{note} Solutions
+:class: solutions-link
+Exercises marked {sup}`★` have worked solutions in [](#sol-inviscid-flows).
 :::
 
 ### Exercise 1: Vector Identity {sup}`★`
@@ -481,216 +482,6 @@ a) Estimate the exit velocity using Bernoulli's equation (assume inviscid flow)
 b) Calculate the volume flux
 
 c) Discuss limitations of the inviscid approximation for magma (typical viscosity $\eta \sim 10^3$ Pa·s)
-
-## Solutions to Selected Exercises
-
-:::{tip} Solution to Exercise 1: Vector Identity
-:class: dropdown
-
-Start with the term $\mathbf{b} \times (\CURL \mathbf{a})$ in index notation:
-$$
-\begin{aligned}
-[\mathbf{b} \times (\CURL \mathbf{a})]_i &= \varepsilon_{ijk} b_j [\CURL \mathbf{a}]_k \\
-&= \varepsilon_{ijk} b_j \varepsilon_{klm} \frac{\partial a_m}{\partial x_l} \\
-&= \varepsilon_{kij} \varepsilon_{klm} b_j \frac{\partial a_m}{\partial x_l}
-\end{aligned}
-$$
-
-Using the identity $\varepsilon_{kij}\varepsilon_{klm} = \delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}$:
-$$
-= (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}) b_j \frac{\partial a_m}{\partial x_l} = b_j \frac{\partial a_j}{\partial x_i} - b_j \frac{\partial a_i}{\partial x_j}
-$$
-
-Similarly:
-$$
-[\mathbf{a} \times (\CURL \mathbf{b})]_i = a_j \frac{\partial b_j}{\partial x_i} - a_j \frac{\partial b_i}{\partial x_j}
-$$
-
-Adding these:
-$$
-\mathbf{b} \times (\CURL \mathbf{a}) + \mathbf{a} \times (\CURL \mathbf{b}) = \GRAD(\mathbf{a} \cdot \mathbf{b}) - (\mathbf{b} \cdot \GRAD)\mathbf{a} - (\mathbf{a} \cdot \GRAD)\mathbf{b}
-$$
-
-Rearranging gives the vector identity.
-
-**For the second part**, set $\mathbf{a} = \mathbf{b} = \uv$:
-$$
-2\uv \times \boldsymbol{\omega} = \GRAD|\uv|^2 - 2(\uv \cdot \GRAD)\uv
-$$
-
-Dividing by 2 and rearranging:
-$$
-(\uv \cdot \GRAD)\uv = \GRAD\left(\frac{1}{2}|\uv|^2\right) - \uv \times \boldsymbol{\omega}
-$$
-:::
-
-:::{tip} Solution to Exercise 2: Channel Constriction
-:class: dropdown
-
-**Conservation of mass** (volume flux):
-
-Outside constriction (point 1): width $w_1$, depth $h_1 = h$, velocity $u_1 = U$
-
-Inside constriction (point 2): width $w_2 = w_1/2$, depth $h_2 = h/2$, velocity $u_2$
-
-Volume flux: $u_1 h_1 w_1 = u_2 h_2 w_2$
-
-Therefore:
-$$
-u_2 = u_1 \frac{h_1 w_1}{h_2 w_2} = U \frac{h \cdot w_1}{(h/2) \cdot (w_1/2)} = 4U
-$$
-
-**Bernoulli's equation** along surface streamline ($p = p_0$ everywhere):
-$$
-\frac{u_1^2}{2} + gh_1 = \frac{u_2^2}{2} + gh_2
-\frac{U^2}{2} + gh = \frac{(4U)^2}{2} + g\frac{h}{2}
-\frac{U^2}{2} + gh = 8U^2 + \frac{gh}{2}
-\frac{gh}{2} = \frac{15U^2}{2}
-$$
-
-**Result:**
-$$
-U = \sqrt{\frac{gh}{15}}
-$$
-:::
-
-:::{tip} Solution to Exercise 3: Building Pressure
-:class: dropdown
-
-There is a **stagnation point** on the upstream side of the building where the wind velocity goes to zero. From Bernoulli's equation:
-$$
-\frac{1}{2}\rho U_0^2 + p_0 = 0 + p_{\text{stag}}
-$$
-
-**Pressure increase:**
-$$
-\Delta p = p_{\text{stag}} - p_0 = \frac{1}{2}\rho U_0^2
-$$
-
-For wind at 100 km/hr = 27.8 m/s and air density $\rho = 1.2$ kg/m³:
-$$
-\Delta p = \frac{1}{2} \times 1.2 \times (27.8)^2 \approx 464 \text{ Pa}
-$$
-
-This is about 0.5% of atmospheric pressure (~ 100 kPa), but represents a significant force on large building faces. For a 10 m × 10 m wall:
-$$
-F = \Delta p \times A = 464 \times 100 = 46.4 \text{ kN}
-$$
-:::
-
-:::{tip} Solution to Exercise 5: Bernoulli Paradox
-:class: dropdown
-
-When you blow air between the two sheets, the velocity of air increases in the gap (channeling effect).
-
-According to Bernoulli's equation along a streamline:
-$$
-\frac{1}{2}\rho v^2 + p = \text{constant}
-$$
-
-**Outside the sheets**: $v \approx 0$ (still air), pressure = $p_0$ (atmospheric)
-
-**Between the sheets**: $v > 0$ (moving air), pressure = $p_{\text{gap}}$
-
-Therefore:
-$$
-\frac{1}{2}\rho v^2 + p_{\text{gap}} \approx p_0
-p_{\text{gap}} < p_0
-$$
-
-The pressure **between** the sheets is **lower** than atmospheric pressure outside. This pressure difference pushes the sheets **together**.
-
-This is the same principle behind:
-- Airplane wings generating lift
-- Shower curtains billowing inward
-- Spinning balls curving (Magnus effect)
-:::
-
-:::{tip} Solution to Exercise 6: Balloon and Tank
-:class: dropdown
-
-**(a) Balloon deflation:**
-
-Inside balloon: $p = p_0 + \Delta p$, $u \approx 0$ (large volume, slow movement)
-
-Outside (at exit): $p = p_0$, $u = U$ (exit velocity)
-
-Bernoulli's equation (ignoring gravity for a small balloon):
-$$
-\frac{0^2}{2} + \frac{p_0 + \Delta p}{\rho} = \frac{U^2}{2} + \frac{p_0}{\rho}
-U = \sqrt{\frac{2\Delta p}{\rho}}
-$$
-
-**(b) Tank with waste pipe:**
-
-At top surface: $u \approx 0$, $p = p_0$, elevation = $H$ (unknown)
-
-At waste pipe exit: $u = U$, $p = p_0$, elevation = $-L = -0.01$ m
-
-Bernoulli's equation:
-$$
-0 + \frac{p_0}{\rho} + gH = \frac{U^2}{2} + \frac{p_0}{\rho} + g(-L)
-H = \frac{U^2}{2g} - L
-$$
-
-Volume conservation (steady state):
-$$
-U \cdot A_{\text{pipe}} = Q_{\text{in}}
-U = \frac{3 \times 10^{-5}}{2 \times 10^{-5}} = 1.5 \text{ m/s}
-$$
-
-Therefore:
-$$
-H = \frac{(1.5)^2}{2 \times 10} - 0.01 = 0.1125 - 0.01 = 0.1025 \text{ m} \approx 10.3 \text{ cm}
-$$
-:::
-
-:::{tip} Solution to Exercise 7: Post in River
-:class: dropdown
-
-**(a) Explanation:**
-
-At the upstream face of the post, there is a **stagnation point** where the water velocity becomes zero as it diverts around the post. According to Bernoulli's equation, where velocity decreases, pressure (and hence water level) must increase.
-
-**(b) Height increase:**
-
-Far from post: velocity = $U$, pressure at surface = $p_0$, height = $h_0$
-
-At stagnation point: velocity = 0, pressure at surface = $p_{\text{stag}}$, height = $h_0 + \Delta h$
-
-Bernoulli's equation along surface:
-$$
-\frac{U^2}{2} + p_0 + \rho g h_0 = 0 + p_{\text{stag}} + \rho g(h_0 + \Delta h)
-$$
-
-Since pressure varies hydrostatically near the surface: $p_{\text{stag}} = p_0 + \rho g \Delta h$
-
-Substituting:
-$$
-\frac{U^2}{2} + p_0 + \rho g h_0 = p_0 + \rho g \Delta h + \rho g h_0 + \rho g \Delta h
-\frac{U^2}{2} = 2\rho g \Delta h
-$$
-
-Wait, let me reconsider. Actually, at the free surface, $p = p_0$ everywhere. The height change creates the pressure difference:
-
-$$
-\frac{U^2}{2} + gh_0 = 0 + g(h_0 + \Delta h)
-$$
-
-**Height increase:**
-$$
-\Delta h = \frac{U^2}{2g}
-$$
-
-**(c) Numerical estimate:**
-
-For $U = 1$ m/s:
-$$
-\Delta h = \frac{1^2}{2 \times 10} = 0.05 \text{ m} = 5 \text{ cm}
-$$
-
-This is easily observable!
-:::
 
 ## Summary
 

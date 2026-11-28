@@ -219,19 +219,17 @@ Fluid in the pores of a rock carries part of the load. The grains feel only the 
 
 where $p_f$ is the pore-fluid pressure. Raising $p_f$ lowers every normal stress by the same amount and leaves the shear stresses unchanged: the Mohr circle keeps its size and moves towards the envelope ([](#fig-mohr-coulomb)). This is how fluid injection can trigger earthquakes on faults that were already close to failure, and why high pore pressure allows thrust sheets to move on very gently dipping planes.
 
+(sec-stress-and-faulting-exercises)=
 ## Exercises
 
-:::{note} Exercises with solutions available are marked with {sup}`★`
+:::{note} Solutions
+:class: solutions-link
+Exercises marked {sup}`★` have worked solutions in [](#sol-stress-and-faulting).
 :::
 
 ### Exercise 1: Stress on a fault {sup}`★`
 
 A normal fault extends to a depth of 5 km. Measurements at that depth show a normal stress of $300$ MPa and a shear stress of $120$ MPa on the fault plane. Taking the coefficient of friction as $0.6$, use the Coulomb criterion to decide whether the fault should slip.
-
-:::{tip} Solution to Exercise 1
-:class: dropdown
-Slip requires $\tau \geq C + \mu\sigma_n = C + 0.6 \times 300 = 180 + C$ MPa. The cohesion is never negative, so the shear stress needed for slip is at least $180$ MPa. The fault carries $120$ MPa and should not slip.
-:::
 
 ### Exercise 2: The worked example on the Mohr diagram
 
@@ -246,11 +244,6 @@ c) With $C = 0$, what coefficient of friction would allow that plane to slip?
 ### Exercise 3: Anderson's angles {sup}`★`
 
 Derive the dip of normal and thrust faults for $\mu = 0.4$ and for $\mu = 0.85$.
-
-:::{tip} Solution to Exercise 3
-:class: dropdown
-$\phi = \arctan\mu$: $21.8°$ for $\mu = 0.4$ and $40.4°$ for $\mu = 0.85$. Faults form at $45° - \phi/2$ to $\sigma_1$, that is at $34.1°$ and $24.8°$. A normal fault ($\sigma_1$ vertical) therefore dips $90°$ minus these, $55.9°$ and $65.2°$; a thrust ($\sigma_1$ horizontal) dips $34.1°$ and $24.8°$.
-:::
 
 ### Exercise 4: Pore pressure
 

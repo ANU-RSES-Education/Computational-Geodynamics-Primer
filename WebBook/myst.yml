@@ -8,6 +8,11 @@ project:
     methods used to model it.
   authors:
     - name: Louis Moresi
+      affiliations:
+        - The Australian National University
+    - name: Catherine M. Cooper
+      affiliations:
+        - Washington State University
   github: https://github.com/ANU-RSES-Education/Computational-Geodynamics-Primer
   license: CC0-1.0   # matches LICENSE at the repository root
   bibliography:
@@ -31,6 +36,7 @@ project:
     - file: Part3-Geodynamics/geodynamics.md
       children:
         - file: Part3-Geodynamics/stress-and-faulting.md
+        - file: Part3-Geodynamics/rayleigh-benard-convection.md
     - file: Part4-NumericalMethods/numerical-methods.md
       children:
         - file: Part4-NumericalMethods/time-integration.md
@@ -41,9 +47,9 @@ project:
     - file: Part5-Computational/computational-exercises.md
       children:
         - file: Part5-Computational/Benchmarks/analytical-solutions.md
+    - file: Solutions/solutions.md
     - title: Draft material (being reorganised)
       children:
-        - file: DraftMaterial/ThermalConvection.md
         - file: DraftMaterial/LithosphericDynamics.md
 
   # One set of maths macros for the whole book (formerly _math-preamble.qmd,
