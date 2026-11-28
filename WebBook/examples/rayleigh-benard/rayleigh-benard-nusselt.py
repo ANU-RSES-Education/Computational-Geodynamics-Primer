@@ -6,6 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
+#       jupytext_version: 1.19.7
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -38,6 +39,8 @@ import numpy as np
 import sympy
 import matplotlib.pyplot as plt
 import underworld3 as uw
+
+trapezoid = getattr(np, "trapezoid", None) or np.trapz   # numpy < 2 has only trapz
 
 # %% [markdown]
 # ## Parameters
@@ -99,7 +102,7 @@ heat.add_dirichlet_bc(0.0, "Top")
 
 # start from conduction plus a single-cell perturbation
 T0 = (1.0 - z) + 0.05 * sympy.cos(sympy.pi * x) * sympy.sin(sympy.pi * z)
-T.array[...] = uw.function.evaluate(T0, T.coords)
+T.array[...] = np.asarray(uw.function.evaluate(T0, T.coords)).reshape(T.array.shape)
 
 # where the surface heat flux and the velocity are measured
 xs = np.linspace(0.0, 1.0, 201)
@@ -113,7 +116,7 @@ plot_points = np.column_stack([px.ravel(), pz.ravel()])
 
 def nusselt():
     flux = -np.asarray(uw.function.evaluate(dTdz, top)).reshape(-1)
-    return np.trapezoid(flux, xs)
+    return trapezoid(flux, xs)
 
 
 def vrms():
