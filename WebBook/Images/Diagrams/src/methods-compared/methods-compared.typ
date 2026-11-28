@@ -27,7 +27,7 @@
   let nodes(x, r: 0.45) = {
     for i in range(n + 1) {
       for j in range(n + 1) {
-        circle((x + i * h, j * h), radius: r, fill: white, stroke: (paint: mesh-grey, thickness: 0.4pt))
+        circle((x + i * h, j * h), radius: r, fill: paper, stroke: (paint: mesh-grey, thickness: 0.4pt))
       }
     }
   }
@@ -124,7 +124,7 @@
   }
   for i in range(n) {
     for j in range(n) {
-      circle((xd + (i + 0.5) * h, (j + 0.5) * h), radius: 0.8, fill: white, stroke: (paint: ink, thickness: 0.5pt))
+      circle((xd + (i + 0.5) * h, (j + 0.5) * h), radius: 0.8, fill: paper, stroke: (paint: ink, thickness: 0.5pt))
     }
   }
   for (cell, p) in pts {

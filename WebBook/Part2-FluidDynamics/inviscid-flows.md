@@ -124,11 +124,18 @@ This is indeed a parabola opening upward. This is observed in rotating buckets o
 
 ### Torricelli's Theorem: Draining a Reservoir
 
-:::{figure} ../Images/Diagrams/draining-tank.png
+::::{figure}
 :label: fig-torricelli
-:width: 350px
-Flow from a draining tank through a small orifice
-:::
+```{image} ../Images/Diagrams/draining-tank.svg
+:alt: A tank of water with a small opening at the bottom of its right wall. A dashed streamline runs from point B on the free surface down to point A at the opening, a height h below; a curved jet leaves the opening with velocity u A. The surface is at atmospheric pressure p 0.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/draining-tank-dark.svg
+:alt: A tank of water with a small opening at the bottom of its right wall. A dashed streamline runs from point B on the free surface down to point A at the opening, a height h below; a curved jet leaves the opening with velocity u A. The surface is at atmospheric pressure p 0.
+:class: hidden dark:block
+```
+Flow from a draining tank through a small orifice Point $B$ on the free surface and the exit $A$ are both at atmospheric pressure $p_0$; Bernoulli's equation along the streamline from $B$ to $A$ (dashed) gives $u_A = \sqrt{2gh}$.
+::::
 
 Consider a large reservoir with a small drainage hole at the bottom. If the opening is much smaller than the reservoir cross-section, the water surface falls very slowly and the flow may be regarded as approximately steady.
 
@@ -172,11 +179,18 @@ This provides a rough estimate for effusive eruption velocities (actual values m
 
 ### Stagnation Pressure and the Pitot Tube
 
-:::{figure} ../Images/Diagrams/stagnation-point.png
+::::{figure}
 :label: fig-stagnation
-:width: 400px
-Flow around a bluff body showing the stagnation point
-:::
+```{image} ../Images/Diagrams/stagnation-point.svg
+:alt: Streamlines of a uniform stream curving around a circular body. The central streamline runs along the axis and ends at a dot S on the front of the body, labelled p stag. Arrows on the left mark the oncoming stream U 0 at pressure p 0.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/stagnation-point-dark.svg
+:alt: Streamlines of a uniform stream curving around a circular body. The central streamline runs along the axis and ends at a dot S on the front of the body, labelled p stag. Arrows on the left mark the oncoming stream U 0 at pressure p 0.
+:class: hidden dark:block
+```
+Flow around a bluff body showing the stagnation point. The dividing streamline ends at the stagnation point $S$, where the flow is brought to rest and the pressure rises to $p_{\text{stag}}$.
+::::
 
 Suppose a stream has uniform speed $U_0$ and pressure $p_0$ far from an obstacle. As it flows around a bluff body, the flow must slow down in front, creating a **dividing streamline** that separates fluid passing on either side. This streamline ends at a **stagnation point** where the velocity is zero.
 
@@ -195,11 +209,18 @@ The pressure $p_{\text{stag}}$ is the **total** or **Pitot pressure** (also call
 
 ### The Pitot Tube
 
-:::{figure} ../Images/Diagrams/pitot-tube.png
+::::{figure}
 :label: fig-pitot
-:width: 400px
-Pitot tube for measuring flow velocity via pressure measurement
-:::
+```{image} ../Images/Diagrams/pitot-tube.svg
+:alt: A channel with flow U 0 from the left. An L-shaped tube faces upstream at mid-depth and rises to a vertical column; a second column rises from a tap in the channel wall. The liquid in the first column stands higher than in the second by Delta h.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/pitot-tube-dark.svg
+:alt: A channel with flow U 0 from the left. An L-shaped tube faces upstream at mid-depth and rises to a vertical column; a second column rises from a tap in the channel wall. The liquid in the first column stands higher than in the second by Delta h.
+:class: hidden dark:block
+```
+Pitot tube for measuring flow velocity via pressure measurement The tube facing upstream senses the stagnation pressure $p_{\text{stag}}$; the tap in the wall, normal to the flow, senses the static pressure $p_0$. The difference in level $\Delta h$ measures $p_{\text{stag}} - p_0 = \tfrac{1}{2}\rho U_0^2$.
+::::
 
 A Pitot tube consists of a tube directed into the stream with a small central hole connected to a manometer. At equilibrium, there is no flow through the tube, so the measured pressure is the total pressure:
 $$

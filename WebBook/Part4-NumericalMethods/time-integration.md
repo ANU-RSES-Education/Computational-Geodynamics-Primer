@@ -32,11 +32,18 @@ $$
 
 where $\theta_0$ is the amount of the radioactive material remaining. The same equation also describes the cooling of, say, a cup of coffee. In this case we interpret $\theta$ as the excess temperature (above room temperature).
 
-:::{figure} ../Images/Diagrams/time-marching.svg
+::::{figure}
 :label: fig-time-discretisation
+```{image} ../Images/Diagrams/time-marching.svg
 :alt: A decaying curve of theta against time with dots at equally spaced times, labelled theta 0, theta 1, theta 2, and so on up to theta n and theta n plus 1; the spacing between two dots is marked Delta t.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/time-marching-dark.svg
+:alt: A decaying curve of theta against time with dots at equally spaced times, labelled theta 0, theta 1, theta 2, and so on up to theta n and theta n plus 1; the spacing between two dots is marked Delta t.
+:class: hidden dark:block
+```
 Marching through time in small increments. The solution is computed only at times separated by $\Delta t$, giving the sequence $\theta_0, \theta_1, \ldots, \theta_{n+1}$.
-:::
+::::
 
 
 We want to march forward in time from our starting point where $\theta = \theta_0$ to obtain the value of $\theta$ at later times. To do this, we need to approximate the original differential equation, and, in particular, the value of the time derivative at each time. There are a number of ways to do this.
@@ -154,11 +161,18 @@ The results are more accurate when a smaller timestep is used although it requir
 
 ### Second Order Runge-Kutta
 
-:::{figure} ../Images/Diagrams/time-rk2.svg
+::::{figure}
 :label: fig-rk2
+```{image} ../Images/Diagrams/time-rk2.svg
 :alt: The exact decay curve from theta of t. A dashed tangent runs from theta of t to an open circle theta hat at t plus Delta t over 2; a short segment through theta hat shows the slope there; a solid arrow with that slope runs from theta of t to the RK2 value at t plus Delta t, just above the exact value on the curve.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/time-rk2-dark.svg
+:alt: The exact decay curve from theta of t. A dashed tangent runs from theta of t to an open circle theta hat at t plus Delta t over 2; a short segment through theta hat shows the slope there; a solid arrow with that slope runs from theta of t to the RK2 value at t plus Delta t, just above the exact value on the curve.
+:class: hidden dark:block
+```
 A different way to derive a second order method. A first-order half step along the tangent (dashed) gives the estimate $\hat{\theta}$ at $t+\Delta t/2$; the gradient there (short segment) is used for the whole step from $\theta(t)$. The step is large, $k\Delta t = 0.8$, so the remaining error is visible.
-:::
+::::
 
 
 The Runge-Kutta approach to higher order integration methods is [illustrated in the figure](#fig-rk2). The idea is to estimate the gradient $d \theta / d t$ at the half way point between two timestep values.  This is done in two stages. Initially a first order estimate, $\hat{\theta}$ is made for the value of the function $\theta$ at $t=t+\Delta t /2$ in the future. This value is then subsituted into the differential equation to obtain the estimate for the gradient at this time. The revised gradient is then used to update the original $\theta(t)$ by an entire timestep.

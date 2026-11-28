@@ -39,7 +39,7 @@
   // nodes: element ends filled, mid-nodes open
   for k in range(7) {
     let x = x0 + k * L / 2
-    node((x, y0), fill: if calc.even(k) { ink } else { white })
+    node((x, y0), fill: if calc.even(k) { ink } else { paper })
   }
   content((x0 + L, y0 + H + 1.5), anchor: "south", $N_A$)
   content((x0 + 2.5 * L, y0 + H + 1.5), anchor: "south", $N_C$)
@@ -76,7 +76,7 @@
     let (x1, y1) = (ai + di, aj + dj)
     let corners = ((x1, y1), (x1 + 1, y1), (x1 + 1, y1 + 1), (x1, y1 + 1))
     line(..corners.map(c => proj(c.at(0), c.at(1), N(c.at(0), c.at(1)))), close: true,
-         fill: white, stroke: none)
+         fill: paper, stroke: none)
     for k in range(1, 4) {
       let t = k / 4
       line(proj(x1 + t, y1, N(x1 + t, y1)), proj(x1 + t, y1 + 1, N(x1 + t, y1 + 1)), stroke: s-construct)

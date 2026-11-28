@@ -97,11 +97,18 @@ The choice of $\bf M$ has a dramatic effect on the rate of convergence of the me
 
 ### Multigrid
 
-:::{figure} ../Images/Diagrams/multigrid.svg
+::::{figure}
 :label: fig-multigrid-diagram
+```{image} ../Images/Diagrams/multigrid.svg
 :alt: (a) Six stacked profiles of the error: a noisy curve; the same curve smoothed; its coarse-grid version; the coarse correction; then two nearly flat lines after correction and further smoothing. (b) A wide tent-shaped basis function on a coarse grid labelled H above a narrow one on a fine grid labelled h, joined by a dotted line through their shared node. (c) to (e) Zig-zag paths of dots between four levels labelled fine and coarse, for the V cycle, the W cycle and full multigrid.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/multigrid-dark.svg
+:alt: (a) Six stacked profiles of the error: a noisy curve; the same curve smoothed; its coarse-grid version; the coarse correction; then two nearly flat lines after correction and further smoothing. (b) A wide tent-shaped basis function on a coarse grid labelled H above a narrow one on a fine grid labelled h, joined by a dotted line through their shared node. (c) to (e) Zig-zag paths of dots between four levels labelled fine and coarse, for the V cycle, the W cycle and full multigrid.
+:class: hidden dark:block
+```
 Multigrid: (a) Error reduction during simple two level V cycle, (b) Shape functions on different grid scales, (c) V cycle on four grids, (d) W cycle on four grids, (e) Schematic of Full Multigrid V cycles. In (a), computed for a 1-D Poisson problem and drawn on one scale, smoothing removes the oscillatory error but leaves the smooth part, which the coarse grid then removes. In (e) the heavier steps are interpolations to a new, finer level.
-:::
+::::
 
 
 The multigrid method works by formulating the finite element problem on a number of different scales - usually a set of grids which are nested one within the other sharing common nodes.  The solution progresses on all of the grids at the same time with each grid eliminating errors at a different scale. The effect is to propogate information very rapidly between different nodes in the grid which would otherwise be prevented by the local support of the element shape functions. In fact, by a single traverse from fine to coarse grid and back, all nodes in the mesh can be directly connected to every other -- allowing nodes which are physically coupled but remote in the mesh to communicate directly during each iteration cycle.

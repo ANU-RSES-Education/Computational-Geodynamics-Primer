@@ -234,11 +234,18 @@ For example, in the constant viscosity Stokes' flow problem, we now have
     
 Although we have now nominally made our problem finite by expressing everything in terms of Galerkin basis functions, we have yet to decide what those functions ought to be. Whatever our choice, it should make the problem easy to compute numerically.  
 
-:::{figure} ../Images/Diagrams/fem-domain-mapping.svg
+::::{figure}
 :label: fig-domain-decomp
+```{image} ../Images/Diagrams/fem-domain-mapping.svg
 :alt: A rounded domain with a wavy boundary Gamma, divided into six four-sided elements whose straight edges meet the boundary only at their corners, leaving thin slivers between mesh and boundary. A small square with axes xi and eta at the upper right has a curved arrow labelled x of xi, eta pointing to one shaded element.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/fem-domain-mapping-dark.svg
+:alt: A rounded domain with a wavy boundary Gamma, divided into six four-sided elements whose straight edges meet the boundary only at their corners, leaving thin slivers between mesh and boundary. A small square with axes xi and eta at the upper right has a curved arrow labelled x of xi, eta pointing to one shaded element.
+:class: hidden dark:block
+```
 Splitting an arbitrary domain into patches is trivial in an integral formulation. Additionally, the irregular shape of the individual subdomains is easy to handle with standard changes of variables (Jacobians). Here six elements $\Omega^1 \ldots \Omega^6$ with straight edges approximate a domain $\Omega$ with curved boundary $\Gamma$; each element is the image of a reference square in $(\xi, \eta)$ under a mapping $\mathbf{x}(\xi, \eta)$.
-:::
+::::
 
 
 The choice of basis functions is very broad but we narrow it down by tying it very closely to the way we choose to split up the domain of our problem. With an integral method, the domain decomposition is simple since
@@ -254,11 +261,18 @@ which means that the decomposition [shown above](#fig-domain-decomp) is as accur
 The functions which interpolate the node points at the corners of  subdomains are a suitable set for use as an approximate basis as we require for the Galerkin formulation. This is easy to see if we consider a one dimensional problem.
   
 
-:::{figure} ../Images/Diagrams/fem-1d-basis.svg
+::::{figure}
 :label: fig-discretisation-1d
+```{image} ../Images/Diagrams/fem-1d-basis.svg
 :alt: Three stacked panels on the same row of six nodes. (a) A smooth dashed curve and a solid piecewise-linear line that meets it at every node. (b) Triangles of different heights, one centred on each node, whose heights are the nodal values. (c) Two triangles of unit height centred on neighbouring nodes A and B, each falling to zero at the adjacent nodes.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/fem-1d-basis-dark.svg
+:alt: Three stacked panels on the same row of six nodes. (a) A smooth dashed curve and a solid piecewise-linear line that meets it at every node. (b) Triangles of different heights, one centred on each node, whose heights are the nodal values. (c) Two triangles of unit height centred on neighbouring nodes A and B, each falling to zero at the adjacent nodes.
+:class: hidden dark:block
+```
 Representing a piecewise linear function as a sum of pointy functions localized at the nodes. (a) A field $u$ (dashed) and its linear interpolant $u^h$ through the nodal values. (b) $u^h$ is the sum of the basis functions, each scaled by its nodal value $u(x_A)$. (c) The basis function $N_A$ is one at node $A$, zero at every other node and linear in between, so it overlaps only its neighbours, such as $N_B$.
-:::
+::::
 
 
 In the one dimensional case, the choice of subdomains is limited to breaking up the line into a number of segments, though not necessarily of equal length. If the approximation to the continuum field, $u$ is made by linear interpolation to give $u^h$, then $u^h$ can also be expressed as a sum on the [local triangular functions $N_A$](#fig-discretisation-1d)
@@ -274,11 +288,18 @@ This is an exact representation of the interpolation provided the $N_A$ takes th
 ### Naming of Things and What They are Like
 The interpolation functions are known as shape functions. The subdomains are known as elements. The elements correspond to the individual springs of our discrete example. The shape functions are pure interpolation functions of the required order within the element and can be differentiated the appropriate number of times. This means that the order of interpolation must match the order of derivatives in the FE operator. Crossing the element boundaries, the shape functions have discontinuous derivatives (as do the piecewise interpolations). Continuous derivative functions are possible (e.g. splines) but add significant complexity. Shape functions in 2D and 3D can be formed from the product of 1D shape functions in each direction. 
 
-:::{figure} ../Images/Diagrams/fem-shape-functions.svg
+::::{figure}
 :label: fig-shape-functions
+```{image} ../Images/Diagrams/fem-shape-functions.svg
 :alt: Left, a row of nodes with two curves: a solid curve rising to one at node A with small negative dips on either side, and a dashed arch over a single element peaking at its middle node C. Right, a grid seen in perspective with a tent-shaped surface rising to a peak of one above node A over the four cells around it.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/fem-shape-functions-dark.svg
+:alt: Left, a row of nodes with two curves: a solid curve rising to one at node A with small negative dips on either side, and a dashed arch over a single element peaking at its middle node C. Right, a grid seen in perspective with a tent-shaped surface rising to a peak of one above node A over the four cells around it.
+:class: hidden dark:block
+```
 Extension of simple shape function concept (a) to higher order functions and (b) to higher dimensions. (a) With quadratic elements, the function of a corner node $A$ is one at $A$, zero at the other nodes of the two elements that share it, and negative in between; the function of a mid-element node $C$ is non-zero only inside its own element. (b) With bilinear quadrilaterals, the function of node $A$ rises to one above $A$ and falls to zero at the edges of the four cells that share it. Along every grid line it is linear, so the surface is ruled.
-:::
+::::
 
 
 ### Element Matrices

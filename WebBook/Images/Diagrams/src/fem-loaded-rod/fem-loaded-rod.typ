@@ -21,7 +21,7 @@
   // rod
   rect((0, 3), (L, 3 + t), fill: solid-tint, stroke: s-boundary)
   // rollers and ground
-  for x in (9, 20, 31) { circle((x, 1.5), radius: 1.5, fill: white, stroke: s-interface) }
+  for x in (9, 20, 31) { circle((x, 1.5), radius: 1.5, fill: paper, stroke: s-interface) }
   line((4, 0), (36, 0), stroke: s-boundary)
   for k in range(13) { line((5 + k * 2.5, 0), (3 + k * 2.5, -2), stroke: s-construct) }
   // end load

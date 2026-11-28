@@ -5,11 +5,18 @@ We start by deriving the equations of motion, energy balance and so on
 through a conservation principle. This will give a useful insight into
 the different forms of the equations which we will later encounter.
 
-:::{figure} ../Images/Diagrams/volume-element.svg
+::::{figure}
 :label: fig-volume-element
+```{image} ../Images/Diagrams/volume-element.svg
 :alt: An irregular closed region labelled Omega with boundary Gamma; a short thick segment on the boundary has an arrow pointing outward, labelled d Gamma.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/volume-element-dark.svg
+:alt: An irregular closed region labelled Omega with boundary Gamma; a short thick segment on the boundary has an arrow pointing outward, labelled d Gamma.
+:class: hidden dark:block
+```
 An arbitrary volume, $\Omega$ of material has a surface $\Gamma$ An element of the surface is represented by the outward vector $\dGamma$, whose magnitude is its area.
-:::
+::::
 
 A general conservation law does not distinguish the quantity which is
 being conserved -- it is a mathematical identity. Consider a quantity

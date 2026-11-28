@@ -40,7 +40,7 @@
     for (di, dj) in ((-1, 0), (0, 0), (-1, -1), (0, -1)) {
       let (x1, y1) = (ax + di * w, ay + dj * w)
       let cs = ((x1, y1), (x1 + w, y1), (x1 + w, y1 + w), (x1, y1 + w))
-      line(..cs.map(c => proj(o, c.at(0), c.at(1), N(c.at(0), c.at(1)))), close: true, fill: white, stroke: none)
+      line(..cs.map(c => proj(o, c.at(0), c.at(1), N(c.at(0), c.at(1)))), close: true, fill: paper, stroke: none)
       for k in range(1, 4) {
         let t = k * w / 4
         line(proj(o, x1 + t, y1, N(x1 + t, y1)), proj(o, x1 + t, y1 + w, N(x1 + t, y1 + w)), stroke: s-construct)

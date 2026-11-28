@@ -3,7 +3,8 @@
     pixi run figures            # all figures
     pixi run figures NAME ...   # only these (folder names under src/)
 
-Typst sources (src/NAME/NAME.typ) become NAME.svg and a 300 dpi NAME.png.
+Typst sources (src/NAME/NAME.typ) become NAME.svg and a 300 dpi NAME.png, plus
+NAME-dark.svg/png in the blueprint theme (primerfig.typ, --input theme=dark).
 If src/NAME/NAME.py exists it is run first, in that folder, to write the
 data the Typst source reads (computed curves, schedules).
 """
@@ -22,11 +23,14 @@ def build_typst(src: pathlib.Path) -> None:
     data_script = src.with_suffix(".py")
     if data_script.exists():
         subprocess.run([sys.executable, "-I", data_script.name], cwd=src.parent, check=True)
-    for out, extra in ((f"{name}.svg", []), (f"{name}.png", ["--format", "png", "--ppi", "300"])):
-        subprocess.run(
-            ["typst", "compile", "--root", str(DIAGRAMS), *extra, str(src), str(DIAGRAMS / out)],
-            check=True,
-        )
+    # Light theme -> NAME.svg/png; blueprint theme -> NAME-dark.svg/png.
+    for theme, suffix in (("light", ""), ("dark", "-dark")):
+        for ext, extra in (("svg", []), ("png", ["--format", "png", "--ppi", "300"])):
+            subprocess.run(
+                ["typst", "compile", "--root", str(DIAGRAMS), "--input", f"theme={theme}", *extra,
+                 str(src), str(DIAGRAMS / f"{name}{suffix}.{ext}")],
+                check=True,
+            )
     print(f"built {name}")
 
 

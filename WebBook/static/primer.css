@@ -18,15 +18,45 @@
   --primer-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primer-ink: #e6e9ec;
-    --primer-muted: #9aa7b0;
-    --primer-rule: #2c353d;
-    --primer-accent: #e0a63c;
-    --primer-table-head: #2c353d;
-    --primer-table-head-ink: #f2efe7;
-  }
+/* ---- dark mode: blueprint ----------------------------------------------
+ * The theme switches modes with a .dark class (not the OS media query), so
+ * everything dark is keyed on .dark. The page takes the same washed-out blue
+ * as the blueprint figures (primerfig.typ, theme=dark), so they sit on the
+ * page without a frame. The theme's own colour variables are redefined here. */
+html.dark {
+  --primer-ink: #f1f5f9;
+  --primer-muted: #b9cadb;
+  --primer-rule: #4d6f93;
+  --primer-accent: #e8b04a;            /* ANU gold, lightened for the blue ground */
+  --primer-table-head: #1f3c5a;
+  --primer-table-head-ink: #f1f5f9;
+
+  --myst-color-bg: #2d5277;            /* = figure ground */
+  --myst-color-bg-secondary: #284a6c;
+  --myst-color-surface: #335a80;
+  --myst-color-surface-hover: #3d6890;
+  --myst-color-active-surface: #335a80;
+  --myst-color-text: #f1f5f9;
+  --myst-color-text-secondary: #c9d7e5;
+  --myst-color-text-tertiary: #b9cadb;
+  --myst-color-prose-body: #e6edf4;
+  --myst-color-border: #5b7da0;
+  --myst-color-border-strong: #7d9cbd;
+  --myst-color-link: #e8b04a;
+  --myst-color-link-hover: #f3cd80;
+  --myst-color-link-underline: #e8b04a;
+  --myst-color-active: #e8b04a;
+  --myst-color-focus-ring: #e8b04a;
+  --myst-color-focus-outline: #e8b04a;
+  --myst-color-code: #ffd9a8;
+  --myst-color-info-bg: #284a6c;
+  --myst-color-success-bg: #284a6c;
+  --myst-color-warning-bg: #284a6c;
+  --myst-color-danger-bg: #284a6c;
+  --myst-color-error-bg: #284a6c;
+  --myst-color-theorem-bg: #284a6c;
+  --myst-color-example-bg: #284a6c;
+  --myst-color-proof-bg: #284a6c;
 }
 
 /* ---- article pages ----------------------------------------------------- */
@@ -85,8 +115,20 @@ article.content figcaption p {
   color: var(--primer-muted);
 }
 
-/* House-style figures are drawn on white; keep them on white in dark mode. */
-article.content figure img[src$=".svg"] {
+/* ---- light / blueprint figure pairs ---------------------------------------
+ * A figure that has both themes holds two images:
+ *   ```{image} NAME.svg        with  :class: dark:hidden
+ *   ```{image} NAME-dark.svg   with  :class: hidden dark:block
+ * MyST turns them into sub-figures (a) and (b). Show only the sub-figure for
+ * the current mode and drop the sub-figure labels, so the reader sees one
+ * figure with one caption. */
+figure.subcontainer:has(> img.dark\:hidden) > figcaption,
+figure.subcontainer:has(> img.dark\:block) > figcaption { display: none; }
+html:not(.dark) figure.subcontainer:has(> img.dark\:block) { display: none; }
+.dark figure.subcontainer:has(> img.dark\:hidden) { display: none; }
+
+/* Figures that exist only in the light theme keep a white ground in dark mode. */
+.dark article.content figure img[src$=".svg"]:not(.dark\:block):not(.dark\:hidden) {
   background: #ffffff;
   border-radius: 4px;
   padding: 4px;

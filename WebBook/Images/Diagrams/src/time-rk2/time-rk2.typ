@@ -50,9 +50,9 @@
 
   // points
   circle(P(0, th0), radius: 1, fill: ink, stroke: none)
-  circle(P(dt / 2, thhat), radius: 1, fill: white, stroke: s-interface)
+  circle(P(dt / 2, thhat), radius: 1, fill: paper, stroke: s-interface)
   circle(P(dt, th1), radius: 1, fill: ink, stroke: none)
-  circle(P(dt, exact(dt)), radius: 0.7, fill: white, stroke: s-construct)
+  circle(P(dt, exact(dt)), radius: 0.7, fill: paper, stroke: s-construct)
   content((1.5, th0 * sy + 1.5), anchor: "south-west", $theta(t)$)
   content((dt / 2 * sx - 1.5, thhat * sy - 1.5), anchor: "north-east", $hat(theta)$)
   content((dt * sx + 1.5, th1 * sy + 0.5), anchor: "west", [$theta(t + Delta t)$, RK2])

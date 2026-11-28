@@ -23,11 +23,18 @@ In words, the procedure goes like this: of all possible curves between the two p
         \end{center}
 \end{figure} -->
 
-:::{figure} ../Images/Diagrams/fem-shortest-path.svg
+::::{figure}
 :label: fig-variational
+```{image} ../Images/Diagrams/fem-shortest-path.svg
 :alt: Two points joined by a straight line labelled Gamma, with three dashed curved paths between the same two points. A short segment dS is marked on the straight line.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/fem-shortest-path-dark.svg
+:alt: Two points joined by a straight line labelled Gamma, with three dashed curved paths between the same two points. A short segment dS is marked on the straight line.
+:class: hidden dark:block
+```
 What curve gives the shortest distance between two points in a plane ?  And how can we prove it ! The straight line $\Gamma$ and other admissible curves (dashed) join $\mathbf{x}_1$ and $\mathbf{x}_2$; the length of any of them is the integral of the element $dS$ along it.
-:::
+::::
 
 
 We decide, arbitrarily, that we will make $x$ the independent variable and find a curve $y(x)$ which satisfies the minimum distance requirement.
@@ -151,11 +158,18 @@ See Klaus-Jürgen Bathe's book for a more complete outline of this approach to F
         \end{center}
     \end{figure} -->
 
-:::{figure} ../Images/Diagrams/fem-heated-slab.svg
+::::{figure}
 :label: fig-heated-bar
+```{image} ../Images/Diagrams/fem-heated-slab.svg
 :alt: Cross-section of a slab between x equals 0 and x equals L. Three arrows carry heat flux Q into the left face; the right face is hatched and held at temperature theta i; q B is marked inside the slab.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/fem-heated-slab-dark.svg
+:alt: Cross-section of a slab between x equals 0 and x equals L. Three arrows carry heat flux Q into the left face; the right face is hatched and held at temperature theta i; q B is marked inside the slab.
+:class: hidden dark:block
+```
 A Slab of Material Subjected to an sudden onset of heating at $Q$ on one side at time $t=0$. The face $x=L$ is held at $\theta_i$ and heat is generated inside at rate $q^B$; the slab extends indefinitely across the page, so the temperature depends on $x$ only.
-:::
+::::
 
 
 The functional governing the temperature in the [block of material](#fig-heated-bar) is
@@ -230,11 +244,18 @@ $$
 
 $\Omega$ is the domain of the operator and $u$ and $v$ are any functions which satisfy the boundary conditions.  
 
-:::{figure} ../Images/Diagrams/fem-loaded-rod.svg
+::::{figure}
 :label: fig-elastic-rod
+```{image} ../Images/Diagrams/fem-loaded-rod.svg
 :alt: (a) A horizontal rod fixed to a wall at its left end, resting on rollers, pulled to the right by a force R at its free end. (b) A short element of the rod of length delta x with axial forces sigma A pointing outward on its two faces.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/fem-loaded-rod-dark.svg
+:alt: (a) A horizontal rod fixed to a wall at its left end, resting on rollers, pulled to the right by a force R at its free end. (b) A short element of the rod of length delta x with axial forces sigma A pointing outward on its two faces.
+:class: hidden dark:block
+```
 A rod subject to end load --- Young's modulus, $E$, density, $\rho$, cross sectional area, $A$. (a) The rod is fixed at $x=0$ and loaded by $R$ at $x=L$. (b) An element of length $\delta x$ and the axial forces on its faces.
-:::
+::::
 
 
 Consider the 1D example of a bar subject to a steady end load. The response is the solution to 
@@ -334,11 +355,18 @@ One of the dominant features of the Finite Element literature is that it is fill
 Thus, before getting deeply involved in the arcane lore of Finite Elements, We give one example of a genuinely discrete system and show how it generates a matrix problem quite naturally.
     
 
-:::{figure} ../Images/Diagrams/fem-spring-carts.svg
+::::{figure}
 :label: fig-mine-carts
+```{image} ../Images/Diagrams/fem-spring-carts.svg
 :alt: Three wheeled carts on a level track. A spring joins a wall to cart 1; two springs in parallel join carts 1 and 2; one spring joins carts 2 and 3; a fifth spring, carried on rigid links above, joins carts 1 and 3. Each cart has a load arrow R and a displacement arrow U. Below, a single spring k2 between two nodes with end forces F1 and F2 pointing right and displacements U1 and U2.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/fem-spring-carts-dark.svg
+:alt: Three wheeled carts on a level track. A spring joins a wall to cart 1; two springs in parallel join carts 1 and 2; one spring joins carts 2 and 3; a fifth spring, carried on rigid links above, joins carts 1 and 3. Each cart has a load arrow R and a displacement arrow U. Below, a single spring k2 between two nodes with end forces F1 and F2 pointing right and displacements U1 and U2.
+:class: hidden dark:block
+```
 (a) A system of three carts interconnected by springs of different stiffnesses and in turn connected to an end wall. (b) The element equilibrium diagram for the spring $k_2$
-:::
+::::
 
 
     

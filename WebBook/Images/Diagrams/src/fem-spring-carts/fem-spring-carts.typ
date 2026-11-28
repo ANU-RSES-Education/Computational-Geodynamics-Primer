@@ -37,7 +37,7 @@
   let cart(x, w, label) = {
     rect((x, 4), (x + w, 18), fill: solid-tint, stroke: s-boundary)
     for wx in (x + 5, x + w - 5) {
-      circle((wx, 2), radius: 2, fill: white, stroke: s-interface)
+      circle((wx, 2), radius: 2, fill: paper, stroke: s-interface)
     }
     content((x + w / 2, 8), text(10pt, weight: "bold", label))
   }

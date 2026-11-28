@@ -78,11 +78,18 @@ Consider steady viscous flow between two parallel rigid plates:
 - Flow independent of $x$ and $y$ directions
 - No applied pressure gradient
 
-:::{figure} ../../Images/Diagrams/couette-flow.png
+::::{figure}
 :label: fig-couette
-:width: 450px
+```{image} ../../Images/Diagrams/couette-flow.svg
+:alt: Fluid between a fixed lower plate and an upper plate moving right at speed U, a distance h apart. Horizontal arrows at increasing heights grow linearly in length from zero at the lower plate to U at the upper one.
+:class: dark:hidden
+```
+```{image} ../../Images/Diagrams/couette-flow-dark.svg
+:alt: Fluid between a fixed lower plate and an upper plate moving right at speed U, a distance h apart. Horizontal arrows at increasing heights grow linearly in length from zero at the lower plate to U at the upper one.
+:class: hidden dark:block
+```
 Couette flow: Linear velocity profile between moving plates
-:::
+::::
 
 ### Solution
 
@@ -140,11 +147,18 @@ Steady viscous flow driven by a pressure gradient between two parallel fixed pla
 - Applied pressure gradient: $dp/dx < 0$ (pressure decreases in flow direction)
 - Flow independent of $x$ and $y$ positions
 
-:::{figure} ../../Images/Diagrams/poiseuille-flow.png
+::::{figure}
 :label: fig-poiseuille
-:width: 450px
+```{image} ../../Images/Diagrams/poiseuille-flow.svg
+:alt: Fluid between two fixed plates a distance h apart, with pressure p 1 on the left greater than p 2 on the right. Horizontal arrows across the gap form a parabola: zero at both plates, largest midway.
+:class: dark:hidden
+```
+```{image} ../../Images/Diagrams/poiseuille-flow-dark.svg
+:alt: Fluid between two fixed plates a distance h apart, with pressure p 1 on the left greater than p 2 on the right. Horizontal arrows across the gap form a parabola: zero at both plates, largest midway.
+:class: hidden dark:block
+```
 Poiseuille flow: Parabolic velocity profile in pressure-driven channel flow
-:::
+::::
 
 ### Solution
 
@@ -208,11 +222,18 @@ Steady viscous flow through a cylindrical pipe of radius $a$ under a constant ap
 - Axisymmetric flow: no dependence on $\theta$
 - Applied pressure gradient: $dp/dz = -\gamma$
 
-:::{figure} ../../Images/Diagrams/pipe-flow.png
+::::{figure}
 :label: fig-pipe-flow
-:width: 350px
-Pipe flow: Parabolic velocity profile in a circular pipe
-:::
+```{image} ../../Images/Diagrams/pipe-flow.svg
+:alt: Lengthwise section of a pipe of radius a about its axis z, with horizontal arrows forming a parabola that is largest on the axis and zero at the wall; beside it, a circular cross-section with dotted rings of equal speed and a radius r.
+:class: dark:hidden
+```
+```{image} ../../Images/Diagrams/pipe-flow-dark.svg
+:alt: Lengthwise section of a pipe of radius a about its axis z, with horizontal arrows forming a parabola that is largest on the axis and zero at the wall; beside it, a circular cross-section with dotted rings of equal speed and a radius r.
+:class: hidden dark:block
+```
+Pipe flow: Parabolic velocity profile in a circular pipe The cross-section shows the speed depends only on the distance $r$ from the axis.
+::::
 
 ### Solution
 

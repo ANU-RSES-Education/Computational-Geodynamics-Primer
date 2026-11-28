@@ -102,11 +102,18 @@ If the dye can diffuse then, the finer scales of the tendrils will in fact be mi
 
 ### Numerical Example in 1D
 
-:::{figure} ../Images/Diagrams/advection-upwind.svg
+::::{figure}
 :label: fig-advection2
+```{image} ../Images/Diagrams/advection-upwind.svg
 :alt: Two rows of equally spaced nodes. Top, at t equals 0, a shaded profile phi equal to one up to node i and zero from node i plus 1, with a velocity arrow v. Bottom, at t equals delta x over v, the computed profile ramps down over three intervals, while a dashed step one node further downstream shows the exact solution.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/advection-upwind-dark.svg
+:alt: Two rows of equally spaced nodes. Top, at t equals 0, a shaded profile phi equal to one up to node i and zero from node i plus 1, with a velocity arrow v. Bottom, at t equals delta x over v, the computed profile ramps down over three intervals, while a dashed step one node further downstream shows the exact solution.
+:class: hidden dark:block
+```
 Setup for a first attempt at a numerical advection scheme on a fixed discretization. After two timesteps, the sharp front has become smoothed despite introducing no genuine diffusion. The lower profile uses the upwind values of [](#tbl-hand-rolled-advection); the dashed line is the exact solution, the original step moved one node downstream.
-:::
+::::
 
 
 Let us follow our usual strategy an solve the simplest imaginable advection equation:
@@ -206,11 +213,18 @@ As we have already seen, some methods work well for particular problem and other
 
 Obviously there is not room to do justice to any particular method --- or (god forbid) make some other method seem better than finite elements (though for some things this is obviously true).
 
-:::{figure} ../Images/Diagrams/methods-compared.svg
+::::{figure}
 :label: fig-methods-compared
+```{image} ../Images/Diagrams/methods-compared.svg
 :alt: Four square grids side by side. The first highlights a cross-shaped five-node stencil. The second is triangulated and shades the hexagonal patch of six triangles around one node. The third outlines a dashed square around one node with four arrows pointing out through its faces. The fourth shows a grid of cells, each with an open circle at its centre joined by short lines to the particles inside it; blue circular particles lie below a dashed diagonal interface and green square particles above it, and one shaded cell on the interface holds five particles of both kinds.
+:class: dark:hidden
+```
+```{image} ../Images/Diagrams/methods-compared-dark.svg
+:alt: Four square grids side by side. The first highlights a cross-shaped five-node stencil. The second is triangulated and shades the hexagonal patch of six triangles around one node. The third outlines a dashed square around one node with four arrows pointing out through its faces. The fourth shows a grid of cells, each with an open circle at its centre joined by short lines to the particles inside it; blue circular particles lie below a dashed diagonal interface and green square particles above it, and one shaded cell on the interface holds five particles of both kinds.
+:class: hidden dark:block
+```
 The same patch of domain as each method represents it. (a) Finite differences store point values at the nodes; the derivative at the centre node uses the five-point stencil (dark nodes). (b) Finite elements interpolate between nodes with basis functions; the basis function of the dark node is non-zero only on the six triangles that share it (shaded). (c) Finite volumes store the average over a control volume (dashed) and balance the fluxes through its faces (arrows). (d) Particle-in-cell methods carry material properties on particles that move with the flow through a fixed grid; each particle contributes to the cell it occupies, here represented by its centre (open circles). Most cells hold one particle; the shaded cell holds several, from both sides of an interface between two materials (circles and squares), and receives a mixture of their properties.
-:::
+::::
 
 ### Finite Differences
 
