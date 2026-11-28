@@ -6,6 +6,8 @@
 // basal layer (D'') and a plume. The cold outline is T = 0.9 T_i (the base of
 // the thermal lithosphere and the slab); the hot outline is T_i + 0.06.
 // Lithosphere is about 2.5 times too thick, as in the models.
+// Overriding plate: oceanic near the trench, then a continent (with crust,
+// drawn as a compositional layer) and a thicker cratonic keel.
 // Overlaid: the 660 km phase change (dashed), convection (velocity arrows),
 // core, labels.
 // Double column (183 mm).
@@ -36,6 +38,9 @@
   // thermal outlines from the field
   for c in data.cold { line(..c, stroke: (paint: ink, thickness: w-interface)) }
   for c in data.hot { line(..c, stroke: (paint: energy, thickness: w-interface)) }
+  // continental crust: a compositional layer, drawn over the field
+  line(..data.crust, close: true, fill: ink.transparentize(58%), stroke: none)
+  line(..data.crust_base, stroke: s-interface)
   // structure
   line(..arcpts(R660, t-left, t-right), stroke: (paint: ink, thickness: w-construct, dash: "dashed"))
   line(..arcpts(Rcmb, t-left, t-right), stroke: s-boundary)
@@ -57,7 +62,8 @@
 
   // labels
   label(P(Rs + 700, 124), [oceanic lithosphere], anchor: "south")
-  label(P(Rs + 700, 57), [continental lithosphere], anchor: "south")
+  label(P(Rs + 700, 59), [continental crust], anchor: "south")
+  label(P(5520, 49.5), [craton])
   label(P(Rs + 260, 80), [trench], anchor: "south")
   label(P(5200, 64.5), [slab])
   label(P(4500, 128.5), [plume])

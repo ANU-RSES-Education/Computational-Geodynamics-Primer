@@ -68,20 +68,20 @@ The computational techniques needed to solve the mathematical equations describi
 ### Part V: Computational Exercises
 Practical examples and benchmarks demonstrating the concepts throughout the book.
 
-## Acknowledgements
+## Credits
 
 Developed at the Research School of Earth Sciences, The Australian National University.
 
 ```{image} Images/ANU-logo.png
 :alt: The Australian National University
 :width: 170px
-:align: left
+:align: center
 :class: dark:hidden
 ```
 
 ```{image} Images/ANU-logo-dark.png
 :alt: The Australian National University
 :width: 170px
-:align: left
+:align: center
 :class: hidden dark:block
 ```

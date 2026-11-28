@@ -5,7 +5,8 @@ The cold side follows the "slab" initial state of the annulus subduction models
 here without Underworld:
   * surface plates cool as a half space, T = T_i erf(depth / 2 sqrt(age)), the
     plate age ramping from zero at the ridge to the trench age on the
-    subducting side, and a uniform older age under the continent;
+    subducting side; on the overriding side an oceanic plate near the trench,
+    then an older continent with a still older cratonic keel;
   * the slab cools from the same age continued down the fault plane, which
     leaves the trench at a fixed dip: T = T_i - T_i erfc(n / 2 sqrt(age)) into
     the subducting side (n the distance from the plane), a short cooled halo on
@@ -38,7 +39,13 @@ TH_T = 80.0                     # trench
 
 T_i = 0.75                      # interior temperature (K1 default)
 AGE_SUB = 0.0025                # subducting plate at the trench (K1 default)
-AGE_CONT = 0.0016               # continent: a uniform old lid
+AGE_OVER = 0.0010               # oceanic part of the overriding plate
+AGE_CONT = 0.0016               # continental lithosphere
+AGE_CRATON = 0.0045             # cratonic keel
+CONT_EDGE = 66.0                # continental margin (degrees); continent from here to the wedge edge
+CRATON = (56.0, 43.0)           # craton extent (degrees)
+CRUST_KM = 120.0                # continental crust as drawn (about 2.5 times too thick, like the plates)
+EDGE = 2.0                      # width of the transitions (degrees)
 DIP = 60.0                      # slab dip (degrees)
 SLAB_LEN = 0.55                 # down-dip length, d
 WEDGE_AGE = 6.25e-4             # cooled halo on the wedge side (K1 default)
@@ -54,7 +61,10 @@ def temperature(r, th):
     rel = np.radians(th - TH_T)                             # > 0 on the subducting (left) side
     ridge = np.radians(TH_L - TH_T)
     age_sub = AGE_SUB * np.clip(1 - rel / ridge, 0, 1)      # zero at the ridge, AGE_SUB at the trench
-    age = np.where(rel >= 0, age_sub, AGE_CONT)
+    in_cont = 0.5 * (1 + np.tanh((CONT_EDGE - th) / EDGE))
+    in_craton = 0.5 * (np.tanh((th - CRATON[1]) / EDGE) + np.tanh((CRATON[0] - th) / EDGE))
+    age_over = AGE_OVER + (AGE_CONT - AGE_OVER) * in_cont + (AGE_CRATON - AGE_CONT) * np.clip(in_craton, 0, 1)
+    age = np.where(rel >= 0, age_sub, age_over)
     age = np.maximum(age, 2.0e-5)
     T_plate = T_i * erf(depth / (2 * np.sqrt(age)))
     # slab: plane from the trench, dipping toward the overriding (right, -theta) side
@@ -116,7 +126,17 @@ def paths(level_index, min_len=12):
     return out
 
 
+# continental crust: a band of thickness CRUST_KM under the continent, tapering at the margin
+ths = np.linspace(CONT_EDGE + 3 * EDGE, TH_R, 160)
+thick = CRUST_KM * 0.5 * (1 + np.tanh((CONT_EDGE - ths) / EDGE))
+to_mm = R_MM / 6370.0
+outer = [[R_MM * np.cos(np.radians(t)), R_MM * np.sin(np.radians(t))] for t in ths]
+inner = [[(6370.0 - h) * to_mm * np.cos(np.radians(t)), (6370.0 - h) * to_mm * np.sin(np.radians(t))]
+         for t, h in zip(ths[::-1], thick[::-1])]
+crust = [[round(a, 3), round(b, 3)] for a, b in outer + inner]
+crust_base = [[round(a, 3), round(b, 3)] for a, b in inner[::-1]]
+
 with open("earth-processes.json", "w") as f:
     json.dump({"extent": [-xm, 0, xm, R_MM], "cold": paths(0), "hot": paths(1),
-               "r_cmb_mm": r_c / r_o * R_MM}, f)
+               "r_cmb_mm": r_c / r_o * R_MM, "crust": crust, "crust_base": crust_base}, f)
 print("cold contours", len(paths(0)), "hot contours", len(paths(1)))
