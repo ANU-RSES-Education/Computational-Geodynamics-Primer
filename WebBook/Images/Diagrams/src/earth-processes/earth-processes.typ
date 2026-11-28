@@ -62,8 +62,8 @@
 
   // labels
   label(P(Rs + 700, 124), [oceanic lithosphere], anchor: "south")
-  label(P(Rs + 700, 59), [continental crust], anchor: "south")
-  label(P(5520, 49.5), [craton])
+  label(P(Rs + 700, 64), [continental crust], anchor: "south")
+  label(P(Rs + 700, 46.5), [craton], anchor: "south")
   label(P(Rs + 260, 80), [trench], anchor: "south")
   label(P(5200, 64.5), [slab])
   label(P(4500, 128.5), [plume])

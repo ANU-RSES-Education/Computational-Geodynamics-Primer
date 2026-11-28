@@ -86,7 +86,7 @@ def temperature(r, th):
     # hot side: basal layer and a plume (scaled by T_cold / T_i so plates stay cold)
     hot = (1 - T_i) * erfc(np.maximum(r - r_c, 0) / (2 * np.sqrt(AGE_BASE)))
     arc_tail = np.radians(th - PLUME_TH) * r
-    tail = np.exp(-(arc_tail / 0.035) ** 2) * (r < r_o - 0.08)
+    tail = np.exp(-(arc_tail / 0.035) ** 2) * (r < r_o - 0.2)        # the tail ends inside the head
     arc_head = np.radians(th - HEAD_TH) * r
     head = np.exp(-(arc_head / 0.30) ** 2 - ((r - (r_o - 0.2)) / 0.07) ** 2)
     hot = np.maximum(hot, PLUME_DT * np.maximum(tail, head))
